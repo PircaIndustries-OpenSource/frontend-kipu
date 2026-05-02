@@ -63,7 +63,8 @@
               "buildTarget": "kipu-frontend:build:production"
             },
             "development": {
-              "buildTarget": "kipu-frontend:build:development"
+              "buildTarget": "kipu-frontend:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
