@@ -2,7 +2,139 @@
   "identity": [],
   "project": [],
   "documents": [],
-  "materials": [],
+  "materials": [
+    {
+      "id": "mat-001",
+      "name": "King Kong Brick 18 holes",
+      "category": "Construction materials",
+      "subcategory": "Structures",
+      "currentStock": 5400,
+      "measureUnit": "unit",
+      "minimumLimit": 1000,
+      "status": "IN_STOCK",
+      "suggestedSupplierId": "sup-001"
+    },
+    {
+      "id": "mat-002",
+      "name": "Portland Cement Type I",
+      "category": "Binders",
+      "subcategory": null,
+      "currentStock": 150,
+      "measureUnit": "kg",
+      "minimumLimit": 20,
+      "status": "IN_STOCK",
+      "suggestedSupplierId": null
+    },
+    {
+      "id": "mat-003",
+      "name": "Fine sand",
+      "category": "Aggregates",
+      "subcategory": null,
+      "currentStock": 800,
+      "measureUnit": "kg",
+      "minimumLimit": 100,
+      "status": "IN_STOCK",
+      "suggestedSupplierId": null
+    },
+    {
+      "id": "mat-004",
+      "name": "Corrugated steel 1/2\" x 9m",
+      "category": "Metals",
+      "subcategory": null,
+      "currentStock": 200,
+      "measureUnit": "unit",
+      "minimumLimit": 30,
+      "status": "IN_STOCK",
+      "suggestedSupplierId": "sup-001"
+    }
+  ],
+  "materialRequests": [
+    {
+      "id": "req-001",
+      "projectId": "proj-01",
+      "requestDate": "2026-05-01",
+      "deadline": "2026-05-10",
+      "status": "PENDING",
+      "priority": 1,
+      "deliveryLocation": "Basement 2",
+      "budgetLineId": "PP-2026-05",
+      "purpose": "Construction of perimeter walls on Floor 3",
+      "additionalNotes": "Preferred brand: Sol or Pacasmayo. Delivery on pallets.",
+      "suggestedSupplierId": "sup-001",
+      "budgetSnapshot": {
+        "total": 50000,
+        "spent": 38000,
+        "available": 12000
+      },
+      "attachments": [],
+      "items": [
+        {
+          "materialId": "mat-002",
+          "materialName": "Portland Cement Type I",
+          "quantity": 50,
+          "unit": "kg"
+        },
+        {
+          "materialId": "mat-003",
+          "materialName": "Fine sand",
+          "quantity": 200,
+          "unit": "kg"
+        }
+      ]
+    },
+    {
+      "id": "req-002",
+      "projectId": "proj-02",
+      "requestDate": "2026-05-02",
+      "deadline": "2026-05-15",
+      "status": "APPROVED",
+      "priority": 2,
+      "deliveryLocation": "Floor 2",
+      "budgetLineId": null,
+      "purpose": null,
+      "additionalNotes": null,
+      "suggestedSupplierId": "sup-001",
+      "budgetSnapshot": null,
+      "attachments": [],
+      "items": [
+        {
+          "materialId": "mat-004",
+          "materialName": "Corrugated steel 1/2\" x 9m",
+          "quantity": 30,
+          "unit": "unit"
+        }
+      ]
+    }
+  ],
+  "materialWaste": [
+    {
+      "id": "rmt-089",
+      "projectId": "proj-01",
+      "materialId": "mat-001",
+      "quantity": 50,
+      "unit": "unit",
+      "classificationType": "BREAKAGE",
+      "date": "2026-05-02",
+      "description": "Bricks broken during truck unloading maneuver on site. Material unusable.",
+      "reportedBy": "40213390",
+      "photoUrl": "https://storage.example.com/rmt089_evidence.jpg"
+    }
+  ],
+  "suppliers": [
+    {
+      "id": "sup-001",
+      "RUC": "20100000001",
+      "companyName": "Aceros Arequipa S.A.",
+      "contactName": "Corporate Sales",
+      "phone": "01-555-0192",
+      "contactEmail": "ventas@acerosarequipa.pe",
+      "status": "ACTIVE",
+      "entryDate": "2028-02-01",
+      "suppliedCategories": "Corrugated iron, binding wire, nails, electrowelded mesh",
+      "paymentCondition": "30-day credit upon delivery of invoice and delivery note",
+      "category": "Metals and hardware"
+    }
+  ],
   "iot-telemetry": [],
   "field": []
 }
