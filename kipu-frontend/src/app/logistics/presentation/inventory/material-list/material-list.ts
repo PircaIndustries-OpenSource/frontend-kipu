@@ -1,5 +1,5 @@
 import {Component, input} from '@angular/core';
-import {MaterialEntity} from '../../domain/material.entity';
+import {MaterialEntity} from '../../../domain/material.entity';
 import {MaterialItem} from '../material-item/material-item';
 
 @Component({

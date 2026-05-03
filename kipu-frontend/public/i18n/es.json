@@ -2,7 +2,8 @@
   "inventory": {
     "title": "Inventario General",
     "filters": {
-      "category": "Categoría"
+      "category": "Categoría",
+      "placeholder": "Seleccione una categoría"
     },
     "summary": {
       "registered-materials": "Materiales Registrados",

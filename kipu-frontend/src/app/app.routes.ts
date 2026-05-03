@@ -9,7 +9,12 @@ export const routes: Routes = [
       {
         path: 'inventory',
         loadComponent: () =>
-          import('./logistics/presentation/inventory-page/inventory-page').then(m => m.InventoryPage)
+          import('./logistics/presentation/inventory/inventory-page/inventory-page').then(m => m.InventoryPage)
+      },
+      {
+        path: 'request',
+        loadComponent: () =>
+          import('./logistics/presentation/request/request-page/request-page').then(m => m.RequestPage)
       },
 
       {
@@ -54,7 +59,7 @@ export const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'inventory',
+        redirectTo: 'projects',
         pathMatch: 'full'
       }
     ]
