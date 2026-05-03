@@ -1,0 +1,68 @@
+<div class="flex h-full w-[260px] flex-col font-inter" style="background-color: #2c3e50; color: #f8f9fa;">
+
+  <div class="p-6 border-b border-white/10">
+    <h1 class="text-2xl font-bold m-0" style="color: #f8f9fa;">Kipu</h1>
+    <p class="text-xs mt-1" style="color: #b0bec5;">Gestión de Obras</p>
+  </div>
+
+  <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+    <!-- El exact: true es para que Dashboard no se quede siempre prendido si es la ruta base -->
+    <a routerLink="/dashboard" routerLinkActive="bg-[#3498db] text-white" [routerLinkActiveOptions]="{exact: true}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
+      <mat-icon>dashboard</mat-icon>
+      <span class="font-medium">Dashboard</span>
+    </a>
+
+    <a routerLink="/advances" routerLinkActive="bg-[#3498db] text-white" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
+      <mat-icon>trending_up</mat-icon>
+      <span class="font-medium">Avances</span>
+    </a>
+
+    <a routerLink="/rnc" routerLinkActive="bg-[#3498db] text-white" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
+      <mat-icon>report_problem</mat-icon>
+      <span class="font-medium">RNC</span>
+    </a>
+
+    <!-- Cambié /materials por /inventory para que coincida con tus rutas -->
+    <a routerLink="/inventory" routerLinkActive="bg-[#3498db] text-white" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
+      <mat-icon>inventory_2</mat-icon>
+      <span class="font-medium">Materiales</span>
+    </a>
+
+    <a routerLink="/blueprints" routerLinkActive="bg-[#3498db] text-white" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
+      <mat-icon>architecture</mat-icon>
+      <span class="font-medium">Planos</span>
+    </a>
+
+    <a routerLink="/signatures" routerLinkActive="bg-[#3498db] text-white" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
+      <mat-icon>draw</mat-icon>
+      <span class="font-medium">Firmas</span>
+    </a>
+
+    <a routerLink="/budget" routerLinkActive="bg-[#3498db] text-white" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
+      <mat-icon>payments</mat-icon>
+      <span class="font-medium">Presupuesto</span>
+    </a>
+
+    <a routerLink="/team" routerLinkActive="bg-[#3498db] text-white" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
+      <mat-icon>groups</mat-icon>
+      <span class="font-medium">Equipo</span>
+    </a>
+
+    <a routerLink="/iot" routerLinkActive="bg-[#3498db] text-white" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
+      <mat-icon>sensors</mat-icon>
+      <span class="font-medium">Monitoreo IoT</span>
+    </a>
+  </nav>
+
+  <div class="p-4" style="background-color: rgba(0,0,0,0.2);">
+    <div class="flex items-center gap-3 p-3 rounded-2xl" style="background-color: rgba(255,255,255,0.05);">
+      <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background-color: #3498db;">
+        <mat-icon style="color: #f8f9fa;">person</mat-icon>
+      </div>
+      <div class="flex flex-col text-left overflow-hidden">
+        <span class="text-sm font-semibold truncate" style="color: #f8f9fa;">Usuario Demo</span>
+        <span class="text-[10px] uppercase truncate" style="color: #b0bec5;">Residente de Obra</span>
+      </div>
+    </div>
+  </div>
+</div>
