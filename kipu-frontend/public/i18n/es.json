@@ -1,3 +1,23 @@
 {
-
+  "inventory": {
+    "title": "Inventario General",
+    "filters": {
+      "category": "Categoría"
+    },
+    "summary": {
+      "registered-materials": "Materiales Registrados",
+      "critical-stock-alert": "Con Stock Crítico"
+    },
+    "card": {
+      "equipment": "Equipo",
+      "min-limit": "Límite Mínimo",
+      "current-stock": "Stock Actual",
+      "status": {
+        "critical": "STOCK CRÍTICO"
+      },
+      "actions": {
+        "add-stock": "Añadir Stock"
+      }
+    }
+  }
 }
