@@ -1,2 +1,24 @@
 {
+  "inventory": {
+    "title": "General Inventory",
+    "filters": {
+      "category": "Category",
+      "placeholder": "Select a category"
+    },
+    "summary": {
+      "registered-materials": "Registered Materials",
+      "critical-stock-alert": "With Critical Stock"
+    },
+    "card": {
+      "equipment": "Equipment",
+      "min-limit": "Minimum Limit",
+      "current-stock": "Current Stock",
+      "status": {
+        "critical": "CRITICAL STOCK"
+      },
+      "actions": {
+        "add-stock": "Add Stock"
+      }
+    }
+  }
 }

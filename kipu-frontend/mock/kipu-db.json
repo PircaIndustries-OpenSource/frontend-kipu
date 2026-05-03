@@ -17,7 +17,7 @@
       "currentStock": 5400,
       "measureUnit": "unit",
       "minimumLimit": 1000,
-      "status": "IN_STOCK",
+      "status": "OPTIMAL",
       "suggestedSupplierId": "sup-001"
     },
     {
@@ -28,7 +28,7 @@
       "currentStock": 150,
       "measureUnit": "kg",
       "minimumLimit": 20,
-      "status": "IN_STOCK",
+      "status": "OPTIMAL",
       "suggestedSupplierId": null
     },
     {
@@ -39,7 +39,7 @@
       "currentStock": 800,
       "measureUnit": "kg",
       "minimumLimit": 100,
-      "status": "IN_STOCK",
+      "status": "OPTIMAL",
       "suggestedSupplierId": null
     },
     {
@@ -47,10 +47,10 @@
       "name": "Corrugated steel 1/2\" x 9m",
       "category": "Metals",
       "subcategory": null,
-      "currentStock": 200,
+      "currentStock": 20,
       "measureUnit": "unit",
       "minimumLimit": 30,
-      "status": "IN_STOCK",
+      "status": "CRITICAL",
       "suggestedSupplierId": "sup-001"
     }
   ],
@@ -67,11 +67,6 @@
       "purpose": "Construction of perimeter walls on Floor 3",
       "additionalNotes": "Preferred brand: Sol or Pacasmayo. Delivery on pallets.",
       "suggestedSupplierId": "sup-001",
-      "budgetSnapshot": {
-        "total": 50000,
-        "spent": 38000,
-        "available": 12000
-      },
       "attachments": [],
       "items": [
         {
@@ -100,7 +95,6 @@
       "purpose": null,
       "additionalNotes": null,
       "suggestedSupplierId": "sup-001",
-      "budgetSnapshot": null,
       "attachments": [],
       "items": [
         {
