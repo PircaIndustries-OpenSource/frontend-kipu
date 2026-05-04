@@ -6,7 +6,6 @@
   </div>
 
   <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-    <!-- El exact: true es para que Dashboard no se quede siempre prendido si es la ruta base -->
     <a routerLink="/dashboard" routerLinkActive="bg-[#3498db] text-white" [routerLinkActiveOptions]="{exact: true}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
       <mat-icon>dashboard</mat-icon>
       <span class="font-medium">Dashboard</span>
@@ -21,8 +20,6 @@
       <mat-icon>report_problem</mat-icon>
       <span class="font-medium">RNC</span>
     </a>
-
-    <!-- Cambié /materials por /inventory para que coincida con tus rutas -->
     <a routerLink="/inventory" routerLinkActive="bg-[#3498db] text-white" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
       <mat-icon>inventory_2</mat-icon>
       <span class="font-medium">Materiales</span>
