@@ -16,7 +16,9 @@ export class RequestAssembler {
       additionalNotes: resource.additionalNotes,
       suggestedSupplierId: resource.suggestedSupplierId,
       attachments: resource.attachments,
-      items: resource.items
+      items: resource.items,
+      requestedBy: resource.requestedBy,
+      activity: resource.activity,
     }
   }
   static toEntitiesFromResponse(response: RequestResponse): RequestEntity[]{

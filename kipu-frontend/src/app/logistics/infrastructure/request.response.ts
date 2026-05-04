@@ -14,5 +14,7 @@ export interface RequestResource {
   additionalNotes: string;
   suggestedSupplierId: string;
   attachments: string[];
-  items: RequestItem[];
+  items: RequestItem;
+  requestedBy: string;
+  activity: string;
 }

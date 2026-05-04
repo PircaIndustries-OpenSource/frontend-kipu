@@ -68,20 +68,15 @@
       "additionalNotes": "Preferred brand: Sol or Pacasmayo. Delivery on pallets.",
       "suggestedSupplierId": "sup-001",
       "attachments": [],
-      "items": [
-        {
-          "materialId": "mat-002",
-          "materialName": "Portland Cement Type I",
-          "quantity": 50,
-          "unit": "kg"
-        },
-        {
-          "materialId": "mat-003",
-          "materialName": "Fine sand",
-          "quantity": 200,
-          "unit": "kg"
-        }
-      ]
+      "items":
+      {
+        "materialId": "mat-002",
+        "materialName": "Portland Cement Type I",
+        "quantity": 50,
+        "unit": "kg"
+      },
+      "requestedBy": "us-01",
+      "activity": "act-01"
     },
     {
       "id": "req-002",
@@ -96,14 +91,15 @@
       "additionalNotes": null,
       "suggestedSupplierId": "sup-001",
       "attachments": [],
-      "items": [
-        {
-          "materialId": "mat-004",
-          "materialName": "Corrugated steel 1/2\" x 9m",
-          "quantity": 30,
-          "unit": "unit"
-        }
-      ]
+      "items":
+      {
+        "materialId": "mat-004",
+        "materialName": "Corrugated steel 1/2\" x 9m",
+        "quantity": 30,
+        "unit": "unit"
+      },
+      "requestedBy": "us-02",
+      "activity": "act-01"
     }
   ],
   "materialWaste": [

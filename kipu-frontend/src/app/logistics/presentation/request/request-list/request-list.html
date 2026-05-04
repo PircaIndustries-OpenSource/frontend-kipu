@@ -1,1 +1,4 @@
-<p>request-list works!</p>
+@for(request of requests(); track request.id){
+  <app-request-item [request]="request">
+  </app-request-item>
+}

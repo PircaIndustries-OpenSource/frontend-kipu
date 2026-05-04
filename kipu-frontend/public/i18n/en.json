@@ -20,5 +20,39 @@
         "add-stock": "Add Stock"
       }
     }
+  },
+  "request": {
+    "card": {
+      "header": {
+        "urgent": "URGENT",
+        "request-date": "Request:"
+      },
+      "fields": {
+        "material": "Material",
+        "requester": "Requester",
+        "budget-line": "Budget Line",
+        "required-date": "Required Date",
+        "in-days": "In {{days}} days"
+      },
+      "purpose": {
+        "title": "Purpose/Use"
+      },
+      "budget-verification": {
+        "title": "Budget Verification",
+        "requested-amount": "Requested amount:",
+        "available-budget": "Available budget:",
+        "status": "Status:"
+      },
+      "status": {
+        "within-budget": "WITHIN BUDGET",
+        "pending": "Pending",
+        "approved": "Approved",
+        "refused": "Refused"
+      },
+      "actions": {
+        "modify": "Modify Request",
+        "view-details": "View Full Detail"
+      }
+    }
   }
 }
