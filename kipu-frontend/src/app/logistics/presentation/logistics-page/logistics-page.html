@@ -1,0 +1,36 @@
+<nav mat-tab-nav-bar [tabPanel]="tabPanel" class="mb-6">
+  <a mat-tab-link
+     routerLink="inventory"
+     routerLinkActive #rla1="routerLinkActive"
+     [active]="rla1.isActive">
+    {{'inventory.tab-inventory'|translate}}
+  </a>
+  <a mat-tab-link
+     routerLink="requests"
+     routerLinkActive #rla2="routerLinkActive"
+     [active]="rla2.isActive">
+    {{'inventory.tab-requests'|translate}}
+  </a>
+  <a mat-tab-link
+     routerLink="machinery"
+     routerLinkActive #rla2="routerLinkActive"
+     [active]="rla2.isActive">
+    {{'inventory.tab-machinery'|translate}}
+  </a>
+  <a mat-tab-link
+     routerLink="suppliers"
+     routerLinkActive #rla2="routerLinkActive"
+     [active]="rla2.isActive">
+    {{'inventory.tab-suppliers'|translate}}
+  </a>
+  <a mat-tab-link
+     routerLink="waste"
+     routerLinkActive #rla2="routerLinkActive"
+     [active]="rla2.isActive">
+    {{'inventory.tab-waste'|translate}}
+  </a>
+
+</nav>
+<mat-tab-nav-panel #tabPanel>
+  <router-outlet></router-outlet>
+</mat-tab-nav-panel>

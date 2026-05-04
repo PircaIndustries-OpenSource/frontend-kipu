@@ -1,5 +1,10 @@
 {
   "inventory": {
+    "tab-inventory": "Inventario",
+    "tab-requests": "Solicitudes",
+    "tab-machinery": "Maquinaria",
+    "tab-suppliers": "Proveedores",
+    "tab-waste": "Merma",
     "title": "Inventario General",
     "filters": {
       "category": "Categoría",

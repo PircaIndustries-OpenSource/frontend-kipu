@@ -1,5 +1,10 @@
 {
   "inventory": {
+    "tab-inventory": "Inventory",
+    "tab-requests": "Requests",
+    "tab-machinery": "Equipment",
+    "tab-suppliers": "Suppliers",
+    "tab-waste": "Waste",
     "title": "General Inventory",
     "filters": {
       "category": "Category",
