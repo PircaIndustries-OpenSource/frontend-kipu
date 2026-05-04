@@ -1,5 +1,4 @@
 @import "tailwindcss";
-
 @theme {
   --color-primary: #2c3e50;
   --color-accent: #3498db;
@@ -7,15 +6,50 @@
   --color-neutral-bg: #f8f9fa;
   --color-neutral-border: #b0bec5;
 
-  --font-inter: "Inter", sans-serif;
+  --color-success: #28AE60;
+  --color-warning: #BD760D;
+  --color-danger:  #FE2318;
+  --color-info:    #3598DB;
+  --color-success-soft: #CAFFC9;
+  --color-warning-soft: #FEFBEA;
+  --color-danger-soft:  #FFD9D8;
+  --color-info-soft:    #E6F4FF;
+
+  --font-inter: "Interh", sans-serif;
+
+  --spacing-3xs: 0.125rem;
+  --spacing-2xs: 0.25rem;
+  --spacing-xs: 0.5rem;
+  --spacing-s: 0.75rem;
+  --spacing-m: 1.0rem;
+  --spacing-l: 1.5rem;
+  --spacing-xl: 2.0rem;
+  --spacing-2xl: 3.0rem;
+  --spacing-3xl: 4.0rem;
+
+  --radius-sm: 0.25rem;
+  --radius-m: 0.5rem;
+  --radius-l: 0.75rem;
+  --radius-full: 20rem;
+
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
 
   --transition-base: 150ms ease;
 }
-
-@layer base {
+@layer base{
   body {
     @apply bg-[--color-neutral-bg] text-[--color-text-main] font-inter;
-    margin: 0;
-    padding: 0;
+  }
+  input, textarea, select, button {
+    @apply font-inter;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-neutral-border) transparent;
   }
 }

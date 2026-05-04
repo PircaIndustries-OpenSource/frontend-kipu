@@ -1,8 +1,8 @@
-import {MaterialResource, MaterialsResponse} from './materials.response';
-import {MaterialEntity} from '../domain/material.entity';
+import { MaterialResource, MaterialsResponse } from './materials.response';
+import { MaterialEntity } from '../domain/material.entity';
 
 export class MaterialsAssembler {
-  static toEntityFromResource(resource: MaterialResource): MaterialEntity{
+  static toEntityFromResource(resource: MaterialResource): MaterialEntity {
     return {
       id: resource.id,
       name: resource.name,
@@ -11,11 +11,11 @@ export class MaterialsAssembler {
       currentStock: resource.currentStock,
       measureUnit: resource.measureUnit,
       minimumLimit: resource.minimumLimit,
-      status: resource.status ,
+      status: resource.status,
       suggestedSupplierId: resource.suggestedSupplierId,
-    }
+    };
   }
-  static toEntitiesFromResponse(response: MaterialsResponse): MaterialEntity[]{
-    return response.map(resource => this.toEntityFromResource(resource));
+  static toEntitiesFromResponse(response: MaterialsResponse): MaterialEntity[] {
+    return response.map((resource) => this.toEntityFromResource(resource));
   }
 }

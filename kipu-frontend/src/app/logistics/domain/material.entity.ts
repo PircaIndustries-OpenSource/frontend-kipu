@@ -10,14 +10,14 @@ export class MaterialEntity {
   suggestedSupplierId: string;
 
   constructor() {
-    this.id = "";
-    this.name = "";
-    this.category = "";
-    this.subcategory = "";
+    this.id = '';
+    this.name = '';
+    this.category = '';
+    this.subcategory = '';
     this.currentStock = 0;
-    this.measureUnit = "";
+    this.measureUnit = '';
     this.minimumLimit = 0;
-    this.status = "";
-    this.suggestedSupplierId = "";
+    this.status = '';
+    this.suggestedSupplierId = '';
   }
 }
