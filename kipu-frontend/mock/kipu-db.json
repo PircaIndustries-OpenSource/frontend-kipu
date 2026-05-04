@@ -132,5 +132,9 @@
     }
   ],
   "iot-telemetry": [],
-  "field": []
+  "field": [],
+  "team": {
+    "users": [],
+    "workers": []
+  }
 }
