@@ -1,19 +1,12 @@
-import {Component, computed, inject, OnInit} from '@angular/core';
-import {LogisticsStore} from '../../../application/logistics.store';
-import {MaterialList} from '../material-list/material-list';
-import {TranslatePipe} from '@ngx-translate/core';
-import {SummaryCard} from '../../../../shared/presentation/summary-card/summary-card';
-import {
-  AutocompleteFilterList
-} from '../../../../shared/presentation/autocomplete-filter-list/autocomplete-filter-list';
+import { Component, computed, inject, OnInit } from '@angular/core';
+import { LogisticsStore } from '../../../application/logistics.store';
+import { MaterialList } from '../material-list/material-list';
+import { TranslatePipe } from '@ngx-translate/core';
+import { SummaryCard } from '../../../../shared/presentation/summary-card/summary-card';
+import { AutocompleteFilterList } from '../../../../shared/presentation/autocomplete-filter-list/autocomplete-filter-list';
 @Component({
   selector: 'app-inventory-page',
-  imports: [
-    TranslatePipe,
-    MaterialList,
-    SummaryCard,
-    AutocompleteFilterList
-  ],
+  imports: [TranslatePipe, MaterialList, SummaryCard, AutocompleteFilterList],
   templateUrl: './inventory-page.html',
   styleUrl: './inventory-page.css',
 })
@@ -26,7 +19,7 @@ export class InventoryPage implements OnInit {
   ngOnInit() {
     this.logisticsStore.loadMaterials();
   }
-  onCategorySelect(category: string){
+  onCategorySelect(category: string) {
     console.log('Page received: ', category);
     this.logisticsStore.filterByCategory(category);
   }
