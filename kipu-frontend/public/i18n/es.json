@@ -20,5 +20,39 @@
         "add-stock": "Añadir Stock"
       }
     }
+  },
+  "request": {
+    "card": {
+      "header": {
+        "urgent": "URGENTE",
+        "request-date": "Solicitud:"
+      },
+      "fields": {
+        "material": "Material",
+        "requester": "Solicitante",
+        "budget-line": "Partida",
+        "required-date": "Fecha requerida",
+        "in-days": "En {{days}} días"
+      },
+      "purpose": {
+        "title": "Uso/Finalidad"
+      },
+      "budget-verification": {
+        "title": "Verificación Presupuestal",
+        "requested-amount": "Monto solicitado:",
+        "available-budget": "Presupuesto disponible:",
+        "status": "Estado:"
+      },
+      "status": {
+        "within-budget": "DENTRO DE PRESUPUESTO",
+        "pending": "Pendiente",
+        "approved": "Aprobado",
+        "refused": "Rechazado"
+      },
+      "actions": {
+        "modify": "Modificar Solicitud",
+        "view-details": "Ver Detalle Completo"
+      }
+    }
   }
 }

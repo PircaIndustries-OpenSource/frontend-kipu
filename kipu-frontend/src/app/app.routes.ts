@@ -19,7 +19,7 @@ export const routes: Routes = [
       {
         path: 'request',
         loadComponent: () =>
-          import('./logistics/presentation/inventory/inventory-page/inventory-page').then(m => m.InventoryPage)
+          import('./logistics/presentation/request/request-page/request-page').then(m => m.RequestPage)
       },
       {
         path: 'dashboard',
