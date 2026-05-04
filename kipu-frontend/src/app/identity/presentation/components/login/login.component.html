@@ -1,0 +1,36 @@
+<div class="min-h-screen bg-slate-800 flex items-center justify-center p-4">
+  <div class="bg-white rounded-xl shadow-2xl flex flex-col md:flex-row w-full max-w-5xl overflow-hidden">
+    <section class="bg-slate-700 md:w-1/2 p-12 flex flex-col justify-center text-white">
+      <h1 class="text-4xl font-bold mb-2">Kipu</h1>
+      <p class="text-slate-300 mb-10 text-lg">Bienvenido de nuevo</p>
+      <p class="text-sm text-slate-400">Accede para gestionar expedientes, materiales y avances de obra.</p>
+    </section>
+
+    <section class="md:w-1/2 p-12 bg-gray-50 flex flex-col justify-center">
+      <h2 class="text-3xl font-bold text-gray-800 mb-6">Iniciar sesión</h2>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="flex flex-col gap-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput formControlName="email" type="email">
+          @if (loginForm.get('email')?.hasError('email')) {
+            <mat-error>Formato de correo no válido</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input matInput formControlName="password" type="password">
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit" class="!py-6" [disabled]="loginForm.invalid">
+          Ingresar
+        </button>
+
+        <p class="text-center text-xs text-gray-500 mt-6">
+          ¿No tienes una cuenta? <a routerLink="/register" class="text-blue-500 hover:underline">Regístrate aquí</a>
+        </p>
+      </form>
+    </section>
+  </div>
+</div>

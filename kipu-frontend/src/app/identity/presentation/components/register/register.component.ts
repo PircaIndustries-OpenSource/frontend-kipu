@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -6,8 +6,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
-import { IdentityService } from '../../../core/services/identity.service';
+import { IdentityService } from '../../../infrastructure/identity.service';
 import { catchError, map, Observable, of, switchMap, timer } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,11 +16,16 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
+import { RegisterSuccessDialogComponent } from './register-success.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
+  standalone: true,
   imports: [
     ReactiveFormsModule,
+    RouterLink,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
@@ -32,10 +38,13 @@ import { MatDividerModule } from '@angular/material/divider';
 })
 export class RegisterComponent {
   registerForm: FormGroup;
+  private dialog = inject(MatDialog);
+  private router = inject(Router);
 
-  private identityService = new IdentityService();
+  private fb = inject(FormBuilder);
+  private identityService = inject(IdentityService);
 
-  constructor(private fb: FormBuilder) {
+  constructor() {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email], [this.emailDuplicationValidator()]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -61,17 +70,18 @@ export class RegisterComponent {
       const newIdentity = this.registerForm.value;
 
       this.identityService.registerData(newIdentity).subscribe({
-        next: (response) => {
-          // Escenario 1: El sistema emite la confirmación de cuenta creada
-          console.log('Cuenta creada exitosamente:', response);
-          alert('Identidad habilitada en el sistema correctamente.');
+        next: () => {
+          const dialogRef = this.dialog.open(RegisterSuccessDialogComponent, {
+            width: '600px',
+            panelClass: 'custom-dialog-container',
+            disableClose: true,
+          });
 
-          this.registerForm.reset();
+          dialogRef.afterClosed().subscribe(() => {
+            this.router.navigate(['/login']);
+          });
         },
-        error: (error) => {
-          console.error('Fallo en la comunicación con el servidor:', error);
-          alert('Error crítico al intentar registrar la cuenta.');
-        },
+        error: (error) => console.error('Error en el registro', error),
       });
     } else {
       this.registerForm.markAllAsTouched();

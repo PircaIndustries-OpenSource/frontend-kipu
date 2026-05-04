@@ -46,7 +46,7 @@
           @if (registerForm.get('email')?.hasError('email')) {
             <mat-error>El formato del correo no es válido.</mat-error>
           }
-          @if (registerForm.get('email')?.hasError('emailDuplicado')) {
+            @if (registerForm.get('email')?.hasError('emailDuplicated')) {
             <mat-error>Este correo ya se encuentra activo en el sistema.</mat-error>
           }
           @if (registerForm.get('email')?.pending) {
@@ -68,7 +68,7 @@
 
         <div class="flex items-center justify-between mb-4">
           <mat-checkbox color="primary" class="text-sm">Recordarme</mat-checkbox>
-          <a href="#" class="text-sm text-gray-500 hover:text-blue-500 transition-colors">¿Olvidaste tu contraseña?</a>
+           <button type="button" class="text-sm text-gray-500 hover:text-blue-500 transition-colors">¿Olvidaste tu contraseña?</button>
         </div>
 
         <button
@@ -96,7 +96,7 @@
         </div>
 
         <p class="text-center text-xs text-gray-500 mt-6">
-          ¿Ya tienes una cuenta? <a href="#" class="text-blue-500 hover:underline">Ingresa aquí</a>
+           ¿Ya tienes una cuenta? <a routerLink="/login" class="text-blue-500 hover:underline">Ingresa aquí</a>
         </p>
       </form>
     </div>
