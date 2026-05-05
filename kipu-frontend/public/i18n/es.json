@@ -27,10 +27,39 @@
     }
   },
   "request": {
+    "title": "Solicitudes de Material",
+    "button-create": "Realizar Solicitud",
+    "summary": {
+      "title": "Resumen",
+      "pending": "Pendientes",
+      "approved-today": "Aprobadas hoy",
+      "rejected": "Rechazadas"
+    },
+    "filters": {
+      "title": "Filtros Rápidos",
+      "only-urgent": "Solo urgentes",
+      "within-budget": "Dentro de presupuesto",
+      "exceed-budget": "Exceden presupuesto",
+      "expire-48h": "Vence en 48 hrs"
+    },
+    "reminders": {
+      "title": "Recordatorio",
+      "urgent-notice": "Las solicitudes urgentes deben ser procesadas dentro de las 24 horas."
+    },
+    "recent-activity": {
+      "title": "Actividad Reciente",
+      "approved": "aprobada",
+      "rejected": "rechazada",
+      "ago": "Hace {{time}}"
+    },
     "card": {
       "header": {
         "urgent": "URGENTE",
-        "request-date": "Solicitud:"
+        "request-date": "Solicitud:",
+        "status": {
+          "normal": "NORMAL",
+          "exceed": "EXCEDE PRESUPUESTO"
+        }
       },
       "fields": {
         "material": "Material",
@@ -46,18 +75,61 @@
         "title": "Verificación Presupuestal",
         "requested-amount": "Monto solicitado:",
         "available-budget": "Presupuesto disponible:",
+        "excess": "Exceso:",
         "status": "Estado:"
       },
       "status": {
         "within-budget": "DENTRO DE PRESUPUESTO",
+        "out-budget": "FUERA DE PRESUPUESTO",
         "pending": "Pendiente",
         "approved": "Aprobado",
         "refused": "Rechazado"
       },
       "actions": {
-        "modify": "Modificar Solicitud",
+        "approve": "Aprobar Solicitud",
+        "reject": "Rechazar",
+        "modify": "Solicitar Modificación",
         "view-details": "Ver Detalle Completo"
       }
+    }
+  },
+  "machinery": {
+    "title": "Maquinaria y Herramientas",
+    "tabs": {
+      "summary": "Resumen",
+      "filters": "Filtros Rápidos"
+    },
+    "filter": {
+      "show-all": "Mostrar todos",
+      "critical-equipment": "Equipo crítico",
+      "only-assigned": "Solo asignados"
+    },
+    "card": {
+      "header": {
+        "registration": "Registro",
+        "status": {
+          "in-use": "En uso",
+          "urgent": "MANTENIMIENTO URGENTE"
+        }
+      },
+      "fields": {
+        "equipment": "Equipo",
+        "physical-status": "Estado Físico",
+        "assigned": "Asignado a (DNI)",
+        "maintenance": "Mantenimiento",
+        "assignment-detail": "Detalle de Asignación"
+      },
+      "actions": {
+        "return": "Registrar devolución",
+        "history": "Ver historial",
+        "maintenance": "Registrar mantenimiento",
+        "assign": "Asignar Operario"
+      }
+    },
+    "summary": {
+      "total": "Total Herramientas",
+      "in-use": "En Uso",
+      "maintenance": "Requiere Mantenimiento"
     }
   }
 }

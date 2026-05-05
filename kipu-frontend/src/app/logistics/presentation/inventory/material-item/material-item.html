@@ -1,35 +1,57 @@
-<mat-card class="bg-neutral-bg! border-s! w-4xl flex flex-col gap-l
-p-xl border-2! border-primary!"
+<mat-card class="bg-white! border! rounded-m! w-full h-80! overflow-hidden! flex! flex-col p-0! mb-l transition-all duration-200 hover:shadow-md"
           [class.border-danger!]="material().status === 'CRITICAL'"
           [class.border-primary!]="material().status !== 'CRITICAL'"
->
-  <mat-card-header class="p-0! m-0!">
-    <mat-card-title class="font-bold!">{{material().id}}</mat-card-title>
-  </mat-card-header>
-  <mat-card-content class="flex! flex-row justify-between
-  p-0! m-0!">
-    <div class="flex flex-col gap-1 w-64">
-      <p class="text-xs">{{'inventory.card.equipment'|translate}}</p>
-      <p class="font-medium text-xl">{{material().name}}</p>
+          [class.bg-danger-soft!]="material().status === 'CRITICAL'">
+  <div class="px-xl! py-m! flex flex-row justify-between items-center m-0!"
+       [class.bg-danger!]="material().status === 'CRITICAL'"
+       [class.bg-primary!]="material().status !== 'CRITICAL'"
+       [class.text-white!]="true">
+    <div class="flex flex-row items-center gap-m">
+      <span class="font-bold text-xl">{{material().id}}</span>
+      @if (material().status === 'CRITICAL') {
+        <span class="text-xs font-bold tracking-widest uppercase bg-white text-danger px-2 py-0.5 rounded-sm">
+          {{'inventory.card.status.critical'|translate}}
+        </span>
+      }
     </div>
-    <div class="w-32">
-      <p class="text-xs">{{'inventory.card.min-limit' | translate}}</p>
-      <p class="font-medium text-xl">{{material().minimumLimit}}</p>
+    <div class="flex flex-row items-center gap-xs text-sm opacity-90">
+      <mat-icon class="">category</mat-icon>
+      <p class="">{{material().category}}</p>
     </div>
-    <div class="w-64">
-      <p class="text-xs">{{'inventory.card.current-stock' | translate}}</p>
-      <p class="font-medium text-xl" [class.text-danger]="material().status === 'CRITICAL'">
-        {{material().currentStock}}
-      </p>
+  </div>
+  <mat-card-content class="p-xl! flex! flex-col gap-xl! m-0!">
+    <div class="grid grid-cols-3 gap-l">
+      <div class="flex flex-col gap-1">
+        <p class="text-xs text-neutral-border font-medium">{{'inventory.card.equipment'|translate}}</p>
+        <p class="font-bold text-lg text-primary h-3xl">{{material().name}}</p>
+        <p class="text-xs text-neutral-border italic">{{material().subcategory || '---'}}</p>
+      </div>
+      <div class="flex flex-col gap-1">
+        <p class="text-xs text-neutral-border font-medium">{{'inventory.card.min-limit' | translate}}</p>
+        <p class="font-medium text-xl text-primary">{{material().minimumLimit}} {{material().measureUnit}}</p>
+      </div>
+      <div class="flex flex-col gap-1">
+        <p class="text-xs text-neutral-border font-medium">{{'inventory.card.current-stock' | translate}}</p>
+        <div class="flex items-baseline gap-2">
+          <p class="font-bold text-xl"
+             [class.text-danger]="material().status === 'CRITICAL'"
+             [class.text-primary]="material().status !== 'CRITICAL'">
+            {{material().currentStock}}
+          </p>
+          <span class="text-sm font-medium text-neutral-border">{{material().measureUnit}}</span>
+        </div>
+      </div>
     </div>
   </mat-card-content>
-  <mat-card-footer class="flex! flex-row gap-l items-center">
-    <div class="flex flex-row gap-xs">
-      <span class="block w-5 h-5 rounded-full bg-primary"></span>
-      <p>{{material().category}}</p>
-    </div>
-    @if (material().status !== "OPTIMAL"){
-      <p class="rounded-full bg-danger px-4 py-1 text-xs text-neutral-bg font-semibold">{{'inventory.card.status.critical'|translate}}</p>
-    }
-  </mat-card-footer>
+  <mat-card-actions class="px-xl! pb-xl! pt-0! flex! flex-row gap-m! w-full m-0!">
+    <button matRipple
+            class="flex-1 bg-accent text-white! py-s! rounded-m! font-bold! cursor-pointer transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2">
+      <mat-icon class="text-sm! w-4! h-4!">add_circle</mat-icon>
+      {{'inventory.card.actions.add-stock'|translate}}
+    </button>
+    <button matRipple
+            class="flex-1 border-2! border-neutral-border/30! text-primary! py-s! rounded-m! font-medium! cursor-pointer hover:bg-neutral-bg">
+      {{'request.card.actions.view-details'|translate}}
+    </button>
+  </mat-card-actions>
 </mat-card>

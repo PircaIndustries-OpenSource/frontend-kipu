@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-l">
+<div class="grid grid-cols-2 gap-l w-full">
   @for (material of materials(); track material.id){
     <app-material-item [material]="material"></app-material-item>
   }

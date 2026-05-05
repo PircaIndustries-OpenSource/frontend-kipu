@@ -131,6 +131,28 @@
       "category": "Metals and hardware"
     }
   ],
+  "materialTools": [
+    {
+      "id": "EQP-042",
+      "name": "Amoladora Angular 9\"",
+      "status": "IN_USE",
+      "physicalStatus": "Operativo",
+      "assignedTo": "45678912",
+      "registrationDate": "15/04/2026",
+      "maintenanceHours": "Ok (120 hrs)",
+      "assignmentDetail": "Entregado a Carlos Mendoza para trabajos de corte de acero en Sótano 2. Responsable directo de su integridad."
+    },
+    {
+      "id": "EQP-011",
+      "name": "Mezcladora de Concreto 9p3",
+      "status": "URGENT_MAINTENANCE",
+      "physicalStatus": "Desgaste Alto",
+      "assignedTo": "En Almacén",
+      "registrationDate": "10/01/2026",
+      "maintenanceHours": "505 hrs / 500 hrs",
+      "assignmentDetail": "El equipo ha superado las horas de uso recomendadas. Requiere cambio de aceite de motor y revisión de fajas antes de volver a operar."
+    }
+  ],
   "iot-telemetry": [],
   "field": [],
   "team": {

@@ -8,6 +8,9 @@ import {MaterialsAssembler} from './materials.assembler';
 import {RequestEntity} from '../domain/request.entity';
 import {RequestResponse} from './request.response';
 import {RequestAssembler} from './request.assembler';
+import { MachineryEntity } from '../domain/machinery.entity';
+import { MachineryResponse } from './machinery.response';
+import { MachineryAssembler } from './machinery.assembler';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +20,7 @@ export class LogisticsApi {
   apiBaseUrl = environment.kipuApiBaseUrl;
   materialsEndpoint = environment.kipuApiMaterialsEndpointPath;
   requestsEndpoint = environment.kipuApiRequestEndpointPath;
+  machineryEndpoint = environment.kipuApiMachineryEndpointPath;
   getAllMaterials():Observable<MaterialEntity[]>{
     return this.http.get<MaterialsResponse>(`${this.apiBaseUrl}${this.materialsEndpoint}`).pipe(
       map(response => MaterialsAssembler.toEntitiesFromResponse(response))
@@ -26,5 +30,10 @@ export class LogisticsApi {
     return this.http.get<RequestResponse>(`${this.apiBaseUrl}${this.requestsEndpoint}`).pipe(
       map(response => RequestAssembler.toEntitiesFromResponse(response))
     );
+  }
+  getAllMachinery(): Observable<MachineryEntity[]>{
+    return this.http
+      .get<MachineryResponse>(`${this.apiBaseUrl}${this.machineryEndpoint}`)
+      .pipe(map((response) => MachineryAssembler.toEntitiesFromResponse(response)));
   }
 }

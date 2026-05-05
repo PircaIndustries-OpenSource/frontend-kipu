@@ -27,10 +27,39 @@
     }
   },
   "request": {
+    "title": "Material Requests",
+    "button-create": "Create Request",
+    "summary": {
+      "title": "Summary",
+      "pending": "Pending",
+      "approved-today": "Approved today",
+      "rejected": "Rejected"
+    },
+    "filters": {
+      "title": "Quick Filters",
+      "only-urgent": "Urgent only",
+      "within-budget": "Within budget",
+      "exceed-budget": "Exceed budget",
+      "expire-48h": "Expires in 48 hrs"
+    },
+    "reminders": {
+      "title": "Reminder",
+      "urgent-notice": "Urgent requests must be processed within 24 hours."
+    },
+    "recent-activity": {
+      "title": "Recent Activity",
+      "approved": "approved",
+      "rejected": "rejected",
+      "ago": "{{time}} ago"
+    },
     "card": {
       "header": {
         "urgent": "URGENT",
-        "request-date": "Request:"
+        "request-date": "Request:",
+        "status": {
+          "normal": "NORMAL",
+          "exceed": "EXCEEDS BUDGET"
+        }
       },
       "fields": {
         "material": "Material",
@@ -46,18 +75,61 @@
         "title": "Budget Verification",
         "requested-amount": "Requested amount:",
         "available-budget": "Available budget:",
+        "excess": "Excess:",
         "status": "Status:"
       },
       "status": {
         "within-budget": "WITHIN BUDGET",
+        "out-budget": "OUT OF BUDGET",
         "pending": "Pending",
         "approved": "Approved",
         "refused": "Refused"
       },
       "actions": {
-        "modify": "Modify Request",
+        "approve": "Approve Request",
+        "reject": "Reject",
+        "modify": "Request Modification",
         "view-details": "View Full Detail"
       }
+    }
+  },
+  "machinery": {
+    "title": "Machinery & Tools",
+    "tabs": {
+      "summary": "Summary",
+      "filters": "Quick Filters"
+    },
+    "filter": {
+      "show-all": "Show all",
+      "critical-equipment": "Critical equipment",
+      "only-assigned": "Only Assigned"
+    },
+    "card": {
+      "header": {
+        "registration": "Registration",
+        "status": {
+          "in-use": "In use",
+          "urgent": "URGENT MAINTENANCE"
+        }
+      },
+      "fields": {
+        "equipment": "Equipment",
+        "physical-status": "Physical Status",
+        "assigned": "Assigned to (ID)",
+        "maintenance": "Maintenance",
+        "assignment-detail": "Assignment Detail"
+      },
+      "actions": {
+        "return": "Register return",
+        "history": "View history",
+        "maintenance": "Register maintenance",
+        "assign": "Assign Operator"
+      }
+    },
+    "summary": {
+      "total": "Total Tools",
+      "in-use": "In Use",
+      "maintenance": "Requires Maintenance"
     }
   }
 }
