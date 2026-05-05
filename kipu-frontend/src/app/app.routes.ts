@@ -9,6 +9,25 @@ export const routes: Routes = [
     component: RegisterComponent,
   },
   {
+<<<<<<< Updated upstream
+=======
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'verification',
+    loadComponent: () => import('./identity/presentation/components/verification/verification.component').then(m => m.VerificationComponent)
+  },
+  {
+    path: 'forgot-password',
+    loadComponent: () => import('./identity/presentation/components/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent)
+  },
+  {
+    path: 'reset-password',
+    loadComponent: () => import('./identity/presentation/components/reset-password/reset-password.component').then(m => m.ResetPasswordComponent)
+  },
+  {
+>>>>>>> Stashed changes
     path: '',
     component: Layout,
     children: [

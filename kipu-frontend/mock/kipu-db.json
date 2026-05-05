@@ -4,6 +4,24 @@
       "email": "fdhbbf@hotmail.com",
       "password": "kipu12345",
       "id": "SIVyLM6"
+<<<<<<< Updated upstream
+=======
+    },
+    {
+      "email": "kipu@hotmail.com",
+      "password": "kipu123",
+      "id": "P-n4XLk"
+    },
+    {
+      "email": "usuario@ejemplo.com",
+      "password": "kipu12345",
+      "id": "YaICORq"
+    },
+    {
+      "email": "ej@hotmail.com",
+      "password": "hola123",
+      "id": "bhjp9wt"
+>>>>>>> Stashed changes
     }
   ],
   "project": [],
