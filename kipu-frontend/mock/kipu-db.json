@@ -134,7 +134,66 @@
   "iot-telemetry": [],
   "field": [],
   "team": {
-    "users": [],
-    "workers": []
+    "users": [
+      {
+        "id": "us-01",
+        "fullName": "Admin Demo",
+        "email": "admin@pirca.com",
+        "password": "hashed_password_1",
+        "isActive": true,
+        "hasUreadNotifications": true,
+        "role": "Administrador"
+      },
+      {
+        "id": "us-02",
+        "fullName": "Ana Torres",
+        "email": "ana.torres@pirca.com",
+        "password": "hashed_password_2",
+        "isActive": true,
+        "hasUreadNotifications": false,
+        "role": "Ingeniera"
+      },
+      {
+        "id": "us-03",
+        "fullName": "Juan Pérez",
+        "email": "jperez.logistica@pirca.com",
+        "password": "hashed_password_3",
+        "isActive": true,
+        "hasUreadNotifications": true,
+        "role": "Gestor O."
+      },
+      {
+        "id": "us-04",
+        "fullName": "Inversor Centro SAC",
+        "email": "gerencia@inversorcentro.pe",
+        "password": "hashed_password_4",
+        "isActive": true,
+        "hasUreadNotifications": false,
+        "role": "Logística"
+      }
+    ],
+    "workers": [
+      {
+        "dni": "70123456",
+        "fullName": "Carlos Ruiz",
+        "role": "Capataz",
+        "status": "activo",
+        "assignedTools": ["Tolva", "Pico"]
+      },
+      {
+        "dni": "45678912",
+        "fullName": "Ricardo Loli",
+        "role": "Operario",
+        "status": "activo",
+        "assignedTools": ["Mezcladora", "Palana"]
+      },
+      {
+        "dni": "12345678",
+        "fullName": "Miguel Estrada",
+        "role": "Oficial",
+        "status": "activo",
+        "assignedTools": ["Martillo rotativo", "Nivel de mano"]
+      }
+    ]
   }
 }

@@ -50,7 +50,7 @@ export const routes: Routes = [
               import('./logistics/presentation/waste/waste-page/waste-page').then(
                 (m) => m.WastePage,
               ),
-          }
+          },
         ],
       },
       {
@@ -97,10 +97,27 @@ export const routes: Routes = [
       },
       {
         path: 'team',
-        loadComponent: () =>
-          import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
-            (m) => m.InventoryPage,
-          ),
+        children: [
+          {
+            path: 'users',
+            loadComponent: () =>
+              import('./logistics/presentation/team/users-page/users-page').then(
+                (m) => m.UsersPage, // Ajusta la ruta y el nombre del componente según tu carpeta
+              ),
+          },
+          {
+            path: 'workers',
+            loadComponent: () =>
+              import('./logistics/presentation/team/workers-page/workers-page').then(
+                (m) => m.WorkersPage,
+              ),
+          },
+          {
+            path: '',
+            redirectTo: 'users',
+            pathMatch: 'full',
+          },
+        ],
       },
       {
         path: 'iot',
