@@ -20,7 +20,6 @@ export class InventoryPage implements OnInit {
     this.logisticsStore.loadMaterials();
   }
   onCategorySelect(category: string) {
-    console.log('Page received: ', category);
     this.logisticsStore.filterByCategory(category);
   }
 }

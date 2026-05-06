@@ -1,1 +1,51 @@
-<p>machinery-page works!</p>
+
+<section class="flex flex-col gap-xl p-xl animate-fade-in">
+  <header class="flex flex-row justify-between items-center">
+    <h1 class="text-3xl font-bold text-primary tracking-tight">
+      {{ 'machinery.title' | translate }}
+    </h1>
+  </header>
+
+  <div class="flex flex-row gap-xl">
+    <div class="flex-1 min-w-0 flex flex-col gap-l">
+      <app-machinery-list [items]="machinery()"></app-machinery-list>
+    </div>
+    <aside class="w-64 flex flex-col gap-xl">
+      <div class="flex flex-col gap-m">
+        <h3 class="text-xs font-black text-primary uppercase tracking-widest
+                   border-b border-primary/10 pb-2">
+          {{ 'machinery.tabs.summary' | translate }}
+        </h3>
+        <div class="flex flex-col items-center gap-l">
+          <app-summary-card [title]="'machinery.summary.total' | translate"
+                            [value]="15"></app-summary-card>
+
+          <app-summary-card [title]="'machinery.summary.in-use' | translate"
+                            [value]="4"
+                            class="text-success!"></app-summary-card>
+
+          <app-summary-card [title]="'machinery.summary.maintenance' | translate"
+                            [value]="1"
+                            class="text-warning!"></app-summary-card>
+        </div>
+      </div>
+      <div class="bg-white border border-neutral-border/20 rounded-m p-xl shadow-sm
+                  flex flex-col gap-m">
+        <h3 class="text-xs font-black text-primary uppercase tracking-widest">
+          {{ 'machinery.tabs.filters' | translate }}
+        </h3>
+        <ul class="flex flex-col gap-m text-sm">
+          <li class="px-m py-s border border-neutral-border/20 rounded-s text-sm text-primary font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
+            {{'machinery.filter.show-all'|translate}}
+          </li>
+          <li class="px-m py-s border border-neutral-border/20 rounded-s text-sm text-primary font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
+            {{'machinery.filter.critical-equipment'|translate}}
+          </li>
+          <li class="px-m py-s border border-neutral-border/20 rounded-s text-sm text-primary font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
+            {{'machinery.filter.only-assigned'|translate}}
+          </li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>

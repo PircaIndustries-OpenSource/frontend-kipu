@@ -1,1 +1,71 @@
-<app-request-list [requests]="requests()"></app-request-list>
+<section class="flex flex-col gap-xl p-xl animate-fade-in">
+  <header class="flex flex-row justify-between items-center">
+    <h1 class="text-3xl font-bold text-primary tracking-tight">
+      {{ 'request.title' | translate }}
+    </h1>
+    <button matRipple class="w-60 bg-accent text-white! py-5! rounded-m! font-bold! text-base! shadow-md! cursor-pointer transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2">
+      <mat-icon>add_circle</mat-icon>
+      {{ 'request.button-create' | translate }}
+    </button>
+  </header>
+  <div class="flex flex-row gap-xl">
+    <div class="flex-1 min-w-0 flex flex-col gap-l">
+      <app-request-list [requests]="requests()"></app-request-list>
+    </div>
+    <aside class="w-64 flex flex-col gap-xl">
+      <div class="flex flex-col gap-m">
+        <h3 class="text-xs font-black text-primary uppercase tracking-widest
+                   border-b border-primary/10 pb-2">
+          {{ 'request.summary.title' | translate }}
+        </h3>
+        <div class="flex flex-col items-center gap-l">
+          <app-summary-card [title]="'request.summary.pending' | translate" [value]="5"></app-summary-card>
+          <app-summary-card [title]="'request.summary.approved-today' | translate" [value]="12" class="text-success!"></app-summary-card>
+          <app-summary-card [title]="'request.summary.rejected' | translate" [value]="2" class="text-danger!"></app-summary-card>
+        </div>
+      </div>
+      <div class="bg-white border border-neutral-border/20 rounded-m p-xl shadow-sm
+                  flex flex-col gap-m">
+        <h3 class="text-xs font-black text-primary uppercase tracking-widest">
+          {{ 'request.filters.title' | translate }}
+        </h3>
+        <ul class="flex flex-col gap-2">
+          <li class="px-m py-s border border-neutral-border/20 rounded-s text-sm text-primary font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
+            {{ 'request.filters.only-urgent' | translate }}
+          </li>
+          <li class="px-m py-s border border-neutral-border/20 rounded-s text-sm text-primary font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
+            {{ 'request.filters.within-budget' | translate }}
+          </li>
+          <li class="px-m py-s border border-neutral-border/20 rounded-s text-sm text-primary font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
+            {{ 'request.filters.exceed-budget' | translate }}
+          </li>
+          <li class="px-m py-s border border-neutral-border/20 rounded-s text-sm text-primary font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
+            {{ 'request.filters.expire-48h' | translate }}
+          </li>
+        </ul>
+      </div>
+      <div class="bg-white border border-neutral-border/20 rounded-m p-xl shadow-sm">
+        <h3 class="text-xs font-black text-primary uppercase tracking-widest mb-l">
+          {{ 'request.recent-activity.title' | translate }}
+        </h3>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3">
+            <mat-icon class="text-success text-sm! w-4! h-4! mt-0.5">check_circle</mat-icon>
+            <div class="flex flex-col">
+              <span class="text-xs font-bold text-primary">Lorem ipsum</span>
+              <span class="text-[10px] text-neutral-border">Lorem ipsum</span>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <mat-icon class="text-danger text-sm! w-4! h-4! mt-0.5">cancel</mat-icon>
+            <div class="flex flex-col">
+              <span class="text-xs font-bold text-primary">Lorem ipsum</span>
+              <span class="text-[10px] text-neutral-border">Lorem ipsum<</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+</section>

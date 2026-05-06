@@ -2,6 +2,7 @@ import {computed, inject, Injectable, signal} from '@angular/core';
 import {MaterialEntity} from '../domain/material.entity';
 import {LogisticsApi} from '../infrastructure/logistics.api';
 import {RequestEntity} from '../domain/request.entity';
+import { MachineryEntity } from '../domain/machinery.entity';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,6 @@ export class LogisticsStore {
   readonly filteredMaterials = computed(() => {
     const category = this.selectedCategorySignal();
     const allMaterials = this.materialsSignal();
-    console.log('Computed with category: ', category);
     if (!category) {
       return allMaterials;
     }
@@ -39,7 +39,6 @@ export class LogisticsStore {
   }
   filterByCategory(category: string) {
     this.selectedCategorySignal.set(category);
-    console.log('Store set category: ', category);
   }
   clearFilter() {
     this.selectedCategorySignal.set('');
@@ -60,4 +59,14 @@ export class LogisticsStore {
     this.materialsSignal().some((material) => material.currentStock <= material.minimumLimit),
   );
   readonly hasNotifications = computed(() => this.hasUnreadRequests() || this.hasCriticalStock());
+  //Machinery
+  private machinerySignal = signal<MachineryEntity[]>([]);
+  readonly machinery = computed(() => this.machinerySignal());
+  loadMachinery(){
+    if(this.machinerySignal().length === 0) {
+      this.logisticsApi.getAllMachinery().subscribe((data) => {
+        this.machinerySignal.set(data);
+      })
+    }
+  }
 }

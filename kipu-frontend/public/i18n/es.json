@@ -2,13 +2,13 @@
   "inventory": {
     "tab-inventory": "Inventario",
     "tab-requests": "Solicitudes",
-    "tab-machinery": "Maquinaria",
+    "tab-machinery": "Equipos",
     "tab-suppliers": "Proveedores",
-    "tab-waste": "Merma",
+    "tab-waste": "Residuos",
     "title": "Inventario General",
     "filters": {
       "category": "Categoría",
-      "placeholder": "Seleccione una categoría"
+      "placeholder": "Selecciona una categoría"
     },
     "summary": {
       "registered-materials": "Materiales Registrados",
@@ -22,42 +22,114 @@
         "critical": "STOCK CRÍTICO"
       },
       "actions": {
-        "add-stock": "Añadir Stock"
+        "add-stock": "Agregar Stock"
       }
     }
   },
   "request": {
+    "title": "Solicitudes de Material",
+    "button-create": "Crear Solicitud",
+    "summary": {
+      "title": "Resumen",
+      "pending": "Pendientes",
+      "approved-today": "Aprobadas hoy",
+      "rejected": "Rechazadas"
+    },
+    "filters": {
+      "title": "Filtros Rápidos",
+      "only-urgent": "Solo urgentes",
+      "within-budget": "Dentro del presupuesto",
+      "exceed-budget": "Excede presupuesto",
+      "expire-48h": "Vence en 48 hrs"
+    },
+    "reminders": {
+      "title": "Recordatorio",
+      "urgent-notice": "Las solicitudes urgentes deben procesarse en menos de 24 horas."
+    },
+    "recent-activity": {
+      "title": "Actividad Reciente",
+      "approved": "aprobó",
+      "rejected": "rechazó",
+      "ago": "hace {{time}}"
+    },
     "card": {
       "header": {
         "urgent": "URGENTE",
-        "request-date": "Solicitud:"
+        "request-date": "Solicitud:",
+        "status": {
+          "normal": "NORMAL",
+          "exceed": "EXCEDE PRESUPUESTO"
+        }
       },
       "fields": {
         "material": "Material",
         "requester": "Solicitante",
-        "budget-line": "Partida",
-        "required-date": "Fecha requerida",
+        "budget-line": "Línea Presupuestaria",
+        "required-date": "Fecha Requerida",
         "in-days": "En {{days}} días"
       },
       "purpose": {
-        "title": "Uso/Finalidad"
+        "title": "Propósito / Uso"
       },
       "budget-verification": {
-        "title": "Verificación Presupuestal",
+        "title": "Verificación Presupuestaria",
         "requested-amount": "Monto solicitado:",
         "available-budget": "Presupuesto disponible:",
+        "excess": "Excedente:",
         "status": "Estado:"
       },
       "status": {
-        "within-budget": "DENTRO DE PRESUPUESTO",
+        "within-budget": "DENTRO DEL PRESUPUESTO",
+        "out-budget": "FUERA DEL PRESUPUESTO",
         "pending": "Pendiente",
-        "approved": "Aprobado",
-        "refused": "Rechazado"
+        "approved": "Aprobada",
+        "refused": "Rechazada"
       },
       "actions": {
-        "modify": "Modificar Solicitud",
+        "approve": "Aprobar Solicitud",
+        "reject": "Rechazar",
+        "modify": "Solicitar Modificación",
         "view-details": "Ver Detalle Completo"
       }
+    }
+  },
+  "machinery": {
+    "title": "Maquinaria y Herramientas",
+    "tabs": {
+      "summary": "Resumen",
+      "filters": "Filtros Rápidos"
+    },
+    "filter": {
+      "show-all": "Mostrar todo",
+      "critical-equipment": "Equipos críticos",
+      "only-assigned": "Solo Asignados"
+    },
+    "card": {
+      "header": {
+        "registration": "Registro",
+        "status": {
+          "in-use": "En uso",
+          "urgent": "MANTENIMIENTO URGENTE"
+        }
+      },
+      "fields": {
+        "equipment": "Equipo",
+        "physical-status": "Estado Físico",
+        "assigned": "Asignado a (ID)",
+        "maintenance": "Mantenimiento",
+        "assignment-detail": "Detalle de Asignación"
+      },
+      "actions": {
+        "return": "Registrar Devolución",
+        "history": "Ver Historial",
+        "maintenance": "Registrar Mantenimiento",
+        "assign": "Asignar Operario"
+      }
+    },
+    "summary": {
+      "total": "Total de Herramientas",
+      "in-use": "En Uso",
+      "maintenance": "Requiere Mantenimiento"
     }
   },
   "budget": {

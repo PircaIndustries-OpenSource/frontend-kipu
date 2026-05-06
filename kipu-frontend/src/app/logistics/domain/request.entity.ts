@@ -25,7 +25,7 @@ export class RequestEntity {
   additionalNotes: string;
   suggestedSupplierId: string;
   attachments: string[];
-  items: RequestItem;
+  item: RequestItem;
   requestedBy: string;
   activity: string;
   constructor() {
@@ -41,7 +41,7 @@ export class RequestEntity {
     this.additionalNotes = "";
     this.suggestedSupplierId = "";
     this.attachments = [];
-    this.items = new RequestItem();
+    this.item = new RequestItem();
     this.requestedBy = "";
     this.activity = "";
   }

@@ -1,22 +1,36 @@
-<section class="flex flex-col gap-xl">
-  <header class="flex flex-row justify-between">
-    <h1 class="text-2xl font-bold">{{'inventory.title' | translate }}</h1>
-    <app-autocomplete-filter-list
-      [label]="'inventory.filters.category'|translate"
-      [placeholder]="'inventory.filters.placeholder'|translate"
-      [listOptions]="categories()"
-      (optionSelected)="onCategorySelect($event)"
-    />
+<section class="flex flex-col gap-xl p-xl animate-fade-in">
+  <header class="flex flex-row justify-between items-center">
+    <h1 class="text-3xl font-bold text-primary tracking-tight">
+      {{'inventory.title' | translate }}
+    </h1>
   </header>
-  <div class="flex flex-row gap-2xl">
-    <div class="flex flex-col gap">
+  <div class="flex flex-row gap-xl">
+    <div class="flex-1 min-w-0 flex flex-col gap-l">
       <app-material-list [materials]="materials()"></app-material-list>
     </div>
-    <div class="flex flex-col gap-l">
-      <app-summary-card  [title]="'inventory.summary.registered-materials' | translate"
-                         [value]="materialsCount()"></app-summary-card>
-      <app-summary-card  [title]="'inventory.summary.critical-stock-alert' | translate"
-                         [value]="criticalMaterialsCount()"></app-summary-card>
-    </div>
+    <aside class="w-64 flex flex-col gap-xl items-center">
+      <div class="flex flex-col gap-m">
+        <h3 class="text-xs font-black text-primary uppercase tracking-widest
+                   border-b border-primary/10 pb-2">
+          {{ 'request.summary.title' | translate }}
+        </h3>
+        <app-summary-card  [title]="'inventory.summary.registered-materials' | translate"
+                           [value]="materialsCount()"></app-summary-card>
+        <app-summary-card  class="text-danger!" [title]="'inventory.summary.critical-stock-alert' | translate"
+                           [value]="criticalMaterialsCount()"></app-summary-card>
+      </div>
+      <div class="flex flex-col gap-m">
+        <h3 class="text-xs font-black text-primary uppercase tracking-widest">
+          {{ 'inventory.filters.category' | translate }}
+        </h3>
+        <app-autocomplete-filter-list
+          [label]="'inventory.filters.category' | translate"
+          [placeholder]="'inventory.filters.placeholder' | translate"
+          [listOptions]="categories()"
+          (optionSelected)="onCategorySelect($event)"
+        />
+      </div>
+    </aside>
   </div>
+
 </section>

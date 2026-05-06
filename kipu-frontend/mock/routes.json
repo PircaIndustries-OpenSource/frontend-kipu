@@ -3,5 +3,7 @@
   "/api/v1/materials/requests/:id": "/materialRequests/:id",
   "/api/v1/materials/waste": "/materialWaste",
   "/api/v1/materials/waste/:id": "/materialWaste/:id",
+  "/api/v1/materials/tools": "/materialTools",
+  "/api/v1/materials/tools/:id": "/materialTools/:id",
   "/api/v1/*": "/$1"
 }
