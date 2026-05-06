@@ -12,7 +12,7 @@
     <div class="grid grid-cols-4 gap-l">
       <div class="flex flex-col gap-1">
         <p class="text-xs text-neutral-border font-medium">{{'request.card.fields.material' | translate}}</p>
-        <p class="font-bold text-lg text-primary">{{request().items.materialName}}</p>
+        <p class="font-bold text-lg text-primary">{{request().item.materialName}}</p>
       </div>
 
       <div class="flex flex-col gap-1">
@@ -30,7 +30,7 @@
         <p class="text-xs text-neutral-border font-medium">{{'request.card.fields.required-date' | translate}}</p>
         <p class="font-bold text-base text-primary">{{request().deadline}}</p>
         <p class="text-xs text-neutral-border flex items-center gap-1 font-medium mt-1">
-          {{ 'request.card.fields.in-days' | translate:{ days: 2 } }}
+          {{ 'request.card.fields.in-days' | translate:{ days: remainingDays() } }}
         </p>
       </div>
     </div>
@@ -85,7 +85,7 @@
       {{'request.card.actions.modify' | translate}}
     </button>
 
-    <button matRipple class="flex-1 bg-info! text-neutral-bg! font-medium! rounded-m! py-s! cursor-pointer transition-base hover:brightness-110">
+    <button matRipple class="flex-1 bg-accent text-neutral-bg! font-medium! rounded-m! py-s! cursor-pointer transition-base hover:brightness-110">
       {{'request.card.actions.view-details' | translate}}
     </button>
 

@@ -5,7 +5,7 @@
   <div class="px-xl! py-m! flex flex-row justify-between items-center m-0!"
        [class.bg-danger!]="material().status === 'CRITICAL'"
        [class.bg-primary!]="material().status !== 'CRITICAL'"
-       [class.text-white!]="true">
+       [class.text-neutral-bg!]="true">
     <div class="flex flex-row items-center gap-m">
       <span class="font-bold text-xl">{{material().id}}</span>
       @if (material().status === 'CRITICAL') {

@@ -68,7 +68,7 @@
       "additionalNotes": "Preferred brand: Sol or Pacasmayo. Delivery on pallets.",
       "suggestedSupplierId": "sup-001",
       "attachments": [],
-      "items":
+      "item":
       {
         "materialId": "mat-002",
         "materialName": "Portland Cement Type I",
@@ -91,7 +91,7 @@
       "additionalNotes": null,
       "suggestedSupplierId": "sup-001",
       "attachments": [],
-      "items":
+      "item":
       {
         "materialId": "mat-004",
         "materialName": "Corrugated steel 1/2\" x 9m",

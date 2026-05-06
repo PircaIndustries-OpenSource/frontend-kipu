@@ -16,7 +16,6 @@ export class LogisticsStore {
   readonly filteredMaterials = computed(() => {
     const category = this.selectedCategorySignal();
     const allMaterials = this.materialsSignal();
-    console.log('Computed with category: ', category);
     if (!category) {
       return allMaterials;
     }
@@ -40,7 +39,6 @@ export class LogisticsStore {
   }
   filterByCategory(category: string) {
     this.selectedCategorySignal.set(category);
-    console.log('Store set category: ', category);
   }
   clearFilter() {
     this.selectedCategorySignal.set('');

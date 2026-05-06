@@ -16,7 +16,7 @@ export class RequestAssembler {
       additionalNotes: resource.additionalNotes,
       suggestedSupplierId: resource.suggestedSupplierId,
       attachments: resource.attachments,
-      items: resource.items,
+      item: resource.item,
       requestedBy: resource.requestedBy,
       activity: resource.activity,
     }
