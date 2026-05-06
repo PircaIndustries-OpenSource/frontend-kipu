@@ -59,50 +59,66 @@
         "view-details": "View Full Detail"
       }
     }
-  },"budget": {
-  "title": "Kipu - Torre Empresarial Centro",
-  "summary": {
-    "total-budget": "Total Project Budget",
-    "total-amount": "Total Budget",
-    "executed": "Executed",
-    "available": "available",
-    "this-month": "This Month",
-    "spent": "Spent",
-    "budgeted": "Budgeted",
-    "alerts": "Alerts",
-    "risk-item": "1 item at risk",
-    "executed-lower": "executed"
   },
-  "table": {
-    "title": "Budget by Items",
-    "search": "Search item...",
-    "budgeted": "BUDGETED",
-    "executed": "EXECUTED",
-    "available": "AVAILABLE",
-    "status": "STATUS"
-  },
-  "status": {
-    "normal": "Normal",
-    "risk": "At risk"
-  },
-  "actions": {
-    "add": "Add Item",
-    "view-detail": "View Detail",
-    "view-expenses": "View Expenses",
-    "export": "Export Excel",
-    "check-alerts": "Check Alerts",
-    "request-extension": "Request Extension"
-  },
-  "sidebar": {
-    "actions": "Actions",
-    "general-report": "General Report",
-    "projection": "Projection",
-    "export-excel": "Export Excel",
-    "recent-movements": "Recent Movements",
-    "hours-ago": "2 hours ago",
-    "hours-ago-3": "3 hours ago",
-    "days-ago-1": "1 day ago",
-    "blocked": "Blocked"
+  "budget": {
+    "title": "Kipu - Torre Empresarial Centro",
+    "summary": {
+      "total-budget": "Total Project Budget",
+      "total-amount": "Total Budget",
+      "executed": "Executed",
+      "available": "available",
+      "this-month": "This Month",
+      "spent": "Spent",
+      "budgeted": "Budgeted",
+      "alerts": "Alerts",
+      "risk-item": "1 item at risk",
+      "executed-lower": "executed"
+    },
+    "table": {
+      "title": "Budget by Items",
+      "search": "Search item...",
+      "budgeted": "BUDGETED",
+      "executed": "EXECUTED",
+      "available": "AVAILABLE",
+      "status": "STATUS"
+    },
+    "status": {
+      "normal": "Normal",
+      "risk": "At risk"
+    },
+    "actions": {
+      "add": "Add Item",
+      "view-detail": "View Detail",
+      "view-expenses": "View Expenses",
+      "export": "Export Excel",
+      "check-alerts": "Check Alerts",
+      "request-extension": "Request Extension"
+    },
+    "sidebar": {
+      "actions": "Actions",
+      "general-report": "General Report",
+      "projection": "Projection",
+      "export-excel": "Export Excel",
+      "recent-movements": "Recent Movements",
+      "hours-ago": "2 hours ago",
+      "hours-ago-3": "3 hours ago",
+      "days-ago-1": "1 day ago",
+      "blocked": "Blocked"
+    },
+    "team": {
+      "users": {
+        "tab-users": "System Users",
+        "title": "User Managing",
+        "stats": {
+          "active": "ACTIVE USERS",
+          "managers": "MANAGERS / RESIDENTS",
+          "logistics": "LOGISTIC TEAM",
+          "clients": "CLIENTS / INVESTORS"
+        }
+      },
+      "workers": {
+        "tab-workers": "Workers Directory"
+      }
+    }
   }
-}
 }
