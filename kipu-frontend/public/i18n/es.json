@@ -60,18 +60,64 @@
       }
     }
   },
-  "team": {
-    "users": {
-      "tab-users": "Usuarios del Sistema",
-      "tab-workers": "Directorio de Obreros",
-      "title": "Gestión de Usuarios",
-      "stats": {
-        "active": "USUARIOS ACTIVOS",
-        "managers": "GESTORES",
-        "logistics": "EQUIPO DE LOGÍSTICA",
-        "clients": "CLIENTES / INVERSORES"
-      }
+  "budget": {
+    "title": "Kipu - Torre Empresarial Centro",
+    "summary": {
+      "total-budget": "Presupuesto Total del Proyecto",
+      "total-amount": "Presupuesto Total",
+      "executed": "Ejecutado",
+      "available": "disponibles",
+      "this-month": "Este Mes",
+      "spent": "Gastado",
+      "budgeted": "Presupuestado",
+      "alerts": "Alertas",
+      "risk-item": "1 partida en riesgo",
+      "executed-lower": "ejecutado"
     },
-    "workers": {}
+    "table": {
+      "title": "Presupuesto por Partidas",
+      "search": "Buscar partida...",
+      "budgeted": "PRESUPUESTADO",
+      "executed": "EJECUTADO",
+      "available": "DISPONIBLE",
+      "status": "ESTADO"
+    },
+    "status": {
+      "normal": "Normal",
+      "risk": "En riesgo"
+    },
+    "actions": {
+      "add": "Añadir Partida",
+      "view-detail": "Ver Detalle",
+      "view-expenses": "Ver Gastos",
+      "export": "Exportar Excel",
+      "check-alerts": "Revisar Alertas",
+      "request-extension": "Solicitar Ampliación"
+    },
+    "sidebar": {
+      "actions": "Acciones",
+      "general-report": "Reporte General",
+      "projection": "Proyección",
+      "export-excel": "Exportar Excel",
+      "recent-movements": "Movimientos Recientes",
+      "hours-ago": "Hace 2 horas",
+      "hours-ago-3": "Hace 3 horas",
+      "days-ago-1": "Hace 1 día",
+      "blocked": "Bloqueado"
+    },
+    "team": {
+      "users": {
+        "tab-users": "Usuarios del Sistema",
+        "tab-workers": "Directorio de Obreros",
+        "title": "Gestión de Usuarios",
+        "stats": {
+          "active": "USUARIOS ACTIVOS",
+          "managers": "GESTORES",
+          "logistics": "EQUIPO DE LOGÍSTICA",
+          "clients": "CLIENTES / INVERSORES"
+        }
+      },
+      "workers": {}
+    }
   }
 }

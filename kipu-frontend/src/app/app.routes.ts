@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { RegisterComponent } from './presentation/components/register/register.component';
+import {RegisterComponent} from './presentation/components/register/register.component';
 import { Layout } from './shared/presentation/layout/layout';
-import { LogisticsPage } from './logistics/presentation/logistics-page/logistics-page';
+import {LogisticsPage} from './logistics/presentation/logistics-page/logistics-page';
 import { TeamPage } from './logistics/presentation/team/team-page/team-page';
 
 export const routes: Routes = [
@@ -92,9 +92,8 @@ export const routes: Routes = [
       {
         path: 'budget',
         loadComponent: () =>
-          import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
-            (m) => m.InventoryPage,
-          ),
+          import('./logistics/presentation/budget/budget-page/budget-page').then(m => m.BudgetPage),
+
       },
       {
         path: 'team',
