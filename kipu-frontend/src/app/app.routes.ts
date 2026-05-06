@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { RegisterComponent } from './presentation/components/register/register.component';
 import { Layout } from './shared/presentation/layout/layout';
 import { LogisticsPage } from './logistics/presentation/logistics-page/logistics-page';
+import { TeamPage } from './logistics/presentation/team/team-page/team-page';
 
 export const routes: Routes = [
   {
@@ -97,6 +98,7 @@ export const routes: Routes = [
       },
       {
         path: 'team',
+        component: TeamPage,
         children: [
           {
             path: 'users',

@@ -59,5 +59,20 @@
         "view-details": "View Full Detail"
       }
     }
+  },
+  "team": {
+    "users": {
+      "tab-users": "System Users",
+      "title": "User Managing",
+      "stats": {
+        "active": "ACTIVE USERS",
+        "managers": "MANAGERS / RESIDENTS",
+        "logistics": "LOGISTIC TEAM",
+        "clients": "CLIENTS / INVESTORS"
+      }
+    },
+    "workers": {
+      "tab-workers": "Workers Directory"
+    }
   }
 }

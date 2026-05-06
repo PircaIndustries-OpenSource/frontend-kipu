@@ -59,5 +59,19 @@
         "view-details": "Ver Detalle Completo"
       }
     }
+  },
+  "team": {
+    "users": {
+      "tab-users": "Usuarios del Sistema",
+      "tab-workers": "Directorio de Obreros",
+      "title": "Gestión de Usuarios",
+      "stats": {
+        "active": "USUARIOS ACTIVOS",
+        "managers": "GESTORES",
+        "logistics": "EQUIPO DE LOGÍSTICA",
+        "clients": "CLIENTES / INVERSORES"
+      }
+    },
+    "workers": {}
   }
 }
