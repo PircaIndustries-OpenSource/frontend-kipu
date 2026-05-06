@@ -159,8 +159,26 @@
         "email": "jperez.logistica@pirca.com",
         "password": "hashed_password_3",
         "isActive": true,
+        "hasUreadNotifications": false,
+        "role": "Gestor"
+      },
+      {
+        "id": "us-10",
+        "fullName": "Mike Wasaouski",
+        "email": "MikeWasaouski@pirca.com",
+        "password": "hashed_password_3",
+        "isActive": true,
         "hasUreadNotifications": true,
-        "role": "Gestor O."
+        "role": "Gestor"
+      },
+      {
+        "id": "us-06",
+        "fullName": "Danna Sofía",
+        "email": "Dansof22@pirca.com",
+        "password": "hashed_password_3",
+        "isActive": false,
+        "hasUreadNotifications": true,
+        "role": "Gestor"
       },
       {
         "id": "us-04",
@@ -169,7 +187,16 @@
         "password": "hashed_password_4",
         "isActive": true,
         "hasUreadNotifications": false,
-        "role": "Logística"
+        "role": "Logistica"
+      },
+      {
+        "id": "us-07",
+        "fullName": "Laurel Pallo",
+        "email": "LauPallo@pirca.com",
+        "password": "hashed_password_3",
+        "isActive": true,
+        "hasUreadNotifications": true,
+        "role": "Cliente"
       }
     ],
     "workers": [
@@ -185,14 +212,14 @@
         "fullName": "Ricardo Loli",
         "role": "Operario",
         "status": "activo",
-        "assignedTools": ["Mezcladora", "Palana"]
+        "assignedTools": ["Mezcladora"]
       },
       {
         "dni": "12345678",
         "fullName": "Miguel Estrada",
         "role": "Oficial",
         "status": "activo",
-        "assignedTools": ["Martillo rotativo", "Nivel de mano"]
+        "assignedTools": []
       }
     ]
   }

@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { TeamUsersEntity } from '../domain/team-users.entity';
 import { TeamUsersResponse } from './team-users.response';
@@ -16,7 +16,7 @@ import { TeamWorkersAssembler } from './team-workers.assembler';
 })
 
 export class TeamApi {
-  http: HttpClient = Inject(HttpClient);
+  http: HttpClient = inject(HttpClient);
   apiBaseUrl = environment.kipuApiBaseUrl;
   teamUsersEndpoint = environment.kipuApiTeamUsersEndpointPath;
   teamWorkersEndpoint = environment.kipuApiTeamWorkersEndpointPath;
