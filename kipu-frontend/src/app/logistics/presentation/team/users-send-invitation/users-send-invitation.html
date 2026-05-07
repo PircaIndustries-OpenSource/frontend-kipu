@@ -1,0 +1,44 @@
+<div class="">
+  <h2 mat-dialog-title>{{"team.users.send-invitation" | translate}}</h2>
+
+  <mat-dialog-content>
+    <p class="text-gray-500 mb-4 text-sm">Se enviará un correo con las credenciales de acceso al sistema.</p>
+
+    <div class="flex flex-col gap-2 mt-2">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Correo Electrónico</mat-label>
+        <input matInput placeholder="usuario@empresa.com" type="email">
+      </mat-form-field>
+
+      <div class="flex gap-4">
+        <mat-form-field appearance="outline" class="flex-1">
+          <mat-label>Nombres</mat-label>
+          <input matInput placeholder="Ej. Juan">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="flex-1">
+          <mat-label>Apellidos</mat-label>
+          <input matInput placeholder="Ej. Pérez">
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Rol a asignar</mat-label>
+        <mat-select>
+          <mat-option value="Administrador">Administrador</mat-option>
+          <mat-option value="Gestor">Gestor</mat-option>
+          <mat-option value="Logistica">Logística</mat-option>
+          <mat-option value="Cliente">Cliente</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="!pb-6 !px-6">
+    <button mat-button mat-dialog-close class="!rounded-md">Cancelar</button>
+    <button mat-flat-button color="primary" [mat-dialog-close]="true" class="!bg-blue-600 !rounded-md">
+      Enviar Invitación
+    </button>
+  </mat-dialog-actions>
+</div>
+

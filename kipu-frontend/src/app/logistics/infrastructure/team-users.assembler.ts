@@ -7,9 +7,7 @@ export class TeamUsersAssembler {
       id: resource.id,
       fullName: resource.fullName,
       email: resource.email,
-      password: resource.password,
       isActive: resource.isActive,
-      hasUnreadNotifications: resource.hasUnreadNotifications,
       role: resource.role
     };
   }

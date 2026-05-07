@@ -10,29 +10,33 @@ import { MaterialEntity } from '../domain/material.entity';
 import { TeamWorkersEntity } from '../domain/team-workers.entity';
 import { TeamWorkersResponse } from './team-workers.response';
 import { TeamWorkersAssembler } from './team-workers.assembler';
+import { TeamStore } from '../application/team.store';
 
 @Injectable({
   providedIn: 'root',
 })
-
 export class TeamApi {
   http: HttpClient = inject(HttpClient);
   apiBaseUrl = environment.kipuApiBaseUrl;
   teamEndpoint = environment.kipuApiTeamEndpointPath;
   teamUsersEndpoint = environment.kipuApiTeamUsersEndpointPath;
   teamWorkersEndpoint = environment.kipuApiTeamWorkersEndpointPath;
+  teamUsersUrl = `${this.apiBaseUrl}${this.teamUsersEndpoint}`;
+  teamWorkersUrl = `${this.apiBaseUrl}${this.teamWorkersEndpoint}`;
 
   getAllUsers(): Observable<TeamUsersEntity[]> {
-    return this.http.get<TeamUsersResponse>(`${this.apiBaseUrl}${this.teamUsersEndpoint}`)
-      .pipe(
-        map(response => TeamUsersAssembler.toEntitiesFromResponse(response))
-      )
+    return this.http
+      .get<TeamUsersResponse>(this.teamUsersUrl)
+      .pipe(map((response) => TeamUsersAssembler.toEntitiesFromResponse(response)));
   }
   getAllWorkers(): Observable<TeamWorkersEntity[]> {
-    return this.http.get<TeamWorkersResponse>(`${this.apiBaseUrl}${this.teamWorkersEndpoint}`)
-      .pipe(
-        map(response => TeamWorkersAssembler.toEntitiesFromResponse(response))
-      )
+    return this.http
+      .get<TeamWorkersResponse>(this.teamWorkersUrl)
+      .pipe(map((response) => TeamWorkersAssembler.toEntitiesFromResponse(response)));
+  }
+
+  postUser(user: TeamUsersEntity): Observable<TeamUsersEntity> {
+    return this.http.post<TeamUsersEntity>(this.teamUsersUrl, user);
   }
 }
 

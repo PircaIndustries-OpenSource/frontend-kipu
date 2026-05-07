@@ -71,6 +71,23 @@ export class TeamStore {
     this.searchTermSignal.set('');
   }
 
+  createUser(fullName: string, email: string, rol: string): TeamUsersEntity {
+    return {
+      id: `us-${Date.now()}`,
+      fullName: fullName,
+      email: email,
+      isActive: true,
+      role: rol,
+    };
+  }
+  inviteUser(user: TeamUsersEntity){
+    const currentUsers = this.teamUsersSignal();
+    this.teamUsersSignal.set([...currentUsers, user]);
+
+    this.teamApi.postUser(user);
+
+  }
+
   // WORKERS
 
   private teamWorkersSignal = signal<TeamWorkersEntity[]>([]);

@@ -245,6 +245,7 @@
         "action-tab": "Action",
         "user-profile-you": "You",
         "btn-action": "Disable",
+        "btn-action-done": "Disabled",
         "input-placeholder": "Name, email or role...",
         "search-user": "Search user",
         "user-count": "users",
@@ -259,11 +260,22 @@
         "manager-description": "Field-focused. Records progress, RNCs and requests materials. Views blueprints.",
         "logistics": "Logistics",
         "logistics-description": "Office-focused. Approves orders, edits inventory and manages suppliers.",
-        "client": "CLIENT ROLE",
+        "client": "Client",
         "client-description-1": "Strict access level of ",
         "client-description-bold": "Read Only. ",
         "client-description-2": "All creation or editing buttons are hidden in their view to protect the data.",
         "engineer": "Engineer"
+      },
+      "send-invitation": {
+        "title": "Invite new user",
+        "credentials": "An email with the system access credentials will be sent.",
+        "email": "EMAIL ADDRESS",
+        "email-placeholder": "user@company.com",
+        "name": "NAMES",
+        "name-placeholder": "e.g., 'Juan'",
+        "lastname": "LASTNAMES",
+        "lastname-placeholder": "e.g., 'Perez'",
+        "rol": "ROL TO ASSIGN"
       }
     },
     "workers": {

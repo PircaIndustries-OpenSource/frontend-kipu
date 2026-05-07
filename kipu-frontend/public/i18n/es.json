@@ -245,6 +245,7 @@
           "action-tab": "Acción",
           "user-profile-you": "Tú",
           "btn-action": "Deshabilitar",
+          "btn-action-done": "Deshabilitado",
           "input-placeholder": "Nombre, correo o rol...",
           "search-user": "Buscar usuario",
           "user-count": "usuarios",
@@ -259,11 +260,19 @@
           "manager-description": "Enfocado en campo. Registra avances, RNCs y solicita materiales. Visualiza planos.",
           "logistics": "Logística",
           "logistics-description": "Enfocado en oficina. Aprueba pedidos, edita inventarios y gestiona proveedores.",
-          "client": "ROL CLIENTE",
+          "client": "Cliente",
           "client-description-1": "Nivel de acceso estricto de ",
           "client-description-bold": "Solo Lectura. ",
           "client-description-2": "Todos los botones de creación o edición se ocultan en su vista para proteger la data.",
           "engineer": "Ingeniero"
+        },
+        "send-invitation": {
+          "title": "Invitar nuevo usuario",
+          "credentials": "Se enviará un correo con las credenciales de acceso al sistema.",
+          "email": "CORREO ELECTRÓNICO",
+          "name": "NOMBRES",
+          "lastname": "APELLIDOS",
+          "rol": "ROL A ASIGNAR"
         }
       },
       "workers": {
