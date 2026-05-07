@@ -1,4 +1,7 @@
 {
+  "general": {
+    "summary": "Resumen"
+  },
   "inventory": {
     "tab-inventory": "Inventario",
     "tab-requests": "Solicitudes",
@@ -30,7 +33,6 @@
     "title": "Solicitudes de Material",
     "button-create": "Crear Solicitud",
     "summary": {
-      "title": "Resumen",
       "pending": "Pendientes",
       "approved-today": "Aprobadas hoy",
       "rejected": "Rechazadas"
@@ -93,8 +95,30 @@
       }
     }
   },
+  "suppliers": {
+    "title": "Directorio de Proveedores",
+    "button-create": "Registrar nuevo proveedor",
+    "summary": {
+      "active": "Activo"
+    },
+    "card": {
+      "ruc": "RUC",
+      "onboarded": "Ingreso",
+      "social-reason": "Razón social",
+      "contact": "Contacto Principal",
+      "phone": "Teléfono",
+      "email": "Correo Electrónico",
+      "categories": "Categorías Suministradas",
+      "payment-terms": "Condición de Pago Habitual",
+      "actions": {
+        "button-edit": "Editar datos",
+        "button-add": "Registros nuevo proveedor"
+      }
+    }
+  },
   "machinery": {
     "title": "Maquinaria y Herramientas",
+    "button-create": "Agregar maquinaria",
     "tabs": {
       "summary": "Resumen",
       "filters": "Filtros Rápidos"
@@ -130,6 +154,31 @@
       "total": "Total de Herramientas",
       "in-use": "En Uso",
       "maintenance": "Requiere Mantenimiento"
+    }
+  },
+  "waste": {
+    "title": "Registro de Mermas",
+    "button-report": "Reportar Material Dañado",
+    "summary": {
+      "title": "Resumen",
+      "damaged": "Dañados"
+    },
+    "card": {
+      "header": {
+        "report-date": "Reporte:",
+        "status-damaged": "MATERIAL DAÑADO"
+      },
+      "fields": {
+        "affected-material": "Material Afectado",
+        "discounted-quantity": "Cantidad Descontada",
+        "reported-by": "Reportado por",
+        "inventory-impact": "Impacto Inventario",
+        "inventory-updated": "Actualizado",
+        "reason-title": "Motivo del Descuento de Stock"
+      },
+      "actions": {
+        "view-photo": "Ver fotografía adjunta"
+      }
     }
   },
   "budget": {

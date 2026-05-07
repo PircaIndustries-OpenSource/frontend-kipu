@@ -4,6 +4,10 @@
     <h1 class="text-3xl font-bold text-primary tracking-tight">
       {{ 'machinery.title' | translate }}
     </h1>
+    <button matRipple class="w-60 bg-accent text-white! py-5! rounded-m! font-bold! text-base! shadow-md! cursor-pointer transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2">
+      <mat-icon>add_circle</mat-icon>
+      {{ 'machinery.button-create' | translate }}
+    </button>
   </header>
 
   <div class="flex flex-row gap-xl">
@@ -14,7 +18,7 @@
       <div class="flex flex-col gap-m">
         <h3 class="text-xs font-black text-primary uppercase tracking-widest
                    border-b border-primary/10 pb-2">
-          {{ 'machinery.tabs.summary' | translate }}
+          {{ 'general.summary' | translate }}
         </h3>
         <div class="flex flex-col items-center gap-l">
           <app-summary-card [title]="'machinery.summary.total' | translate"
