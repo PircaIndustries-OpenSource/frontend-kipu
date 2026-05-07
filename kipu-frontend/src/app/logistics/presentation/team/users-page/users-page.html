@@ -22,13 +22,33 @@
         <p>{{'team.users.stats.clients' | translate}}</p>
         <h1 class="text-4xl">8</h1>
       </div>
-
     </div>
-    <div class="info flex w-full gap-7 mt-8" >
+
+    <div class="info flex w-full gap-7 mt-8">
       <div class="info-role flex-3 shadow-md/20 p-7 w-full">
         <div class="flex justify-between">
           <h2 class="text-2xl font-medium">{{'team.users.assigned-roles.title' | translate}}</h2>
-          <input type="text" class="w-md border rounded p-2 leading-4">
+          <mat-form-field class="w-96" appearance="outline">
+            <mat-label>{{'team.users.assigned-roles.search-user' | translate}}</mat-label>
+            <mat-icon matPrefix>search</mat-icon>
+            <input
+              type="text"
+              matInput
+              [formControl]="searchControl"
+              placeholder="{{'team.users.assigned-roles.input-placeholder' | translate}}"
+            />
+            @if (searchControl.value){
+              <button
+                matSuffix
+                mat-icon-button
+                (click)="clearSearch()"
+                aria-label="Limpiar"
+                class="text-gray-400 hover:text-gray-600"
+              >
+                <mat-icon>close</mat-icon>
+              </button>
+            }
+          </mat-form-field>
         </div>
 
         <div class="user-table mt-10">
@@ -38,12 +58,54 @@
             <div class="w-full flex justify-center"><h2 class="text-xl">{{'team.users.assigned-roles.assigned-role-tab' | translate}}</h2></div>
             <div class="w-full flex justify-center"><h2 class="text-xl">{{'team.users.assigned-roles.action-tab' | translate}}</h2></div>
           </div>
-          <div class="table-cols grid grid-cols-4 border-b justify-center">
 
+          <div class="table-body">
+            @for (user of teamStore.filteredUsers(); track user.id) {
+              <div class="grid grid-cols-4 p-3 border-b hover:bg-gray-50 items-center">
+                <div class="flex justify-start items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent font-semibold text-sm">
+                    {{ getInitials(user.fullName) }}
+                  </div>
+                  <div>
+                    <span class="font-medium">
+                      {{ user.fullName }}
+                      @if (isCurrentUser(user)) {
+                        <span class="text-xs text-gray-500 ml-1">({{'team.users.assigned-roles.user-profile-you' | translate}})</span>
+                      }
+                    </span>
+                  </div>
+                </div>
+                <div class="flex justify-start text-gray-600">
+                  {{ user.email }}
+                </div>
+                <div class="flex justify-start">
+                  <span [class]="getRoleBadgeClass(user.role)">
+                    {{ getRoleTranslation(user.role) }}
+                  </span>
+                </div>
+                <div class="flex justify-start">
+                  <button
+                    class="text-red-600 hover:text-red-800 font-medium text-sm transition-colors"
+                    (click)="disableUser(user)"
+                  >
+                    {{'team.users.assigned-roles.btn-action' | translate}}
+                  </button>
+                </div>
+              </div>
+            }
+            @empty {
+              <div class="text-center py-8 text-gray-500">
+                {{ 'team.users.assigned-roles.no-user-found' | translate }} "{{ searchControl.value }}"
+              </div>
+            }
           </div>
         </div>
 
+        <div class="text-xs text-gray-400 mt-4 text-right">
+           {{ teamStore.filteredUsers().length }} / {{ teamStore.teamUsers().length }} {{'team.users.assigned-roles.user-count' | translate}}
+        </div>
       </div>
+
       <div class="info-dic flex-1 shadow-md/20 p-7">
         <h2 class="text-2xl font-medium">{{'team.users.role-dictionary.title' | translate}}</h2>
 
@@ -64,10 +126,10 @@
           <h2 class="text-lg font-medium">{{'team.users.role-dictionary.client' | translate}}</h2>
           <p class="text-base/7">{{'team.users.role-dictionary.client-description-1' | translate}}
             <b>{{'team.users.role-dictionary.client-description-bold' | translate}}</b>
-            {{'team.users.role-dictionary.client-description-2' | translate}}</p>
+            {{'team.users.role-dictionary.client-description-2' | translate}}
+          </p>
         </div>
       </div>
     </div>
   </div>
-
 </section>

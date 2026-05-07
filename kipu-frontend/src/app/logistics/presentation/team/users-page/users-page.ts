@@ -1,30 +1,81 @@
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
 import { MatTabLink, MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
-import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
+import { TranslateModule, TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { MatRipple } from '@angular/material/core';
 import { TeamStore } from '../../../application/team.store';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { MatIconButton } from '@angular/material/button';
+import { NgIf } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { TeamUsersEntity } from '../../../domain/team-users.entity';
 
 @Component({
   selector: 'app-users-page',
   imports: [
-    RouterLinkActive,
-    MatTabNav,
-    MatTabNavPanel,
-    RouterOutlet,
-    MatTabLink,
     RouterModule,
     TranslateModule,
     TranslatePipe,
     MatRipple,
+    MatFormField,
+    MatLabel,
+    ReactiveFormsModule,
+    MatIconButton,
+    MatIcon,
+    MatInput,
   ],
   templateUrl: './users-page.html',
   styleUrl: './users-page.css',
 })
 export class UsersPage implements OnInit {
   protected teamStore = inject(TeamStore);
-  searchTerm = ''
+  private translate = inject(TranslateService);
+  searchControl = new FormControl('');
   ngOnInit() {
+    this.teamStore.loadUsers();
 
+    this.searchControl.valueChanges.subscribe((value) => {
+      this.teamStore.updateSearchTerm(value || '');
+    });
   }
+  onSearchChange(term: string) {
+    this.teamStore.updateSearchTerm(term);
+  }
+  clearSearch() {
+    this.searchControl.setValue("");
+    this.teamStore.cleanSearch();
+  }
+
+  getRoleBadgeClass(role: string): string {
+    const roleMap: Record<string, string> = {
+      Administrador: 'bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm',
+      Gestor: 'bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm',
+      Logistica: 'bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm',
+      Cliente: 'bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm',
+    };
+    return roleMap[role] || 'bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm';
+  }
+
+  getRoleTranslation(role: string): string {
+    const translationMap: Record<string, string> = {
+      'Administrador': this.translate.instant('team.users.role-dictionary.administrator'),
+      'Gestor': this.translate.instant('team.users.role-dictionary.manager'),
+      'Logistica': this.translate.instant('team.users.role-dictionary.logistics'),
+      'Cliente': this.translate.instant('team.users.role-dictionary.client'),
+    };
+    return translationMap[role] || role;
+  }
+
+  disableUser(user: TeamUsersEntity) {
+    console.log('Deshabilitar usuario:', user);
+  }
+  getInitials(fullName: string) {
+    return fullName[0] + fullName[fullName.trim().indexOf(" ") + 1];
+  }
+
+  isCurrentUser(user: TeamUsersEntity) {
+    return user.role == "Administrador"
+  }
+
 }

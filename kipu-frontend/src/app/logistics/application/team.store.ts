@@ -15,9 +15,9 @@ export class TeamStore {
   readonly teamUsers = computed(() => this.teamUsersSignal());
   readonly filteredUsers = computed(() => {
     const users = this.teamUsers();
-    const searchTeam = this.searchTermSignal().toLowerCase();
+    const searchTeam = this.searchTermSignal().toLowerCase().trim();
 
-    if(!searchTeam) return users;
+    if(!searchTeam || searchTeam === "" || searchTeam === null || searchTeam === undefined) return users;
 
     return users.filter(user =>
     user.fullName.toLowerCase().includes(searchTeam) ||

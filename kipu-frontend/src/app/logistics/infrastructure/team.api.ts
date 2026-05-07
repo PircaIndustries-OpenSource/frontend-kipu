@@ -18,17 +18,18 @@ import { TeamWorkersAssembler } from './team-workers.assembler';
 export class TeamApi {
   http: HttpClient = inject(HttpClient);
   apiBaseUrl = environment.kipuApiBaseUrl;
+  teamEndpoint = environment.kipuApiTeamEndpointPath;
   teamUsersEndpoint = environment.kipuApiTeamUsersEndpointPath;
   teamWorkersEndpoint = environment.kipuApiTeamWorkersEndpointPath;
 
   getAllUsers(): Observable<TeamUsersEntity[]> {
-    return this.http.get<TeamUsersResponse>(`${this.apiBaseUrl}${this.teamUsersEndpoint}`)
+    return this.http.get<TeamUsersResponse>(`${this.apiBaseUrl}${this.teamEndpoint}${this.teamUsersEndpoint}`)
       .pipe(
         map(response => TeamUsersAssembler.toEntitiesFromResponse(response))
       )
   }
   getAllWorkers(): Observable<TeamWorkersEntity[]> {
-    return this.http.get<TeamWorkersResponse>(`${this.apiBaseUrl}${this.teamWorkersEndpoint}`)
+    return this.http.get<TeamWorkersResponse>(`${this.apiBaseUrl}${this.teamEndpoint}${this.teamWorkersEndpoint}`)
       .pipe(
         map(response => TeamWorkersAssembler.toEntitiesFromResponse(response))
       )

@@ -244,7 +244,11 @@
           "assigend-role-tab": "Rol Asignado",
           "action-tab": "Acción",
           "user-profile-you": "Tú",
-          "btn-action": "Deshabilitar"
+          "btn-action": "Deshabilitar",
+          "input-placeholder": "Nombre, correo o rol...",
+          "search-user": "Buscar usuario",
+          "user-count": "usuarios",
+          "no-user-found": "No se encontraron usuarios con "
         },
         "btn-invite": "Enviar Invitación",
         "role-dictionary": {

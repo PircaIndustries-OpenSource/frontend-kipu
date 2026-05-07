@@ -244,7 +244,11 @@
         "assigned-role-tab": "Assigned Role",
         "action-tab": "Action",
         "user-profile-you": "You",
-        "btn-action": "Disable"
+        "btn-action": "Disable",
+        "input-placeholder": "Name, email or role...",
+        "search-user": "Search user",
+        "user-count": "users",
+        "no-user-found": "No users were found with"
       },
       "btn-invite": "Send Invitation",
       "role-dictionary": {
