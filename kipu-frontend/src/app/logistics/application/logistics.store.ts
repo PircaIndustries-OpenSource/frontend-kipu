@@ -5,12 +5,14 @@ import {RequestEntity} from '../domain/request.entity';
 import { MachineryEntity } from '../domain/machinery.entity';
 import { Supplier } from '../domain/supplier';
 import { WasteEntity } from '../domain/waste.entity';
+import { BudgetStore } from '../../budget/application/budget-store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LogisticsStore {
   logisticsApi = inject(LogisticsApi);
+  budgetStore = inject(BudgetStore);
   // MATERIAL
   private materialsSignal = signal<MaterialEntity[]>([]);
   private selectedCategorySignal = signal<string>('');
@@ -48,6 +50,43 @@ export class LogisticsStore {
   //REQUEST
   requestsSignal = signal<RequestEntity[]>([]);
   readonly requests = computed(() => this.requestsSignal());
+  selectedRequestFilter = signal<string>('');
+  readonly requestFiltered = computed(() => {
+    const allRequest = this.requestsSignal();
+    const filter = this.selectedRequestFilter;
+    if (!filter) {
+      return allRequest;
+    }
+    const available = this.budgetStore.totalAvailable();
+    const budgeted = this.budgetStore.totalBudgeted();
+    switch (filter()) {
+      case 'within-budget':
+        return allRequest.filter((request) => {
+          const nextAmount = request.item.quantity * request.item.pricePerUnit;
+          return nextAmount + available <= budgeted;
+        });
+      case 'out-budget': {
+        return allRequest.filter((request) => {
+          const nextAmount = request.item.quantity * request.item.pricePerUnit;
+          return nextAmount + available > budgeted;
+        });
+      }
+      case 'expire-48h':{
+        return allRequest.filter((request) => {
+          const difference = new Date(request.deadline).getTime() - Date.now();
+          return ((difference /(1000 * 60 *60* 24)) <= 2)
+        })
+      }
+      default:
+        return allRequest;
+    }
+  });
+  filterRequest(filter: string) {
+    this.selectedRequestFilter.set(filter);
+  }
+  clearRequest() {
+    this.selectedRequestFilter.set('');
+  }
   loadRequest() {
     if (this.requestsSignal().length === 0) {
       this.logisticsApi.getAllRequest().subscribe((data) => {
@@ -64,28 +103,29 @@ export class LogisticsStore {
   //Machinery
   private machinerySignal = signal<MachineryEntity[]>([]);
   readonly machinery = computed(() => this.machinerySignal());
-  loadMachinery(){
-    if(this.machinerySignal().length === 0) {
+  loadMachinery() {
+    if (this.machinerySignal().length === 0) {
       this.logisticsApi.getAllMachinery().subscribe((data) => {
         this.machinerySignal.set(data);
-      })
+      });
     }
   }
   //Suppliers
   suppliersSignal = signal<Supplier[]>([]);
   readonly suppliers = computed(() => this.suppliersSignal());
-  loadSuppliers(){
-    if(this.suppliersSignal().length === 0) {
+  loadSuppliers() {
+    if (this.suppliersSignal().length === 0) {
       this.logisticsApi.getAllSuppliers().subscribe((data) => {
         this.suppliersSignal.set(data);
-      })
+      });
     }
   }
   numberSuppliersActive = computed(() => {
     const activeSuppliers = this.suppliersSignal().filter(
-      supplier => supplier.status === 'active');
+      (supplier) => supplier.status === 'active',
+    );
     return activeSuppliers.length;
-  })
+  });
   //Waste
   wasteSignal = signal<WasteEntity[]>([]);
   readonly waste = computed(() => this.wasteSignal());

@@ -1,14 +1,17 @@
+import { Supplier } from './supplier';
+
 export class RequestItem {
   materialId: string;
   materialName: string;
   quantity: number;
   unit: string;
-
+  pricePerUnit: number;
   constructor() {
-    this.materialId = "";
-    this.materialName = "";
+    this.materialId = '';
+    this.materialName = '';
     this.quantity = 0;
-    this.unit = "";
+    this.unit = '';
+    this.pricePerUnit = 0;
   }
 }
 

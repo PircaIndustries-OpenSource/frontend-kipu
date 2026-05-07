@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-xl w-full">
   @for(request of requests(); track request.id){
-    <app-request-item [request]="request"></app-request-item>
+    <app-request-item [request]="request" [availableBudget]="availableBudget()" [totalBudget]="totalBudget()"></app-request-item>
   }
 </div>

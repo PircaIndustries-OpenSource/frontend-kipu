@@ -10,4 +10,6 @@ import {RequestEntity} from '../../../domain/request.entity';
 })
 export class RequestList {
   requests = input.required<RequestEntity[]>();
+  availableBudget = input.required<number>();
+  totalBudget = input.required<number>();
 }

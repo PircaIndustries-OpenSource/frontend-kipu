@@ -18,6 +18,11 @@ export const routes: Routes = [
         component: LogisticsPage,
         children: [
           {
+            path: '',
+            redirectTo: 'inventory',
+            pathMatch: 'full',
+          },
+          {
             path: 'inventory',
             loadComponent: () =>
               import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
@@ -92,8 +97,9 @@ export const routes: Routes = [
       {
         path: 'budget',
         loadComponent: () =>
-          import('./logistics/presentation/budget/budget-page/budget-page').then(m => m.BudgetPage),
-
+          import('./logistics/presentation/budget/budget-page/budget-page').then(
+            (m) => m.BudgetPage,
+          ),
       },
       {
         path: 'team',

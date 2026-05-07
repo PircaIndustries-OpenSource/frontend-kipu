@@ -10,7 +10,7 @@
   </header>
   <div class="flex flex-row gap-xl">
     <div class="flex-1 min-w-0 flex flex-col gap-l">
-      <app-request-list [requests]="requests()"></app-request-list>
+      <app-request-list [requests]="requests()" [availableBudget]="availableBudget()" [totalBudget]="totalBudget()"></app-request-list>
     </div>
     <aside class="w-64 flex flex-col gap-xl">
       <div class="flex flex-col gap-m">
@@ -30,16 +30,21 @@
           {{ 'request.filters.title' | translate }}
         </h3>
         <ul class="flex flex-col gap-2">
-          <li class="px-m py-s border border-neutral-border/20 rounded-s text-sm text-primary font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
-            {{ 'request.filters.only-urgent' | translate }}
-          </li>
-          <li class="px-m py-s border border-neutral-border/20 rounded-s text-sm text-primary font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
+
+          <li class="px-m py-s border border-neutral-border/20 rounded-s text-sm
+          text-primary font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary
+          transition-all"
+          (click)="onFilterChange('within-budget')">
             {{ 'request.filters.within-budget' | translate }}
           </li>
-          <li class="px-m py-s border border-neutral-border/20 rounded-s text-sm text-primary font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
+          <li
+            (click)="onFilterChange('out-budget')"
+            class="px-m py-s border border-neutral-border/20 rounded-s text-sm text-primary font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
             {{ 'request.filters.exceed-budget' | translate }}
           </li>
-          <li class="px-m py-s border border-neutral-border/20 rounded-s text-sm text-primary font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
+          <li
+            (click)="onFilterChange('expire-48h')"
+            class="px-m py-s border border-neutral-border/20 rounded-s text-sm text-primary font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
             {{ 'request.filters.expire-48h' | translate }}
           </li>
         </ul>

@@ -47,20 +47,22 @@
         <div class="flex flex-col gap-2 w-full mt-2">
           <div class="flex justify-between text-sm text-primary">
             <p>{{'request.card.budget-verification.requested-amount' | translate}}</p>
-            <p class="font-bold">Lorem ipsum</p>
+            <p class="font-bold">{{requestedAmount()}}</p>
           </div>
           <div class="flex justify-between text-sm text-primary">
             <p>{{'request.card.budget-verification.available-budget' | translate}}</p>
-            <p class="font-bold">Lorem ipsum</p>
+            <p class="font-bold">{{availableBudget()}}</p>
           </div>
 
           <hr class="border-t-2! border-primary! my-2 opacity-20">
 
           <div class="flex justify-between items-center text-sm">
             <p class="text-primary">{{'request.card.budget-verification.status' | translate}}</p>
-            <p class="font-bold text-success flex items-center gap-1 text-xs">
-              Lorem ipsum
-            </p>
+            @if (isAmountValid()){
+              <p class="font-bold  text-(color--success) (flex items-center gap-1 text-xs">{{'request.card.status.within-budget'|translate}}</p>
+            } @else {
+              <p class="font-bold text-(--color-danger) flex items-center gap-1 text-xs">{{'request.card.status.out-budget'|translate}}</p>
+            }
           </div>
         </div>
       </div>
@@ -80,7 +82,6 @@
         {{'request.card.status.approved' | translate}}
       </button>
     }
-
     <button matRipple class="flex-1 bg-neutral-border! bg-opacity-40! text-primary! font-medium! rounded-m! py-s! cursor-pointer transition-base hover:brightness-95">
       {{'request.card.actions.modify' | translate}}
     </button>
@@ -88,6 +89,5 @@
     <button matRipple class="flex-1 bg-accent text-neutral-bg! font-medium! rounded-m! py-s! cursor-pointer transition-base hover:brightness-110">
       {{'request.card.actions.view-details' | translate}}
     </button>
-
   </mat-card-actions>
 </mat-card>
