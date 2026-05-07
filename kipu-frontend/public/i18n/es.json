@@ -236,9 +236,34 @@
           "managers": "GESTORES",
           "logistics": "EQUIPO DE LOGÍSTICA",
           "clients": "CLIENTES / INVERSORES"
+        },
+        "assigned-roles": {
+          "title": "Asignación de Roles",
+          "user-tab": "Usuario",
+          "email-tab": "Correo Electrónico",
+          "assigend-role-tab": "Rol Asignado",
+          "action-tab": "Acción",
+          "user-profile-you": "Tú",
+          "btn-action": "Deshabilitar"
+        },
+        "btn-invite": "Enviar Invitación",
+        "role-dictionary": {
+          "title": "Diccionario de Roles",
+          "administrator": "Administrator",
+          "administrator-description": "Acceso total al sistema. Puede gestionar obras, presupuestos base y accesos.",
+          "manager": "Gestor Operativo",
+          "manager-description": "Enfocado en campo. Registra avances, RNCs y solicita materiales. Visualiza planos.",
+          "logistics": "Logística",
+          "logistics-description": "Enfocado en oficina. Aprueba pedidos, edita inventarios y gestiona proveedores.",
+          "client": "ROL CLIENTE",
+          "client-description-1": "Nivel de acceso estricto de ",
+          "client-description-bold": "Solo Lectura. ",
+          "client-description-2": "Todos los botones de creación o edición se ocultan en su vista para proteger la data."
         }
       },
-      "workers": {}
+      "workers": {
+        "tab-workers": "Directorio de Obreros"
+      }
     }
   }
 }

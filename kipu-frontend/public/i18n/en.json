@@ -1,7 +1,4 @@
 {
-  "general": {
-    "summary": "Summary"
-  },
   "inventory": {
     "tab-inventory": "Inventory",
     "tab-requests": "Requests",
@@ -33,6 +30,7 @@
     "title": "Material Requests",
     "button-create": "Create Request",
     "summary": {
+      "title": "Summary",
       "pending": "Pending",
       "approved-today": "Approved today",
       "rejected": "Rejected"
@@ -95,30 +93,8 @@
       }
     }
   },
-  "suppliers": {
-    "title": "Supplier Directory",
-    "button-create": "Register new supplier",
-    "summary": {
-      "active": "Active"
-    },
-    "card": {
-      "ruc": "RUC",
-      "onboarded": "Onboarded",
-      "social-reason": "Business Name",
-      "contact": "Main Contact",
-      "phone": "Phone",
-      "email": "Email",
-      "categories": "Supplied Categories",
-      "payment-terms": "Standard Payment Terms",
-      "actions": {
-        "button-edit": "Edit supplier",
-        "button-add": "Add new supplier"
-      }
-    }
-  },
   "machinery": {
     "title": "Machinery & Tools",
-    "button-create": "Add machinery",
     "tabs": {
       "summary": "Summary",
       "filters": "Quick Filters"
@@ -200,47 +176,44 @@
       "hours-ago-3": "3 hours ago",
       "days-ago-1": "1 day ago",
       "blocked": "Blocked"
-    },
-
-    "team": {
-      "users": {
-        "tab-users": "System Users",
-        "title": "User Managing",
-        "stats": {
-          "active": "ACTIVE USERS",
-          "managers": "MANAGERS / RESIDENTS",
-          "logistics": "LOGISTIC TEAM",
-          "clients": "CLIENTS / INVESTORS"
-        }
-      },
-      "workers": {
-        "tab-workers": "Workers Directory"
-      }
     }
   },
-  "waste": {
-    "title": "Waste Registry",
-    "button-report": "Report Damaged Material",
-    "summary": {
-      "title": "Summary",
-      "damaged": "Damaged"
-    },
-    "card": {
-      "header": {
-        "report-date": "Report:",
-        "status-damaged": "DAMAGED MATERIAL"
+  "team": {
+    "users": {
+      "tab-users": "System Users",
+      "title": "User Managing",
+      "stats": {
+        "active": "ACTIVE USERS",
+        "managers": "MANAGERS / RESIDENTS",
+        "logistics": "LOGISTIC TEAM",
+        "clients": "CLIENTS / INVESTORS"
       },
-      "fields": {
-        "affected-material": "Affected Material",
-        "discounted-quantity": "Discounted Quantity",
-        "reported-by": "Reported by",
-        "inventory-impact": "Inventory Impact",
-        "inventory-updated": "Updated",
-        "reason-title": "Reason for Stock Deduction"
+      "assigned-roles": {
+        "title": "Role Assignment",
+        "user-tab": "User",
+        "email-tab": "Email",
+        "assigned-role-tab": "Assigned Role",
+        "action-tab": "Action",
+        "user-profile-you": "You",
+        "btn-action": "Disable"
       },
-      "actions": {
-        "view-photo": "View attached photo"
+      "btn-invite": "Send Invitation",
+      "role-dictionary": {
+        "title": "Role Dictionary",
+        "administrator": "Administrator",
+        "administrator-description": "Full system access. Can manage projects, base budgets and access controls.",
+        "manager": "Operations Manager",
+        "manager-description": "Field-focused. Records progress, RNCs and requests materials. Views blueprints.",
+        "logistics": "Logistics",
+        "logistics-description": "Office-focused. Approves orders, edits inventory and manages suppliers.",
+        "client": "CLIENT ROLE",
+        "client-description-1": "Strict access level of ",
+        "client-description-bold": "Read Only. ",
+        "client-description-2": "All creation or editing buttons are hidden in their view to protect the data."
       }
+    },
+    "workers": {
+      "tab-workers": "Workers Directory"
     }
   }
 }

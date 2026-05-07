@@ -1,8 +1,11 @@
 <section>
-  <h1 class="text-2xl font-bold">{{'team.users.title'| translate }}</h1>
+  <div class="flex justify-between mx-10 mr-30 items-center overflow-y-auto">
+    <h1 class="text-2xl font-bold">{{'team.users.title'| translate }}</h1>
+    <button matRipple class="px-s bg-accent text-white! py-s! rounded-m! font-bold! cursor-pointer transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2">{{'team.users.btn-invite' | translate }}</button>
+  </div>
 
-  <div class="user-dashboard flex mx-20">
-    <div class="user-stadistics flex w-full mt-10 gap-7">
+  <div class="user-dashboard flex mx-20 flex-col">
+    <div class="stats flex w-full mt-10 gap-7">
       <div class="card p-5 shadow-md/20 gap-2 flex-1 flex-col grow py-6 flex">
         <p class="text-divider">{{'team.users.stats.active' | translate}}</p>
         <h1 class="text-4xl">8</h1>
@@ -20,6 +23,50 @@
         <h1 class="text-4xl">8</h1>
       </div>
 
+    </div>
+    <div class="info flex w-full gap-7 mt-8" >
+      <div class="info-role flex-3 shadow-md/20 p-7 w-full">
+        <div class="flex justify-between">
+          <h2 class="text-2xl font-medium">{{'team.users.assigned-roles.title' | translate}}</h2>
+          <input type="text" class="w-md border rounded p-2 leading-4">
+        </div>
+
+        <div class="user-table mt-10">
+          <div class="table-header grid grid-cols-4 border-b justify-center">
+            <div class="w-full flex justify-center"><h2 class="text-xl">{{'team.users.assigned-roles.user-tab' | translate}}</h2></div>
+            <div class="w-full flex justify-center"><h2 class="text-xl">{{'team.users.assigned-roles.email-tab' | translate}}</h2></div>
+            <div class="w-full flex justify-center"><h2 class="text-xl">{{'team.users.assigned-roles.assigned-role-tab' | translate}}</h2></div>
+            <div class="w-full flex justify-center"><h2 class="text-xl">{{'team.users.assigned-roles.action-tab' | translate}}</h2></div>
+          </div>
+          <div class="table-cols grid grid-cols-4 border-b justify-center">
+
+          </div>
+        </div>
+
+      </div>
+      <div class="info-dic flex-1 shadow-md/20 p-7">
+        <h2 class="text-2xl font-medium">{{'team.users.role-dictionary.title' | translate}}</h2>
+
+        <div class="py-6 flex flex-col gap-y-2">
+          <h2 class="text-lg font-medium">{{'team.users.role-dictionary.administrator' | translate}}</h2>
+          <p class="text-(--color-neutral-border) font-medium text-base/7">{{'team.users.role-dictionary.administrator-description' | translate}}</p>
+        </div>
+        <div class="py-6 flex flex-col gap-y-2">
+          <h2 class="text-lg font-medium">{{'team.users.role-dictionary.manager' | translate}}</h2>
+          <p class="text-(--color-neutral-border) font-medium text-base/7">{{'team.users.role-dictionary.manager-description' | translate}}</p>
+        </div>
+        <div class="py-6 flex flex-col gap-y-2">
+          <h2 class="text-lg font-medium">{{'team.users.role-dictionary.logistics' | translate}}</h2>
+          <p class="text-(--color-neutral-border) font-medium text-base/7">{{'team.users.role-dictionary.logistics-description' | translate}}</p>
+        </div>
+
+        <div class="py-6 flex flex-col gap-y-2 bg-(--color-info-soft) p-5 border rounded-md">
+          <h2 class="text-lg font-medium">{{'team.users.role-dictionary.client' | translate}}</h2>
+          <p class="text-base/7">{{'team.users.role-dictionary.client-description-1' | translate}}
+            <b>{{'team.users.role-dictionary.client-description-bold' | translate}}</b>
+            {{'team.users.role-dictionary.client-description-2' | translate}}</p>
+        </div>
+      </div>
     </div>
   </div>
 

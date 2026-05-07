@@ -1,18 +1,1 @@
 @import "tailwindcss";
-
-@theme {
-  /* Tipografía principal (Neutro oscuro para evitar fatiga) */
-  --color-main: #212529;
-
-  /* Color Primario (Azul formal para gestión técnica) */
-  --color-primary: #2C3E50;
-
-  /* Color de Acento (Botones y CTAs) */
-  --color-accent: #3498DB;
-
-  /* Fondos y Superficies (Neutros claros) */
-  --color-surface: #F8F9FA;
-
-  /* Separadores y bordes (Gris azulado) */
-  --color-divider: #B0BEC5;
-}

@@ -11,7 +11,20 @@ export class TeamStore {
 
   // USERS
   private teamUsersSignal = signal<TeamUsersEntity[]>([]);
+  private searchTermSignal = signal<string>("");
   readonly teamUsers = computed(() => this.teamUsersSignal());
+  readonly filteredUsers = computed(() => {
+    const users = this.teamUsers();
+    const searchTeam = this.searchTermSignal().toLowerCase();
+
+    if(!searchTeam) return users;
+
+    return users.filter(user =>
+    user.fullName.toLowerCase().includes(searchTeam) ||
+      user.email.toLowerCase().includes(searchTeam) ||
+      user.role.toLowerCase().includes(searchTeam) ||
+      (user.isActive ? "activo" : "inactivo").includes(searchTeam));
+  })
   readonly totalActiveUsers = computed(
     () => this.teamUsers().filter((user) => user.isActive).length,
   );
@@ -33,10 +46,18 @@ export class TeamStore {
     }
   }
 
+  updateSearchTerm(term: string) {
+    this.searchTermSignal.set(term);
+  }
+
+  cleanSearch() {
+    this.searchTermSignal.set("");
+  }
+
   // WORKERS
 
   private teamWorkersSignal = signal<TeamWorkersEntity[]>([]);
   readonly teamWorkers = computed(() => this.teamWorkersSignal());
-  
+
 
 }
