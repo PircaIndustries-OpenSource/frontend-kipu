@@ -262,7 +262,8 @@
         "client": "CLIENT ROLE",
         "client-description-1": "Strict access level of ",
         "client-description-bold": "Read Only. ",
-        "client-description-2": "All creation or editing buttons are hidden in their view to protect the data."
+        "client-description-2": "All creation or editing buttons are hidden in their view to protect the data.",
+        "engineer": "Engineer"
       }
     },
     "workers": {

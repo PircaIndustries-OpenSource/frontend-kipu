@@ -23,13 +23,13 @@ export class TeamApi {
   teamWorkersEndpoint = environment.kipuApiTeamWorkersEndpointPath;
 
   getAllUsers(): Observable<TeamUsersEntity[]> {
-    return this.http.get<TeamUsersResponse>(`${this.apiBaseUrl}${this.teamEndpoint}${this.teamUsersEndpoint}`)
+    return this.http.get<TeamUsersResponse>(`${this.apiBaseUrl}${this.teamUsersEndpoint}`)
       .pipe(
         map(response => TeamUsersAssembler.toEntitiesFromResponse(response))
       )
   }
   getAllWorkers(): Observable<TeamWorkersEntity[]> {
-    return this.http.get<TeamWorkersResponse>(`${this.apiBaseUrl}${this.teamEndpoint}${this.teamWorkersEndpoint}`)
+    return this.http.get<TeamWorkersResponse>(`${this.apiBaseUrl}${this.teamWorkersEndpoint}`)
       .pipe(
         map(response => TeamWorkersAssembler.toEntitiesFromResponse(response))
       )

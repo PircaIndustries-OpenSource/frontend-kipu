@@ -7,8 +7,8 @@
   "/api/v1/materials/tools/:id": "/materialTools/:id",
   "/api/v1/materials/suppliers": "/materialSuppliers",
   "/api/v1/materials/suppliers/:id": "/materialSuppliers/:id",
-  "/api/v1/team/users": "/team/users",
-  "/api/v1/team/workers": "/team/workers",
+  "/api/v1/team/users": "/team-users",
+  "/api/v1/team/workers": "/team-workers",
   "/api/v1/team": "/team",
   "/api/v1/*": "/$1"
 }

@@ -61,7 +61,7 @@
 
           <div class="table-body">
             @for (user of teamStore.filteredUsers(); track user.id) {
-              <div class="grid grid-cols-4 p-3 border-b hover:bg-gray-50 items-center">
+              <div class="grid grid-cols-4 p-3 border-b hover:bg-gray-50 justify-items-center">
                 <div class="flex justify-start items-center gap-3">
                   <div class="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent font-semibold text-sm">
                     {{ getInitials(user.fullName) }}

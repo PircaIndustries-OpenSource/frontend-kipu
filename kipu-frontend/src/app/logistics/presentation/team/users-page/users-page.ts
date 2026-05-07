@@ -59,10 +59,11 @@ export class UsersPage implements OnInit {
 
   getRoleTranslation(role: string): string {
     const translationMap: Record<string, string> = {
-      'Administrador': this.translate.instant('team.users.role-dictionary.administrator'),
-      'Gestor': this.translate.instant('team.users.role-dictionary.manager'),
-      'Logistica': this.translate.instant('team.users.role-dictionary.logistics'),
-      'Cliente': this.translate.instant('team.users.role-dictionary.client'),
+      Administrador: this.translate.instant('team.users.role-dictionary.administrator'),
+      Gestor: this.translate.instant('team.users.role-dictionary.manager'),
+      Logistica: this.translate.instant('team.users.role-dictionary.logistics'),
+      Cliente: this.translate.instant('team.users.role-dictionary.client'),
+      Ingeniero: this.translate.instant('team.users.role-dictionary.engineer')
     };
     return translationMap[role] || role;
   }

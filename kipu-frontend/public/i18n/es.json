@@ -262,7 +262,8 @@
           "client": "ROL CLIENTE",
           "client-description-1": "Nivel de acceso estricto de ",
           "client-description-bold": "Solo Lectura. ",
-          "client-description-2": "Todos los botones de creación o edición se ocultan en su vista para proteger la data."
+          "client-description-2": "Todos los botones de creación o edición se ocultan en su vista para proteger la data.",
+          "engineer": "Ingeniero"
         }
       },
       "workers": {
