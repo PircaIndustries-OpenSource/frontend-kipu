@@ -153,6 +153,44 @@
       "assignmentDetail": "El equipo ha superado las horas de uso recomendadas. Requiere cambio de aceite de motor y revisión de fajas antes de volver a operar."
     }
   ],
+  "materialSuppliers": [
+    {
+      "id": "ms-001",
+      "ruc": "20100000001",
+      "onboarded": "2023-02-15",
+      "socialReason": "Aceros Arequipa S.A.",
+      "contact": "Corporate Sales",
+      "phone": "01-555-0192",
+      "email": "ventas@acerosarequipa.pe",
+      "categories": "Corrugated iron, binding wire, nails, electrowelded mesh",
+      "paymentTerms": "30-day credit upon delivery of invoice and delivery note",
+      "status": "Active"
+    },
+    {
+      "id": "ms-002",
+      "ruc": "20457896321",
+      "onboarded": "2024-01-10",
+      "socialReason": "Cementos Pacasmayo S.A.A.",
+      "contact": "Customer Service",
+      "phone": "01-614-0400",
+      "email": "atencioncliente@cementospacasmayo.pe",
+      "categories": "Portland Cement, Concrete, Mortar",
+      "paymentTerms": "Net 45 days",
+      "status": "Active"
+    },
+    {
+      "id": "ms-003",
+      "ruc": "20601234567",
+      "onboarded": "2024-06-20",
+      "socialReason": "Ladrillera Santa Rosa S.A.C.",
+      "contact": "Sales Department",
+      "phone": "054-225500",
+      "email": "ventas@ladrillerasantarosa.pe",
+      "categories": "Bricks, Pavers, Roofing tiles",
+      "paymentTerms": "50% advance, 50% against delivery",
+      "status": "Inactive"
+    }
+  ],
   "iot-telemetry": [],
   "field": [],
   "team": {

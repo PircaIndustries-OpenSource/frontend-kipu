@@ -1,4 +1,7 @@
 {
+  "general": {
+    "summary": "Summary"
+  },
   "inventory": {
     "tab-inventory": "Inventory",
     "tab-requests": "Requests",
@@ -30,7 +33,6 @@
     "title": "Material Requests",
     "button-create": "Create Request",
     "summary": {
-      "title": "Summary",
       "pending": "Pending",
       "approved-today": "Approved today",
       "rejected": "Rejected"
@@ -93,8 +95,30 @@
       }
     }
   },
+  "suppliers": {
+    "title": "Supplier Directory",
+    "button-create": "Register new supplier",
+    "summary": {
+      "active": "Active"
+    },
+    "card": {
+      "ruc": "RUC",
+      "onboarded": "Onboarded",
+      "social-reason": "Business Name",
+      "contact": "Main Contact",
+      "phone": "Phone",
+      "email": "Email",
+      "categories": "Supplied Categories",
+      "payment-terms": "Standard Payment Terms",
+      "actions": {
+        "button-edit": "Edit supplier",
+        "button-add": "Add new supplier"
+      }
+    }
+  },
   "machinery": {
     "title": "Machinery & Tools",
+    "button-create": "Add machinery",
     "tabs": {
       "summary": "Summary",
       "filters": "Quick Filters"
@@ -177,6 +201,7 @@
       "days-ago-1": "1 day ago",
       "blocked": "Blocked"
     },
+
     "team": {
       "users": {
         "tab-users": "System Users",
@@ -190,6 +215,31 @@
       },
       "workers": {
         "tab-workers": "Workers Directory"
+      }
+    }
+  },
+  "waste": {
+    "title": "Waste Registry",
+    "button-report": "Report Damaged Material",
+    "summary": {
+      "title": "Summary",
+      "damaged": "Damaged"
+    },
+    "card": {
+      "header": {
+        "report-date": "Report:",
+        "status-damaged": "DAMAGED MATERIAL"
+      },
+      "fields": {
+        "affected-material": "Affected Material",
+        "discounted-quantity": "Discounted Quantity",
+        "reported-by": "Reported by",
+        "inventory-impact": "Inventory Impact",
+        "inventory-updated": "Updated",
+        "reason-title": "Reason for Stock Deduction"
+      },
+      "actions": {
+        "view-photo": "View attached photo"
       }
     }
   }

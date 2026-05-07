@@ -3,6 +3,8 @@ import {MaterialEntity} from '../domain/material.entity';
 import {LogisticsApi} from '../infrastructure/logistics.api';
 import {RequestEntity} from '../domain/request.entity';
 import { MachineryEntity } from '../domain/machinery.entity';
+import { Supplier } from '../domain/supplier';
+import { WasteEntity } from '../domain/waste.entity';
 
 @Injectable({
   providedIn: 'root',
@@ -67,6 +69,31 @@ export class LogisticsStore {
       this.logisticsApi.getAllMachinery().subscribe((data) => {
         this.machinerySignal.set(data);
       })
+    }
+  }
+  //Suppliers
+  suppliersSignal = signal<Supplier[]>([]);
+  readonly suppliers = computed(() => this.suppliersSignal());
+  loadSuppliers(){
+    if(this.suppliersSignal().length === 0) {
+      this.logisticsApi.getAllSuppliers().subscribe((data) => {
+        this.suppliersSignal.set(data);
+      })
+    }
+  }
+  numberSuppliersActive = computed(() => {
+    const activeSuppliers = this.suppliersSignal().filter(
+      supplier => supplier.status === 'active');
+    return activeSuppliers.length;
+  })
+  //Waste
+  wasteSignal = signal<WasteEntity[]>([]);
+  readonly waste = computed(() => this.wasteSignal());
+  loadWaste() {
+    if (this.wasteSignal().length === 0) {
+      this.logisticsApi.getAllWaste().subscribe((data) => {
+        this.wasteSignal.set(data);
+      });
     }
   }
 }

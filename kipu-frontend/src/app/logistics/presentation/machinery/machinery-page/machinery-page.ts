@@ -3,10 +3,12 @@ import {MachineryList} from '../machinery-list/machinery-list';
 import { LogisticsStore } from '../../../application/logistics.store';
 import {TranslatePipe} from '@ngx-translate/core';
 import { SummaryCard } from '../../../../shared/presentation/summary-card/summary-card';
+import { MatIcon } from '@angular/material/icon';
+import { MatRipple } from '@angular/material/core';
 
 @Component({
   selector: 'app-machinery-page',
-  imports: [MachineryList, TranslatePipe, SummaryCard],
+  imports: [MachineryList, TranslatePipe, SummaryCard, MatIcon, MatRipple],
   templateUrl: './machinery-page.html',
   styleUrl: './machinery-page.css',
 })
