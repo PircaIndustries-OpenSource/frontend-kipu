@@ -297,7 +297,23 @@
         "tab-count-tools-many": "equipment units",
         "tab-btn-delete": "Delete",
         "tab-status-active": "ACTIVE",
-        "tab-status-inactive": "INACTIVE"
+        "tab-status-inactive": "INACTIVE",
+        "no-workers-found": "No workers registered yet."
+      },
+      "add-modal": {
+        "title": "Register New Worker",
+        "dni-label": "ID Number",
+        "dni-placeholder": "8 digits",
+        "name-label": "Full Name",
+        "name-placeholder": "e.g., Juan Perez",
+        "role-label": "Position / Crew",
+        "role-placeholder": "e.g., Masonry Worker",
+        "tools-title": "Assigned Tools",
+        "tools-add": "+ Add Tool",
+        "tools-placeholder": "Equipment name...",
+        "btn-save": "Save Worker",
+        "btn-cancel": "Cancel",
+        "no-tools-added": "No initial tools assigned"
       }
     }
   }

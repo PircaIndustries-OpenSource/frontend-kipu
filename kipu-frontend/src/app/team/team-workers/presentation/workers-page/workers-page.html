@@ -12,19 +12,78 @@
       <h2 class="text-2xl font-medium">{{'team.workers.register.title' | translate}}</h2>
       <p class="text-(--color-neutral-border) font-medium text-base/7">{{'team.workers.register.description' | translate}}</p>
     </div>
-    <button matRipple class="px-s bg-accent text-white! py-s! rounded-m! font-bold! cursor-pointer transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2">{{'team.workers.register.btn-add-worker' | translate }}</button>
+    <button matRipple class="px-s bg-accent text-white! py-s! rounded-m! font-bold! cursor-pointer transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2"
+    (click)="openFormDialog()">{{'team.workers.register.btn-add-worker' | translate }}</button>
   </div>
 
     <div class="workers-table mt-10">
 
-      <div class="table-header grid grid-cols-6 border-2 rounded-md justify-center">
+      <div class="table-header grid grid-cols-6 border-2 border-(--color-neutral-border) rounded-t-md justify-center bg-[#B0BFC6]">
         <div class="w-full flex justify-center"><h2 class="text-xl">{{'team.workers.register.tab-dni' | translate}}</h2></div>
         <div class="w-full flex justify-center"><h2 class="text-xl">{{'team.workers.register.tab-name' | translate}}</h2></div>
         <div class="w-full flex justify-center"><h2 class="text-xl">{{'team.workers.register.tab-role' | translate}}</h2></div>
         <div class="w-full flex justify-center"><h2 class="text-xl">{{'team.workers.register.tab-status' | translate}}</h2></div>
         <div class="w-full flex justify-center"><h2 class="text-xl">{{'team.workers.register.tab-tools' | translate}}</h2></div>
-        <div class="w-full flex justify-center"><h2 class="text-xl">{{'team.workers.register.tab-btn-delete' | translate}}</h2></div>
+        <div class="w-full flex justify-center"><h2 class="text-xl">{{'team.workers.register.tab-action' | translate}}</h2></div>
       </div>
+
+      <div class="table-body max-h-120 overflow-y-scroll rounded-b-md">
+
+        @for (worker of this.teamStore.teamWorkers(); track worker.id) {
+          <div class="grid grid-cols-6 border-2 border-(--color-neutral-border) w-full p-3 place-content-center align-middle">
+            <div class="id-number flex justify-center">
+              <h2 class="text-base">{{worker.dni}}</h2>
+
+            </div>
+
+            <div class="fullname flex justify-center">
+              <h2 class="text-base">{{worker.fullName}}</h2>
+
+            </div>
+
+            <div class="position flex justify-center">
+              <h2 class="text-base">{{worker.role}}</h2>
+
+            </div>
+
+            <div class="work-status flex justify-center">
+              @if (worker.status == "activo"){
+                <h3 class="p-2 bg-[#CAFFC9] w-fit rounded-md text-(--color-success)">{{'team.workers.register.tab-status-active' | translate}}</h3>
+              }
+              @else {
+                <h3 class="p-2 bg-(--color-neutral-border) w-fit rounded-md text-(--color-info-soft)">{{'team.workers.register.tab-status-inactive' | translate}}</h3>
+              }
+
+
+            </div>
+
+            <div class="assigned-tools flex justify-center align-middle h-full">
+              @if (worker.assignedTools.length == 1) {
+                <h2 class="text-base">{{worker.assignedTools.length}} {{'team.workers.register.tab-count-tools-one' |  translate}}</h2>
+              } @else {
+                <h2 class="text-base">{{worker.assignedTools.length}} {{'team.workers.register.tab-count-tools-many' |  translate}}</h2>
+              }
+
+
+            </div>
+
+            <div class="action flex justify-center">
+              <button class="text-red-600 hover:text-red-800 hover:bg-red-50 font-medium text-base transition-all duration-200 px-3 py-1 cursor-pointer rounded-md"
+              (click)="deleteWorker(worker.id)">
+                {{'team.workers.register.tab-btn-delete' | translate}}</button>
+
+            </div>
+          </div>
+
+        } @empty {
+          <div class="p-10 text-center text-slate-400">
+          {{ 'team.workers.register.no-workers-found' | translate }}
+          </div>
+        }
+
+
+      </div>
+
 
     </div>
 

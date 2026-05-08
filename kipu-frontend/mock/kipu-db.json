@@ -205,12 +205,12 @@
     },
     {
       "id": "w-2",
-      "dni": "45678912",
-      "fullName": "Ricardo Loli",
-      "role": "Operario",
-      "status": "activo",
+      "dni": "54343234",
+      "fullName": "Pedro Castro",
+      "role": "Manejador",
+      "status": "inactivo",
       "assignedTools": [
-        "Mezcladora"
+        "Escuela"
       ]
     },
     {
@@ -220,6 +220,17 @@
       "role": "Oficial",
       "status": "activo",
       "assignedTools": []
+    },
+    {
+      "dni": "23242424",
+      "fullName": "Neo Ramos",
+      "role": "Capataz",
+      "status": "activo",
+      "assignedTools": [
+        "Tolva",
+        "Marañón"
+      ],
+      "id": "w-1778261706149"
     }
   ],
   "team-users": [
@@ -268,7 +279,7 @@
       "id": "us-04",
       "fullName": "Inversor Centro SAC",
       "email": "gerencia@inversorcentro.pe",
-      "isActive": true,
+      "isActive": false,
       "role": "Logistica"
     },
     {

@@ -12,4 +12,29 @@ export class TeamWorkersStore {
 
   private teamWorkersSignal = signal<TeamWorkersEntity[]>([]);
   readonly teamWorkers = computed(() => this.teamWorkersSignal());
+
+  loadWorkers() {
+    if (this.teamWorkersSignal().length == 0) {
+      this.teamApi.getAllWorkers().subscribe((data) => {
+        this.teamWorkersSignal.set(data);
+      });
+    }
+  }
+  deleteWorker(id: string) {
+    this.teamApi.deleteWorker(id).subscribe({
+      next: () => {
+        this.teamWorkersSignal.update(workers =>
+        workers.filter(worker => worker.id !== id))
+      },
+      error: (err) => console.log(err)
+    });
+  }
+  addWorker(worker: TeamWorkersEntity) {
+    this.teamApi.postWorker(worker).subscribe({
+      next: (newWorker) => {
+        this.teamWorkersSignal.update(prev => [...prev, newWorker]);
+      },
+      error: (error) => console.log(error)
+    });
+  }
 }

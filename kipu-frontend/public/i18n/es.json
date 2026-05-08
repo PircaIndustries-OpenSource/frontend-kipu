@@ -297,7 +297,23 @@
           "tab-count-tools-many": "equipos",
           "tab-btn-delete": "Eliminar",
           "tab-status-active": "ACTIVO",
-          "tab-status-inactive": "INACTIVO"
+          "tab-status-inactive": "INACTIVO",
+          "no-workers-found": "No se encontraron trabajadores registrados."
+        },
+        "add-modal": {
+          "title": "Registrar Nuevo Obrero",
+          "dni-label": "Documento (DNI)",
+          "dni-placeholder": "8 dígitos",
+          "name-label": "Nombres Completos",
+          "name-placeholder": "Ejm. Juan Perez",
+          "role-label": "Cargo / Cuadrilla",
+          "role-placeholder": "Ejm. Operario de Albaliñería",
+          "tools-title": "Herramientas Asignadas",
+          "tools-add": "+ Añadir Herramienta",
+          "tools-placeholder": "Nombre del equipo...",
+          "btn-save": "Guardar Obrero",
+          "btn-cancel": "Cancelar",
+          "no-tools-added": "Sin herramientas iniciales asignadas"
         }
       }
     }
