@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import {RegisterComponent} from './presentation/components/register/register.component';
 import { Layout } from './shared/presentation/layout/layout';
 import {LogisticsPage} from './logistics/presentation/logistics-page/logistics-page';
-import { TeamPage } from './logistics/presentation/team/team-page/team-page';
+import { TeamPage } from './team/presentation/team-page/team-page';
 
 export const routes: Routes = [
   {
@@ -102,14 +102,14 @@ export const routes: Routes = [
           {
             path: 'users',
             loadComponent: () =>
-              import('./logistics/presentation/team/users-page/users-page').then(
+              import('./team/team-users/presentation/users-page/users-page').then(
                 (m) => m.UsersPage, // Ajusta la ruta y el nombre del componente según tu carpeta
               ),
           },
           {
             path: 'workers',
             loadComponent: () =>
-              import('./logistics/presentation/team/workers-page/workers-page').then(
+              import('./team/team-workers/presentation/workers-page/workers-page').then(
                 (m) => m.WorkersPage,
               ),
           },

@@ -283,6 +283,33 @@
       "fullName": "pepe raros",
       "isActive": true,
       "id": "us-1778215899308"
+    },
+    {
+      "email": "waza@gmail.com",
+      "firstName": "pepe",
+      "lastName": "raros",
+      "role": "Administrador",
+      "fullName": "pepe raros",
+      "isActive": true,
+      "id": "us-1778215899308"
+    },
+    {
+      "email": "Coral@gmail.com",
+      "firstName": "Pele",
+      "lastName": "mama",
+      "role": "Logistica",
+      "fullName": "Pele mama",
+      "isActive": true,
+      "id": "us-1778218020628"
+    },
+    {
+      "email": "qcres@asaa.com",
+      "firstName": "pero",
+      "lastName": "osad",
+      "role": "Administrador",
+      "fullName": "pero osad",
+      "isActive": true,
+      "id": "us-1778218035097"
     }
   ]
 }

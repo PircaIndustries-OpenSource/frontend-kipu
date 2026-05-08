@@ -1,4 +1,4 @@
-import { TeamWorkersEntity } from '../domain/team-workers.entity';
+import { TeamWorkersEntity } from '../domain/model/team-workers.entity';
 import { TeamWorkersResource, TeamWorkersResponse } from './team-workers.response';
 
 

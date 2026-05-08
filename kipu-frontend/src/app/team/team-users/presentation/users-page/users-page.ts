@@ -3,13 +3,13 @@ import { RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
 import { MatTabLink, MatTabNav, MatTabNavPanel } from '@angular/material/tabs';
 import { TranslateModule, TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { MatRipple } from '@angular/material/core';
-import { TeamStore } from '../../../application/team.store';
+import { TeamUsersStore } from '../../application/team-users.store';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatIconButton } from '@angular/material/button';
 import { NgIf } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
-import { TeamUsersEntity } from '../../../domain/team-users.entity';
+import { TeamUsersEntity } from '../../domain/model/team-users.entity';
 import { UsersSendInvitation } from '../users-send-invitation/users-send-invitation';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
@@ -32,7 +32,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
   styleUrl: './users-page.css',
 })
 export class UsersPage implements OnInit {
-  protected teamStore = inject(TeamStore);
+  protected teamStore = inject(TeamUsersStore);
   private translate = inject(TranslateService);
   private dialog = inject(MatDialog);
   searchControl = new FormControl('');

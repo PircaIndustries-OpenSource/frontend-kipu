@@ -1,18 +1,17 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { TeamUsersEntity } from '../domain/team-users.entity';
-import { TeamWorkersEntity } from '../domain/team-workers.entity';
-import { TeamApi } from '../infrastructure/team.api';
+import { TeamUsersEntity } from '../domain/model/team-users.entity';
+import { TeamWorkersEntity } from '../../team-workers/domain/model/team-workers.entity';
+import { TeamUsersApi } from '../infrastructure/team-users.api';
 import { TranslateModule, TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 
 @Injectable({
   providedIn: 'root',
 })
-export class TeamStore {
-  teamApi = inject(TeamApi);
+export class TeamUsersStore {
+  teamApi = inject(TeamUsersApi);
   private translate = inject(TranslateService);
 
-  // USERS
   private teamUsersSignal = signal<TeamUsersEntity[]>([]);
   private searchTermSignal = signal<string>('');
   readonly teamUsers = computed(() => this.teamUsersSignal());
@@ -104,8 +103,5 @@ export class TeamStore {
     });
   }
 
-  // WORKERS
 
-  private teamWorkersSignal = signal<TeamWorkersEntity[]>([]);
-  readonly teamWorkers = computed(() => this.teamWorkersSignal());
 }

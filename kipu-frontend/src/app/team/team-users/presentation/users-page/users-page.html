@@ -59,7 +59,7 @@
             <div class="w-full flex justify-center"><h2 class="text-xl">{{'team.users.assigned-roles.action-tab' | translate}}</h2></div>
           </div>
 
-          <div class="table-body overflow-auto">
+          <div class="table-body max-h-120 overflow-y-scroll">
             @for (user of teamStore.filteredUsers(); track user.id) {
               <div class="grid grid-cols-4 p-3 border-b hover:bg-gray-50 justify-items-center">
                 <div class="flex justify-start items-center gap-3">
