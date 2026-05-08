@@ -197,14 +197,19 @@
       "fullName": "Carlos Ruiz",
       "role": "Capataz",
       "status": "activo",
-      "assignedTools": ["Tolva", "Pico"]
+      "assignedTools": [
+        "Tolva",
+        "Pico"
+      ]
     },
     {
       "dni": "45678912",
       "fullName": "Ricardo Loli",
       "role": "Operario",
       "status": "activo",
-      "assignedTools": ["Mezcladora"]
+      "assignedTools": [
+        "Mezcladora"
+      ]
     },
     {
       "dni": "12345678",
@@ -219,9 +224,7 @@
       "id": "us-01",
       "fullName": "Admin Demo",
       "email": "admin@pirca.com",
-      "password": "hashed_password_1",
       "isActive": true,
-      "hasUreadNotifications": true,
       "role": "Administrador"
     },
     {
@@ -255,28 +258,31 @@
       "id": "us-06",
       "fullName": "Danna Sofía",
       "email": "Dansof22@pirca.com",
-      "password": "hashed_password_3",
-      "isActive": false,
-      "hasUreadNotifications": true,
+      "isActive": true,
       "role": "Gestor"
     },
     {
       "id": "us-04",
       "fullName": "Inversor Centro SAC",
       "email": "gerencia@inversorcentro.pe",
-      "password": "hashed_password_4",
       "isActive": true,
-      "hasUreadNotifications": false,
       "role": "Logistica"
     },
     {
       "id": "us-07",
       "fullName": "Laurel Pallo",
       "email": "LauPallo@pirca.com",
-      "password": "hashed_password_3",
       "isActive": true,
-      "hasUreadNotifications": true,
       "role": "Cliente"
+    },
+    {
+      "email": "waza@gmail.com",
+      "firstName": "pepe",
+      "lastName": "raros",
+      "role": "Administrador",
+      "fullName": "pepe raros",
+      "isActive": true,
+      "id": "us-1778215899308"
     }
   ]
 }

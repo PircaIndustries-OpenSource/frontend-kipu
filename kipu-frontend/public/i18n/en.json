@@ -271,11 +271,13 @@
         "credentials": "An email with the system access credentials will be sent.",
         "email": "EMAIL ADDRESS",
         "email-placeholder": "user@company.com",
-        "name": "NAMES",
+        "name": "Name",
         "name-placeholder": "e.g., 'Juan'",
-        "lastname": "LASTNAMES",
+        "lastname": "Lastname",
         "lastname-placeholder": "e.g., 'Perez'",
-        "rol": "ROL TO ASSIGN"
+        "rol": "Rol to assign",
+        "btn-cancel": "Cancel",
+        "btn-invite": "Send Invitation"
       }
     },
     "workers": {

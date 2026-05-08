@@ -10,6 +10,8 @@ import { MatIconButton } from '@angular/material/button';
 import { NgIf } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { TeamUsersEntity } from '../../../domain/team-users.entity';
+import { UsersSendInvitation } from '../users-send-invitation/users-send-invitation';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-users-page',
@@ -23,6 +25,7 @@ import { TeamUsersEntity } from '../../../domain/team-users.entity';
     ReactiveFormsModule,
     MatIconButton,
     MatIcon,
+    MatDialogModule,
     MatInput,
   ],
   templateUrl: './users-page.html',
@@ -31,6 +34,7 @@ import { TeamUsersEntity } from '../../../domain/team-users.entity';
 export class UsersPage implements OnInit {
   protected teamStore = inject(TeamStore);
   private translate = inject(TranslateService);
+  private dialog = inject(MatDialog);
   searchControl = new FormControl('');
   ngOnInit() {
     this.teamStore.loadUsers();
@@ -43,7 +47,7 @@ export class UsersPage implements OnInit {
     this.teamStore.updateSearchTerm(term);
   }
   clearSearch() {
-    this.searchControl.setValue("");
+    this.searchControl.setValue('');
     this.teamStore.cleanSearch();
   }
 
@@ -63,20 +67,36 @@ export class UsersPage implements OnInit {
       Gestor: this.translate.instant('team.users.role-dictionary.manager'),
       Logistica: this.translate.instant('team.users.role-dictionary.logistics'),
       Cliente: this.translate.instant('team.users.role-dictionary.client'),
-      Ingeniero: this.translate.instant('team.users.role-dictionary.engineer')
+      Ingeniero: this.translate.instant('team.users.role-dictionary.engineer'),
     };
     return translationMap[role] || role;
   }
 
   disableUser(user: TeamUsersEntity) {
     console.log('Deshabilitar usuario:', user);
+    user.isActive = !user.isActive;
   }
   getInitials(fullName: string) {
-    return fullName[0] + fullName[fullName.trim().indexOf(" ") + 1];
+    return fullName[0] + fullName[fullName.trim().indexOf(' ') + 1];
   }
 
   isCurrentUser(user: TeamUsersEntity) {
-    return user.role == "Administrador"
+    return user.role == 'Administrador';
   }
 
+
+  openInviteDialog() {
+    const dialogRef = this.dialog.open(UsersSendInvitation, { width: '550px' });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // 'result' contiene el objeto con: email, firstName, lastName, role
+        console.log('Datos recibidos del modal:', result);
+        this.teamStore.inviteUser(result);
+        // Aquí podrías llamar a tu servicio para guardarlo:
+        // this.teamApi.inviteUser(result).subscribe(...);
+
+      }
+    });
+  }
 }

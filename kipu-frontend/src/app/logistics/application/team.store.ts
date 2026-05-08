@@ -71,21 +71,37 @@ export class TeamStore {
     this.searchTermSignal.set('');
   }
 
-  createUser(fullName: string, email: string, rol: string): TeamUsersEntity {
-    return {
-      id: `us-${Date.now()}`,
-      fullName: fullName,
-      email: email,
+  inviteUser(userData: any) {
+    const userToSave = {
+      ...userData,
+      fullName: `${userData.firstName} ${userData.lastName}`,
       isActive: true,
-      role: rol,
+      id: `us-${Date.now()}`,
     };
+
+    this.teamApi.postUser(userToSave).subscribe({
+      next: (newUser) => {
+        // Si la API responde OK, actualizamos la lista local para que
+        // el nuevo usuario aparezca en la tabla sin recargar la página.
+        this.teamUsersSignal.update((currentUsers) => [...currentUsers, newUser]);
+      },
+      error: (err) => console.error('Error al invitar:', err),
+    });
   }
-  inviteUser(user: TeamUsersEntity){
-    const currentUsers = this.teamUsersSignal();
-    this.teamUsersSignal.set([...currentUsers, user]);
 
-    this.teamApi.postUser(user);
+  toggleUserStatus(user: TeamUsersEntity) {
+    const updatedUser = { ...user, isActive: !user.isActive };
 
+    // 1. Avisamos al servidor
+    this.teamApi.updateUser(updatedUser).subscribe({
+      next: (savedUser) => {
+        // 2. Actualizamos la Signal de forma inmutable
+        this.teamUsersSignal.update((users) =>
+          users.map((u) => (u.id === savedUser.id ? savedUser : u)),
+        );
+      },
+      error: (err) => console.error('Error al actualizar estado:', err),
+    });
   }
 
   // WORKERS

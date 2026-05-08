@@ -38,5 +38,10 @@ export class TeamApi {
   postUser(user: TeamUsersEntity): Observable<TeamUsersEntity> {
     return this.http.post<TeamUsersEntity>(this.teamUsersUrl, user);
   }
+
+  updateUser(user: TeamUsersEntity): Observable<TeamUsersEntity> {
+    const url = `${this.teamUsersUrl}/${user.id}`;
+    return this.http.put<TeamUsersEntity>(url, user);
+  }
 }
 
