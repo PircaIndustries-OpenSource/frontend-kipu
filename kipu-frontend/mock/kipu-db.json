@@ -193,6 +193,7 @@
   "field": [],
   "team-workers": [
     {
+      "id": "w-1",
       "dni": "70123456",
       "fullName": "Carlos Ruiz",
       "role": "Capataz",
@@ -203,6 +204,7 @@
       ]
     },
     {
+      "id": "w-2",
       "dni": "45678912",
       "fullName": "Ricardo Loli",
       "role": "Operario",
@@ -212,6 +214,7 @@
       ]
     },
     {
+      "id": "w-3",
       "dni": "12345678",
       "fullName": "Miguel Estrada",
       "role": "Oficial",

@@ -281,7 +281,24 @@
       }
     },
     "workers": {
-      "tab-workers": "Workers Directory"
+      "tab-workers": "Worker Directory",
+      "title": "Machinery & Tools",
+      "register": {
+        "title": "Crews & Workers Registry",
+        "description": "Passive directory of operational personnel. Used exclusively to link ID numbers within the Logistics Module.",
+        "btn-add-worker": "+ New Worker",
+        "tab-dni": "ID Number",
+        "tab-name": "Full Name",
+        "tab-role": "Position / Crew",
+        "tab-status": "Work Status",
+        "tab-tools": "Assigned Tools",
+        "tab-action": "Action",
+        "tab-count-tools-one": "equipment",
+        "tab-count-tools-many": "equipment units",
+        "tab-btn-delete": "Delete",
+        "tab-status-active": "ACTIVE",
+        "tab-status-inactive": "INACTIVE"
+      }
     }
   }
 }

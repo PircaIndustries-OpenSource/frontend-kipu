@@ -5,6 +5,7 @@ import { TeamWorkersResource, TeamWorkersResponse } from './team-workers.respons
 export class TeamWorkersAssembler {
   static toEntityFromResource(resource: TeamWorkersResource): TeamWorkersEntity {
     return {
+      id: resource.id,
       dni: resource.dni,
       fullName: resource.fullName,
       role: resource.role,

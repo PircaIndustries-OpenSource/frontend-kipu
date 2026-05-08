@@ -1,1 +1,33 @@
-<p>workers-page works!</p>
+<section class="p-5">
+
+  <div class="flex justify-between mx-10 mr-30 overflow-y-auto">
+      <h1 class="text-2xl font-bold">{{'team.workers.title'| translate }}</h1>
+
+  </div>
+
+  <div class="workers-div shadow-md/20 p-7 mx-40 mt-10">
+
+  <div class="explanation flex justify-between">
+    <div class="info">
+      <h2 class="text-2xl font-medium">{{'team.workers.register.title' | translate}}</h2>
+      <p class="text-(--color-neutral-border) font-medium text-base/7">{{'team.workers.register.description' | translate}}</p>
+    </div>
+    <button matRipple class="px-s bg-accent text-white! py-s! rounded-m! font-bold! cursor-pointer transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2">{{'team.workers.register.btn-add-worker' | translate }}</button>
+  </div>
+
+    <div class="workers-table mt-10">
+
+      <div class="table-header grid grid-cols-6 border-2 rounded-md justify-center">
+        <div class="w-full flex justify-center"><h2 class="text-xl">{{'team.workers.register.tab-dni' | translate}}</h2></div>
+        <div class="w-full flex justify-center"><h2 class="text-xl">{{'team.workers.register.tab-name' | translate}}</h2></div>
+        <div class="w-full flex justify-center"><h2 class="text-xl">{{'team.workers.register.tab-role' | translate}}</h2></div>
+        <div class="w-full flex justify-center"><h2 class="text-xl">{{'team.workers.register.tab-status' | translate}}</h2></div>
+        <div class="w-full flex justify-center"><h2 class="text-xl">{{'team.workers.register.tab-tools' | translate}}</h2></div>
+        <div class="w-full flex justify-center"><h2 class="text-xl">{{'team.workers.register.tab-btn-delete' | translate}}</h2></div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

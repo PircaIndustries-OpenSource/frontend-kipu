@@ -281,7 +281,24 @@
         }
       },
       "workers": {
-        "tab-workers": "Directorio de Obreros"
+        "tab-workers": "Directorio de Obreros",
+        "title": "Maquinaria y Herramientas",
+        "register": {
+          "title": "Registro de Cuadrillas y Obreros",
+          "description": "Directorio pasivo del personal operario. Se utiliza exclusivamente para asociar su DNI en el Módulo Logístico.",
+          "btn-add-worker": "+ Nuevo Obrero",
+          "tab-dni": "Documento (DNI)",
+          "tab-name": "Nombres Completos",
+          "tab-role": "Cargo / Cuadrilla",
+          "tab-status": "Estado de Obra",
+          "tab-tools": "Herramientas asignadas",
+          "tab-action": "Acción",
+          "tab-count-tools-one": "equipo",
+          "tab-count-tools-many": "equipos",
+          "tab-btn-delete": "Eliminar",
+          "tab-status-active": "ACTIVO",
+          "tab-status-inactive": "INACTIVO"
+        }
       }
     }
   }

@@ -21,4 +21,18 @@ export class TeamWorkersApi {
       .get<TeamWorkersResponse>(this.teamWorkersUrl)
       .pipe(map((response) => TeamWorkersAssembler.toEntitiesFromResponse(response)));
   }
+
+  postWorker(worker: TeamWorkersEntity): Observable<TeamWorkersEntity> {
+    return this.http.post<TeamWorkersEntity>(this.teamWorkersUrl, worker);
+  }
+
+  updateWorker(worker: TeamWorkersEntity): Observable<TeamWorkersEntity> {
+    const url = `${this.teamWorkersUrl}/${worker.id}`;
+    return this.http.put<TeamWorkersEntity>(url, worker);
+  }
+
+  deleteWorker(id: string): Observable<void> {
+    const url = `${this.teamWorkersUrl}/${id}`;
+    return this.http.delete<void>(url);
+  }
 }
