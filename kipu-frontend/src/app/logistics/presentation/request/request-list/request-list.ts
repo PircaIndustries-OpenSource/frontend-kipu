@@ -1,6 +1,6 @@
 import {Component, input} from '@angular/core';
 import {RequestItem} from '../request-item/request-item';
-import {RequestEntity} from '../../../domain/request.entity';
+import {RequestViewModel } from '../../../domain/request.entity';
 
 @Component({
   selector: 'app-request-list',
@@ -9,7 +9,7 @@ import {RequestEntity} from '../../../domain/request.entity';
   styleUrl: './request-list.css',
 })
 export class RequestList {
-  requests = input.required<RequestEntity[]>();
+  requests = input.required<RequestViewModel[]>();
   availableBudget = input.required<number>();
   totalBudget = input.required<number>();
 }

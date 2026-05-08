@@ -1,11 +1,15 @@
 {
-  "/api/v1/materials/requests": "/materialRequests",
-  "/api/v1/materials/requests/:id": "/materialRequests/:id",
-  "/api/v1/materials/waste": "/materialWaste",
-  "/api/v1/materials/waste/:id": "/materialWaste/:id",
-  "/api/v1/materials/tools": "/materialTools",
-  "/api/v1/materials/tools/:id": "/materialTools/:id",
-  "/api/v1/materials/suppliers": "/materialSuppliers",
-  "/api/v1/materials/suppliers/:id": "/materialSuppliers/:id",
+  "/api/v1/materials": "/materialsCatalog",
+  "/api/v1/materials/categories": "/categoriesCatalog",
+  "/api/v1/materials/requests": "/materialsRequests",
+  "/api/v1/materials/requests/:id": "/materialsRequests/:id",
+  "/api/v1/materials/inventory": "/materialsInventory",
+  "/api/v1/materials/inventory/:id": "/materialsInventory/:id",
+  "/api/v1/materials/waste": "/materialsWaste",
+  "/api/v1/materials/waste/:id": "/materialsWaste/:id",
+  "/api/v1/materials/tools": "/materialsTools",
+  "/api/v1/materials/tools/:id": "/materialsTools/:id",
+  "/api/v1/materials/suppliers": "/materialsSuppliers",
+  "/api/v1/materials/suppliers/:id": "/materialsSuppliers/:id",
   "/api/v1/*": "/$1"
 }

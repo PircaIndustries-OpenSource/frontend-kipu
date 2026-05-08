@@ -39,7 +39,7 @@
     },
     "filters": {
       "title": "Quick Filters",
-      "only-urgent": "Urgent only",
+      "all": "Show all",
       "within-budget": "Within budget",
       "exceed-budget": "Exceed budget",
       "expire-48h": "Expires in 48 hrs"
@@ -92,6 +92,48 @@
         "reject": "Reject",
         "modify": "Request Modification",
         "view-details": "View Full Detail"
+      }
+    },
+    "create": {
+      "title": "New Material Request",
+      "fields": {
+        "category": "Material Category",
+        "specific-material": "Specific Material",
+        "quantity": "Quantity",
+        "unit": "Unit",
+        "budget": "Budget",
+        "budget-line": "Budget Line",
+        "priority": "Priority",
+        "required-date": "Required Delivery Date",
+        "delivery-location": "Delivery Location",
+        "purpose": "Purpose / Use",
+        "additional-notes": "Additional Observations",
+        "suggested-supplier": "Suggested Supplier",
+        "attachments": "Attach Documents (Quotes, Technical Specs)"
+      },
+      "placeholders": {
+        "select": "Select",
+        "quantity": "0",
+        "budget": "0.00",
+        "date": "dd / mm / yyyy",
+        "location": "Enter delivery point",
+        "purpose": "Describe what the material will be used for...",
+        "additional-notes": "Technical specs, preferred brand, etc...",
+        "dropzone": "Drag files here or click to select",
+        "dropzone-hint": "PDF, DOC, XLS, images (Max. 10MB)"
+      },
+      "budget-verification": {
+        "title": "Budget Verification",
+        "item-budget": "Item budget",
+        "executed": "Executed",
+        "available": "Available",
+        "status-ok": "This request is within the available budget",
+        "status-out-badge": "This request is out the available budget"
+      },
+      "actions": {
+        "generate": "Generate Ticket",
+        "save-draft": "Save Draft",
+        "cancel": "Cancel"
       }
     }
   },

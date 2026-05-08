@@ -12,7 +12,7 @@ import {AsyncPipe} from '@angular/common';
 })
 export class AutocompleteFilterList implements OnInit {
   listOptions = input.required<string[]>();
-  label = input.required<string>();
+  label = input<string>();
   placeholder = input.required<string>();
   optionSelected = output<string>();
   controlFilter =new FormControl('');

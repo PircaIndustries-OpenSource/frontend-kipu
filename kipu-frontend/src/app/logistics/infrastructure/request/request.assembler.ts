@@ -1,5 +1,5 @@
 import {RequestResource, RequestResponse} from './request.response';
-import {RequestEntity} from '../domain/request.entity';
+import {RequestEntity} from '../../domain/request.entity';
 
 export class RequestAssembler {
   static toEntityFromResource(resource: RequestResource): RequestEntity{
@@ -16,7 +16,7 @@ export class RequestAssembler {
       additionalNotes: resource.additionalNotes,
       suggestedSupplierId: resource.suggestedSupplierId,
       attachments: resource.attachments,
-      item: resource.item,
+      items: resource.items,
       requestedBy: resource.requestedBy,
       activity: resource.activity,
     }

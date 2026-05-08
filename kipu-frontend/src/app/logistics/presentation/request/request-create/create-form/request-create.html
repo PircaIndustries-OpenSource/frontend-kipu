@@ -1,0 +1,112 @@
+<form>
+  <header>
+  </header>
+  <div class="main">
+    <div class="material-choice">
+      <mat-form-field>
+        <mat-label>{{'request.create.fields.category'|translate}}</mat-label>
+        <app-autocomplete-filter-list
+          [listOptions]="nameCategories"
+          [placeholder]="'request.create.placeholders.select'|translate"
+          (optionSelected)="onCategoryMaterialSelect($event)"
+        ></app-autocomplete-filter-list>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{'request.create.fields.specific-material'|translate}}</mat-label>
+        <app-autocomplete-filter-list
+          [listOptions]="nameMaterials"
+          [placeholder]="'request.create.placeholders.select'|translate"
+          (optionSelected)="onCategoryMaterialSelect($event)"
+        ></app-autocomplete-filter-list>
+      </mat-form-field>
+    </div>
+    <div class="material-quantity">
+      <mat-form-field>
+        <mat-label>{{'request.create.fields.quantity'|translate}}</mat-label>
+        <input type="number" [placeholder]="'request.create.placeholders.select'|translate">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{'request.create.fields.unit'|translate}}</mat-label>
+        <p></p>
+      </mat-form-field>
+    </div>
+    <div class="budget-line">
+      <mat-form-field>
+        <mat-label>{{'request.create.fields.budget-line'|translate}}</mat-label>
+        <!--
+        <app-autocomplete-filter-list></app-autocomplete-filter-list>
+        -->
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'request.create.placeholders.priority'|translate}}</mat-label>
+        <mat-select>
+          <mat-option value="1">First option</mat-option>
+          <mat-option value="2">Second option</mat-option>
+          <mat-option value="3">First option</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="dateLocate">
+      <mat-form-field>
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Favorite food</mat-label>
+        <input matInput placeholder="Ex. Pizza" value="Sushi">
+      </mat-form-field>
+    </div>
+    <div class="moreInformation">
+      <mat-form-field class="example-full-width">
+        <mat-label>Leave a comment</mat-label>
+        <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Leave a comment</mat-label>
+        <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+      </mat-form-field>
+    </div>
+    <div class="budget">
+      <p>{{'request.create.budget.title'|translate}}</p>
+      <div>
+        <div>
+          <p>{{'request.create.budget.item-budget'|translate}}</p>
+          <p></p>
+        </div>
+        <div>
+          <p>{{'request.create.budget.executed'|translate}}</p>
+          <p></p>
+        </div>
+        <div>
+          <p>{{'request.create.budget.available'|translate}}</p>
+          <p></p>
+        </div>
+      </div>
+      <div>
+        <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+        <!--
+        @if(){
+          <p>{{'request.create.budget.status-ok'|translate}}</p>
+        }@else{
+          <p>{{'request.create.budget.status-out-badge'|translate}}</p>
+        }
+        -->
+      </div>
+      <div>
+      </div>
+    </div>
+    <div class="documents">
+    </div>
+    <div class="supplier-choice">
+      <mat-form-field>
+        <mat-label>{{'request.create.fields.budget-line'|translate}}</mat-label>
+        <!--
+        <app-autocomplete-filter-list></app-autocomplete-filter-list>
+        -->
+      </mat-form-field>
+    </div>
+  </div>
+</form>

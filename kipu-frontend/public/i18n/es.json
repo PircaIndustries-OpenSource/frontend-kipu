@@ -39,7 +39,7 @@
     },
     "filters": {
       "title": "Filtros Rápidos",
-      "only-urgent": "Solo urgentes",
+      "all": "Mostrar todos",
       "within-budget": "Dentro del presupuesto",
       "exceed-budget": "Excede presupuesto",
       "expire-48h": "Vence en 48 hrs"
@@ -92,6 +92,48 @@
         "reject": "Rechazar",
         "modify": "Solicitar Modificación",
         "view-details": "Ver Detalle Completo"
+      }
+    },
+    "create": {
+      "title": "Nueva Solicitud de Material",
+      "fields": {
+        "category": "Categoría de Material",
+        "specific-material": "Material Específico",
+        "quantity": "Cantidad",
+        "unit": "Unidad",
+        "budget": "Presupuesto",
+        "budget-line": "Partida Presupuestal",
+        "priority": "Prioridad",
+        "required-date": "Fecha de Entrega Requerida",
+        "delivery-location": "Ubicación de Entrega",
+        "purpose": "Uso / Finalidad",
+        "additional-notes": "Observaciones Adicionales",
+        "suggested-supplier": "Proveedor sugerido",
+        "attachments": "Adjuntar Documentos (Cotizaciones, Especificaciones Técnicas)"
+      },
+      "placeholders": {
+        "select": "Seleccionar",
+        "quantity": "0",
+        "budget": "0.00",
+        "date": "dd / mm / aaaa",
+        "location": "Ingrese punto de entrega",
+        "purpose": "Describe para qué se utilizará el material...",
+        "additional-notes": "Especificaciones técnicas, marca preferida, etc...",
+        "dropzone": "Arrastra archivos aquí o haz clic para seleccionar",
+        "dropzone-hint": "PDF, DOC, XLS, imágenes (Máx. 10MB)"
+      },
+      "budget-verification": {
+        "title": "Verificación Presupuestaria",
+        "item-budget": "Presupuesto partida",
+        "executed": "Ejecutado",
+        "available": "Disponible",
+        "status-ok": "Esta solicitud está dentro del presupuesto disponible",
+        "status-out-badge": "Esta solicitud está fuera del presupuesto disponble"
+      },
+      "actions": {
+        "generate": "Generar Ticket",
+        "save-draft": "Guardar Borrador",
+        "cancel": "Cancelar"
       }
     }
   },

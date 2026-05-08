@@ -30,7 +30,12 @@
           {{ 'request.filters.title' | translate }}
         </h3>
         <ul class="flex flex-col gap-2">
-
+          <li class="px-m py-s border border-neutral-border/20 rounded-s text-sm
+          text-primary font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary
+          transition-all"
+              (click)="onFilterChange('all')">
+            {{ 'request.filters.all' | translate }}
+          </li>
           <li class="px-m py-s border border-neutral-border/20 rounded-s text-sm
           text-primary font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary
           transition-all"
