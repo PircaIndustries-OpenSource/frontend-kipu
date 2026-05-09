@@ -16,7 +16,7 @@ import {GeolocalizationResponse} from '../models/geolocalization.response';
 import {GeolocalizationAssembler} from '../assemblers/geolocalization.assembler';
 
 @Injectable({ providedIn: 'root' })
-export class IotApiService {
+export class IotMonitoringApiService {
   private httpClient = inject(HttpClient);
   private readonly baseUrl = environment.kipuApiBaseUrl;
   private readonly ioTMonitoringEndpoint = environment.kipuApiIoTMonitoringEndpointPath;
