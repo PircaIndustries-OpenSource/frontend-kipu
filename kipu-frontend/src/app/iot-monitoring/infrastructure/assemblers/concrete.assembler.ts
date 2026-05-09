@@ -25,5 +25,4 @@ export class ConcreteAssembler {
   static toEntitiesFromResponse(concreteResponse: ConcreteResponse): ConcreteEntity[] {
     return concreteResponse.map((resource) => this.toEntityFromResource(resource));
   }
-
 }

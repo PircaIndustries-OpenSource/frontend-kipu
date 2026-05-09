@@ -6,18 +6,12 @@ export class GeolocalizationEntity {
   #latitude: number;
   #state: string;
 
-  constructor(
-    id: string,
-    name: string,
-    projectId: string,
-    longitude: number,
-    latitude: number,
-  ) {
-    this.#id = id;
-    this.#name = name;
-    this.#projectId = projectId;
-    this.#longitude = longitude;
-    this.#latitude = latitude;
+  constructor() {
+    this.#id = '';
+    this.#name = '';
+    this.#projectId = '';
+    this.#longitude = 0;
+    this.#latitude = 0;
     this.#state = '';
   }
 

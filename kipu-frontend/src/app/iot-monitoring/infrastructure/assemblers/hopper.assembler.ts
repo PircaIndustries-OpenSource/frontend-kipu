@@ -12,11 +12,11 @@ export class HopperAssembler {
     hopperEntity.lastLecture = hopperResource.lastLecture;
 
     const states : Record<number, string> = {1: 'OPTIMUM', 2: 'CRITIC'};
-    hopperEntity.state = states[hopperResource.state];
+    hopperEntity.state = states[hopperResource.state] || 'UNKNOWN';
 
     return hopperEntity;
   }
-  static toEntityFromResponse(hopperResponse: HopperResponse): HopperEntity [] {
+  static toEntitiesFromResponse(hopperResponse: HopperResponse): HopperEntity [] {
     return hopperResponse.map((resource) => this.toEntityFromResource(resource));
   }
 }
