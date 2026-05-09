@@ -1,5 +1,5 @@
 import { MachineryResource, MachineryResponse } from './machinery.response';
-import { MachineryEntity } from '../domain/machinery.entity';
+import { MachineryEntity } from '../../domain/machinery.entity';
 
 export class MachineryAssembler{
   static toEntityFromResource(resource: MachineryResource): MachineryEntity {

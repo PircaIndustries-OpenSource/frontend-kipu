@@ -1,5 +1,5 @@
 import { WasteResource, WasteResponse } from './waste.response';
-import { WasteEntity } from '../domain/waste.entity';
+import { WasteEntity } from '../../domain/waste.entity';
 
 export class WasteAssembler {
   static toEntityFromResource(resource: WasteResource): WasteEntity {

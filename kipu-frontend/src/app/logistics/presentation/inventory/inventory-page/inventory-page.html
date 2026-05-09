@@ -6,7 +6,7 @@
   </header>
   <div class="flex flex-row gap-xl">
     <div class="flex-1 min-w-0 flex flex-col gap-l">
-      <app-material-list [materials]="materials()"></app-material-list>
+      <app-inventory-list [inventoryMaterials]="inventoryMaterials()"></app-inventory-list>
     </div>
     <aside class="w-64 flex flex-col gap-xl items-center">
       <div class="flex flex-col gap-m">
@@ -24,9 +24,8 @@
           {{ 'inventory.filters.category' | translate }}
         </h3>
         <app-autocomplete-filter-list
-          [label]="'inventory.filters.category' | translate"
           [placeholder]="'inventory.filters.placeholder' | translate"
-          [listOptions]="categories()"
+          [listOptions]="categoryNames()"
           (optionSelected)="onCategorySelect($event)"
         />
       </div>

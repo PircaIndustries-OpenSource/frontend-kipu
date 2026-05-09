@@ -1,22 +1,28 @@
 import {inject, Injectable} from '@angular/core';
 import {map, Observable} from 'rxjs';
-import {MaterialEntity} from '../domain/material.entity';
+import {InventoryMaterialEntity} from '../domain/inventoryMaterial.entity';
 import {HttpClient} from '@angular/common/http';
-import {MaterialsResponse} from './materials.response';
+import {InventoryMaterialsResponse} from './inventory/inventoryMaterials.response';
 import {environment} from '../../../environments/environment.development';
-import {MaterialsAssembler} from './materials.assembler';
+import {InventoryMaterialAssembler} from './inventory/inventoryMaterial.assembler';
 import {RequestEntity} from '../domain/request.entity';
-import {RequestResponse} from './request.response';
-import {RequestAssembler} from './request.assembler';
+import {RequestResponse} from './request/request.response';
+import {RequestAssembler} from './request/request.assembler';
 import { MachineryEntity } from '../domain/machinery.entity';
-import { MachineryResponse } from './machinery.response';
-import { MachineryAssembler } from './machinery.assembler';
+import { MachineryResponse } from './machinery/machinery.response';
+import { MachineryAssembler } from './machinery/machinery.assembler';
 import { Supplier } from '../domain/supplier';
-import { SupplierResponse } from './supplier-response';
-import { SupplierAssembler } from './supplier.assembler';
+import { SupplierResponse } from './suppliers/supplier-response';
+import { SupplierAssembler } from './suppliers/supplier.assembler';
 import { WasteEntity } from '../domain/waste.entity';
-import { WasteResponse } from './waste.response';
-import { WasteAssembler } from './waste.assembler';
+import { WasteResponse } from './waste/waste.response';
+import { WasteAssembler } from './waste/waste.assembler';
+import { MaterialEntity } from '../domain/material.entity';
+import { MaterialsAssembler } from './materials/materials.assembler';
+import { MaterialsResponse } from './materials/materials.response';
+import { CategoryEntity } from '../domain/category.entity';
+import { CategoriesResponse } from './materials/categories.response';
+import { CategoriesAssembler } from './materials/categories.assembler';
 
 @Injectable({
   providedIn: 'root',
@@ -24,11 +30,18 @@ import { WasteAssembler } from './waste.assembler';
 export class LogisticsApi {
   http = inject(HttpClient);
   apiBaseUrl = environment.kipuApiBaseUrl;
+  inventoryMaterialsEndpoint = environment.kipuApiInventoryMaterialsEndpointPath;
   materialsEndpoint = environment.kipuApiMaterialsEndpointPath;
   requestsEndpoint = environment.kipuApiRequestEndpointPath;
   machineryEndpoint = environment.kipuApiMachineryEndpointPath;
   suppliersEndpoint = environment.kipuApiSuppliersEndpointPath;
   wasteEndpoint = environment.kipuApiWasteEndpointPath;
+  categoriesEndpoint = environment.kipuApiCategoriesEndPath;
+  getAllInventoryMaterials(): Observable<InventoryMaterialEntity[]> {
+    return this.http
+      .get<InventoryMaterialsResponse>(`${this.apiBaseUrl}${this.inventoryMaterialsEndpoint}`)
+      .pipe(map((response) => InventoryMaterialAssembler.toEntitiesFromResponse(response)));
+  }
   getAllMaterials(): Observable<MaterialEntity[]> {
     return this.http
       .get<MaterialsResponse>(`${this.apiBaseUrl}${this.materialsEndpoint}`)
@@ -53,5 +66,10 @@ export class LogisticsApi {
     return this.http
       .get<WasteResponse>(`${this.apiBaseUrl}${this.wasteEndpoint}`)
       .pipe(map((response) => WasteAssembler.toEntitiesFromResponse(response)));
+  }
+  getAllCategories(): Observable<CategoryEntity[]> {
+    return this.http
+      .get<CategoriesResponse>(`${this.apiBaseUrl}${this.categoriesEndpoint}`)
+      .pipe(map((response) => CategoriesAssembler.toEntitiesFromResponse(response)));
   }
 }

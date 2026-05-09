@@ -9,6 +9,7 @@ export class Supplier {
   categories: string;
   paymentTerms: string;
   status: string;
+  offerMaterials: SupplierOfferEntity[];
 
   constructor() {
     this.id = '';
@@ -21,5 +22,16 @@ export class Supplier {
     this.categories ='';
     this.paymentTerms ='';
     this.status = '';
+    this.offerMaterials = [];
+  }
+}
+export class SupplierOfferEntity{
+  supplierId: string;
+  materialId: string;
+  unitPrice: number;
+  constructor() {
+    this.supplierId = '';
+    this.materialId = '';
+    this.unitPrice = 0;
   }
 }

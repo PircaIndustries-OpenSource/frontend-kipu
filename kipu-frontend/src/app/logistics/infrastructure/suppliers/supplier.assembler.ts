@@ -1,5 +1,5 @@
 import { SupplierResource, SupplierResponse } from './supplier-response';
-import { Supplier } from '../domain/supplier';
+import { Supplier } from '../../domain/supplier';
 
 export class SupplierAssembler {
   static toEntityFromResource(resource: SupplierResource): Supplier {
@@ -14,9 +14,10 @@ export class SupplierAssembler {
       categories: resource.categories,
       paymentTerms: resource.paymentTerms,
       status: resource.status,
+      offerMaterials: resource.offerMaterials
     };
   }
   static toEntitiesFromResponse(response: SupplierResponse): Supplier[] {
-    return response.map((resource) => this.toEntityFromResource(resource));
+      return response.map((resource) => this.toEntityFromResource(resource));
+    }
   }
-}
