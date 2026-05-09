@@ -12,4 +12,9 @@ export const environment = {
   kipuApiWasteEndpointPath: '/materials/waste',
   kipuApiCategoriesEndPath: '/materials/categories',
   kipuApiDocumentsEndpointPath: '/documents',
+  kipuApiIoTMonitoringEndpointPath: '/iot-monitoring',
+  kipuApiConcreteCuringEndpointPath: '/concrete-curing',
+  kipuApiGeolocalizationEndpointPath: '/geolocalization',
+  kipuApiHopperWatchEndpointPath: '/hopper-watch',
+  kipuApiSeismicControlEndpointPath: '/seismic-control',
 };
