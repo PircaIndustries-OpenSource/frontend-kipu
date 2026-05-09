@@ -5,11 +5,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { IdentityService } from '../../../infrastructure/identity.service';
+import { AuthBannerComponent } from '../../../../shared/presentation/components/auth-banner/auth-banner.component';
 
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, MatButtonModule, MatFormFieldModule, MatInputModule],
+  imports: [ReactiveFormsModule, RouterLink, MatButtonModule, MatFormFieldModule, MatInputModule, AuthBannerComponent],
   templateUrl: './forgot-password.component.html',
 })
 export class ForgotPasswordComponent {

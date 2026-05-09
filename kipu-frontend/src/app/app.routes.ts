@@ -1,16 +1,20 @@
 import { Routes } from '@angular/router';
-import { RegisterComponent } from './presentation/components/register/register.component';
+import { RegisterComponent } from './identity/presentation/components/register/register.component';
 import { Layout } from './shared/presentation/layout/layout';
 import { LogisticsPage } from './logistics/presentation/logistics-page/logistics-page';
+import { LoginComponent } from './identity/presentation/components/login/login.component';
 
 export const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'register',
+    pathMatch: 'full',
+  },
   {
     path: 'register',
     component: RegisterComponent,
   },
   {
-<<<<<<< Updated upstream
-=======
     path: 'login',
     component: LoginComponent,
   },
@@ -27,10 +31,16 @@ export const routes: Routes = [
     loadComponent: () => import('./identity/presentation/components/reset-password/reset-password.component').then(m => m.ResetPasswordComponent)
   },
   {
->>>>>>> Stashed changes
     path: '',
     component: Layout,
     children: [
+      {
+        path: 'projects',
+        loadComponent: () =>
+          import('./projects/presentation/projects-dashboard/projects-dashboard.component').then(
+            (m) => m.ProjectsDashboardComponent,
+          ),
+      },
       {
         path: 'logistics',
         component: LogisticsPage,

@@ -1,0 +1,37 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-auth-banner',
+  standalone: true,
+  template: `
+    <div class="bg-slate-700 h-full p-12 flex flex-col justify-center text-white">
+      <h1 class="text-4xl font-bold mb-2">Kipu</h1>
+      <p class="text-slate-300 mb-10 text-lg">Sistema de Gestión de Obras</p>
+
+      <div class="space-y-6">
+        <div class="flex items-start gap-4">
+          <div class="text-2xl">📊</div>
+          <div>
+            <h3 class="font-semibold text-white">Control Total</h3>
+            <p class="text-slate-300 text-sm">Gestiona tus proyectos de construcción desde cualquier lugar</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="text-2xl">📱</div>
+          <div>
+            <h3 class="font-semibold text-white">Multiplataforma</h3>
+            <p class="text-slate-300 text-sm">Accede desde web o móvil, sincronizado en tiempo real</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="text-2xl">✅</div>
+          <div>
+            <h3 class="font-semibold text-white">Seguimiento Continuo</h3>
+            <p class="text-slate-300 text-sm">Registra avances, materiales, RNC y más</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  `
+})
+export class AuthBannerComponent { }

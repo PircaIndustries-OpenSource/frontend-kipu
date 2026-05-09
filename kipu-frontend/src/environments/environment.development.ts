@@ -3,4 +3,5 @@ export const environment = {
   kipuApiBaseUrl: 'http://localhost:3000/api/v1',
   kipuApiMaterialsEndpointPath: '/materials',
   kipuApiRequestEndpointPath: '/materials/requests',
+  kipuApiProjectsEndpointPath: '/projects',
 };

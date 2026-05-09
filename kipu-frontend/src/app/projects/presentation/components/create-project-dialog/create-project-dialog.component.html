@@ -1,0 +1,76 @@
+<h2 mat-dialog-title class="font-bold text-xl mb-4">Nuevo Proyecto de Obra</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="projectForm" class="flex flex-col gap-4 mt-2">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Nombre del Proyecto</mat-label>
+      <input matInput formControlName="name" placeholder="Ej: Edificio Corporativo Los Olivos">
+      @if (projectForm.get('name')?.hasError('required')) {
+        <mat-error>El nombre es obligatorio.</mat-error>
+      }
+      @if (projectForm.get('name')?.hasError('nameDuplicated')) {
+        <mat-error>Ya existe un proyecto con este nombre.</mat-error>
+      }
+      @if (projectForm.get('name')?.pending) {
+        <mat-hint class="text-blue-500">Verificando disponibilidad...</mat-hint>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput formControlName="description" rows="3" placeholder="Describe el alcance del proyecto"></textarea>
+      @if (projectForm.get('description')?.hasError('required')) {
+        <mat-error>La descripción es obligatoria.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Ubicación</mat-label>
+      <input matInput formControlName="location" placeholder="Ej: Av. Principal 123, Lima">
+      @if (projectForm.get('location')?.hasError('required')) {
+        <mat-error>La ubicación es obligatoria.</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="flex flex-row gap-4">
+      <mat-form-field appearance="outline" class="flex-1">
+        <mat-label>Estado Inicial</mat-label>
+        <mat-select formControlName="status">
+          <mat-option value="PLANNED">Planificado</mat-option>
+          <mat-option value="IN_PROGRESS">En Progreso</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="flex-1">
+        <mat-label>Presupuesto Estimado</mat-label>
+        <input matInput formControlName="estimatedBudget" type="number" placeholder="Ej: 500000">
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-row gap-4">
+      <mat-form-field appearance="outline" class="flex-1">
+        <mat-label>Fecha de Inicio</mat-label>
+        <input matInput [matDatepicker]="pickerStart" formControlName="startDate">
+        <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+        <mat-datepicker #pickerStart></mat-datepicker>
+        @if (projectForm.get('startDate')?.hasError('required')) {
+          <mat-error>Obligatorio.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="flex-1">
+        <mat-label>Fecha Fin (Opcional)</mat-label>
+        <input matInput [matDatepicker]="pickerEnd" formControlName="endDate">
+        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+        <mat-datepicker #pickerEnd></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="pb-4 pr-4">
+  <button mat-stroked-button mat-dialog-close>Cancelar</button>
+  <button mat-flat-button color="primary" (click)="onSubmit()" [disabled]="projectForm.invalid || projectForm.pending">
+    Crear Proyecto
+  </button>
+</mat-dialog-actions>

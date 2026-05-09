@@ -1,5 +1,7 @@
 export interface Identity {
   id?: string;
   email: string;
-  role: string;
+  name?: string;
+  password?: string;
+  role?: string;
 }

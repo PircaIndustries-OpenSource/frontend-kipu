@@ -1,12 +1,15 @@
 import { Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { IdentityService } from '../../../infrastructure/identity.service';
 import { RegisterSuccessDialogComponent } from './reset-password-success.component';
+import { AuthBannerComponent } from '../../../../shared/presentation/components/auth-banner/auth-banner.component';
+import { MatDividerModule } from '@angular/material/divider';
+
 
 function passwordMatch(control: AbstractControl) {
   const password = control.get('password')?.value;
@@ -17,7 +20,7 @@ function passwordMatch(control: AbstractControl) {
 @Component({
   selector: 'app-reset-password',
   standalone: true,
-  imports: [ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule],
+  imports: [ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule, RouterLink, MatDividerModule, AuthBannerComponent],
   templateUrl: './reset-password.component.html',
 })
 export class ResetPasswordComponent {
@@ -30,7 +33,7 @@ export class ResetPasswordComponent {
   form = this.fb.group(
     {
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', [Validators.required]],
     },
     { validators: passwordMatch },

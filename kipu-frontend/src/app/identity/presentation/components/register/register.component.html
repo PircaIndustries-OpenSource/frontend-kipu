@@ -1,34 +1,7 @@
 <div class="min-h-screen bg-slate-800 flex items-center justify-center p-4">
   <div class="bg-white rounded-xl shadow-2xl flex flex-col md:flex-row w-full max-w-5xl overflow-hidden">
 
-    <div class="bg-slate-700 md:w-1/2 p-12 flex flex-col justify-center text-white">
-      <h1 class="text-4xl font-bold mb-2">Kipu</h1>
-      <p class="text-slate-300 mb-10 text-lg">Sistema de Gestión de Obras</p>
-
-      <div class="space-y-6">
-        <div class="flex items-start gap-4">
-          <div class="text-2xl">📊</div>
-          <div>
-            <h3 class="font-semibold text-white">Control Total</h3>
-            <p class="text-slate-300 text-sm">Gestiona tus proyectos de construcción desde cualquier lugar</p>
-          </div>
-        </div>
-        <div class="flex items-start gap-4">
-          <div class="text-2xl">📱</div>
-          <div>
-            <h3 class="font-semibold text-white">Multiplataforma</h3>
-            <p class="text-slate-300 text-sm">Accede desde web o móvil, sincronizado en tiempo real</p>
-          </div>
-        </div>
-        <div class="flex items-start gap-4">
-          <div class="text-2xl">✅</div>
-          <div>
-            <h3 class="font-semibold text-white">Seguimiento Continuo</h3>
-            <p class="text-slate-300 text-sm">Registra avances, materiales, RNC y más</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <app-auth-banner></app-auth-banner>
 
     <div class="md:w-1/2 p-12 bg-gray-50 flex flex-col justify-center">
       <h2 class="text-3xl font-bold text-gray-800 mb-1">Registro</h2>
@@ -46,7 +19,7 @@
           @if (registerForm.get('email')?.hasError('email')) {
             <mat-error>El formato del correo no es válido.</mat-error>
           }
-          @if (registerForm.get('email')?.hasError('emailDuplicado')) {
+          @if (registerForm.get('email')?.hasError('emailDuplicated')) {
             <mat-error>Este correo ya se encuentra activo en el sistema.</mat-error>
           }
           @if (registerForm.get('email')?.pending) {
@@ -62,7 +35,7 @@
             <mat-error>La contraseña es obligatoria.</mat-error>
           }
           @if (registerForm.get('password')?.hasError('minlength')) {
-            <mat-error>Debe tener al menos 6 caracteres.</mat-error>
+            <mat-error>Debe tener al menos 8 caracteres.</mat-error>
           }
         </mat-form-field>
 

@@ -5,9 +5,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import {IdentityService} from '../../../infrastructure/identity.service';
+import { IdentityService } from '../../../infrastructure/identity.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
+import { AuthBannerComponent } from '../../../../shared/presentation/components/auth-banner/auth-banner.component';
 
 @Component({
   selector: 'app-login',
@@ -20,10 +21,10 @@ import { MatDividerModule } from '@angular/material/divider';
     MatInputModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatDividerModule
+    MatDividerModule,
+    AuthBannerComponent
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
 })
 export class LoginComponent {
   loginForm: FormGroup;

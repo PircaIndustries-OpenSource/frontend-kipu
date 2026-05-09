@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -6,9 +6,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-
-import { IdentityService } from '../../../core/services/identity.service';
 import { catchError, map, Observable, of, switchMap, timer } from 'rxjs';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -16,8 +15,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 
+import { AuthBannerComponent } from '../../../../shared/presentation/components/auth-banner/auth-banner.component';
+import { Identity } from '../../../domain/identity.model';
+import { IdentityService } from '../../../infrastructure/identity.service';
+
 @Component({
   selector: 'app-register',
+  standalone: true,
   imports: [
     ReactiveFormsModule,
     MatCardModule,
@@ -26,6 +30,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatButtonModule,
     MatCheckboxModule,
     MatDividerModule,
+    AuthBannerComponent,
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
@@ -33,12 +38,13 @@ import { MatDividerModule } from '@angular/material/divider';
 export class RegisterComponent {
   registerForm: FormGroup;
 
-  private identityService = new IdentityService();
+  private identityService = inject(IdentityService);
+  private fb = inject(FormBuilder);
 
-  constructor(private fb: FormBuilder) {
+  constructor() {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email], [this.emailDuplicationValidator()]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
 
@@ -58,11 +64,15 @@ export class RegisterComponent {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      const newIdentity = this.registerForm.value;
+      const newIdentity: Identity = {
+        email: this.registerForm.value.email,
+        password: this.registerForm.value.password,
+        name: 'Usuario Nuevo',
+        role: 'Gestor Operativo'
+      };
 
       this.identityService.registerData(newIdentity).subscribe({
         next: (response) => {
-          // Escenario 1: El sistema emite la confirmación de cuenta creada
           console.log('Cuenta creada exitosamente:', response);
           alert('Identidad habilitada en el sistema correctamente.');
 
