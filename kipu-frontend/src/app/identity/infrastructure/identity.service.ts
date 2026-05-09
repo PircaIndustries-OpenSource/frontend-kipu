@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable, map, of, switchMap } from 'rxjs';
 import { Identity } from '../domain/identity.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class IdentityService {
   private http = inject(HttpClient);
 
-  private apiUrl = 'http://localhost:3000/identity';
+  private apiUrl = environment.kipuApiBaseUrl + '/identity';
 
   /**
    * Check if an email already exists.
