@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  kipuApiBaseUrl: 'http://localhost:4200/api/v1',
+  kipuApiBaseUrl: '/api/v1',
   kipuApiInventoryMaterialsEndpointPath: '/materials/inventory',
   kipuApiMaterialsEndpointPath: '/materials',
   kipuApiRequestEndpointPath: '/materials/requests',
