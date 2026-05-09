@@ -22,8 +22,8 @@ export class ConcreteAssembler {
     return concreteSensor;
   }
 
-  static toEntitiesFromResponse(response: ConcreteResponse): ConcreteEntity[] {
-    return response.map((resource) => this.toEntityFromResource(resource));
+  static toEntitiesFromResponse(concreteResponse: ConcreteResponse): ConcreteEntity[] {
+    return concreteResponse.map((resource) => this.toEntityFromResource(resource));
   }
 
 }

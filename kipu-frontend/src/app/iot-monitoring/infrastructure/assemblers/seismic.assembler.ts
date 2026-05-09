@@ -18,7 +18,7 @@ export class SeismicAssembler {
     return seismicEntity;
   }
 
-  static toEntitiesFromResponse(response: SeismicResponse): SeismicEntity[] {
-    return response.map((resource) => this.toEntityFromResource(resource));
+  static toEntitiesFromResponse(seismicResponse: SeismicResponse): SeismicEntity[] {
+    return seismicResponse.map((resource) => this.toEntityFromResource(resource));
   }
 }
