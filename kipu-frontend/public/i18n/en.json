@@ -251,22 +251,6 @@
       "hours-ago-3": "3 hours ago",
       "days-ago-1": "1 day ago",
       "blocked": "Blocked"
-    },
-
-    "team": {
-      "users": {
-        "tab-users": "System Users",
-        "title": "User Managing",
-        "stats": {
-          "active": "ACTIVE USERS",
-          "managers": "MANAGERS / RESIDENTS",
-          "logistics": "LOGISTIC TEAM",
-          "clients": "CLIENTS / INVESTORS"
-        }
-      },
-      "workers": {
-        "tab-workers": "Workers Directory"
-      }
     }
   },
   "waste": {
@@ -292,6 +276,128 @@
       "actions": {
         "view-photo": "View attached photo"
       }
+    }
+  },
+  "team": {
+    "users": {
+      "tab-users": "System Users",
+      "title": "User Managing",
+      "stats": {
+        "active": "ACTIVE USERS",
+        "managers": "MANAGERS / RESIDENTS",
+        "logistics": "LOGISTIC TEAM",
+        "clients": "CLIENTS / INVESTORS"
+      },
+      "assigned-roles": {
+        "title": "Role Assignment",
+        "user-tab": "User",
+        "email-tab": "Email",
+        "assigned-role-tab": "Assigned Role",
+        "action-tab": "Action",
+        "user-profile-you": "You",
+        "btn-action": "Disable",
+        "btn-action-done": "Disabled",
+        "input-placeholder": "Name, email or role...",
+        "search-user": "Search user",
+        "user-count": "users",
+        "no-user-found": "No users were found with"
+      },
+      "btn-invite": "Send Invitation",
+      "role-dictionary": {
+        "title": "Role Dictionary",
+        "administrator": "Administrator",
+        "administrator-description": "Full system access. Can manage projects, base budgets and access controls.",
+        "manager": "Operations Manager",
+        "manager-description": "Field-focused. Records progress, RNCs and requests materials. Views blueprints.",
+        "logistics": "Logistics",
+        "logistics-description": "Office-focused. Approves orders, edits inventory and manages suppliers.",
+        "client": "Client",
+        "client-description-1": "Strict access level of ",
+        "client-description-bold": "Read Only. ",
+        "client-description-2": "All creation or editing buttons are hidden in their view to protect the data.",
+        "engineer": "Engineer"
+      },
+      "send-invitation": {
+        "title": "Invite new user",
+        "credentials": "An email with the system access credentials will be sent.",
+        "email": "EMAIL ADDRESS",
+        "email-placeholder": "user@company.com",
+        "name": "Name",
+        "name-placeholder": "e.g., 'Juan'",
+        "lastname": "Lastname",
+        "lastname-placeholder": "e.g., 'Perez'",
+        "rol": "Rol to assign",
+        "btn-cancel": "Cancel",
+        "btn-invite": "Send Invitation"
+      }
+    },
+    "workers": {
+      "tab-workers": "Worker Directory",
+      "title": "Machinery & Tools",
+      "register": {
+        "title": "Crews & Workers Registry",
+        "description": "Passive directory of operational personnel. Used exclusively to link ID numbers within the Logistics Module.",
+        "btn-add-worker": "+ New Worker",
+        "tab-dni": "ID Number",
+        "tab-name": "Full Name",
+        "tab-role": "Position / Crew",
+        "tab-status": "Work Status",
+        "tab-tools": "Assigned Tools",
+        "tab-action": "Action",
+        "tab-count-tools-one": "equipment",
+        "tab-count-tools-many": "equipment units",
+        "tab-btn-delete": "Delete",
+        "tab-status-active": "ACTIVE",
+        "tab-status-inactive": "INACTIVE",
+        "no-workers-found": "No workers registered yet."
+      },
+      "add-modal": {
+        "title": "Register New Worker",
+        "dni-label": "ID Number",
+        "dni-placeholder": "8 digits",
+        "name-label": "Full Name",
+        "name-placeholder": "e.g., Juan Perez",
+        "role-label": "Position / Crew",
+        "role-placeholder": "e.g., Masonry Worker",
+        "tools-title": "Assigned Tools",
+        "tools-add": "+ Add Tool",
+        "tools-placeholder": "Equipment name...",
+        "btn-save": "Save Worker",
+        "btn-cancel": "Cancel",
+        "no-tools-added": "No initial tools assigned"
+      }
+    }
+  },
+  "signatures": {
+    "dialog": {
+      "title": "Sign Document",
+      "description": "Enter the verification code you received by email.",
+      "token-sent": "A 6-digit code has been sent to your email.",
+      "token-label": "Verification code",
+      "token-hint": "Enter the 6 digits",
+      "btn-cancel": "Cancel",
+      "btn-confirm": "Confirm Signature"
+    },
+    "page": {
+      "title": "Documents",
+      "pending-title": "Documents Pending Your Signature",
+      "signed-title": "Signed Documents",
+      "deadline": "Deadline",
+      "signers": "Signers",
+      "btn-sign": "Sign Document",
+      "empty-pending": "No pending documents",
+      "empty-signed": "No signed documents",
+      "signed-at": "Signed on",
+      "summary-title": "Summary",
+      "summary-pending": "Pending",
+      "summary-signed": "Signed",
+      "security-title": "Secure Digital Signature",
+      "security-description": "All signatures are encrypted and have legal validity according to current regulations.",
+      "howto-title": "How to sign?",
+      "howto-step1": "Review the complete document",
+      "howto-step2": "Click on 'Sign Document'",
+      "howto-step3": "Enter the verification code",
+      "howto-step4": "The signature is automatically recorded"
     }
   }
 }

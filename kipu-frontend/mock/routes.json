@@ -11,5 +11,9 @@
   "/api/v1/materials/tools/:id": "/materialsTools/:id",
   "/api/v1/materials/suppliers": "/materialsSuppliers",
   "/api/v1/materials/suppliers/:id": "/materialsSuppliers/:id",
+  "/api/v1/team/users": "/team-users",
+  "/api/v1/team/workers": "/team-workers",
+  "/api/v1/team": "/team",
+  "/api/v1/documents": "/documents",
   "/api/v1/*": "/$1"
 }

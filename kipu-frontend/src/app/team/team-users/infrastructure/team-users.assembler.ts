@@ -1,5 +1,5 @@
 import { TeamUsersResource, TeamUsersResponse } from './team-users.response';
-import { TeamUsersEntity } from '../domain/team-users.entity';
+import { TeamUsersEntity } from '../domain/model/team-users.entity';
 
 export class TeamUsersAssembler {
   static toEntityFromResource(resource: TeamUsersResource): TeamUsersEntity{
@@ -7,9 +7,7 @@ export class TeamUsersAssembler {
       id: resource.id,
       fullName: resource.fullName,
       email: resource.email,
-      password: resource.password,
       isActive: resource.isActive,
-      hasUnreadNotifications: resource.hasUnreadNotifications,
       role: resource.role
     };
   }

@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import {RegisterComponent} from './presentation/components/register/register.component';
 import { Layout } from './shared/presentation/layout/layout';
 import {LogisticsPage} from './logistics/presentation/logistics-page/logistics-page';
-import { TeamPage } from './logistics/presentation/team/team-page/team-page';
+import { TeamPage } from './team/presentation/team-page/team-page';
 
 export const routes: Routes = [
   {
@@ -97,8 +97,8 @@ export const routes: Routes = [
       {
         path: 'signatures',
         loadComponent: () =>
-          import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
-            (m) => m.InventoryPage,
+          import('./signatures/document/presentation/document-page/document-page').then(
+            (m) => m.DocumentPage,
           ),
       },
       {
@@ -115,14 +115,14 @@ export const routes: Routes = [
           {
             path: 'users',
             loadComponent: () =>
-              import('./logistics/presentation/team/users-page/users-page').then(
+              import('./team/team-users/presentation/users-page/users-page').then(
                 (m) => m.UsersPage,
               ),
           },
           {
             path: 'workers',
             loadComponent: () =>
-              import('./logistics/presentation/team/workers-page/workers-page').then(
+              import('./team/team-workers/presentation/workers-page/workers-page').then(
                 (m) => m.WorkersPage,
               ),
           },

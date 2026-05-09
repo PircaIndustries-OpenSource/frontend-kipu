@@ -35,7 +35,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 export class RequestCreate {
   materialResetCounter = signal(0);
   quantityControl = new FormControl(1);
-  getQuantityInput(){
+  getQuantityInput() {
     return this.quantityControl.value;
   }
   logisticsStore = inject(LogisticsStore);
@@ -52,16 +52,22 @@ export class RequestCreate {
   nameBudgetLines = this.budgetStore
     .budgetItems()
     .map((b) => `${b.code} - ${b.name}`);
+
+  /*
   budgetedAmount = computed<number>(() => {
     return this.getQuantityInput()  * this.materialSelected.price;
   });
-  executedAmount = this.budgetStore.totalExecuted;
-  availableAmount = this.budgetStore.totalAvailable;
+
   budgetProgress = computed(() => {
     const total = this.budgetedAmount();
     if (total === 0) return 0;
     return Math.round((this.executedAmount() / total) * 100);
   });
+  * */
+
+  executedAmount = this.budgetStore.totalExecuted;
+  availableAmount = this.budgetStore.totalAvailable;
+
   onCategoryMaterialSelect(category: string) {
     this.logisticsStore.filterByCategory(category);
     this.materialResetCounter.update((v) => v + 1);

@@ -53,3 +53,9 @@
     scrollbar-color: var(--color-neutral-border) transparent;
   }
 }
+
+cdk-overlay-backdrop {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px);
+}
