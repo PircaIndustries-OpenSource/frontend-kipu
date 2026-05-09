@@ -85,8 +85,8 @@ export const routes: Routes = [
       {
         path: 'signatures',
         loadComponent: () =>
-          import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
-            (m) => m.InventoryPage,
+          import('./signatures/document/presentation/document-page/document-page').then(
+            (m) => m.DocumentPage,
           ),
       },
       {

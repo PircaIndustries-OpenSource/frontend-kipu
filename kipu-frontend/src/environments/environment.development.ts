@@ -9,4 +9,5 @@ export const environment = {
   kipuApiTeamWorkersEndpointPath: '/team-workers',
   kipuApiSuppliersEndpointPath: '/materials/suppliers',
   kipuApiWasteEndpointPath: '/materials/waste',
+  kipuApiDocumentsEndpointPath: '/documents',
 };

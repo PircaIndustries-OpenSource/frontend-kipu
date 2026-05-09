@@ -7,7 +7,6 @@
     }
   ],
   "project": [],
-  "documents": [],
   "materials": [
     {
       "id": "mat-001",
@@ -324,6 +323,90 @@
       "fullName": "pero osad",
       "isActive": true,
       "id": "us-1778218035097"
+    }
+  ],
+  "documents": [
+    {
+      "id": "doc-001",
+      "type": "Acta de Conformidad - Estructura",
+      "isSigned": false,
+      "digitalSignatureToken": null,
+      "deadLine": "2024-12-31T23:59:59.000Z",
+      "projectId": "proj-001",
+      "assignedTo": [
+        {
+          "id": "us-01",
+          "fullName": "Admin Demo",
+          "signedAt": null
+        },
+        {
+          "id": "us-02",
+          "fullName": "Ana Torres",
+          "signedAt": null
+        }
+      ]
+    },
+    {
+      "id": "doc-002",
+      "type": "Acta de Conformidad - Instalaciones Eléctricas",
+      "isSigned": false,
+      "digitalSignatureToken": null,
+      "deadLine": "2025-01-15T23:59:59.000Z",
+      "assignedTo": [
+        {
+          "id": "us-01",
+          "fullName": "Admin Demo"
+        },
+        {
+          "id": "us-03",
+          "fullName": "Juan Pérez"
+        }
+      ]
+    },
+    {
+      "id": "doc-003",
+      "type": "RNC - Fisura en losa de cimentación",
+      "isSigned": true,
+      "digitalSignatureToken": "483729",
+      "deadLine": "2024-11-30T23:59:59.000Z",
+      "projectId": "proj-001",
+      "assignedTo": [
+        {
+          "id": "us-01",
+          "fullName": "Admin Demo",
+          "signedAt": "2024-11-20T10:30:00.000Z"
+        },
+        {
+          "id": "us-02",
+          "fullName": "Ana Torres",
+          "signedAt": "2024-11-21T14:45:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "doc-004",
+      "type": "Liquidación de Obra - Proyecto Los Olivos",
+      "isSigned": false,
+      "digitalSignatureToken": null,
+      "deadLine": "2025-02-28T23:59:59.000Z",
+      "projectId": "proj-002",
+      "assignedTo": [
+        {
+          "id": "us-01",
+          "fullName": "Admin Demo",
+          "signedAt": null
+        },
+        {
+          "id": "us-03",
+          "fullName": "Juan Pérez",
+          "signedAt": null
+        },
+        {
+          "id": "us-07",
+          "fullName": "Laurel Pallo",
+          "signedAt": null
+        }
+      ]
     }
   ]
 }

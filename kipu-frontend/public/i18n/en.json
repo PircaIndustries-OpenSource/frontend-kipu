@@ -316,5 +316,37 @@
         "no-tools-added": "No initial tools assigned"
       }
     }
+  },
+  "signatures": {
+    "dialog": {
+      "title": "Sign Document",
+      "description": "Enter the verification code you received by email.",
+      "token-sent": "A 6-digit code has been sent to your email.",
+      "token-label": "Verification code",
+      "token-hint": "Enter the 6 digits",
+      "btn-cancel": "Cancel",
+      "btn-confirm": "Confirm Signature"
+    },
+    "page": {
+      "title": "Documents",
+      "pending-title": "Documents Pending Your Signature",
+      "signed-title": "Signed Documents",
+      "deadline": "Deadline",
+      "signers": "Signers",
+      "btn-sign": "Sign Document",
+      "empty-pending": "No pending documents",
+      "empty-signed": "No signed documents",
+      "signed-at": "Signed on",
+      "summary-title": "Summary",
+      "summary-pending": "Pending",
+      "summary-signed": "Signed",
+      "security-title": "Secure Digital Signature",
+      "security-description": "All signatures are encrypted and have legal validity according to current regulations.",
+      "howto-title": "How to sign?",
+      "howto-step1": "Review the complete document",
+      "howto-step2": "Click on 'Sign Document'",
+      "howto-step3": "Enter the verification code",
+      "howto-step4": "The signature is automatically recorded"
+    }
   }
 }
