@@ -96,6 +96,7 @@
     },
     "create": {
       "title": "New Material Request",
+      "subtitle": "Fill in the details of your material request",
       "fields": {
         "category": "Material Category",
         "specific-material": "Specific Material",
@@ -111,6 +112,12 @@
         "suggested-supplier": "Suggested Supplier",
         "attachments": "Attach Documents (Quotes, Technical Specs)"
       },
+      "priority": {
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High",
+        "critical": "Critical"
+      },
       "placeholders": {
         "select": "Select",
         "quantity": "0",
@@ -120,7 +127,8 @@
         "purpose": "Describe what the material will be used for...",
         "additional-notes": "Technical specs, preferred brand, etc...",
         "dropzone": "Drag files here or click to select",
-        "dropzone-hint": "PDF, DOC, XLS, images (Max. 10MB)"
+        "dropzone-hint": "PDF, DOC, XLS, images (Max. 10MB)",
+        "unit-empty": "Select a material first"
       },
       "budget-verification": {
         "title": "Budget Verification",
@@ -133,7 +141,8 @@
       "actions": {
         "generate": "Generate Ticket",
         "save-draft": "Save Draft",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "submit": "Send Request"
       }
     }
   },

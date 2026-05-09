@@ -18,43 +18,82 @@ export class LogisticsStore {
   //MATERIAL
   private materialsSignal = signal<MaterialEntity[]>([]);
   private categoriesSignal = signal<CategoryEntity[]>([]);
-  readonly materials = computed(() => this.materialsSignal());
+  readonly filteredMaterials = computed(() => this.filteredMaterialsSignal());
   readonly categories = computed(() => this.categoriesSignal());
-  readonly categoryNames = computed(()=>{
-    return this.categoriesSignal().filter(category => category.isActive).map(category => category.name);
+  private selectedCategorySignal = signal<string>('');
+  private selectedMaterialSignal = signal<string>('');
+  readonly selectedMaterial = computed(() => this.selectedMaterialSignal());
+  setSelectedMaterial(materialName: string) {
+    this.selectedMaterialSignal.set(materialName);
+  }
+  readonly categoryNames = computed(() => {
+    return this.categoriesSignal()
+      .filter((category) => category.isActive)
+      .map((category) => category.name);
+  });
+  getMaterialSelected = computed<MaterialEntity | undefined>(()=>{
+    const materialNameSelected = this.selectedMaterialSignal();
+    const materials = this.materialsSignal;
+    const materialSelected = materials().find(
+      (material) => material.name === materialNameSelected)
+    return materialSelected;
   })
+  readonly filteredMaterialsSignal = computed(() => {
+    const category = this.selectedCategorySignal();
+    const allMaterials = this.materialsSignal();
+    if (!category) {
+      return allMaterials;
+    }
+    return allMaterials.filter((material) => material.category === category);
+  });
+  filterByCategory(category: string) {
+    this.selectedCategorySignal.set(category);
+  }
   // INVENTORY
   private inventorySignal = signal<InventoryMaterialEntity[]>([]);
-  private selectedCategorySignal = signal<string>('');
+
+  readonly selectedCategory = computed(() => this.selectedCategorySignal());
+
   readonly inventoryMaterials = computed(() => this.inventorySignal());
   readonly inventoryView = computed<InventoryViewModel[]>(() => {
     const catalogMaterials = this.materialsSignal();
     const inventory = this.inventorySignal();
     const categories = this.categoriesSignal();
     return inventory.map((invItem) => {
-      const materialRelated = catalogMaterials.find((material) => material.id === invItem.materialId);
-      const category = categories.find(category => category.id === materialRelated?.category);
+      const materialRelated = catalogMaterials.find(
+        (material) => material.id === invItem.materialId,
+      );
+      const category = categories.find(
+        (category) => category.id === materialRelated?.category,
+      );
       return {
         ...invItem,
         materialName: materialRelated?.name || 'Material Unknown',
         materialCategory: category?.name || 'Without Category',
         materialUnit: materialRelated?.measureUnit || 'Without unit',
-        materialSubcategory: materialRelated?.subcategory || 'Without Subcategory',
+        materialSubcategory:
+          materialRelated?.subcategory || 'Without Subcategory',
       };
     });
   });
-  readonly filteredMaterials = computed(() => {
+  readonly filteredInventoryMaterials = computed(() => {
     const category = this.selectedCategorySignal();
     const allInventoryMaterials = this.inventoryView();
     if (!category) {
       return allInventoryMaterials;
     }
-    return allInventoryMaterials.filter((invItem) => invItem.materialCategory === category);
+    return allInventoryMaterials.filter(
+      (invItem) => invItem.materialCategory === category,
+    );
   });
-  readonly totalInventoryMaterials = computed(() => this.inventoryMaterials().length);
+  readonly totalInventoryMaterials = computed(
+    () => this.inventoryMaterials().length,
+  );
   readonly criticalMaterialsCount = computed(
     () =>
-      this.inventoryMaterials().filter((invItem) => invItem.currentStock <= invItem.miniumStock).length,
+      this.inventoryMaterials().filter(
+        (invItem) => invItem.currentStock <= invItem.miniumStock,
+      ).length,
   );
   loadMaterials() {
     if (this.inventorySignal().length === 0) {
@@ -62,20 +101,18 @@ export class LogisticsStore {
         this.inventorySignal.set(data);
       });
     }
-    if(this.materialsSignal().length === 0) {
+    if (this.materialsSignal().length === 0) {
       this.logisticsApi.getAllMaterials().subscribe((data) => {
         this.materialsSignal.set(data);
-      })
+      });
     }
-    if(this.categoriesSignal().length === 0) {
+    if (this.categoriesSignal().length === 0) {
       this.logisticsApi.getAllCategories().subscribe((data) => {
         this.categoriesSignal.set(data);
-      })
+      });
     }
   }
-  filterByCategory(category: string) {
-    this.selectedCategorySignal.set(category);
-  }
+
   clearFilter() {
     this.selectedCategorySignal.set('');
   }
@@ -87,9 +124,11 @@ export class LogisticsStore {
     const requests = this.requestsSignal();
     const materials = this.materialsSignal();
     const categories = this.categoriesSignal();
-    return requests.map(request => {
-      const detailsItem = request.items.map(item =>{
-        const material = materials.find((material) => material.id === item.materialId);
+    return requests.map((request) => {
+      const detailsItem = request.items.map((item) => {
+        const material = materials.find(
+          (material) => material.id === item.materialId,
+        );
         const category = categories.find((c) => c.id === material?.category);
         return {
           ...item,
@@ -99,12 +138,12 @@ export class LogisticsStore {
           materialUnit: material?.measureUnit || 'Without unit',
           materialSubcategory: material?.subcategory || 'Without Subcategory',
         };
-      })
+      });
       return {
         ...request,
-        items: detailsItem
-      }
-    })
+        items: detailsItem,
+      };
+    });
   });
   readonly requestFiltered = computed<RequestViewModel[]>(() => {
     const allRequest = this.requestDetailsView();
@@ -119,13 +158,13 @@ export class LogisticsStore {
         return allRequest.filter((request) => {
           const nextAmount = request.items.reduce((total, item) => {
             return total + Math.ceil(item.quantity * item.pricePerUnit);
-          },0)
+          }, 0);
           return nextAmount + available <= budgeted;
         });
       case 'out-budget': {
         return allRequest.filter((request) => {
           const nextAmount = request.items.reduce((total, item) => {
-            return total +  Math.ceil(item.quantity * item.pricePerUnit);
+            return total + Math.ceil(item.quantity * item.pricePerUnit);
           }, 0);
           return nextAmount + available > budgeted;
         });
@@ -156,9 +195,13 @@ export class LogisticsStore {
   //Notifications
   readonly hasUnreadRequests = computed(() => this.requestsSignal().length > 0);
   readonly hasCriticalStock = computed(() =>
-    this.inventorySignal().some((invItem) => invItem.currentStock <= invItem.miniumStock),
+    this.inventorySignal().some(
+      (invItem) => invItem.currentStock <= invItem.miniumStock,
+    ),
   );
-  readonly hasNotifications = computed(() => this.hasUnreadRequests() || this.hasCriticalStock());
+  readonly hasNotifications = computed(
+    () => this.hasUnreadRequests() || this.hasCriticalStock(),
+  );
   //Machinery
   private machinerySignal = signal<MachineryEntity[]>([]);
   readonly machinery = computed(() => this.machinerySignal());

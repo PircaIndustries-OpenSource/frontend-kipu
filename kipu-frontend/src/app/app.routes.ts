@@ -30,6 +30,13 @@ export const routes: Routes = [
               ),
           },
           {
+            path: 'request/create',
+            loadComponent: () =>
+              import('./logistics/presentation/request/request-create/create-page/create-page').then(
+                (m) => m.CreatePage,
+              ),
+          },
+          {
             path: 'requests',
             loadComponent: () =>
               import('./logistics/presentation/request/request-page/request-page').then(
@@ -109,7 +116,7 @@ export const routes: Routes = [
             path: 'users',
             loadComponent: () =>
               import('./logistics/presentation/team/users-page/users-page').then(
-                (m) => m.UsersPage, // Ajusta la ruta y el nombre del componente según tu carpeta
+                (m) => m.UsersPage,
               ),
           },
           {

@@ -96,6 +96,7 @@
     },
     "create": {
       "title": "Nueva Solicitud de Material",
+      "subtitle": "Complete los detalles de su solicitud de material",
       "fields": {
         "category": "Categoría de Material",
         "specific-material": "Material Específico",
@@ -111,6 +112,12 @@
         "suggested-supplier": "Proveedor sugerido",
         "attachments": "Adjuntar Documentos (Cotizaciones, Especificaciones Técnicas)"
       },
+      "priority": {
+        "low": "Baja",
+        "medium": "Media",
+        "high": "Alta",
+        "critical": "Crítica"
+      },
       "placeholders": {
         "select": "Seleccionar",
         "quantity": "0",
@@ -120,7 +127,8 @@
         "purpose": "Describe para qué se utilizará el material...",
         "additional-notes": "Especificaciones técnicas, marca preferida, etc...",
         "dropzone": "Arrastra archivos aquí o haz clic para seleccionar",
-        "dropzone-hint": "PDF, DOC, XLS, imágenes (Máx. 10MB)"
+        "dropzone-hint": "PDF, DOC, XLS, imágenes (Máx. 10MB)",
+        "unit-empty": "Seleccione un material primero"
       },
       "budget-verification": {
         "title": "Verificación Presupuestaria",
@@ -133,7 +141,8 @@
       "actions": {
         "generate": "Generar Ticket",
         "save-draft": "Guardar Borrador",
-        "cancel": "Cancelar"
+        "cancel": "Cancelar",
+        "submit": "Enviar Solicitud"
       }
     }
   },

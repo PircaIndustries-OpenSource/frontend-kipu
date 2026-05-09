@@ -1,93 +1,155 @@
-<mat-card class="bg-neutral-bg! border! border-neutral-border! rounded-m! w-full overflow-hidden! flex! flex-col p-0!">
-  <div class="bg-primary! text-neutral-bg! px-xl! py-m! flex flex-row justify-between items-center m-0!">
+<mat-card
+  class="bg-neutral-bg! border! border-neutral-border! rounded-m! w-full overflow-hidden! flex! flex-col p-0!"
+>
+  <div
+    class="bg-primary! text-neutral-bg! px-xl! py-m! flex flex-row justify-between items-center m-0!"
+  >
     <div class="flex flex-row items-center gap-m">
-      <span class="font-bold text-xl">{{request().id}}</span>
-      <span class="text-xs font-bold tracking-widest uppercase">{{ 'request.card.header.urgent' | translate }}</span>
+      <span class="font-bold text-xl">{{ request().id }}</span>
+      <span class="text-xs font-bold tracking-widest uppercase">{{
+        'request.card.header.urgent' | translate
+      }}</span>
     </div>
     <div class="text-sm">
-      {{'request.card.header.request-date' | translate}} {{request().requestDate}}
+      {{ 'request.card.header.request-date' | translate }}
+      {{ request().requestDate }}
     </div>
   </div>
   <mat-card-content class="p-xl! flex! flex-col gap-xl! m-0!">
     <div class="grid grid-cols-4 gap-l">
       <div class="flex flex-col gap-1">
-        <p class="text-xs text-neutral-border font-medium">{{'request.card.fields.material' | translate}}</p>
-        <p class="font-bold text-lg text-primary">{{request().items[0].materialName}}</p>
+        <p class="text-xs text-neutral-border font-medium">
+          {{ 'request.card.fields.material' | translate }}
+        </p>
+        <p class="font-bold text-lg text-primary">
+          {{ request().items[0].materialName }}
+        </p>
       </div>
 
       <div class="flex flex-col gap-1">
-        <p class="text-xs text-neutral-border font-medium">{{'request.card.fields.requester' | translate}}</p>
-        <p class="text-base font-medium text-primary">{{request().requestedBy}}</p>
+        <p class="text-xs text-neutral-border font-medium">
+          {{ 'request.card.fields.requester' | translate }}
+        </p>
+        <p class="text-base font-medium text-primary">
+          {{ request().requestedBy }}
+        </p>
         <p class="text-sm text-primary">Lorem ipsum</p>
       </div>
 
       <div class="flex flex-col gap-1">
-        <p class="text-xs text-neutral-border font-medium">{{'request.card.fields.budget-line' | translate}}</p>
-        <p class="text-base font-medium text-primary">{{request().activity}}</p>
+        <p class="text-xs text-neutral-border font-medium">
+          {{ 'request.card.fields.budget-line' | translate }}
+        </p>
+        <p class="text-base font-medium text-primary">
+          {{ request().activity }}
+        </p>
       </div>
 
       <div class="flex flex-col gap-1">
-        <p class="text-xs text-neutral-border font-medium">{{'request.card.fields.required-date' | translate}}</p>
-        <p class="font-bold text-base text-primary">{{request().deadline}}</p>
-        <p class="text-xs text-neutral-border flex items-center gap-1 font-medium mt-1">
-          {{ 'request.card.fields.in-days' | translate:{ days: remainingDays() } }}
+        <p class="text-xs text-neutral-border font-medium">
+          {{ 'request.card.fields.required-date' | translate }}
+        </p>
+        <p class="font-bold text-base text-primary">{{ request().deadline }}</p>
+        <p
+          class="text-xs text-neutral-border flex items-center gap-1 font-medium mt-1"
+        >
+          {{
+            'request.card.fields.in-days' | translate: { days: remainingDays() }
+          }}
         </p>
       </div>
     </div>
     <div class="grid grid-cols-2 gap-l">
-      <div class="border! border-neutral-border! rounded-m! p-l! bg-neutral-bg! flex flex-col gap-s">
-        <p class="font-bold text-primary">{{'request.card.purpose.title' | translate}}</p>
+      <div
+        class="border! border-neutral-border! rounded-m! p-l! bg-neutral-bg! flex flex-col gap-s"
+      >
+        <p class="font-bold text-primary">
+          {{ 'request.card.purpose.title' | translate }}
+        </p>
         <p class="text-sm text-primary leading-relaxed">
-          {{request().purpose}}
+          {{ request().purpose }}
         </p>
       </div>
-      <div class="border! border-neutral-border! rounded-m! p-l! bg-neutral-bg! flex flex-col gap-s justify-between">
-        <p class="font-bold text-primary">{{'request.card.budget-verification.title' | translate}}</p>
+      <div
+        class="border! border-neutral-border! rounded-m! p-l! bg-neutral-bg! flex flex-col gap-s justify-between"
+      >
+        <p class="font-bold text-primary">
+          {{ 'request.card.budget-verification.title' | translate }}
+        </p>
 
         <div class="flex flex-col gap-2 w-full mt-2">
           <div class="flex justify-between text-sm text-primary">
-            <p>{{'request.card.budget-verification.requested-amount' | translate}}</p>
-            <p class="font-bold">{{requestedAmount()}}</p>
+            <p>
+              {{
+                'request.card.budget-verification.requested-amount' | translate
+              }}
+            </p>
+            <p class="font-bold">{{ requestedAmount() }}</p>
           </div>
           <div class="flex justify-between text-sm text-primary">
-            <p>{{'request.card.budget-verification.available-budget' | translate}}</p>
-            <p class="font-bold">{{availableBudget()}}</p>
+            <p>
+              {{
+                'request.card.budget-verification.available-budget' | translate
+              }}
+            </p>
+            <p class="font-bold">{{ availableBudget() }}</p>
           </div>
 
-          <hr class="border-t-2! border-primary! my-2 opacity-20">
+          <hr class="border-t-2! border-primary! my-2 opacity-20" />
 
           <div class="flex justify-between items-center text-sm">
-            <p class="text-primary">{{'request.card.budget-verification.status' | translate}}</p>
-            @if (isAmountValid()){
-              <p class="font-bold  text-(color--success) (flex items-center gap-1 text-xs">{{'request.card.status.within-budget'|translate}}</p>
+            <p class="text-primary">
+              {{ 'request.card.budget-verification.status' | translate }}
+            </p>
+            @if (isAmountValid()) {
+              <p
+                class="font-bold text-(color--success) (flex items-center gap-1 text-xs"
+              >
+                {{ 'request.card.status.within-budget' | translate }}
+              </p>
             } @else {
-              <p class="font-bold text-(--color-danger) flex items-center gap-1 text-xs">{{'request.card.status.out-budget'|translate}}</p>
+              <p
+                class="font-bold text-(--color-danger) flex items-center gap-1 text-xs"
+              >
+                {{ 'request.card.status.out-budget' | translate }}
+              </p>
             }
           </div>
         </div>
       </div>
     </div>
-
   </mat-card-content>
-  <mat-card-actions class="px-xl! pb-xl! pt-0! flex! flex-row gap-l! w-full justify-between m-0!">
-    @if (request().status === "PENDING"){
-      <button class="flex-1 border-2! border-warning! bg-warning-soft! text-warning! font-bold! rounded-m! py-s! flex justify-center items-center gap-xs cursor-default">
+  <mat-card-actions
+    class="px-xl! pb-xl! pt-0! flex! flex-row gap-l! w-full justify-between m-0!"
+  >
+    @if (request().status === 'PENDING') {
+      <button
+        class="flex-1 border-2! border-warning! bg-warning-soft! text-warning! font-bold! rounded-m! py-s! flex justify-center items-center gap-xs cursor-default"
+      >
         <span class="block w-3 h-3 rounded-full bg-warning"></span>
-        {{'request.card.status.pending' | translate}}
+        {{ 'request.card.status.pending' | translate }}
       </button>
     }
-    @if (request().status === "APPROVED"){
-      <button class="flex-1 border-2! border-success! bg-success-soft! text-success! font-bold! rounded-m! py-s! flex justify-center items-center gap-xs cursor-default">
+    @if (request().status === 'APPROVED') {
+      <button
+        class="flex-1 border-2! border-success! bg-success-soft! text-success! font-bold! rounded-m! py-s! flex justify-center items-center gap-xs cursor-default"
+      >
         <span class="block w-3 h-3 rounded-full bg-success"></span>
-        {{'request.card.status.approved' | translate}}
+        {{ 'request.card.status.approved' | translate }}
       </button>
     }
-    <button matRipple class="flex-1 bg-neutral-border! bg-opacity-40! text-primary! font-medium! rounded-m! py-s! cursor-pointer transition-base hover:brightness-95">
-      {{'request.card.actions.modify' | translate}}
+    <button
+      matRipple
+      class="flex-1 bg-neutral-border! bg-opacity-40! text-primary! font-medium! rounded-m! py-s! cursor-pointer transition-base hover:brightness-95"
+    >
+      {{ 'request.card.actions.modify' | translate }}
     </button>
 
-    <button matRipple class="flex-1 bg-accent text-neutral-bg! font-medium! rounded-m! py-s! cursor-pointer transition-base hover:brightness-110">
-      {{'request.card.actions.view-details' | translate}}
+    <button
+      matRipple
+      class="flex-1 bg-accent text-neutral-bg! font-medium! rounded-m! py-s! cursor-pointer transition-base hover:brightness-110"
+    >
+      {{ 'request.card.actions.view-details' | translate }}
     </button>
   </mat-card-actions>
 </mat-card>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {RequestCreate} from '../create-form/request-create';
 
 @Component({
@@ -7,4 +7,6 @@ import {RequestCreate} from '../create-form/request-create';
   templateUrl: './create-page.html',
   styleUrl: './create-page.css',
 })
-export class CreatePage {}
+export class CreatePage {
+
+}

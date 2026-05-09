@@ -12,7 +12,7 @@ import { AutocompleteFilterList } from '../../../../shared/presentation/autocomp
 })
 export class InventoryPage implements OnInit {
   protected logisticsStore = inject(LogisticsStore);
-  protected readonly inventoryMaterials = this.logisticsStore.filteredMaterials;
+  protected readonly inventoryMaterials = this.logisticsStore.filteredInventoryMaterials;
   materialsCount = this.logisticsStore.totalInventoryMaterials;
   criticalMaterialsCount = this.logisticsStore.criticalMaterialsCount;
   categoryNames = this.logisticsStore.categoryNames;
