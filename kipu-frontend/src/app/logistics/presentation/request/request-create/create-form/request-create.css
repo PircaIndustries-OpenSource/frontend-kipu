@@ -1,0 +1,5 @@
+:host ::ng-deep .thick-progress-bar {
+  --mdc-linear-progress-track-height: 12px;
+  --mdc-linear-progress-active-indicator-height: 12px;
+  border-radius: 6px;
+}

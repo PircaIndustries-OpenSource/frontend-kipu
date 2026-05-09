@@ -1,0 +1,43 @@
+<div class="p-6">
+  <h2 mat-dialog-title class="text-xl font-bold mb-4 flex items-center gap-2">
+    <mat-icon class="text-blue-600">lock</mat-icon>
+    {{ 'signatures.dialog.title' | translate }}
+  </h2>
+
+  <mat-dialog-content>
+    <p class="text-gray-600 mb-4">{{ 'signatures.dialog.description' | translate }}</p>
+
+    <div class="bg-blue-50 p-4 rounded-lg mb-4 flex items-start gap-2">
+      <mat-icon class="text-blue-600 text-sm">email</mat-icon>
+      <p class="text-sm text-blue-800 m-0">{{ 'signatures.dialog.token-sent' | translate }}</p>
+    </div>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>{{ 'signatures.dialog.token-label' | translate }}</mat-label>
+      <input
+        [(ngModel)]="tokenInput"
+        matInput
+        placeholder="000000"
+        maxlength="6"
+        autocomplete="off"
+      />
+      <mat-hint>{{ 'signatures.dialog.token-hint' | translate }}</mat-hint>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="!pb-4 !px-6 gap-3">
+    <button mat-button mat-dialog-close class="!rounded-md">
+      {{ 'signatures.dialog.btn-cancel' | translate }}
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="onConfirm()"
+      [disabled]="!tokenInput || tokenInput.length !== 6"
+      class="!bg-blue-600 !rounded-md"
+    >
+      <mat-icon class="text-sm mr-1">verified</mat-icon>
+      {{ 'signatures.dialog.btn-confirm' | translate }}
+    </button>
+  </mat-dialog-actions>
+</div>

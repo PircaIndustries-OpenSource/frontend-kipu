@@ -1,0 +1,229 @@
+<form class="flex flex-col gap-xl animate-fade-in">
+  <header class="flex flex-col gap-xs">
+    <h1 class="text-2xl font-bold text-primary tracking-tight">
+      {{ 'request.create.title' | translate }}
+    </h1>
+    <p class="text-sm text-neutral-border">
+      {{ 'request.create.subtitle' | translate }}
+    </p>
+  </header>
+
+  <div class="bg-white border border-neutral-border/20 rounded-m p-xl shadow-sm flex flex-col gap-l">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-l">
+      <div class="flex flex-col gap-1">
+        <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
+          {{ 'request.create.fields.category' | translate }}
+        </span>
+        <app-autocomplete-filter-list
+          (optionSelected)="onCategoryMaterialSelect($event)"
+          [listOptions]="nameCategories()"
+          [placeholder]="'request.create.placeholders.select' | translate"
+        ></app-autocomplete-filter-list>
+      </div>
+      <div class="flex flex-col gap-1">
+        <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
+          {{ 'request.create.fields.specific-material' | translate }}
+        </span>
+        <app-autocomplete-filter-list
+          [listOptions]="nameMaterials()"
+          (optionSelected)="onMaterialSelect($event)"
+          [resetSignal]="materialResetCounter()"
+          [disabled]="isMaterialDisabled()"
+          [placeholder]="!isMaterialDisabled() ? ('request.create.placeholders.select' | translate) : 'Por favor selecciona una categoría'"
+        ></app-autocomplete-filter-list>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-l">
+      <div class="flex flex-col gap-1">
+        <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
+          {{ 'request.create.fields.quantity' | translate }}
+        </span>
+        <mat-form-field>
+          <input
+            [formControl]="quantityControl"
+            matInput
+            type="number"
+            step="1"
+            [placeholder]="'request.create.placeholders.quantity' | translate"
+          >
+        </mat-form-field>
+      </div>
+      <div class="flex flex-col gap-1">
+        <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
+          {{ 'request.create.fields.unit' | translate }}
+        </span>
+        <div class="w-full min-h-[56px] flex items-center px-4 rounded-m border border-neutral-border/20 bg-white text-sm">
+          @if (selectedUnit()) {
+            <span class="text-primary font-medium">{{selectedUnit()}}</span>
+          } @else {
+            <span class="text-neutral-border">{{ 'request.create.placeholders.unit-empty' | translate }}</span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-l">
+      <div class="flex flex-col gap-1">
+        <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
+          {{ 'request.create.fields.budget-line' | translate }}
+        </span>
+        <app-autocomplete-filter-list
+          [listOptions]="nameBudgetLines"
+          [placeholder]="'request.create.placeholders.select' | translate"
+        ></app-autocomplete-filter-list>
+      </div>
+      <div class="flex flex-col gap-1">
+        <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
+          {{ 'request.create.fields.priority' | translate }}
+        </span>
+        <mat-form-field>
+          <mat-select>
+            <mat-option value="1">{{ 'request.create.priority.low' | translate }}</mat-option>
+            <mat-option value="2">{{ 'request.create.priority.medium' | translate }}</mat-option>
+            <mat-option value="3">{{ 'request.create.priority.high' | translate }}</mat-option>
+            <mat-option value="4">{{ 'request.create.priority.critical' | translate }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-l">
+      <div class="flex flex-col gap-1">
+        <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
+          {{ 'request.create.fields.required-date' | translate }}
+        </span>
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" [placeholder]="'request.create.placeholders.date' | translate">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="flex flex-col gap-1">
+        <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
+          {{ 'request.create.fields.delivery-location' | translate }}
+        </span>
+        <mat-form-field>
+          <input matInput [placeholder]="'request.create.placeholders.location' | translate">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
+        {{ 'request.create.fields.purpose' | translate }}
+      </span>
+      <mat-form-field class="w-full">
+        <textarea matInput rows="3" [placeholder]="'request.create.placeholders.purpose' | translate"></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
+        {{ 'request.create.fields.additional-notes' | translate }}
+      </span>
+      <mat-form-field class="w-full">
+        <textarea matInput rows="2" [placeholder]="'request.create.placeholders.additional-notes' | translate"></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="bg-white border border-neutral-border/20 rounded-m p-xl shadow-sm flex flex-col gap-l">
+    <h3 class="text-xs font-black text-primary uppercase tracking-widest">
+      {{ 'request.create.budget-verification.title' | translate }}
+    </h3>
+
+    <div class="grid grid-cols-3 gap-l">
+      <div class="flex flex-col items-center p-m bg-neutral-bg rounded-s border border-neutral-border/20">
+        <span class="text-xs text-neutral-border uppercase font-bold tracking-wider">
+          {{ 'request.create.budget-verification.item-budget' | translate }}
+        </span>
+        <!--
+        <span class="text-xl font-bold text-primary">S/ {{ budgetedAmount() | number }}</span>
+        -->
+      </div>
+      <div class="flex flex-col items-center p-m bg-neutral-bg rounded-s border border-neutral-border/20">
+        <span class="text-xs text-neutral-border uppercase font-bold tracking-wider">
+          {{ 'request.create.budget-verification.executed' | translate }}
+        </span>
+        <span class="text-xl font-bold text-warning">S/ {{ executedAmount() | number }}</span>
+      </div>
+      <div class="flex flex-col items-center p-m bg-neutral-bg rounded-s border border-neutral-border/20">
+        <span class="text-xs text-neutral-border uppercase font-bold tracking-wider">
+          {{ 'request.create.budget-verification.available' | translate }}
+        </span>
+        <span class="text-xl font-bold text-success">S/ {{ availableAmount() | number }}</span>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-s">
+      <!--
+      <mat-progress-bar
+        class="thick-progress-bar"
+        mode="determinate"
+        [value]="budgetProgress()"
+      ></mat-progress-bar>
+      -->
+      <div class="flex justify-between items-center">
+
+        <!--
+        <span class="text-xs text-neutral-border">{{ budgetProgress() }}% utilizado</span>
+
+        @if (budgetProgress() <= 80) {
+          <span class="text-xs font-bold text-success flex items-center gap-1">
+            <mat-icon class="text-sm! w-4! h-4!">check_circle</mat-icon>
+            {{ 'request.create.budget-verification.status-ok' | translate }}
+          </span>
+        } @else {
+          <span class="text-xs font-bold text-danger flex items-center gap-1">
+            <mat-icon class="text-sm! w-4! h-4!">warning</mat-icon>
+            {{ 'request.create.budget-verification.status-out-badge' | translate }}
+          </span>
+        }
+        -->
+
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white border border-neutral-border/20 rounded-m p-xl shadow-sm flex flex-col gap-l">
+    <div class="flex flex-col gap-1">
+      <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
+        {{ 'request.create.fields.suggested-supplier' | translate }}
+      </span>
+      <app-autocomplete-filter-list
+        [listOptions]="nameSuppliers"
+        [placeholder]="'request.create.placeholders.select' | translate"
+      ></app-autocomplete-filter-list>
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
+        {{ 'request.create.fields.attachments' | translate }}
+      </span>
+      <div class="border-2 border-dashed border-neutral-border/30 rounded-m p-xl flex flex-col items-center gap-m text-center cursor-pointer hover:border-accent hover:bg-accent/5 transition-all">
+        <mat-icon class="text-3xl text-neutral-border">cloud_upload</mat-icon>
+        <span class="text-sm font-bold text-primary">{{ 'request.create.placeholders.dropzone' | translate }}</span>
+        <span class="text-xs text-neutral-border">{{ 'request.create.placeholders.dropzone-hint' | translate }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-end gap-m">
+    <button
+      type="button"
+      matRipple
+      class="px-xl py-s border border-neutral-border/30 rounded-m text-sm font-bold text-primary cursor-pointer transition-all hover:bg-neutral-bg active:scale-95"
+    >
+      {{ 'request.create.actions.cancel' | translate }}
+    </button>
+    <button
+      type="submit"
+      matRipple
+      class="px-xl py-s bg-accent text-white rounded-m text-sm font-bold shadow-md cursor-pointer transition-all hover:scale-[1.02] active:scale-95 flex items-center gap-2"
+    >
+      <mat-icon>send</mat-icon>
+      {{ 'request.create.actions.submit' | translate }}
+    </button>
+  </div>
+</form>

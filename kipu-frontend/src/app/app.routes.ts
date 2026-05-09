@@ -3,6 +3,7 @@ import { RegisterComponent } from './identity/presentation/components/register/r
 import { Layout } from './shared/presentation/layout/layout';
 import { LogisticsPage } from './logistics/presentation/logistics-page/logistics-page';
 import { LoginComponent } from './identity/presentation/components/login/login.component';
+import { TeamPage } from './team/presentation/team-page/team-page';
 
 export const routes: Routes = [
   {
@@ -46,10 +47,22 @@ export const routes: Routes = [
         component: LogisticsPage,
         children: [
           {
+            path: '',
+            redirectTo: 'inventory',
+            pathMatch: 'full',
+          },
+          {
             path: 'inventory',
             loadComponent: () =>
               import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
                 (m) => m.InventoryPage,
+              ),
+          },
+          {
+            path: 'request/create',
+            loadComponent: () =>
+              import('./logistics/presentation/request/request-create/create-page/create-page').then(
+                (m) => m.CreatePage,
               ),
           },
           {
@@ -79,7 +92,7 @@ export const routes: Routes = [
               import('./logistics/presentation/waste/waste-page/waste-page').then(
                 (m) => m.WastePage,
               ),
-          }
+          },
         ],
       },
       {
@@ -113,23 +126,41 @@ export const routes: Routes = [
       {
         path: 'signatures',
         loadComponent: () =>
-          import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
-            (m) => m.InventoryPage,
+          import('./signatures/document/presentation/document-page/document-page').then(
+            (m) => m.DocumentPage,
           ),
       },
       {
         path: 'budget',
         loadComponent: () =>
-          import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
-            (m) => m.InventoryPage,
+          import('./logistics/presentation/budget/budget-page/budget-page').then(
+            (m) => m.BudgetPage,
           ),
       },
       {
         path: 'team',
-        loadComponent: () =>
-          import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
-            (m) => m.InventoryPage,
-          ),
+        component: TeamPage,
+        children: [
+          {
+            path: 'users',
+            loadComponent: () =>
+              import('./team/team-users/presentation/users-page/users-page').then(
+                (m) => m.UsersPage,
+              ),
+          },
+          {
+            path: 'workers',
+            loadComponent: () =>
+              import('./team/team-workers/presentation/workers-page/workers-page').then(
+                (m) => m.WorkersPage,
+              ),
+          },
+          {
+            path: '',
+            redirectTo: 'users',
+            pathMatch: 'full',
+          },
+        ],
       },
       {
         path: 'iot',

@@ -1,17 +1,19 @@
 export class RequestItem {
   materialId: string;
-  materialName: string;
   quantity: number;
-  unit: string;
-
+  pricePerUnit: number;
   constructor() {
-    this.materialId = "";
-    this.materialName = "";
+    this.materialId = '';
     this.quantity = 0;
-    this.unit = "";
+    this.pricePerUnit = 0;
   }
 }
-
+export type RequestItemViewModel = RequestItem & {
+  materialName: string;
+  materialCategory: string;
+  materialUnit: string;
+  materialSubcategory: string;
+};
 export class RequestEntity {
   id: string;
   projectId: string;
@@ -25,7 +27,7 @@ export class RequestEntity {
   additionalNotes: string;
   suggestedSupplierId: string;
   attachments: string[];
-  items: RequestItem;
+  items: RequestItem[];
   requestedBy: string;
   activity: string;
   constructor() {
@@ -41,8 +43,11 @@ export class RequestEntity {
     this.additionalNotes = "";
     this.suggestedSupplierId = "";
     this.attachments = [];
-    this.items = new RequestItem();
+    this.items = [];
     this.requestedBy = "";
     this.activity = "";
   }
 }
+export type RequestViewModel = Omit<RequestEntity, 'items'> & {
+  items: RequestItemViewModel[];
+};

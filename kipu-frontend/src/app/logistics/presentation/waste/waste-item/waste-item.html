@@ -1,0 +1,37 @@
+<mat-card class="bg-white! border! border-primary! rounded-m! w-full overflow-hidden! flex! flex-col p-0! mb-l">
+  <div class="bg-primary! text-white! px-xl! py-m! flex flex-row justify-between items-center m-0!">
+    <div class="flex flex-row items-center gap-m">
+      <span class="font-bold text-xl">{{ waste().id }}</span>
+      <span class="text-xs font-bold tracking-widest uppercase bg-white/20 px-2 py-0.5 rounded">
+        {{ 'waste.card.header.status-damaged' | translate }}
+      </span>
+    </div>
+    <div class="text-sm opacity-80">
+      {{ 'waste.card.header.report-date' | translate }} {{ waste().date }}
+    </div>
+  </div>
+  <mat-card-content class="p-xl! flex! flex-col gap-xl! m-0!">
+    <div class="grid grid-cols-4 gap-l">
+      <div class="flex flex-col gap-1">
+        <p class="text-xs text-neutral-border font-medium">{{ 'waste.card.fields.affected-material' | translate }}</p>
+        <p class="font-bold text-lg text-primary">{{ waste().materialId }}</p>
+      </div>
+      <div class="flex flex-col gap-1">
+        <p class="text-xs text-neutral-border font-medium">{{ 'waste.card.fields.discounted-quantity' | translate }}</p>
+        <p class="font-bold text-lg text-primary">{{ waste().quantity }} {{ waste().unit }}</p>
+      </div>
+      <div class="flex flex-col gap-1">
+        <p class="text-xs text-neutral-border font-medium">{{ 'waste.card.fields.reported-by' | translate }}</p>
+        <p class="font-bold text-lg text-primary">{{ waste().reportedBy }}</p>
+      </div>
+      <div class="flex flex-col gap-1">
+        <p class="text-xs text-neutral-border font-medium">{{ 'waste.card.fields.inventory-impact' | translate }}</p>
+        <p class="font-bold text-lg text-primary">{{ waste().projectId }}</p>
+      </div>
+    </div>
+    <div class="border! border-neutral-border! rounded-m! p-l! bg-neutral-bg! flex flex-col gap-s">
+      <p class="font-bold text-primary">{{ 'waste.card.fields.reason-title' | translate }}</p>
+      <p class="text-sm text-primary leading-relaxed">{{ waste().description }}</p>
+    </div>
+  </mat-card-content>
+</mat-card>

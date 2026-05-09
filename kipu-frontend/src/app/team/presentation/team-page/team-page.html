@@ -1,0 +1,18 @@
+<nav mat-tab-nav-bar [tabPanel]="teamTabPanel" class="mb-6">
+  <a mat-tab-link
+     routerLink="users"
+     routerLinkActive #rlaUsers="routerLinkActive"
+     [active]="rlaUsers.isActive">
+    {{ 'team.users.tab-users' | translate }}
+  </a>
+  <a mat-tab-link
+     routerLink="workers"
+     routerLinkActive #rlaWorkers="routerLinkActive"
+     [active]="rlaWorkers.isActive">
+    {{ 'team.workers.tab-workers' | translate }}
+  </a>
+</nav>
+
+<mat-tab-nav-panel #teamTabPanel>
+  <router-outlet></router-outlet>
+</mat-tab-nav-panel>

@@ -1,14 +1,17 @@
 {
+  "general": {
+    "summary": "Resumen"
+  },
   "inventory": {
     "tab-inventory": "Inventario",
     "tab-requests": "Solicitudes",
-    "tab-machinery": "Maquinaria",
+    "tab-machinery": "Equipos",
     "tab-suppliers": "Proveedores",
-    "tab-waste": "Merma",
+    "tab-waste": "Residuos",
     "title": "Inventario General",
     "filters": {
       "category": "Categoría",
-      "placeholder": "Seleccione una categoría"
+      "placeholder": "Selecciona una categoría"
     },
     "summary": {
       "registered-materials": "Materiales Registrados",
@@ -22,7 +25,7 @@
         "critical": "STOCK CRÍTICO"
       },
       "actions": {
-        "add-stock": "Añadir Stock"
+        "add-stock": "Agregar Stock"
       }
     }
   },
@@ -56,37 +59,375 @@
     }
   },
   "request": {
+    "title": "Solicitudes de Material",
+    "button-create": "Crear Solicitud",
+    "summary": {
+      "pending": "Pendientes",
+      "approved-today": "Aprobadas hoy",
+      "rejected": "Rechazadas"
+    },
+    "filters": {
+      "title": "Filtros Rápidos",
+      "all": "Mostrar todos",
+      "within-budget": "Dentro del presupuesto",
+      "exceed-budget": "Excede presupuesto",
+      "expire-48h": "Vence en 48 hrs"
+    },
+    "reminders": {
+      "title": "Recordatorio",
+      "urgent-notice": "Las solicitudes urgentes deben procesarse en menos de 24 horas."
+    },
+    "recent-activity": {
+      "title": "Actividad Reciente",
+      "approved": "aprobó",
+      "rejected": "rechazó",
+      "ago": "hace {{time}}"
+    },
     "card": {
       "header": {
         "urgent": "URGENTE",
-        "request-date": "Solicitud:"
+        "request-date": "Solicitud:",
+        "status": {
+          "normal": "NORMAL",
+          "exceed": "EXCEDE PRESUPUESTO"
+        }
       },
       "fields": {
         "material": "Material",
         "requester": "Solicitante",
-        "budget-line": "Partida",
-        "required-date": "Fecha requerida",
+        "budget-line": "Línea Presupuestaria",
+        "required-date": "Fecha Requerida",
         "in-days": "En {{days}} días"
       },
       "purpose": {
-        "title": "Uso/Finalidad"
+        "title": "Propósito / Uso"
       },
       "budget-verification": {
-        "title": "Verificación Presupuestal",
+        "title": "Verificación Presupuestaria",
         "requested-amount": "Monto solicitado:",
         "available-budget": "Presupuesto disponible:",
+        "excess": "Excedente:",
         "status": "Estado:"
       },
       "status": {
-        "within-budget": "DENTRO DE PRESUPUESTO",
+        "within-budget": "DENTRO DEL PRESUPUESTO",
+        "out-budget": "FUERA DEL PRESUPUESTO",
         "pending": "Pendiente",
-        "approved": "Aprobado",
-        "refused": "Rechazado"
+        "approved": "Aprobada",
+        "refused": "Rechazada"
       },
       "actions": {
-        "modify": "Modificar Solicitud",
+        "approve": "Aprobar Solicitud",
+        "reject": "Rechazar",
+        "modify": "Solicitar Modificación",
         "view-details": "Ver Detalle Completo"
       }
+    },
+    "create": {
+      "title": "Nueva Solicitud de Material",
+      "subtitle": "Complete los detalles de su solicitud de material",
+      "fields": {
+        "category": "Categoría de Material",
+        "specific-material": "Material Específico",
+        "quantity": "Cantidad",
+        "unit": "Unidad",
+        "budget": "Presupuesto",
+        "budget-line": "Partida Presupuestal",
+        "priority": "Prioridad",
+        "required-date": "Fecha de Entrega Requerida",
+        "delivery-location": "Ubicación de Entrega",
+        "purpose": "Uso / Finalidad",
+        "additional-notes": "Observaciones Adicionales",
+        "suggested-supplier": "Proveedor sugerido",
+        "attachments": "Adjuntar Documentos (Cotizaciones, Especificaciones Técnicas)"
+      },
+      "priority": {
+        "low": "Baja",
+        "medium": "Media",
+        "high": "Alta",
+        "critical": "Crítica"
+      },
+      "placeholders": {
+        "select": "Seleccionar",
+        "quantity": "0",
+        "budget": "0.00",
+        "date": "dd / mm / aaaa",
+        "location": "Ingrese punto de entrega",
+        "purpose": "Describe para qué se utilizará el material...",
+        "additional-notes": "Especificaciones técnicas, marca preferida, etc...",
+        "dropzone": "Arrastra archivos aquí o haz clic para seleccionar",
+        "dropzone-hint": "PDF, DOC, XLS, imágenes (Máx. 10MB)",
+        "unit-empty": "Seleccione un material primero"
+      },
+      "budget-verification": {
+        "title": "Verificación Presupuestaria",
+        "item-budget": "Presupuesto partida",
+        "executed": "Ejecutado",
+        "available": "Disponible",
+        "status-ok": "Esta solicitud está dentro del presupuesto disponible",
+        "status-out-badge": "Esta solicitud está fuera del presupuesto disponble"
+      },
+      "actions": {
+        "generate": "Generar Ticket",
+        "save-draft": "Guardar Borrador",
+        "cancel": "Cancelar",
+        "submit": "Enviar Solicitud"
+      }
+    }
+  },
+  "suppliers": {
+    "title": "Directorio de Proveedores",
+    "button-create": "Registrar nuevo proveedor",
+    "summary": {
+      "active": "Activo"
+    },
+    "card": {
+      "ruc": "RUC",
+      "onboarded": "Ingreso",
+      "social-reason": "Razón social",
+      "contact": "Contacto Principal",
+      "phone": "Teléfono",
+      "email": "Correo Electrónico",
+      "categories": "Categorías Suministradas",
+      "payment-terms": "Condición de Pago Habitual",
+      "actions": {
+        "button-edit": "Editar datos",
+        "button-add": "Registros nuevo proveedor"
+      }
+    }
+  },
+  "machinery": {
+    "title": "Maquinaria y Herramientas",
+    "button-create": "Agregar maquinaria",
+    "tabs": {
+      "summary": "Resumen",
+      "filters": "Filtros Rápidos"
+    },
+    "filter": {
+      "show-all": "Mostrar todo",
+      "critical-equipment": "Equipos críticos",
+      "only-assigned": "Solo Asignados"
+    },
+    "card": {
+      "header": {
+        "registration": "Registro",
+        "status": {
+          "in-use": "En uso",
+          "urgent": "MANTENIMIENTO URGENTE"
+        }
+      },
+      "fields": {
+        "equipment": "Equipo",
+        "physical-status": "Estado Físico",
+        "assigned": "Asignado a (ID)",
+        "maintenance": "Mantenimiento",
+        "assignment-detail": "Detalle de Asignación"
+      },
+      "actions": {
+        "return": "Registrar Devolución",
+        "history": "Ver Historial",
+        "maintenance": "Registrar Mantenimiento",
+        "assign": "Asignar Operario"
+      }
+    },
+    "summary": {
+      "total": "Total de Herramientas",
+      "in-use": "En Uso",
+      "maintenance": "Requiere Mantenimiento"
+    }
+  },
+  "waste": {
+    "title": "Registro de Mermas",
+    "button-report": "Reportar Material Dañado",
+    "summary": {
+      "title": "Resumen",
+      "damaged": "Dañados"
+    },
+    "card": {
+      "header": {
+        "report-date": "Reporte:",
+        "status-damaged": "MATERIAL DAÑADO"
+      },
+      "fields": {
+        "affected-material": "Material Afectado",
+        "discounted-quantity": "Cantidad Descontada",
+        "reported-by": "Reportado por",
+        "inventory-impact": "Impacto Inventario",
+        "inventory-updated": "Actualizado",
+        "reason-title": "Motivo del Descuento de Stock"
+      },
+      "actions": {
+        "view-photo": "Ver fotografía adjunta"
+      }
+    }
+  },
+  "budget": {
+    "title": "Kipu - Torre Empresarial Centro",
+    "summary": {
+      "total-budget": "Presupuesto Total del Proyecto",
+      "total-amount": "Presupuesto Total",
+      "executed": "Ejecutado",
+      "available": "disponibles",
+      "this-month": "Este Mes",
+      "spent": "Gastado",
+      "budgeted": "Presupuestado",
+      "alerts": "Alertas",
+      "risk-item": "1 partida en riesgo",
+      "executed-lower": "ejecutado"
+    },
+    "table": {
+      "title": "Presupuesto por Partidas",
+      "search": "Buscar partida...",
+      "budgeted": "PRESUPUESTADO",
+      "executed": "EJECUTADO",
+      "available": "DISPONIBLE",
+      "status": "ESTADO"
+    },
+    "status": {
+      "normal": "Normal",
+      "risk": "En riesgo"
+    },
+    "actions": {
+      "add": "Añadir Partida",
+      "view-detail": "Ver Detalle",
+      "view-expenses": "Ver Gastos",
+      "export": "Exportar Excel",
+      "check-alerts": "Revisar Alertas",
+      "request-extension": "Solicitar Ampliación"
+    },
+    "sidebar": {
+      "actions": "Acciones",
+      "general-report": "Reporte General",
+      "projection": "Proyección",
+      "export-excel": "Exportar Excel",
+      "recent-movements": "Movimientos Recientes",
+      "hours-ago": "Hace 2 horas",
+      "hours-ago-3": "Hace 3 horas",
+      "days-ago-1": "Hace 1 día",
+      "blocked": "Bloqueado"
+    }
+  },
+  "team": {
+    "users": {
+      "tab-users": "Usuarios del Sistema",
+      "tab-workers": "Directorio de Obreros",
+      "title": "Gestión de Usuarios",
+      "stats": {
+        "active": "USUARIOS ACTIVOS",
+        "managers": "GESTORES",
+        "logistics": "EQUIPO DE LOGÍSTICA",
+        "clients": "CLIENTES / INVERSORES"
+      },
+      "assigned-roles": {
+        "title": "Asignación de Roles",
+        "user-tab": "Usuario",
+        "email-tab": "Correo Electrónico",
+        "assigend-role-tab": "Rol Asignado",
+        "action-tab": "Acción",
+        "user-profile-you": "Tú",
+        "btn-action": "Deshabilitar",
+        "btn-action-done": "Deshabilitado",
+        "input-placeholder": "Nombre, correo o rol...",
+        "search-user": "Buscar usuario",
+        "user-count": "usuarios",
+        "no-user-found": "No se encontraron usuarios con "
+      },
+      "btn-invite": "Enviar Invitación",
+      "role-dictionary": {
+        "title": "Diccionario de Roles",
+        "administrator": "Administrator",
+        "administrator-description": "Acceso total al sistema. Puede gestionar obras, presupuestos base y accesos.",
+        "manager": "Gestor Operativo",
+        "manager-description": "Enfocado en campo. Registra avances, RNCs y solicita materiales. Visualiza planos.",
+        "logistics": "Logística",
+        "logistics-description": "Enfocado en oficina. Aprueba pedidos, edita inventarios y gestiona proveedores.",
+        "client": "Cliente",
+        "client-description-1": "Nivel de acceso estricto de ",
+        "client-description-bold": "Solo Lectura. ",
+        "client-description-2": "Todos los botones de creación o edición se ocultan en su vista para proteger la data.",
+        "engineer": "Ingeniero"
+      },
+      "send-invitation": {
+        "title": "Invitar nuevo usuario",
+        "credentials": "Se enviará un correo con las credenciales de acceso al sistema.",
+        "email": "CORREO ELECTRÓNICO",
+        "email-placeholder": "usuario@compañia.com",
+        "name": "Nombre",
+        "name-placeholder": "Ejm. 'Juan'",
+        "lastname": "Apellido",
+        "lastname-placeholder": "Ejm. 'Perez'",
+        "rol": "Rol a asignar",
+        "btn-cancel": "Cancelar",
+        "btn-invite": "Mandar Invitación"
+      }
+    },
+    "workers": {
+      "tab-workers": "Directorio de Obreros",
+      "title": "Maquinaria y Herramientas",
+      "register": {
+        "title": "Registro de Cuadrillas y Obreros",
+        "description": "Directorio pasivo del personal operario. Se utiliza exclusivamente para asociar su DNI en el Módulo Logístico.",
+        "btn-add-worker": "+ Nuevo Obrero",
+        "tab-dni": "Documento (DNI)",
+        "tab-name": "Nombres Completos",
+        "tab-role": "Cargo / Cuadrilla",
+        "tab-status": "Estado de Obra",
+        "tab-tools": "Herramientas asignadas",
+        "tab-action": "Acción",
+        "tab-count-tools-one": "equipo",
+        "tab-count-tools-many": "equipos",
+        "tab-btn-delete": "Eliminar",
+        "tab-status-active": "ACTIVO",
+        "tab-status-inactive": "INACTIVO",
+        "no-workers-found": "No se encontraron trabajadores registrados."
+      },
+      "add-modal": {
+        "title": "Registrar Nuevo Obrero",
+        "dni-label": "Documento (DNI)",
+        "dni-placeholder": "8 dígitos",
+        "name-label": "Nombres Completos",
+        "name-placeholder": "Ejm. Juan Perez",
+        "role-label": "Cargo / Cuadrilla",
+        "role-placeholder": "Ejm. Operario de Albaliñería",
+        "tools-title": "Herramientas Asignadas",
+        "tools-add": "+ Añadir Herramienta",
+        "tools-placeholder": "Nombre del equipo...",
+        "btn-save": "Guardar Obrero",
+        "btn-cancel": "Cancelar",
+        "no-tools-added": "Sin herramientas iniciales asignadas"
+      }
+    }
+  },
+  "signatures": {
+    "dialog": {
+      "title": "Firmar Documento",
+      "description": "Ingresa el código de verificación que recibiste por correo electrónico.",
+      "token-sent": "Se ha enviado un código de 6 dígitos a tu correo electrónico.",
+      "token-label": "Código de verificación",
+      "token-hint": "Ingresa los 6 dígitos",
+      "btn-cancel": "Cancelar",
+      "btn-confirm": "Confirmar Firma"
+    },
+    "page": {
+      "title": "Documentos",
+      "pending-title": "Documentos Pendientes de Tu Firma",
+      "signed-title": "Documentos Firmados",
+      "deadline": "Vence",
+      "signers": "Firmantes",
+      "btn-sign": "Firmar Documento",
+      "empty-pending": "No hay documentos pendientes",
+      "empty-signed": "No hay documentos firmados",
+      "signed-at": "Firmado el",
+      "summary-title": "Resumen",
+      "summary-pending": "Pendientes",
+      "summary-signed": "Firmados",
+      "security-title": "Firma Digital Segura",
+      "security-description": "Todas las firmas son encriptadas y tienen validez legal según normativa vigente.",
+      "howto-title": "¿Cómo firmar?",
+      "howto-step1": "Revisa el documento completo",
+      "howto-step2": "Haz clic en 'Firmar Documento'",
+      "howto-step3": "Ingresa el código de verificación",
+      "howto-step4": "La firma se registra automáticamente"
     }
   }
 }
