@@ -4,7 +4,7 @@ export interface SeismicResource {
   projectId: string;
   unit: string;
   location: string;
-  state: string;
+  state: number;
   lastLecture: number;
   limit: number;
   timeLecture: string;
