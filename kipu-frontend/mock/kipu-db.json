@@ -4,9 +4,55 @@
       "email": "fdhbbf@hotmail.com",
       "password": "kipu12345",
       "id": "SIVyLM6"
+    },
+    {
+      "email": "kipu@hotmail.com",
+      "password": "kipu123",
+      "id": "P-n4XLk"
+    },
+    {
+      "email": "usuario@ejemplo.com",
+      "password": "kipu12345",
+      "id": "YaICORq"
+    },
+    {
+      "email": "ej@hotmail.com",
+      "password": "hola123",
+      "id": "bhjp9wt"
     }
   ],
-  "project": [],
+  "project": [
+    {
+      "id": "proj-01",
+      "name": "Edificio Corporativo Los Olivos",
+      "description": "Construcción de edificio corporativo de 12 pisos con 3 sótanos de estacionamiento",
+      "status": "IN_PROGRESS",
+      "startDate": "2026-01-15",
+      "location": "Av. Principal 123, Los Olivos, Lima",
+      "createdAt": "2026-01-10",
+      "createdBy": "SIVyLM6"
+    },
+    {
+      "id": "proj-02",
+      "name": "Residencial San Miguel",
+      "description": "Complejo residencial de 80 departamentos con áreas comunes",
+      "status": "PLANNED",
+      "startDate": "2026-07-01",
+      "location": "Calle Las Flores 456, San Miguel, Lima",
+      "createdAt": "2026-05-01",
+      "createdBy": "SIVyLM6"
+    },
+    {
+      "id": "proj-03",
+      "name": "Colegio Particular San José",
+      "description": "Construcción de nueva infraestructura educativa con 30 aulas y laboratorios",
+      "status": "COMPLETED",
+      "startDate": "2025-03-01",
+      "location": "Av. La Cultura 789, Cusco",
+      "createdAt": "2025-02-15",
+      "createdBy": "P-n4XLk"
+    }
+  ],
   "documents": [
     {
       "id": "doc-001",

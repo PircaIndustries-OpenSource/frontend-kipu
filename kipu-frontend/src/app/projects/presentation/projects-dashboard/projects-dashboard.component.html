@@ -1,0 +1,158 @@
+<div class="p-8 bg-gray-50 min-h-screen">
+
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-2xl font-bold text-gray-800">Mis Proyectos</h1>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+        <mat-card class="p-6 border-none shadow-sm">
+            <div class="flex justify-between items-start mb-4">
+                <span class="text-2xl">🏗️</span>
+                <span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded">Activos</span>
+            </div>
+            <p class="text-gray-500 text-sm mb-1">Proyectos Activos</p>
+            <p class="text-2xl font-bold">12</p>
+        </mat-card>
+
+        <mat-card class="p-6 border-none shadow-sm">
+            <div class="flex justify-between items-start mb-4">
+                <span class="text-2xl">📊</span>
+                <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded">En curso</span>
+            </div>
+            <p class="text-gray-500 text-sm mb-1">Avance Promedio</p>
+            <p class="text-2xl font-bold">78%</p>
+        </mat-card>
+
+        <mat-card class="p-6 border-none shadow-sm">
+            <div class="flex justify-between items-start mb-4">
+                <span class="text-2xl">⚠️</span>
+                <span class="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded">Pendientes</span>
+            </div>
+            <p class="text-gray-500 text-sm mb-1">RNC Abiertos</p>
+            <p class="text-2xl font-bold">5</p>
+        </mat-card>
+
+        <mat-card class="p-6 border-none shadow-sm">
+            <div class="flex justify-between items-start mb-4">
+                <span class="text-2xl">👥</span>
+                <span class="bg-gray-100 text-gray-700 text-xs font-bold px-2 py-1 rounded">Total</span>
+            </div>
+            <p class="text-gray-500 text-sm mb-1">Colaboradores</p>
+            <p class="text-2xl font-bold">42</p>
+        </mat-card>
+    </div>
+
+    <div class="flex gap-4 mb-8">
+        <div class="relative flex-grow">
+            <input type="text" placeholder="Buscar proyecto..."
+                class="w-full p-4 pl-12 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <mat-icon class="absolute left-4 top-4 text-gray-400">search</mat-icon>
+        </div>
+        <button mat-flat-button color="primary" class="!py-7 !px-8 !bg-slate-800" (click)="openCreateDialog()">
+            + Nuevo Proyecto
+        </button>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+        @if (isLoading()) {
+        @for (i of [1, 2, 3, 4]; track i) {
+        <mat-card class="overflow-hidden border-none shadow-md">
+            <div class="h-48 w-full bg-slate-200 animate-pulse"></div>
+
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="h-6 bg-slate-200 rounded w-1/2 animate-pulse"></div>
+                    <div class="h-6 bg-slate-200 rounded w-24 animate-pulse"></div>
+                </div>
+
+                <div class="h-3 bg-slate-200 rounded w-16 mb-2 animate-pulse"></div>
+                <div class="w-full bg-slate-100 rounded-full h-2 mb-4 animate-pulse">
+                    <div class="bg-slate-200 h-2 rounded-full w-full"></div>
+                </div>
+
+                <div class="flex justify-between items-center mb-6">
+                    <div class="flex flex-col gap-2">
+                        <div class="h-3 bg-slate-200 rounded w-8 animate-pulse"></div>
+                        <div class="h-4 bg-slate-200 rounded w-20 animate-pulse"></div>
+                    </div>
+                    <div class="flex flex-col items-end gap-2">
+                        <div class="h-3 bg-slate-200 rounded w-16 animate-pulse"></div>
+                        <div class="h-4 bg-slate-200 rounded w-20 animate-pulse"></div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                    <div class="h-5 bg-slate-200 rounded w-24 animate-pulse"></div>
+                    <div class="flex gap-2">
+                        <div class="h-5 bg-slate-200 rounded w-12 animate-pulse"></div>
+                        <div class="h-5 bg-slate-200 rounded w-20 animate-pulse"></div>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+        }
+        } @else {
+        @for (project of projects(); track project.id) {
+        <mat-card class="overflow-hidden border-none shadow-md">
+            <img [src]="'assets/project' + ((project.id === 'proj-01' ? 1 : project.id === 'proj-02' ? 2 : project.id === 'proj-03' ? 3 : 4)) + '.jpg'"
+                class="h-48 w-full object-cover" alt="Project Image">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="font-bold text-gray-800">{{ project.name }}</h3>
+                    <span class="text-xs font-bold px-2 py-1 rounded cursor-pointer hover:opacity-80 transition-opacity"
+                        [ngClass]="{'bg-green-100 text-green-700': project.status === 'IN_PROGRESS', 
+                                             'bg-yellow-100 text-yellow-700': project.status === 'PLANNED',
+                                             'bg-gray-100 text-gray-700': project.status === 'ON_HOLD',
+                                             'bg-blue-100 text-blue-700': project.status === 'COMPLETED'}"
+                        (click)="openChangeStatusDialog(project)">
+                        {{ getDisplayStatus(project.status) }}
+                    </span>
+                </div>
+
+                <p class="text-xs text-gray-500 mb-2">Avance:</p>
+                <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
+                    <div class="h-2 rounded-full transition-all duration-1000"
+                        [ngClass]="project.status === 'IN_PROGRESS' ? 'bg-green-500' : (project.status === 'PLANNED' ? 'bg-blue-500' : 'bg-gray-400')"
+                        [style.width.%]="project.status === 'COMPLETED' ? 100 : (project.status === 'IN_PROGRESS' ? 45 : 10)">
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center text-xs text-gray-400 mb-6">
+                    <div class="flex flex-col">
+                        <span>Inicio</span>
+                        <span class="font-medium text-gray-600 mt-1">{{ project.startDate | date:'dd/MM/yyyy' }}</span>
+                    </div>
+                    <div class="flex flex-col items-end">
+                        <span>Fin estimado</span>
+                        <span class="font-medium text-gray-600 mt-1">{{ project.endDate ? (project.endDate |
+                            date:'dd/MM/yyyy') : 'No definido' }}</span>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                    <div class="flex items-center gap-2 text-sm text-gray-600">
+                        <mat-icon class="text-sm scale-75">person</mat-icon> 8 miembros
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="bg-red-50 text-red-600 px-2 py-1 rounded font-bold text-[10px]">3 RNC</span>
+                        <span class="bg-yellow-50 text-yellow-600 px-2 py-1 rounded font-bold text-[10px]">5
+                            pendientes</span>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+        } @empty {
+        <div
+            class="col-span-1 md:col-span-2 text-center py-16 bg-white rounded-xl border border-gray-200 border-dashed">
+            <mat-icon class="text-gray-400 text-5xl mb-4 h-12 w-12">folder_open</mat-icon>
+            <h3 class="text-lg font-bold text-gray-700">No hay proyectos activos</h3>
+            <p class="text-gray-500 mt-2 mb-6">Comienza creando tu primer proyecto de obra.</p>
+            <button mat-flat-button color="primary" class="!bg-slate-800" (click)="openCreateDialog()">
+                Crear Proyecto
+            </button>
+        </div>
+        }
+        }
+    </div>
+</div>

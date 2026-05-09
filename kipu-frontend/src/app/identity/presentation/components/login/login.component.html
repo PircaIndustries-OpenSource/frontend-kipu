@@ -1,0 +1,53 @@
+<div class="min-h-screen bg-slate-800 flex items-center justify-center p-4">
+  <div class="bg-white rounded-xl shadow-2xl flex flex-col md:flex-row w-full max-w-5xl overflow-hidden">
+    <app-auth-banner></app-auth-banner>
+
+    <section class="md:w-1/2 p-12 bg-gray-50 flex flex-col justify-center">
+      <h2 class="text-3xl font-bold text-gray-800 ">Iniciar sesión</h2>
+      <p class="text-gray-500 mb-8 text-sm">Ingresa tus credenciales para continuar</p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="flex flex-col gap-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput formControlName="email" type="email">
+          @if (loginForm.get('email')?.hasError('email')) {
+            <mat-error>Formato de correo no válido</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input matInput formControlName="password" type="password">
+        </mat-form-field>
+
+        <div class="flex items-center justify-between mb-4">
+          <mat-checkbox color="primary" class="text-sm">Recordarme</mat-checkbox>
+          <a routerLink="/forgot-password" class="text-sm text-blue-500 hover:underline">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <button mat-flat-button color="primary" type="submit" class="!py-6" [disabled]="loginForm.invalid">
+          Ingresar
+        </button>
+
+        <div class="flex items-center gap-4 my-6">
+          <mat-divider class="flex-grow"></mat-divider>
+          <span class="text-xs text-gray-400">o continúa con</span>
+          <mat-divider class="flex-grow"></mat-divider>
+        </div>
+
+        <div class="flex gap-4">
+          <button mat-stroked-button type="button" class="w-1/2 !py-5">
+            <span class="font-bold mr-2 text-gray-700">G</span> Google
+          </button>
+          <button mat-stroked-button type="button" class="w-1/2 !py-5">
+            <span class="font-bold mr-2 text-gray-700">M</span> Microsoft
+          </button>
+        </div>
+
+        <p class="text-center text-xs text-gray-500 mt-6">
+          ¿No tienes una cuenta? <a routerLink="/register" class="text-blue-500 hover:underline">Regístrate aquí</a>
+        </p>
+      </form>
+    </section>
+  </div>
+</div>

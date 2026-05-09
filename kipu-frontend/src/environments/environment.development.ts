@@ -4,6 +4,7 @@ export const environment = {
   kipuApiInventoryMaterialsEndpointPath: '/materials/inventory',
   kipuApiMaterialsEndpointPath: '/materials',
   kipuApiRequestEndpointPath: '/materials/requests',
+  kipuApiProjectsEndpointPath: '/projects',
   kipuApiMachineryEndpointPath: '/materials/tools',
   kipuApiTeamEndpointPath: '/team',
   kipuApiTeamUsersEndpointPath: '/team-users',
