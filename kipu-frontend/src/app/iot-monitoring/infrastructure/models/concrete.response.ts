@@ -1,4 +1,5 @@
-export interface ConcreteResponse {
+export type ConcreteResponse = ConcreteResource[];
+export interface ConcreteResource {
   id: string;
   name: string;
   state: number;
@@ -6,4 +7,5 @@ export interface ConcreteResponse {
   temperature: number;
   humidity: number;
   limit: number;
+  unit: string;
 }

@@ -1,8 +1,9 @@
-export interface GeolocalizationResponse {
+export type GeolocalizationResponse = GeolocalizationResource[];
+export interface GeolocalizationResource {
   id: string;
   name: string;
   projectId: string;
   longitude: number;
   latitude: number;
-  state: string;
+  state: number;
 }

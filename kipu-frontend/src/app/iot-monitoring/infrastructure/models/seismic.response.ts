@@ -1,4 +1,5 @@
-export interface SeismicResponse {
+export type SeismicResponse = SeismicResource[];
+export interface SeismicResource {
   id: string;
   projectId: string;
   unit: string;

@@ -1,4 +1,5 @@
-export interface HopperResponse {
+export type HopperResponse = HopperResource[];
+export interface HopperResource {
   id: string;
   projectId: string;
   unit: string;

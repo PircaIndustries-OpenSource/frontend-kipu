@@ -6,6 +6,8 @@ export class ConcreteEntity {
   #temperature: number;
   #humidity: number;
   #limit: number;
+  #unit: string;
+
   constructor() {
     this.#id = '';
     this.#name = '';
@@ -14,6 +16,7 @@ export class ConcreteEntity {
     this.#temperature = 0;
     this.#humidity = 0;
     this.#limit = 0;
+    this.#unit = '';
   }
 
   get id(): string {
@@ -70,5 +73,13 @@ export class ConcreteEntity {
 
   set limit(value: number) {
     this.#limit = value;
+  }
+
+  get unit(): string {
+    return this.#unit;
+  }
+
+  set unit(value: string) {
+    this.#unit = value;
   }
 }
