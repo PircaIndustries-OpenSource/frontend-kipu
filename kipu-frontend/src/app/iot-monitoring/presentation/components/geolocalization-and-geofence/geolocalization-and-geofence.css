@@ -1,0 +1,131 @@
+/* --- Cabecera --- */
+.geo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.geo-header h2 { font-size: 20px; color: #2d3748; margin: 0; }
+.edit-btn { background-color: #3182ce; color: white; }
+
+/* --- Layout Principal --- */
+.geo-dashboard {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+/* ========================================= */
+/* --- SECCIÓN DEL MAPA (Izquierda) --- */
+/* ========================================= */
+.map-section {
+  flex: 3;
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  padding: 16px;
+}
+
+/* La cuadrícula de fondo */
+.grid-container {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  background-color: #f8fafc;
+  /* Dibuja las líneas horizontales y verticales de la grilla */
+  background-image:
+    linear-gradient(to right, #cbd5e0 1px, transparent 1px),
+    linear-gradient(to bottom, #cbd5e0 1px, transparent 1px);
+  background-size: 14.28% 14.28%; /* Para crear unas 7 columnas/filas aprox */
+  border: 1px solid #cbd5e0;
+}
+
+/* El polígono punteado (Límite de obra) */
+.geofence-svg {
+  position: absolute;
+  top: 0; left: 0;
+  pointer-events: none; /* Para que no interfiera con los clics en los pines */
+}
+.geofence-polygon {
+  fill: rgba(49, 130, 206, 0.05); /* Relleno azul muy sutil */
+  stroke: #3182ce; /* Borde azul */
+  stroke-width: 0.5;
+  stroke-dasharray: 2, 2; /* Crea el efecto punteado */
+}
+
+/* Los pines y tooltips en el mapa */
+.map-marker {
+  position: absolute;
+  transform: translate(-50%, -50%); /* Centra el pin exactamente en la coordenada */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.marker-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  margin-top: 8px;
+}
+.marker-dot.dentro { background-color: #38a169; }
+.marker-dot.fuera { background-color: #d98825; }
+
+.marker-tooltip {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: bold;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.marker-tooltip.dentro { background-color: #38a169; color: white; }
+.marker-tooltip.fuera { background-color: #fffaf0; color: #d98825; border: 1px solid #d98825; }
+.alert-icon { font-size: 14px; width: 14px; height: 14px; }
+
+/* Leyenda */
+.map-legend {
+  position: absolute;
+  bottom: 16px; left: 16px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: white;
+}
+.legend-title { font-weight: bold; font-size: 12px; display: block; margin-bottom: 8px; }
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #a0aec0;}
+.dashed-line { width: 30px; border-bottom: 2px dashed #3182ce; }
+
+
+/* ========================================= */
+/* --- PANEL DE EQUIPOS (Derecha) --- */
+/* ========================================= */
+.equipment-panel {
+  flex: 1;
+  min-width: 320px;
+}
+
+.equipment-card { padding: 20px; border-radius: 12px; }
+.panel-title { font-size: 16px; margin-bottom: 20px; color: #2d3748; }
+
+.eq-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border-left: 4px solid transparent;
+}
+.eq-item.dentro { background-color: #f0fff4; border-left-color: #38a169; }
+.eq-item.fuera { background-color: #fffaf0; border-left-color: #d98825; }
+
+.eq-info { display: flex; flex-direction: column; gap: 4px; }
+.eq-name { font-weight: 500; font-size: 14px; color: #2d3748; }
+.eq-status-text { font-size: 12px; }
+.eq-status-text.dentro { color: #38a169; }
+.eq-status-text.fuera { color: #d98825; }
+
+.status-dot { width: 10px; height: 10px; border-radius: 50%; }
+.status-dot.dentro { background-color: #38a169; }
+.status-dot.fuera { background-color: #d98825; }

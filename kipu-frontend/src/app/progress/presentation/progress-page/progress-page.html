@@ -1,0 +1,72 @@
+<div class="p-6 bg-gray-50 min-h-screen font-inter">
+
+  <div class="flex justify-between items-center mb-8 border-b border-gray-200 pb-5">
+    <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">
+      {{ 'progress.title' | translate }}
+    </h1>
+    <button mat-flat-button color="primary" class="!rounded-full px-6 font-semibold text-sm">
+      {{ 'progress.actions.viewAll' | translate }}
+    </button>
+  </div>
+
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <table class="w-full text-left border-collapse">
+      <thead class="bg-gray-50 border-b border-gray-100">
+      <tr>
+        <th class="px-6 py-4 text-xs uppercase font-bold text-gray-500 tracking-wider w-20">
+          {{ 'progress.table.id' | translate }}
+        </th>
+        <th class="px-6 py-4 text-xs uppercase font-bold text-gray-500 tracking-wider">
+          {{ 'progress.table.name' | translate }}
+        </th>
+        <th class="px-6 py-4 text-xs uppercase font-bold text-gray-500 tracking-wider">
+          {{ 'progress.table.location' | translate }}
+        </th>
+        <th class="px-6 py-4 text-xs uppercase font-bold text-gray-500 tracking-wider w-48">
+          {{ 'progress.table.progress' | translate }}
+        </th>
+        <th class="px-6 py-4 text-xs uppercase font-bold text-gray-500 tracking-wider">
+          {{ 'progress.table.status' | translate }}
+        </th>
+        <th class="px-6 py-4 w-16 text-center text-xs uppercase font-bold text-gray-500 tracking-wider">
+          {{ 'progress.table.actions' | translate }}
+        </th>
+      </tr>
+      </thead>
+
+      <tbody class="divide-y divide-gray-100">
+        @for (project of projects(); track project.id) {
+          <tr class="hover:bg-gray-50/50 transition-colors duration-150">
+            <td class="px-6 py-4 text-sm font-mono text-gray-400">
+              00{{ project.id }}
+            </td>
+            <td class="px-6 py-4 text-sm font-bold text-gray-900">
+              {{ project.projectName }}
+            </td>
+            <td class="px-6 py-4 text-sm text-gray-600">
+              {{ project.location }}
+            </td>
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-3">
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                  <div class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" [style.width.%]="project.currentPercentage"></div>
+                </div>
+                <span class="text-xs font-bold text-gray-700 w-8">{{ project.currentPercentage }}%</span>
+              </div>
+            </td>
+            <td class="px-6 py-4">
+              <span [class]="getStatusBadgeClass(project.status)">
+                {{ getStatusKey(project.status) | translate }}
+              </span>
+            </td>
+            <td class="px-6 py-4 text-center">
+              <button mat-icon-button class="!text-gray-400">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

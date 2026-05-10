@@ -4,6 +4,7 @@ import { Layout } from './shared/presentation/layout/layout';
 import { LogisticsPage } from './logistics/presentation/logistics-page/logistics-page';
 import { LoginComponent } from './identity/presentation/components/login/login.component';
 import { TeamPage } from './team/presentation/team-page/team-page';
+import { IotMonitoringDashboard } from './iot-monitoring/presentation/dashboard/iot-monitoring-dashboard/iot-monitoring-dashboard';
 
 export const routes: Routes = [
   {
@@ -21,15 +22,24 @@ export const routes: Routes = [
   },
   {
     path: 'verification',
-    loadComponent: () => import('./identity/presentation/components/verification/verification.component').then(m => m.VerificationComponent)
+    loadComponent: () =>
+      import('./identity/presentation/components/verification/verification.component').then(
+        (m) => m.VerificationComponent,
+      ),
   },
   {
     path: 'forgot-password',
-    loadComponent: () => import('./identity/presentation/components/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent)
+    loadComponent: () =>
+      import('./identity/presentation/components/forgot-password/forgot-password.component').then(
+        (m) => m.ForgotPasswordComponent,
+      ),
   },
   {
     path: 'reset-password',
-    loadComponent: () => import('./identity/presentation/components/reset-password/reset-password.component').then(m => m.ResetPasswordComponent)
+    loadComponent: () =>
+      import('./identity/presentation/components/reset-password/reset-password.component').then(
+        (m) => m.ResetPasswordComponent,
+      ),
   },
   {
     path: '',
@@ -101,12 +111,12 @@ export const routes: Routes = [
           import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
             (m) => m.InventoryPage,
           ),
-      },
+      },/*'./progress/presentation/progress-page/progress-page.component'*/
       {
         path: 'advances',
         loadComponent: () =>
-          import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
-            (m) => m.InventoryPage,
+          import('./progress/presentation/progress-page/progress-page').then(
+            (m) => m.ProgressPage,
           ),
       },
       {
@@ -163,11 +173,50 @@ export const routes: Routes = [
         ],
       },
       {
-        path: 'iot',
-        loadComponent: () =>
-          import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
-            (m) => m.InventoryPage,
-          ),
+        path: 'iot-monitoring',
+        component: IotMonitoringDashboard,
+        children: [
+          {
+            path: '',
+            redirectTo: 'iot-monitoring',
+            pathMatch: 'full',
+          },
+          {
+            path: 'iot',
+            loadComponent: () =>
+              import('./iot-monitoring/presentation/dashboard/iot-monitoring-dashboard/iot-monitoring-dashboard').then(
+                (m) => m.IotMonitoringDashboard,
+              ),
+          },
+          {
+            path: 'concrete-curing',
+            loadComponent: () =>
+              import('./iot-monitoring/presentation/components/concrete-curing/concrete-curing').then(
+                (m) => m.ConcreteCuring,
+              ),
+          },
+          {
+            path: 'hopper-watch',
+            loadComponent: () =>
+              import('./iot-monitoring/presentation/components/hopper-watch/hopper-watch').then(
+                (m) => m.HopperWatch,
+              ),
+          },
+          {
+            path: 'geolocalization',
+            loadComponent: () =>
+              import('./iot-monitoring/presentation/components/geolocalization-and-geofence/geolocalization-and-geofence').then(
+                (m) => m.GeolocalizationAndGeofence,
+              ),
+          },
+          {
+            path: 'seismic-control',
+            loadComponent: () =>
+              import('./iot-monitoring/presentation/components/seismic-control/seismic-control').then(
+                (m) => m.SeismicControl,
+              ),
+          },
+        ],
       },
       {
         path: '',

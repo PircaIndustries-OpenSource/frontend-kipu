@@ -1,0 +1,80 @@
+<div class="seismic-dashboard">
+
+  <div class="sensors-list">
+    @for (sensor of seismicSensors(); track sensor.id) {
+
+      <mat-card class="seismic-card" [ngClass]="sensor.state">
+
+        <div class="card-header">
+          <div class="badges">
+            <span class="badge sensor-id">{{ sensor.id }}</span>
+            <span class="badge sensor-status" [ngClass]="sensor.state">
+              {{ sensor.name }}
+            </span>
+          </div>
+          <span class="timestamp">{{ sensor.timeLecture }}</span>
+        </div>
+
+        @if (sensor.state === 'peligro') {
+          <div class="alert-box">
+            <mat-icon color="warn">error_outline</mat-icon>
+            <h4>BLOCK OPERATIONS</h4>
+            <p>La vibración superó el umbral seguro ({{ sensor.lastLecture }} mm/s > {{ sensor.limit }} mm/s)</p>
+          </div>
+
+          <div class="auth-section">
+            <p class="auth-text">Sector: {{ sensor.location }}. Se requiere autorización de Residente para liberar.</p>
+            <input type="password" placeholder="Authorization password" class="auth-input">
+            <button mat-flat-button color="primary" class="unlock-btn">
+              Take care of the risk and unlock.
+            </button>
+          </div>
+        }
+        @else {
+          <div class="normal-data-grid">
+            <div class="data-column">
+              <span class="data-label">Location</span>
+              <span class="data-value">{{ sensor.location }}</span>
+            </div>
+            <div class="data-column">
+              <span class="data-label">Actual Lecture</span>
+              <span class="data-value">{{ sensor.lastLecture }} mm/s</span>
+            </div>
+            <div class="data-column">
+              <span class="data-label">Secure Limit</span>
+              <span class="data-value">{{ sensor.limit }} mm/s</span>
+            </div>
+          </div>
+        }
+
+      </mat-card>
+    }
+  </div>
+
+  <aside class="summary-panel">
+    <mat-card class="summary-card">
+      <h3>MODULE'S RESUME</h3>
+
+      <div class="stat-block">
+        <span class="stat-number dark">{{ getZones() }}</span>
+        <span class="stat-label">INSTALLED SEISMOGRAPHS</span>
+      </div>
+
+      <hr class="divider">
+
+      <div class="stat-block">
+        <span class="stat-number danger">{{ getBlockedZones() }}</span>
+        <span class="stat-label">BLOCKED ZONES</span>
+      </div>
+
+      <hr class="divider">
+
+      <div class="filters">
+        <p class="filters-title">QUICK FILTERS</p>
+        <button class="filter-btn active">ALL THE SENSORS</button>
+        <button class="filter-btn outline">JUST IN WARNING STATE</button>
+      </div>
+    </mat-card>
+  </aside>
+
+</div>
