@@ -1,0 +1,33 @@
+<div class="sensor-grid">
+  @for (sensor of concreteSensors(); track sensor.id) {
+    <mat-card class="curing-card" [ngClass]="getSensorStatusClass(sensor.temperature, sensor.limit)">
+      <mat-card-header>
+        <span class="sensor-name">{{ sensor.name }}</span>
+        <span class="sensor-state">{{ sensor.state }}</span>
+        <span class="sensor-location">{{ sensor.location }}</span>
+      </mat-card-header>
+      <mat-card-content>
+        <span class="temperature">
+          <span class="value" [ngClass]="getSensorStatusClass(sensor.temperature, sensor.limit)">
+            {{ sensor.temperature }}
+            {{ sensor.unit }}
+          </span>
+          TEMPERATURE
+        </span>
+        <span class="humidity">
+          {{ sensor.humidity }}%
+          HUMIDITY
+        </span>
+      </mat-card-content>
+      <mat-card-footer>
+        <span>
+          WARNING BREAKPOINT
+          {{ sensor.limit }}
+        </span>
+        <button mat-flat-button color="primary">
+          CONFIGURE
+        </button>
+      </mat-card-footer>
+    </mat-card>
+  }
+</div>

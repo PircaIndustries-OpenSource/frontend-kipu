@@ -1,18 +1,17 @@
 export class RequestItem {
-  materialId: string;
+  supplierOfferId: string;
   quantity: number;
-  pricePerUnit: number;
   constructor() {
-    this.materialId = '';
+    this.supplierOfferId = '';
     this.quantity = 0;
-    this.pricePerUnit = 0;
   }
 }
 export type RequestItemViewModel = RequestItem & {
   materialName: string;
-  materialCategory: string;
+  categoryName: string;
   materialUnit: string;
   materialSubcategory: string;
+  pricePerUnit: number;
 };
 export class RequestEntity {
   id: string;
@@ -31,21 +30,21 @@ export class RequestEntity {
   requestedBy: string;
   activity: string;
   constructor() {
-    this.id = "";
-    this.projectId = "";
-    this.requestDate = "";
-    this.deadline = "";
-    this.status = "PENDING";
+    this.id = '';
+    this.projectId = '';
+    this.requestDate = '';
+    this.deadline = '';
+    this.status = 'PENDING';
     this.priority = 0;
-    this.deliveryLocation = "";
-    this.budgetLineId = "";
-    this.purpose = "";
-    this.additionalNotes = "";
-    this.suggestedSupplierId = "";
+    this.deliveryLocation = '';
+    this.budgetLineId = '';
+    this.purpose = '';
+    this.additionalNotes = '';
+    this.suggestedSupplierId = '';
     this.attachments = [];
     this.items = [];
-    this.requestedBy = "";
-    this.activity = "";
+    this.requestedBy = '';
+    this.activity = '';
   }
 }
 export type RequestViewModel = Omit<RequestEntity, 'items'> & {

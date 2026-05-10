@@ -18,6 +18,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { AuthBannerComponent } from '../../../../shared/presentation/components/auth-banner/auth-banner.component';
 import { Identity } from '../../../domain/identity.model';
 import { IdentityService } from '../../../infrastructure/identity.service';
+import { RegisterSuccessDialogComponent } from './register-success.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -40,6 +43,9 @@ export class RegisterComponent {
 
   private identityService = inject(IdentityService);
   private fb = inject(FormBuilder);
+  private dialog = inject(MatDialog);
+  private router = inject(Router);
+
 
   constructor() {
     this.registerForm = this.fb.group({
@@ -71,13 +77,20 @@ export class RegisterComponent {
         role: 'Gestor Operativo'
       };
 
+
       this.identityService.registerData(newIdentity).subscribe({
         next: (response) => {
           console.log('Cuenta creada exitosamente:', response);
-          alert('Identidad habilitada en el sistema correctamente.');
-
-          this.registerForm.reset();
+          const dialogRef = this.dialog.open(RegisterSuccessDialogComponent, {
+            width: '600px',
+            panelClass: 'custom-dialog-container',
+            disableClose: true,
+          });
+          dialogRef.afterClosed().subscribe(() => {
+            this.router.navigate(['/login']);
+          });
         },
+
         error: (error) => {
           console.error('Fallo en la comunicación con el servidor:', error);
           alert('Error crítico al intentar registrar la cuenta.');

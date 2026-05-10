@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreatePage } from './create-page';
+import { RequestSuccessDialog } from './request-success-dialog';
 
-describe('CreatePage', () => {
-  let component: CreatePage;
-  let fixture: ComponentFixture<CreatePage>;
+describe('RequestSuccessDialog', () => {
+  let component: RequestSuccessDialog;
+  let fixture: ComponentFixture<RequestSuccessDialog>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreatePage],
+      imports: [RequestSuccessDialog],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CreatePage);
+    fixture = TestBed.createComponent(RequestSuccessDialog);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
