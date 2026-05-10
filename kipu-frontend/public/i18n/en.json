@@ -143,6 +143,11 @@
         "save-draft": "Save Draft",
         "cancel": "Cancel",
         "submit": "Send Request"
+      },
+      "success": {
+        "title": "Success!",
+        "message": "Request successfully submitted",
+        "close": "Close"
       }
     }
   },

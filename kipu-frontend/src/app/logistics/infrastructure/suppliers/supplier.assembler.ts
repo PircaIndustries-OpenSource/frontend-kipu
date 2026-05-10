@@ -1,8 +1,8 @@
 import { SupplierResource, SupplierResponse } from './supplier-response';
-import { Supplier } from '../../domain/supplier';
+import { SupplierEntity } from '../../domain/supplier.entity';
 
 export class SupplierAssembler {
-  static toEntityFromResource(resource: SupplierResource): Supplier {
+  static toEntityFromResource(resource: SupplierResource): SupplierEntity {
     return {
       id: resource.id,
       ruc: resource.ruc,
@@ -14,10 +14,9 @@ export class SupplierAssembler {
       categories: resource.categories,
       paymentTerms: resource.paymentTerms,
       status: resource.status,
-      offerMaterials: resource.offerMaterials
     };
   }
-  static toEntitiesFromResponse(response: SupplierResponse): Supplier[] {
-      return response.map((resource) => this.toEntityFromResource(resource));
-    }
+  static toEntitiesFromResponse(response: SupplierResponse): SupplierEntity[] {
+    return response.map((resource) => this.toEntityFromResource(resource));
   }
+}

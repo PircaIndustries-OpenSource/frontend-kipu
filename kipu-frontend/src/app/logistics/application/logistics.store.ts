@@ -1,13 +1,14 @@
-import {computed, inject, Injectable, signal} from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { InventoryMaterialEntity, InventoryViewModel } from '../domain/inventoryMaterial.entity';
-import {LogisticsApi} from '../infrastructure/logistics.api';
+import { LogisticsApi } from '../infrastructure/logistics.api';
 import { RequestEntity, RequestViewModel } from '../domain/request.entity';
 import { MachineryEntity } from '../domain/machinery.entity';
-import { Supplier } from '../domain/supplier';
+import { SupplierEntity } from '../domain/supplier.entity';
 import { WasteEntity } from '../domain/waste.entity';
 import { BudgetStore } from '../../budget/application/budget-store';
 import { MaterialEntity } from '../domain/material.entity';
 import { CategoryEntity } from '../domain/category.entity';
+import { SupplierOfferEntity } from '../domain/supplierOffer.entity';
 
 @Injectable({
   providedIn: 'root',
@@ -31,20 +32,20 @@ export class LogisticsStore {
       .filter((category) => category.isActive)
       .map((category) => category.name);
   });
-  getMaterialSelected = computed<MaterialEntity | undefined>(()=>{
+  getMaterialSelected = computed<MaterialEntity | undefined>(() => {
     const materialNameSelected = this.selectedMaterialSignal();
     const materials = this.materialsSignal;
-    const materialSelected = materials().find(
-      (material) => material.name === materialNameSelected)
-    return materialSelected;
-  })
+    return materials().find((material) => material.name === materialNameSelected);
+  });
   readonly filteredMaterialsSignal = computed(() => {
     const category = this.selectedCategorySignal();
+    const categories = this.categoriesSignal();
+    const categoryRelatedByName = categories.find((c) => c.name === this.selectedCategorySignal());
     const allMaterials = this.materialsSignal();
-    if (!category) {
+    if (!categoryRelatedByName) {
       return allMaterials;
     }
-    return allMaterials.filter((material) => material.category === category);
+    return allMaterials.filter((material) => material.categoryId === categoryRelatedByName.id);
   });
   filterByCategory(category: string) {
     this.selectedCategorySignal.set(category);
@@ -63,16 +64,13 @@ export class LogisticsStore {
       const materialRelated = catalogMaterials.find(
         (material) => material.id === invItem.materialId,
       );
-      const category = categories.find(
-        (category) => category.id === materialRelated?.category,
-      );
+      const category = categories.find((category) => category.id === materialRelated?.categoryId);
       return {
         ...invItem,
         materialName: materialRelated?.name || 'Material Unknown',
         materialCategory: category?.name || 'Without Category',
         materialUnit: materialRelated?.measureUnit || 'Without unit',
-        materialSubcategory:
-          materialRelated?.subcategory || 'Without Subcategory',
+        materialSubcategory: materialRelated?.subcategory || 'Without Subcategory',
       };
     });
   });
@@ -82,37 +80,35 @@ export class LogisticsStore {
     if (!category) {
       return allInventoryMaterials;
     }
-    return allInventoryMaterials.filter(
-      (invItem) => invItem.materialCategory === category,
-    );
+    return allInventoryMaterials.filter((invItem) => invItem.materialCategory === category);
   });
-  readonly totalInventoryMaterials = computed(
-    () => this.inventoryMaterials().length,
-  );
+  readonly totalInventoryMaterials = computed(() => this.inventoryMaterials().length);
   readonly criticalMaterialsCount = computed(
     () =>
-      this.inventoryMaterials().filter(
-        (invItem) => invItem.currentStock <= invItem.miniumStock,
-      ).length,
+      this.inventoryMaterials().filter((invItem) => invItem.currentStock <= invItem.miniumStock)
+        .length,
   );
   loadMaterials() {
-    if (this.inventorySignal().length === 0) {
-      this.logisticsApi.getAllInventoryMaterials().subscribe((data) => {
-        this.inventorySignal.set(data);
-      });
-    }
     if (this.materialsSignal().length === 0) {
       this.logisticsApi.getAllMaterials().subscribe((data) => {
         this.materialsSignal.set(data);
       });
     }
+  }
+  loadInventoryMaterials = () => {
+    if (this.inventorySignal().length === 0) {
+      this.logisticsApi.getAllInventoryMaterials().subscribe((data) => {
+        this.inventorySignal.set(data);
+      });
+    }
+  };
+  loadCategories() {
     if (this.categoriesSignal().length === 0) {
       this.logisticsApi.getAllCategories().subscribe((data) => {
         this.categoriesSignal.set(data);
       });
     }
   }
-
   clearFilter() {
     this.selectedCategorySignal.set('');
   }
@@ -124,10 +120,13 @@ export class LogisticsStore {
     const requests = this.requestsSignal();
     const materials = this.materialsSignal();
     const categories = this.categoriesSignal();
+    const supplierOffer = this.supplierOfferSignal();
+
     return requests.map((request) => {
       const detailsItem = request.items.map((item) => {
-        const material = materials.find(
-          (material) => material.id === item.materialId,
+        /*
+       *  const material = materials.find(
+          (material) => material.id === item.supplierOfferId,
         );
         const category = categories.find((c) => c.id === material?.category);
         return {
@@ -137,6 +136,18 @@ export class LogisticsStore {
           materialCategory: category?.name || 'Without Category',
           materialUnit: material?.measureUnit || 'Without unit',
           materialSubcategory: material?.subcategory || 'Without Subcategory',
+        };
+       * */
+        const supplierOfferRelated = supplierOffer.find((s) => s.id === item.supplierOfferId);
+        const material = materials.find((m) => m.id === supplierOfferRelated?.materialId);
+        const category = categories.find((c) => c.id === material?.categoryId);
+        return {
+          ...item,
+          materialName: material?.name || 'Unknown Name',
+          categoryName: category?.name || 'Unknown Category',
+          materialUnit: material?.measureUnit || 'Without unit',
+          materialSubcategory: material?.subcategory || 'Without Subcategory',
+          pricePerUnit: supplierOfferRelated?.unitPrice || 0,
         };
       });
       return {
@@ -192,16 +203,35 @@ export class LogisticsStore {
       });
     }
   }
+  getSupplierOfferByMaterialIdAndSupplierId = computed<SupplierOfferEntity | undefined>(() => {
+    const supplierOffer = this.supplierOfferSignal();
+    const materialSelectedId = this.getMaterialSelected()?.id;
+    const supplierSelectedId = this.getSupplierSelected()?.id;
+    if (!materialSelectedId || !supplierSelectedId) {
+      return undefined;
+    }
+    return supplierOffer.find(
+      (sf) => sf.supplierId === supplierSelectedId && sf.materialId === materialSelectedId,
+    );
+  });
+  addRequest(request: RequestEntity, onSuccess?: () => void) {
+    this.logisticsApi.postRequest(request).subscribe({
+      next: (newRequest) => {
+        this.requestsSignal.update((prev) =>
+          [...prev, newRequest]);
+        onSuccess?.();
+      },
+      error: (err) => {
+        console.error('Error adding request', err);
+      },
+    });
+  }
   //Notifications
   readonly hasUnreadRequests = computed(() => this.requestsSignal().length > 0);
   readonly hasCriticalStock = computed(() =>
-    this.inventorySignal().some(
-      (invItem) => invItem.currentStock <= invItem.miniumStock,
-    ),
+    this.inventorySignal().some((invItem) => invItem.currentStock <= invItem.miniumStock),
   );
-  readonly hasNotifications = computed(
-    () => this.hasUnreadRequests() || this.hasCriticalStock(),
-  );
+  readonly hasNotifications = computed(() => this.hasUnreadRequests() || this.hasCriticalStock());
   //Machinery
   private machinerySignal = signal<MachineryEntity[]>([]);
   readonly machinery = computed(() => this.machinerySignal());
@@ -212,8 +242,28 @@ export class LogisticsStore {
       });
     }
   }
+  //SUPPLIERS OFFER
+  supplierOfferSignal = signal<SupplierOfferEntity[]>([]);
+  readonly supplierOffer = computed(() => this.supplierOfferSignal());
+  loadSupplierOffers() {
+    if (this.supplierOfferSignal().length === 0) {
+      this.logisticsApi.getAllSupplierOffer().subscribe((data) => {
+        this.supplierOfferSignal.set(data);
+      });
+    }
+  }
+  getSupplierByMaterial(material: MaterialEntity | undefined) {
+    if (!material) {
+      return [];
+    }
+    const supplierOffer = this.supplierOfferSignal();
+    const suppliers = this.suppliersSignal();
+    const supplierOfferRelated = supplierOffer.filter((sf) => sf.materialId === material.id);
+    const relatedSuppliers = supplierOfferRelated.map((sf) => sf.supplierId);
+    return suppliers.filter((s) => relatedSuppliers.includes(s.id));
+  }
   //Suppliers
-  suppliersSignal = signal<Supplier[]>([]);
+  suppliersSignal = signal<SupplierEntity[]>([]);
   readonly suppliers = computed(() => this.suppliersSignal());
   loadSuppliers() {
     if (this.suppliersSignal().length === 0) {
@@ -227,6 +277,15 @@ export class LogisticsStore {
       (supplier) => supplier.status === 'active',
     );
     return activeSuppliers.length;
+  });
+
+  selectedSupplier = signal<string>('');
+  setSelectedSupplier = (supplierSocialReason: string) => {
+    this.selectedSupplier.set(supplierSocialReason);
+  };
+  getSupplierSelected = computed(() => {
+    const suppliers = this.suppliersSignal();
+    return suppliers.find((s) => s.socialReason === this.selectedSupplier());
   });
   //Waste
   wasteSignal = signal<WasteEntity[]>([]);

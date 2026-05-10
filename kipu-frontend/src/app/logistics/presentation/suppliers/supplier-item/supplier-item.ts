@@ -1,7 +1,11 @@
 import { Component, input } from '@angular/core';
-import {MatCard, MatCardActions, MatCardContent} from "@angular/material/card";
-import {TranslatePipe} from "@ngx-translate/core";
-import { Supplier } from '../../../domain/supplier';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+} from '@angular/material/card';
+import { TranslatePipe } from '@ngx-translate/core';
+import { SupplierEntity } from '../../../domain/supplier.entity';
 
 @Component({
   selector: 'app-supplier-item',
@@ -10,5 +14,5 @@ import { Supplier } from '../../../domain/supplier';
   styleUrl: './supplier-item.css',
 })
 export class SupplierItem {
-  supplier = input.required<Supplier>();
+  supplier = input.required<SupplierEntity>();
 }
