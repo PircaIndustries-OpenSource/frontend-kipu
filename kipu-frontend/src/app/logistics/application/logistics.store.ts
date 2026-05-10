@@ -226,6 +226,23 @@ export class LogisticsStore {
       },
     });
   }
+  updateRequest(id: string, updates: Partial<RequestEntity>, onSuccess?: () => void) {
+    this.logisticsApi.patchRequest(id, updates).subscribe({
+      next: (updated) => {
+        this.requestsSignal.update((prev) =>
+          prev.map((r) => (r.id === id ? { ...r, ...updated } : r)),
+        );
+        onSuccess?.();
+      },
+      error: (err) => {
+        console.error('Error updating request, applying locally', err);
+        this.requestsSignal.update((prev) =>
+          prev.map((r) => (r.id === id ? { ...r, ...updates } : r)),
+        );
+        onSuccess?.();
+      },
+    });
+  }
   //Notifications
   readonly hasUnreadRequests = computed(() => this.requestsSignal().length > 0);
   readonly hasCriticalStock = computed(() =>
@@ -241,6 +258,32 @@ export class LogisticsStore {
         this.machinerySignal.set(data);
       });
     }
+  }
+  addMachinery(machinery: MachineryEntity, onSuccess?: () => void) {
+    this.logisticsApi.postMachinery(machinery).subscribe({
+      next: (newMachinery) => {
+        this.machinerySignal.update((prev) => [...prev, newMachinery]);
+        onSuccess?.();
+      },
+      error: (err) => console.error('Error adding machinery', err),
+    });
+  }
+  updateMachinery(id: string, updates: Partial<MachineryEntity>, onSuccess?: () => void) {
+    this.logisticsApi.patchMachinery(id, updates).subscribe({
+      next: (updated) => {
+        this.machinerySignal.update((prev) =>
+          prev.map((m) => (m.id === id ? { ...m, ...updated } : m)),
+        );
+        onSuccess?.();
+      },
+      error: (err) => {
+        console.error('Error updating machinery, applying locally', err);
+        this.machinerySignal.update((prev) =>
+          prev.map((m) => (m.id === id ? { ...m, ...updates } : m)),
+        );
+        onSuccess?.();
+      },
+    });
   }
   //SUPPLIERS OFFER
   supplierOfferSignal = signal<SupplierOfferEntity[]>([]);
@@ -272,6 +315,32 @@ export class LogisticsStore {
       });
     }
   }
+  addSupplier(supplier: SupplierEntity, onSuccess?: () => void) {
+    this.logisticsApi.postSupplier(supplier).subscribe({
+      next: (newSupplier) => {
+        this.suppliersSignal.update((prev) => [...prev, newSupplier]);
+        onSuccess?.();
+      },
+      error: (err) => console.error('Error adding supplier', err),
+    });
+  }
+  updateSupplier(id: string, updates: Partial<SupplierEntity>, onSuccess?: () => void) {
+    this.logisticsApi.patchSupplier(id, updates).subscribe({
+      next: (updated) => {
+        this.suppliersSignal.update((prev) =>
+          prev.map((s) => (s.id === id ? { ...s, ...updated } : s)),
+        );
+        onSuccess?.();
+      },
+      error: (err) => {
+        console.error('Error updating supplier, applying locally', err);
+        this.suppliersSignal.update((prev) =>
+          prev.map((s) => (s.id === id ? { ...s, ...updates } : s)),
+        );
+        onSuccess?.();
+      },
+    });
+  }
   numberSuppliersActive = computed(() => {
     const activeSuppliers = this.suppliersSignal().filter(
       (supplier) => supplier.status === 'active',
@@ -296,5 +365,14 @@ export class LogisticsStore {
         this.wasteSignal.set(data);
       });
     }
+  }
+  addWaste(waste: WasteEntity, onSuccess?: () => void) {
+    this.logisticsApi.postWaste(waste).subscribe({
+      next: (newWaste) => {
+        this.wasteSignal.update((prev) => [...prev, newWaste]);
+        onSuccess?.();
+      },
+      error: (err) => console.error('Error adding waste', err),
+    });
   }
 }

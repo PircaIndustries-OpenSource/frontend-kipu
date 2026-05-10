@@ -565,10 +565,10 @@
       "requestDate": "2026-05-01",
       "deadline": "2026-05-10",
       "status": "PENDING",
-      "priority": 1,
+      "priority": "2",
       "deliveryLocation": "Sótano 2",
       "budgetLineId": "PP-2026-05",
-      "purpose": "Construcción de muros perimetrales en Piso 3",
+      "purpose": "Es",
       "additionalNotes": "Marca preferida: Sol o Pacasmayo. Entrega en parihuelas.",
       "suggestedSupplierId": "sup-002",
       "attachments": [],
@@ -583,7 +583,8 @@
           "supplierOfferId": "soff-013",
           "quantity": 10
         }
-      ]
+      ],
+      "quantity": 67
     },
     {
       "id": "req-002",
@@ -592,7 +593,7 @@
       "deadline": "2026-05-08",
       "status": "APPROVED",
       "priority": 2,
-      "deliveryLocation": "Almacén Principal",
+      "deliveryLocation": "",
       "budgetLineId": "PP-2026-05",
       "purpose": "Reposición de stock crítico de acero para refuerzo de losas",
       "additionalNotes": "Urgente, stock por debajo del mínimo.",
@@ -605,7 +606,8 @@
           "supplierOfferId": "soff-001",
           "quantity": 100
         }
-      ]
+      ],
+      "quantity": 100
     },
     {
       "id": "req-003",
@@ -890,6 +892,138 @@
       ],
       "requestedBy": "",
       "activity": ""
+    },
+    {
+      "id": "-rjg_PF",
+      "projectId": "",
+      "requestDate": "2026-05-10",
+      "deadline": "",
+      "status": "PENDING",
+      "priority": "1",
+      "deliveryLocation": "",
+      "budgetLineId": "",
+      "purpose": "",
+      "additionalNotes": "",
+      "suggestedSupplierId": "sup-003",
+      "attachments": [],
+      "items": [
+        {
+          "supplierOfferId": "soff-005",
+          "quantity": 1
+        }
+      ],
+      "requestedBy": "",
+      "activity": ""
+    },
+    {
+      "id": "oCh1ony",
+      "projectId": "",
+      "requestDate": "2026-05-10",
+      "deadline": "",
+      "status": "PENDING",
+      "priority": 1,
+      "deliveryLocation": "",
+      "budgetLineId": "",
+      "purpose": "",
+      "additionalNotes": "",
+      "suggestedSupplierId": "",
+      "attachments": [],
+      "items": [
+        {
+          "supplierOfferId": "",
+          "quantity": 1
+        }
+      ],
+      "requestedBy": "",
+      "activity": ""
+    },
+    {
+      "id": "AjFUDol",
+      "projectId": "",
+      "requestDate": "2026-05-10",
+      "deadline": "2026-05-30T05:00:00.000Z",
+      "status": "PENDING",
+      "priority": "1",
+      "deliveryLocation": "asdaaaaaaaaaaeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "budgetLineId": "",
+      "purpose": "asdaaaaaaaaaaeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "additionalNotes": "asdaaaaaaaaaaeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "suggestedSupplierId": "sup-003",
+      "attachments": [],
+      "items": [
+        {
+          "supplierOfferId": "soff-005",
+          "quantity": 1
+        }
+      ],
+      "requestedBy": "",
+      "activity": ""
+    },
+    {
+      "id": "5K4rU2a",
+      "projectId": "",
+      "requestDate": "2026-05-10",
+      "deadline": "",
+      "status": "PENDING",
+      "priority": 1,
+      "deliveryLocation": "",
+      "budgetLineId": "",
+      "purpose": "",
+      "additionalNotes": "",
+      "suggestedSupplierId": "",
+      "attachments": [],
+      "items": [
+        {
+          "supplierOfferId": "",
+          "quantity": 1
+        }
+      ],
+      "requestedBy": "",
+      "activity": ""
+    },
+    {
+      "id": "setKZoP",
+      "projectId": "",
+      "requestDate": "2026-05-10",
+      "deadline": "",
+      "status": "PENDING",
+      "priority": 1,
+      "deliveryLocation": "",
+      "budgetLineId": "",
+      "purpose": "",
+      "additionalNotes": "",
+      "suggestedSupplierId": "",
+      "attachments": [],
+      "items": [
+        {
+          "supplierOfferId": "",
+          "quantity": 1
+        }
+      ],
+      "requestedBy": "",
+      "activity": ""
+    },
+    {
+      "id": "iFWsbi8",
+      "projectId": "",
+      "requestDate": "2026-05-10",
+      "deadline": "2026-05-08T05:00:00.000Z",
+      "status": "PENDING",
+      "priority": "1",
+      "deliveryLocation": "aadsa",
+      "budgetLineId": "",
+      "purpose": "sdasd",
+      "additionalNotes": "asdasd",
+      "suggestedSupplierId": "",
+      "attachments": [],
+      "items": [
+        {
+          "supplierOfferId": "",
+          "quantity": 1
+        }
+      ],
+      "requestedBy": "",
+      "activity": ""
     }
   ],
   "materialsWaste": [
@@ -982,11 +1116,11 @@
     {
       "id": "tool-001",
       "name": "Amoladora Angular 9\"",
-      "status": "IN_USE",
-      "physicalStatus": "Operativo",
-      "assignedTo": "45678912",
+      "status": "URGENT_MAINTENANCE",
+      "physicalStatus": "a",
+      "assignedTo": "Miguel Estrada",
       "registrationDate": "2026-04-15",
-      "maintenanceHours": "120",
+      "maintenanceHours": "200",
       "assignmentDetail": "Entregado a Carlos Mendoza para trabajos de corte de acero en Sótano 2."
     },
     {
@@ -1048,6 +1182,36 @@
       "registrationDate": "2026-04-01",
       "maintenanceHours": "30",
       "assignmentDetail": "Calibrado y listo para topografía en Piso 4."
+    },
+    {
+      "id": "d0rrFHf",
+      "name": "a",
+      "status": "URGENT_MAINTENANCE",
+      "physicalStatus": "a",
+      "assignedTo": "",
+      "registrationDate": "",
+      "maintenanceHours": "aaaaaaa",
+      "assignmentDetail": "aaaa esotilin"
+    },
+    {
+      "id": "f6kZVqO",
+      "name": "a",
+      "status": "AVAILABLE",
+      "physicalStatus": "",
+      "assignedTo": "54343234 - Pedro Castro",
+      "registrationDate": "",
+      "maintenanceHours": "",
+      "assignmentDetail": ""
+    },
+    {
+      "id": "o64cimr",
+      "name": "a",
+      "status": "AVAILABLE",
+      "physicalStatus": "",
+      "assignedTo": "12345678 - Miguel Estrada",
+      "registrationDate": "",
+      "maintenanceHours": "",
+      "assignmentDetail": "a"
     }
   ],
   "iot-telemetry": [],

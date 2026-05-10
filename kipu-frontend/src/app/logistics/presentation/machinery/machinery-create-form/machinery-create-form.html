@@ -1,0 +1,57 @@
+<div [formGroup]="machineryForm" class="flex flex-col   border-(--color-neutral-border)! bg-white!">
+
+  <h2 mat-dialog-title class="!m-0 !p-8 !text-2xl !font-black text-(--color-primary)! border-b border-(--color-neutral-border)! bg-(--color-neutral-bg)! rounded-t-xl!">
+    {{ 'machinery.create.title' | translate }}
+  </h2>
+
+  <mat-dialog-content class="!flex !flex-col !gap-8 !p-10 !m-0 overflow-y-auto max-h-[65vh]">
+
+    <div class="flex flex-col w-full">
+      <mat-form-field appearance="outline" class="w-full!" subscriptSizing="dynamic">
+        <mat-label class="text-(--color-text-main)!">{{ 'machinery.create.name-label' | translate }}</mat-label>
+        <input matInput formControlName="name" [placeholder]="'machinery.create.name-placeholder' | translate">
+        @if (machineryForm.get('name')?.hasError('required') && machineryForm.get('name')?.touched) {
+          <mat-error class="text-(--color-danger)!">{{ 'machinery.create.name-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-col w-full">
+      <mat-form-field appearance="outline" class="w-full!" subscriptSizing="dynamic">
+        <mat-label class="text-(--color-text-main)!">{{ 'machinery.create.worker-label' | translate }}</mat-label>
+        <mat-select formControlName="assignedTo">
+          <mat-option value="">{{ 'machinery.create.worker-none' | translate }}</mat-option>
+          @for (w of workerList(); track w.id) {
+            <mat-option [value]="w.dni">{{ w.dni }} - {{ w.fullName }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-col w-full">
+      <mat-form-field appearance="outline" class="w-full!" subscriptSizing="dynamic">
+        <mat-label class="text-(--color-text-main)!!">{{ 'machinery.create.assignment-detail-label' | translate }}</mat-label>
+        <textarea matInput formControlName="assignmentDetail" rows="3"
+                  [placeholder]="'machinery.create.assignment-detail-placeholder' | translate"></textarea>
+        @if (machineryForm.get('assignmentDetail')?.hasError('required') && machineryForm.get('assignmentDetail')?.touched) {
+          <mat-error class="text-(--color-danger)!">"Texto requerido"</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="!px-8 !py-8 !m-0 !gap-4 bg-(--color-neutral-bg)! border-t border-(--color-neutral-border)!">
+    <button mat-button (click)="onCancel()" class="!rounded-xl !px-8 !py-6 !font-bold text-(--color-neutral-border)! hover:bg-white! transition-all" type="button">
+      {{ 'machinery.create.btn-cancel' | translate }}
+    </button>
+    <button
+      mat-flat-button
+      class="bg-(--color-accent)! text-white! py-6! px-10! rounded-xl! font-bold! text-base! cursor-pointer! transition-all hover:brightness-110! active:scale-95! shadow-md shadow-(--color-accent)/20"
+      (click)="onSave()"
+      type="button"
+    >
+      {{ 'machinery.create.btn-save' | translate }}
+    </button>
+  </mat-dialog-actions>
+</div>

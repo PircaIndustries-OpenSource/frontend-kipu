@@ -3,14 +3,19 @@
     <h1 class="text-3xl font-bold text-primary tracking-tight">
       {{ 'suppliers.title' | translate }}
     </h1>
-    <button matRipple class="w-60 bg-accent text-white! py-5! rounded-m! font-bold! text-base! shadow-md! cursor-pointer transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2">
+    <button (click)="openCreateDialog()" matRipple class="w-60 bg-accent text-white! py-5! rounded-m! font-bold! text-base! shadow-md! cursor-pointer transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2">
       <mat-icon>add_circle</mat-icon>
       {{ 'suppliers.button-create' | translate }}
     </button>
   </header>
+  <mat-form-field appearance="outline" class="w-full max-w-md">
+    <mat-label>{{ 'suppliers.search-ruc' | translate }}</mat-label>
+    <input matInput [(ngModel)]="searchRuc" [placeholder]="'suppliers.search-ruc-placeholder' | translate">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
   <div class="flex flex-row gap-xl">
     <div class="flex-1 min-w-0 flex flex-col gap-l">
-      <app-supplier-list [suppliers]="suppliers()"></app-supplier-list>
+      <app-supplier-list [suppliers]="filteredSuppliers()"></app-supplier-list>
     </div>
     <aside class="w-64 flex flex-col gap-xl">
       <div class="flex flex-col gap-m">
@@ -22,9 +27,7 @@
           <app-summary-card [title]="'suppliers.summary.active' | translate" [value]="suppliersActive">
           </app-summary-card>
         </div>
-
       </div>
     </aside>
   </div>
-
 </section>

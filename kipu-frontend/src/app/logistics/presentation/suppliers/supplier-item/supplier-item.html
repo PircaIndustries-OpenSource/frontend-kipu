@@ -40,8 +40,9 @@
     </div>
   </mat-card-content>
   <mat-card-actions class="px-xl! pb-xl! pt-0! flex! flex-row gap-l! w-full justify-between m-0!">
-    <button class="flex-1 bg-neutral-border! bg-opacity-80! text-primary! font-medium! rounded-m! py-s! cursor-pointer">
-      {{ 'suppliers.card.actions.button-add' | translate }}
+    <button (click)="openEdit()"
+            class="flex-1 bg-accent! text-white! font-bold! rounded-m! py-s! cursor-pointer transition-base hover:brightness-110">
+      {{ 'suppliers.card.actions.button-edit' | translate }}
     </button>
   </mat-card-actions>
 </mat-card>

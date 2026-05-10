@@ -6,16 +6,16 @@ import { InventoryMaterialsResponse } from './inventory/inventoryMaterials.respo
 import { environment } from '../../../environments/environment.development';
 import { InventoryMaterialAssembler } from './inventory/inventoryMaterial.assembler';
 import { RequestEntity } from '../domain/request.entity';
-import { RequestResponse } from './request/request.response';
+import { RequestResponse, RequestResource } from './request/request.response';
 import { RequestAssembler } from './request/request.assembler';
 import { MachineryEntity } from '../domain/machinery.entity';
-import { MachineryResponse } from './machinery/machinery.response';
+import { MachineryResponse, MachineryResource } from './machinery/machinery.response';
 import { MachineryAssembler } from './machinery/machinery.assembler';
 import { SupplierEntity } from '../domain/supplier.entity';
-import { SupplierResponse } from './suppliers/supplier-response';
+import { SupplierResponse, SupplierResource } from './suppliers/supplier-response';
 import { SupplierAssembler } from './suppliers/supplier.assembler';
 import { WasteEntity } from '../domain/waste.entity';
-import { WasteResponse } from './waste/waste.response';
+import { WasteResponse, WasteResource } from './waste/waste.response';
 import { WasteAssembler } from './waste/waste.assembler';
 import { MaterialEntity } from '../domain/material.entity';
 import { MaterialsAssembler } from './materials/materials.assembler';
@@ -85,7 +85,38 @@ export class LogisticsApi {
   //POST
   postRequest(request: RequestEntity): Observable<RequestEntity> {
     return this.http
-      .post<RequestEntity>(`${this.apiBaseUrl}${this.requestsEndpoint}`, request)
+      .post<RequestResource>(`${this.apiBaseUrl}${this.requestsEndpoint}`, request)
       .pipe(map((response) => RequestAssembler.toEntityFromResource(response)));
+  }
+  postMachinery(machinery: MachineryEntity): Observable<MachineryEntity> {
+    return this.http
+      .post<MachineryResource>(`${this.apiBaseUrl}${this.machineryEndpoint}`, machinery)
+      .pipe(map((response) => MachineryAssembler.toEntityFromResource(response)));
+  }
+  postWaste(waste: WasteEntity): Observable<WasteEntity> {
+    return this.http
+      .post<WasteResource>(`${this.apiBaseUrl}${this.wasteEndpoint}`, waste)
+      .pipe(map((response) => WasteAssembler.toEntityFromResource(response)));
+  }
+  postSupplier(supplier: SupplierEntity): Observable<SupplierEntity> {
+    return this.http
+      .post<SupplierResource>(`${this.apiBaseUrl}${this.suppliersEndpoint}`, supplier)
+      .pipe(map((response) => SupplierAssembler.toEntityFromResource(response)));
+  }
+  //PATCH
+  patchRequest(id: string, updates: Partial<RequestEntity>): Observable<RequestEntity> {
+    return this.http
+      .patch<RequestResource>(`${this.apiBaseUrl}${this.requestsEndpoint}/${id}`, updates)
+      .pipe(map((response) => RequestAssembler.toEntityFromResource(response)));
+  }
+  patchMachinery(id: string, updates: Partial<MachineryEntity>): Observable<MachineryEntity> {
+    return this.http
+      .patch<MachineryResource>(`${this.apiBaseUrl}${this.machineryEndpoint}/${id}`, updates)
+      .pipe(map((response) => MachineryAssembler.toEntityFromResource(response)));
+  }
+  patchSupplier(id: string, updates: Partial<SupplierEntity>): Observable<SupplierEntity> {
+    return this.http
+      .patch<SupplierResource>(`${this.apiBaseUrl}${this.suppliersEndpoint}/${id}`, updates)
+      .pipe(map((response) => SupplierAssembler.toEntityFromResource(response)));
   }
 }

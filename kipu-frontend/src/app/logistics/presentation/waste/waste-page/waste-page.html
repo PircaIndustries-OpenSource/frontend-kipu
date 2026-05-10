@@ -3,14 +3,24 @@
     <h1 class="text-3xl font-bold text-primary tracking-tight">
       {{ 'waste.title' | translate }}
     </h1>
-    <button matRipple class="w-60 bg-accent text-white! py-5! rounded-m! font-bold! text-base! shadow-md! cursor-pointer transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2">
+    <button (click)="openReportDialog()" matRipple class="w-60 bg-accent text-white! py-5! rounded-m! font-bold! text-base! shadow-md! cursor-pointer transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2">
       <mat-icon>add_circle</mat-icon>
       {{ 'waste.button-report' | translate }}
     </button>
   </header>
+  <mat-form-field appearance="outline" class="w-full max-w-md">
+    <mat-label>{{ 'waste.date-range-label' | translate }}</mat-label>
+    <mat-date-range-input [rangePicker]="picker">
+      <input matStartDate [(ngModel)]="dateStart" [placeholder]="'waste.date-start-placeholder' | translate">
+      <input matEndDate [(ngModel)]="dateEnd" [placeholder]="'waste.date-end-placeholder' | translate">
+    </mat-date-range-input>
+    <mat-hint>{{ 'waste.date-hint' | translate }}</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+  </mat-form-field>
   <div class="flex flex-row gap-xl">
     <div class="flex-1 min-w-0 flex flex-col gap-l">
-      <app-waste-list [wasteList]="waste()"></app-waste-list>
+      <app-waste-list [wasteList]="filteredWaste()"></app-waste-list>
     </div>
     <aside class="w-64 flex flex-col gap-xl">
       <div class="flex flex-col gap-m">
@@ -20,7 +30,6 @@
         </h3>
         <div class="flex flex-col items-center">
         </div>
-
       </div>
     </aside>
   </div>

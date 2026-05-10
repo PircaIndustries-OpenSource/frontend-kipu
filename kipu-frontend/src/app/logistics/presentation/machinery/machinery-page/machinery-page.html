@@ -4,7 +4,7 @@
     <h1 class="text-3xl font-bold text-primary tracking-tight">
       {{ 'machinery.title' | translate }}
     </h1>
-    <button matRipple class="w-60 bg-accent text-white! py-5! rounded-m! font-bold! text-base! shadow-md! cursor-pointer transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2">
+    <button (click)="openCreateDialog()" matRipple class="w-60 bg-accent text-white! py-5! rounded-m! font-bold! text-base! shadow-md! cursor-pointer transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2">
       <mat-icon>add_circle</mat-icon>
       {{ 'machinery.button-create' | translate }}
     </button>
@@ -12,7 +12,7 @@
 
   <div class="flex flex-row gap-xl">
     <div class="flex-1 min-w-0 flex flex-col gap-l">
-      <app-machinery-list [items]="machinery()"></app-machinery-list>
+      <app-machinery-list [items]="filteredMachinery()"></app-machinery-list>
     </div>
     <aside class="w-64 flex flex-col gap-xl">
       <div class="flex flex-col gap-m">
@@ -22,14 +22,14 @@
         </h3>
         <div class="flex flex-col items-center gap-l">
           <app-summary-card [title]="'machinery.summary.total' | translate"
-                            [value]="15"></app-summary-card>
+                            [value]="totalCount()"></app-summary-card>
 
           <app-summary-card [title]="'machinery.summary.in-use' | translate"
-                            [value]="4"
+                            [value]="inUseCount()"
                             class="text-success!"></app-summary-card>
 
           <app-summary-card [title]="'machinery.summary.maintenance' | translate"
-                            [value]="1"
+                            [value]="maintenanceCount()"
                             class="text-warning!"></app-summary-card>
         </div>
       </div>
@@ -39,14 +39,29 @@
           {{ 'machinery.tabs.filters' | translate }}
         </h3>
         <ul class="flex flex-col gap-m text-sm">
-          <li class="px-m py-s border border-neutral-border/20 rounded-s text-sm text-primary font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
+          <li (click)="setFilter('all')"
+              [class.bg-primary]="filterSignal() === 'all'"
+              [class.text-white]="filterSignal() === 'all'"
+              class="px-m py-s border border-neutral-border/20 rounded-s text-sm font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
             {{'machinery.filter.show-all'|translate}}
           </li>
-          <li class="px-m py-s border border-neutral-border/20 rounded-s text-sm text-primary font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
+          <li (click)="setFilter('assigned')"
+              [class.bg-primary]="filterSignal() === 'assigned'"
+              [class.text-white]="filterSignal() === 'assigned'"
+              class="px-m py-s border border-neutral-border/20 rounded-s text-sm font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
+            {{'machinery.filter.only-assigned'|translate}}
+          </li>
+          <li (click)="setFilter('maintenance')"
+              [class.bg-primary]="filterSignal() === 'maintenance'"
+              [class.text-white]="filterSignal() === 'maintenance'"
+              class="px-m py-s border border-neutral-border/20 rounded-s text-sm font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
             {{'machinery.filter.critical-equipment'|translate}}
           </li>
-          <li class="px-m py-s border border-neutral-border/20 rounded-s text-sm text-primary font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
-            {{'machinery.filter.only-assigned'|translate}}
+          <li (click)="setFilter('unassigned')"
+              [class.bg-primary]="filterSignal() === 'unassigned'"
+              [class.text-white]="filterSignal() === 'unassigned'"
+              class="px-m py-s border border-neutral-border/20 rounded-s text-sm font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
+            {{'machinery.filter.unassigned'|translate}}
           </li>
         </ul>
       </div>

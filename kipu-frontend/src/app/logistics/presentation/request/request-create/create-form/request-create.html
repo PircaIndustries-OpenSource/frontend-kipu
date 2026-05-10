@@ -19,6 +19,9 @@
           [listOptions]="nameCategories()"
           [placeholder]="'request.create.placeholders.select' | translate"
         ></app-autocomplete-filter-list>
+        @if (requestForm.get('category')?.invalid && requestForm.get('category')?.touched){
+          <mat-error>{{ 'Este campo es obligatorio' }}</mat-error>
+        }
       </div>
       <div class="flex flex-col gap-1">
         <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
@@ -31,9 +34,26 @@
           [disabled]="isMaterialDisabled()"
           [placeholder]="!isMaterialDisabled() ? ('request.create.placeholders.select' | translate) : 'Por favor selecciona una categoría'"
         ></app-autocomplete-filter-list>
+        @if (requestForm.get('material')?.invalid && requestForm.get('material')?.touched){
+          <mat-error>{{ 'Este campo es obligatorio' }}</mat-error>
+        }
       </div>
     </div>
-
+    <div class="flex flex-col gap-1">
+      <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
+        {{ 'request.create.fields.suggested-supplier' | translate }}
+      </span>
+      <app-autocomplete-filter-list
+        [listOptions]="nameSuppliers()"
+        [resetSignal]="supplierResetCounter()"
+        (optionSelected)="onSupplierSelect($event)"
+        [disabled]="isSupplierDisabled()"
+        [placeholder]="!isSupplierDisabled() ? ('request.create.placeholders.select' | translate) : 'Por favor selecciona un material'"
+      ></app-autocomplete-filter-list>
+      @if (requestForm.get('category')?.invalid && requestForm.get('category')?.touched){
+        <mat-error>{{ 'Este campo es obligatorio' }}</mat-error>
+      }
+    </div>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-l">
       <div class="flex flex-col gap-1">
         <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
@@ -47,6 +67,10 @@
             step="1"
             [placeholder]="'request.create.placeholders.quantity' | translate"
           >
+          @if (requestForm.get('quantity')?.hasError('required') && requestForm.get('quantity')?.touched) {
+            <mat-error>{{ 'request.create.validation.quantity-required' | translate }}
+            </mat-error>
+          }
         </mat-form-field>
       </div>
       <div class="flex flex-col gap-1">
@@ -62,18 +86,6 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-col gap-1">
-      <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
-        {{ 'request.create.fields.suggested-supplier' | translate }}
-      </span>
-      <app-autocomplete-filter-list
-        [listOptions]="nameSuppliers()"
-        [resetSignal]="supplierResetCounter()"
-        (optionSelected)="onSupplierSelect($event)"
-        [disabled]="isSupplierDisabled()"
-        [placeholder]="!isSupplierDisabled() ? ('request.create.placeholders.select' | translate) : 'Por favor selecciona un material'"
-      ></app-autocomplete-filter-list>
-    </div>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-l">
       <div class="flex flex-col gap-1">
         <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
@@ -84,6 +96,9 @@
           (optionSelected)="onBudgetLineSelect($event)"
           [placeholder]="'request.create.placeholders.select' | translate"
         ></app-autocomplete-filter-list>
+        @if (requestForm.get('material')?.invalid && requestForm.get('material')?.touched){
+          <mat-error>{{ 'Este campo es obligatorio' }}</mat-error>
+        }
       </div>
       <div class="flex flex-col gap-1">
         <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
@@ -96,6 +111,9 @@
             <mat-option value="3">{{ 'request.create.priority.high' | translate }}</mat-option>
             <mat-option value="4">{{ 'request.create.priority.critical' | translate }}</mat-option>
           </mat-select>
+          @if (requestForm.get('priority')?.hasError('required') && requestForm.get('priority')?.touched) {
+            <mat-error>{{ 'request.create.validation.priority-required' | translate }}</mat-error>
+          }
         </mat-form-field>
       </div>
     </div>
@@ -109,6 +127,9 @@
           <input formControlName="requiredDate" matInput [matDatepicker]="picker" [placeholder]="'request.create.placeholders.date' | translate">
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+          @if (requestForm.get('requiredDate')?.hasError('required') && requestForm.get('requiredDate')?.touched) {
+            <mat-error>{{ 'request.create.validation.date-required' | translate }}</mat-error>
+          }
         </mat-form-field>
       </div>
       <div class="flex flex-col gap-1">
@@ -117,6 +138,9 @@
         </span>
         <mat-form-field>
           <input formControlName="deliveryLocation" matInput [placeholder]="'request.create.placeholders.location' | translate">
+          @if (requestForm.get('deliveryLocation')?.hasError('required') && requestForm.get('deliveryLocation')?.touched) {
+            <mat-error>{{ 'request.create.validation.location-required' | translate }}</mat-error>
+          }
         </mat-form-field>
       </div>
     </div>
@@ -127,6 +151,9 @@
       </span>
       <mat-form-field class="w-full">
         <textarea formControlName="purpose" matInput rows="3" [placeholder]="'request.create.placeholders.purpose' | translate"></textarea>
+        @if (requestForm.get('purpose')?.hasError('required') && requestForm.get('purpose')?.touched) {
+          <mat-error>{{ 'request.create.validation.purpose-required' | translate }}</mat-error>
+        }
       </mat-form-field>
     </div>
 
@@ -210,6 +237,7 @@
 
   <div class="flex justify-end gap-m">
     <button
+      (click)="goToRequestPage()"
       type="button"
       matRipple
       class="px-xl py-s border border-neutral-border/30 rounded-m text-sm font-bold text-primary cursor-pointer transition-all hover:bg-neutral-bg active:scale-95"

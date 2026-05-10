@@ -1,0 +1,78 @@
+<div [formGroup]="wasteForm" class="p-2 flex flex-col gap-5">
+  <h2 mat-dialog-title class="!text-2xl !font-bold text-slate-800">
+    {{ 'waste.create.title' | translate }}
+  </h2>
+  <mat-dialog-content class="flex flex-col gap-4">
+    <mat-form-field appearance="outline" class="w-full !pt-3">
+      <mat-label>{{ 'waste.create.material-label' | translate }}</mat-label>
+      <mat-select formControlName="materialId">
+        @for (m of materials(); track m.id) {
+          <mat-option [value]="m.id">{{ m.name }}</mat-option>
+        }
+      </mat-select>
+      @if (wasteForm.get('materialId')?.hasError('required') && wasteForm.get('materialId')?.touched) {
+        <mat-error>{{ 'waste.create.material-required' | translate }}</mat-error>
+      }
+    </mat-form-field>
+    <div class="flex flex-row gap-4">
+      <mat-form-field appearance="outline" class="flex-1">
+        <mat-label>{{ 'waste.create.quantity-label' | translate }}</mat-label>
+        <input matInput formControlName="quantity" type="number" step="0.01">
+        @if (wasteForm.get('quantity')?.hasError('required') && wasteForm.get('quantity')?.touched) {
+          <mat-error>{{ 'waste.create.quantity-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="flex-1">
+        <mat-label>{{ 'waste.create.unit-label' | translate }}</mat-label>
+        <input matInput formControlName="unit"
+               [placeholder]="'waste.create.unit-placeholder' | translate">
+        @if (wasteForm.get('unit')?.hasError('required') && wasteForm.get('unit')?.touched) {
+          <mat-error>{{ 'waste.create.unit-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>{{ 'waste.create.classification-label' | translate }}</mat-label>
+      <input matInput formControlName="classificationType"
+             [placeholder]="'waste.create.classification-placeholder' | translate">
+      @if (wasteForm.get('classificationType')?.hasError('required') && wasteForm.get('classificationType')?.touched) {
+        <mat-error>{{ 'waste.create.classification-required' | translate }}</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>{{ 'waste.create.date-label' | translate }}</mat-label>
+      <input matInput formControlName="date" [matDatepicker]="wasteDatePicker">
+      <mat-datepicker-toggle matIconSuffix [for]="wasteDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #wasteDatePicker></mat-datepicker>
+      @if (wasteForm.get('date')?.hasError('required') && wasteForm.get('date')?.touched) {
+        <mat-error>{{ 'waste.create.date-required' | translate }}</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>{{ 'waste.create.description-label' | translate }}</mat-label>
+      <textarea matInput formControlName="description" rows="3"
+                [placeholder]="'waste.create.description-placeholder' | translate"></textarea>
+      @if (wasteForm.get('description')?.hasError('required') && wasteForm.get('description')?.touched) {
+        <mat-error>{{ 'waste.create.description-required' | translate }}</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>{{ 'waste.create.reported-by-label' | translate }}</mat-label>
+      <input matInput formControlName="reportedBy"
+             [placeholder]="'waste.create.reported-by-placeholder' | translate">
+      @if (wasteForm.get('reportedBy')?.hasError('required') && wasteForm.get('reportedBy')?.touched) {
+        <mat-error>{{ 'waste.create.reported-by-required' | translate }}</mat-error>
+      }
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="!gap-3 !p-6">
+    <button mat-button (click)="onCancel()" class="!rounded-md !px-6" type="button">
+      {{ 'waste.create.btn-cancel' | translate }}
+    </button>
+    <button mat-flat-button color="primary"
+            class="!bg-blue-600 !rounded-md !px-6 shadow-lg shadow-blue-200"
+            (click)="onSave()" type="button">
+      {{ 'waste.create.btn-save' | translate }}
+    </button>
+  </mat-dialog-actions>
+</div>

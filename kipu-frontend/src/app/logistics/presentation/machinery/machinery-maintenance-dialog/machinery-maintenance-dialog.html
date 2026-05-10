@@ -1,0 +1,33 @@
+<div [formGroup]="maintenanceForm" class="p-2 flex flex-col gap-5">
+  <h2 mat-dialog-title class="!text-2xl !font-bold text-slate-800">
+    {{ 'machinery.maintenance.title' | translate }}
+  </h2>
+  <mat-dialog-content class="flex flex-col gap-4">
+    <mat-form-field appearance="outline" class="w-full !pt-3">
+      <mat-label>{{ 'machinery.maintenance.physical-status-label' | translate }}</mat-label>
+      <input matInput formControlName="physicalStatus"
+             [placeholder]="'machinery.maintenance.physical-status-placeholder' | translate">
+      @if (maintenanceForm.get('physicalStatus')?.hasError('required') && maintenanceForm.get('physicalStatus')?.touched) {
+        <mat-error>{{ 'machinery.maintenance.physical-status-required' | translate }}</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>{{ 'machinery.maintenance.hours-label' | translate }}</mat-label>
+      <input matInput formControlName="maintenanceHours"
+             [placeholder]="'machinery.maintenance.hours-placeholder' | translate">
+      @if (maintenanceForm.get('maintenanceHours')?.hasError('required') && maintenanceForm.get('maintenanceHours')?.touched) {
+        <mat-error>{{ 'machinery.maintenance.hours-required' | translate }}</mat-error>
+      }
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="!gap-3 !p-6">
+    <button mat-button (click)="onCancel()" class="!rounded-md !px-6" type="button">
+      {{ 'machinery.maintenance.btn-cancel' | translate }}
+    </button>
+    <button mat-flat-button color="primary"
+            class="!bg-blue-600 !rounded-md !px-6 shadow-lg shadow-blue-200"
+            (click)="onSave()" type="button">
+      {{ 'machinery.maintenance.btn-save' | translate }}
+    </button>
+  </mat-dialog-actions>
+</div>

@@ -141,6 +141,7 @@
     <button
       matRipple
       class="flex-1 bg-neutral-border! bg-opacity-40! text-primary! font-medium! rounded-m! py-s! cursor-pointer transition-base hover:brightness-95"
+      (click)="openModifyDialog()"
     >
       {{ 'request.card.actions.modify' | translate }}
     </button>
@@ -148,6 +149,7 @@
     <button
       matRipple
       class="flex-1 bg-accent text-neutral-bg! font-medium! rounded-m! py-s! cursor-pointer transition-base hover:brightness-110"
+      (click)="openDetailDialog()"
     >
       {{ 'request.card.actions.view-details' | translate }}
     </button>

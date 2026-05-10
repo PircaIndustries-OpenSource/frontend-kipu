@@ -177,12 +177,31 @@
         "title": "¡Éxito!",
         "message": "Solicitud enviada exitosamente",
         "close": "Cerrar"
+      },
+      "validation": {
+        "quantity-required": "La cantidad es obligatoria.",
+        "quantity-min": "La cantidad debe ser mayor a 0.",
+        "priority-required": "La prioridad es obligatoria.",
+        "date-required": "La fecha requerida es obligatoria.",
+        "location-required": "La ubicación de entrega es obligatoria.",
+        "purpose-required": "El propósito es obligatorio."
       }
+    },
+    "modify": {
+      "title": "Solicitar Modificación",
+      "btn-save": "Guardar Cambios",
+      "btn-cancel": "Cancelar"
+    },
+    "detail": {
+      "title": "Detalle Completo de la Solicitud",
+      "btn-close": "Cerrar"
     }
   },
   "suppliers": {
     "title": "Directorio de Proveedores",
     "button-create": "Registrar nuevo proveedor",
+    "search-ruc": "Buscar por RUC",
+    "search-ruc-placeholder": "Ingrese el RUC del proveedor",
     "summary": {
       "active": "Activo"
     },
@@ -199,6 +218,42 @@
         "button-edit": "Editar datos",
         "button-add": "Registros nuevo proveedor"
       }
+    },
+    "create": {
+      "title": "Registrar Nuevo Proveedor",
+      "ruc-label": "RUC",
+      "ruc-placeholder": "11 dígitos",
+      "ruc-required": "El RUC es obligatorio.",
+      "ruc-invalid": "El RUC debe tener 11 dígitos.",
+      "social-reason-label": "Razón Social",
+      "social-reason-placeholder": "Ej: Aceros Arequipa S.A.",
+      "social-reason-required": "La razón social es obligatoria.",
+      "contact-label": "Contacto Principal",
+      "contact-placeholder": "Nombre del contacto",
+      "contact-required": "El contacto es obligatorio.",
+      "phone-label": "Teléfono",
+      "phone-placeholder": "Ej: +51 987 654 321",
+      "phone-required": "El teléfono es obligatorio.",
+      "email-label": "Correo Electrónico",
+      "email-placeholder": "proveedor@empresa.com",
+      "email-required": "El correo electrónico es obligatorio.",
+      "email-invalid": "Ingrese un correo electrónico válido.",
+      "categories-label": "Categorías",
+      "categories-placeholder": "Ej: Aceros, Cementos",
+      "categories-required": "Las categorías son obligatorias.",
+      "payment-terms-label": "Condición de Pago",
+      "payment-terms-placeholder": "Ej: 30 días, Contado",
+      "payment-terms-required": "La condición de pago es obligatoria.",
+      "status-label": "Estado",
+      "status-active": "Activo",
+      "status-inactive": "Inactivo",
+      "btn-save": "Guardar Proveedor",
+      "btn-cancel": "Cancelar"
+    },
+    "edit": {
+      "title": "Modificar Proveedor",
+      "btn-save": "Guardar Cambios",
+      "btn-cancel": "Cancelar"
     }
   },
   "machinery": {
@@ -211,14 +266,18 @@
     "filter": {
       "show-all": "Mostrar todo",
       "critical-equipment": "Equipos críticos",
-      "only-assigned": "Solo Asignados"
+      "only-assigned": "Solo Asignados",
+      "unassigned": "No Asignados"
     },
     "card": {
       "header": {
         "registration": "Registro",
+        "history": "Historial",
         "status": {
           "in-use": "En uso",
-          "urgent": "MANTENIMIENTO URGENTE"
+          "urgent": "MANTENIMIENTO URGENTE",
+          "available": "Disponible",
+          "maintenance": "En Mantenimiento"
         }
       },
       "fields": {
@@ -239,11 +298,63 @@
       "total": "Total de Herramientas",
       "in-use": "En Uso",
       "maintenance": "Requiere Mantenimiento"
+    },
+    "create": {
+      "title": "Agregar Maquinaria",
+      "name-label": "Nombre del Equipo",
+      "name-placeholder": "Ej: Excavadora CAT 320",
+      "name-required": "El nombre del equipo es obligatorio.",
+      "physical-status-label": "Estado Físico",
+      "physical-status-placeholder": "Ej: Operativo, Buen estado",
+      "physical-status-required": "El estado físico es obligatorio.",
+      "status-label": "Estado",
+      "status-available": "Disponible",
+      "status-in-use": "En Uso",
+      "status-urgent-maintenance": "Mantenimiento Urgente",
+      "status-required": "El estado es obligatorio.",
+      "maintenance-hours-label": "Horas de Mantenimiento",
+      "maintenance-hours-placeholder": "Ej: 150",
+      "maintenance-hours-required": "Las horas de mantenimiento son obligatorias.",
+      "assignment-detail-label": "Detalle de Asignación",
+      "assignment-detail-placeholder": "Describe la asignación del equipo...",
+      "worker-label": "Asignar a Obrero (opcional)",
+      "worker-none": "Ninguno",
+      "btn-save": "Guardar Equipo",
+      "btn-cancel": "Cancelar"
+    },
+    "assign": {
+      "title": "Asignar Operario",
+      "worker-label": "Seleccionar Obrero",
+      "worker-required": "Debe seleccionar un obrero.",
+      "btn-cancel": "Cancelar",
+      "btn-assign": "Asignar"
+    },
+    "maintenance": {
+      "title": "Registrar Mantenimiento",
+      "physical-status-label": "Estado Físico Actual",
+      "physical-status-placeholder": "Ej: Desgaste en neumáticos",
+      "physical-status-required": "El estado físico es obligatorio.",
+      "hours-label": "Horas de Mantenimiento",
+      "hours-placeholder": "Ej: 200",
+      "hours-required": "Las horas de mantenimiento son obligatorias.",
+      "btn-save": "Registrar Mantenimiento",
+      "btn-cancel": "Cancelar"
+    },
+    "history": {
+      "title": "Historial de Asignaciones",
+      "current-status": "Estado actual",
+      "assignment-log": "Registro de Asignaciones",
+      "no-records": "No hay registros históricos para este equipo.",
+      "btn-close": "Cerrar"
     }
   },
   "waste": {
     "title": "Registro de Mermas",
     "button-report": "Reportar Material Dañado",
+    "date-range-label": "Filtrar por rango de fechas",
+    "date-start-placeholder": "Fecha inicio",
+    "date-end-placeholder": "Fecha final",
+    "date-hint": "DD/MM/AAAA – DD/MM/AAAA",
     "summary": {
       "title": "Resumen",
       "damaged": "Dañados"
@@ -263,6 +374,29 @@
       },
       "actions": {
         "view-photo": "Ver fotografía adjunta"
+      },
+      "create": {
+        "title": "Reportar Merma",
+        "material-label": "Material Afectado",
+        "material-required": "Debe seleccionar un material.",
+        "quantity-label": "Cantidad",
+        "quantity-required": "La cantidad es obligatoria.",
+        "unit-label": "Unidad",
+        "unit-placeholder": "Ej: kg, m, unidad",
+        "unit-required": "La unidad es obligatoria.",
+        "classification-label": "Tipo de Clasificación",
+        "classification-placeholder": "Ej: Dañado, Vencido, Pérdida",
+        "classification-required": "La clasificación es obligatoria.",
+        "date-label": "Fecha del Reporte",
+        "date-required": "La fecha es obligatoria.",
+        "description-label": "Descripción del Motivo",
+        "description-placeholder": "Describe por qué se descuenta este material...",
+        "description-required": "La descripción es obligatoria.",
+        "reported-by-label": "Reportado por",
+        "reported-by-placeholder": "Nombre de quien reporta",
+        "reported-by-required": "El nombre del reportante es obligatorio.",
+        "btn-save": "Reportar Merma",
+        "btn-cancel": "Cancelar"
       }
     }
   },

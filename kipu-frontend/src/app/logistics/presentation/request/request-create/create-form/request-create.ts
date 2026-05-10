@@ -16,6 +16,7 @@ import { MaterialEntity } from '../../../../domain/material.entity';
 import { RequestEntity } from '../../../../domain/request.entity';
 import { MatDialog } from '@angular/material/dialog';
 import { RequestSuccessDialog } from '../request-success-dialog/request-success-dialog';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-request-create',
   imports: [
@@ -47,13 +48,20 @@ export class RequestCreate implements OnInit {
     this.logisticsStore.loadSupplierOffers();
     this.logisticsStore.loadSuppliers();
   }
-
+  router = inject(Router);
+  goToRequestPage() {
+    this.router.navigate(['/logistics/requests']).then();
+  }
   requestForm: FormGroup = this.fb.group({
-    quantity: [1, [Validators.required, Validators.min(0.01)]],
-    priority: [1, Validators.required],
-    requiredDate: [''],
-    deliveryLocation: [''],
-    purpose: [''],
+    category: ['', Validators.required],
+    material: ['', Validators.required],
+    supplier: ['', Validators.required],
+    budgetLine: ['', Validators.required],
+    quantity: [1, [Validators.required, Validators.min(1)]],
+    priority: ['', Validators.required],
+    requiredDate: ['', Validators.required],
+    deliveryLocation: ['', Validators.required],
+    purpose: ['', Validators.required],
     additionalNotes: [''],
   });
 
@@ -92,21 +100,27 @@ export class RequestCreate implements OnInit {
 
   onCategoryMaterialSelect(category: string) {
     this.logisticsStore.filterByCategory(category);
+    this.requestForm.get('category')?.setValue(category);
     this.materialResetCounter.update((v) => v + 1);
   }
   onMaterialSelect(materialName: string) {
     this.logisticsStore.setSelectedMaterial(materialName);
+    this.requestForm.get('material')?.setValue(materialName);
     this.supplierResetCounter.update((v) => v + 1);
   }
   onSupplierSelect(supplierSocialReason: string) {
     this.logisticsStore.setSelectedSupplier(supplierSocialReason);
+    this.requestForm.get('supplier')?.setValue(supplierSocialReason);
   }
   onBudgetLineSelect(budgetLine: string) {
     this.selectedBudgetLine.set(budgetLine);
+    this.requestForm.get('budgetLine')?.setValue(budgetLine);
   }
-
   onSubmit() {
-    if (this.requestForm.invalid) return;
+    if (this.requestForm.invalid) {
+      this.requestForm.markAllAsTouched();
+      return;
+    }
     const formValue = this.requestForm.value;
     const request = new RequestEntity();
 
