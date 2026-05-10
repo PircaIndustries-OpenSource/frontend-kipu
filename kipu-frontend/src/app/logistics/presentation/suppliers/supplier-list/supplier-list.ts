@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { Supplier } from '../../../domain/supplier';
+import { SupplierEntity } from '../../../domain/supplier.entity';
 import { SupplierItem } from '../supplier-item/supplier-item';
 
 @Component({
@@ -9,5 +9,5 @@ import { SupplierItem } from '../supplier-item/supplier-item';
   styleUrl: './supplier-list.css',
 })
 export class SupplierList {
-  suppliers = input.required<Supplier[]>();
+  suppliers = input.required<SupplierEntity[]>();
 }

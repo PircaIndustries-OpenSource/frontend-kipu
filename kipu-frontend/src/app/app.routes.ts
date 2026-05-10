@@ -61,8 +61,8 @@ export const routes: Routes = [
           {
             path: 'request/create',
             loadComponent: () =>
-              import('./logistics/presentation/request/request-create/create-page/create-page').then(
-                (m) => m.CreatePage,
+              import('./logistics/presentation/request/request-create/create-form/request-create').then(
+                (m) => m.RequestCreate,
               ),
           },
           {
