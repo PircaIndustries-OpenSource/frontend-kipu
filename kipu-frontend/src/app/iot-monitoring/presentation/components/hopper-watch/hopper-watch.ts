@@ -21,4 +21,14 @@ export class HopperWatch {
       return 'status-ok';
     }
   }
+
+  getTicketStatusBySensor(currentLecture: number, limit: number): string {
+    if (currentLecture >= limit) {
+      return 'pending';
+    } else if (currentLecture >= limit - 2) {
+      return 'completed';
+    } else {
+      return 'completed';
+    }
+  }
 }

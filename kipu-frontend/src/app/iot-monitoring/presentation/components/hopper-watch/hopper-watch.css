@@ -67,3 +67,86 @@
   color: #a0aec0;
   font-size: 13px;
 }
+
+/* Layout Principal */
+.monitoring-container {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.hoppers-section {
+  flex: 3; /* Toma más espacio */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.tickets-panel {
+  flex: 1; /* Columna lateral más delgada */
+  min-width: 300px;
+}
+
+/* Tarjeta Contenedora */
+.tickets-container-card {
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+}
+
+.tickets-container-card h3 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Items Individuales */
+.ticket-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border-left: 4px solid transparent;
+}
+
+.ticket-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.ticket-id {
+  font-weight: bold;
+  font-size: 14px;
+  color: #4a5568;
+}
+
+.ticket-material {
+  font-size: 13px;
+  color: #718096;
+}
+
+/* Estilos por Estado */
+.ticket-item.pending {
+  background-color: #fffaf0; /* Crema suave */
+  border-left-color: #d98825; /* Tu naranja warning */
+}
+
+.ticket-item.completed {
+  background-color: #f0fff4; /* Verde suave */
+  border-left-color: #2fb362; /* Tu verde óptimo */
+}
+
+/* Badges */
+.status-badge {
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+}
+
+.status-badge.pending { background-color: #b7791f; }
+.status-badge.completed { background-color: #38a169; }

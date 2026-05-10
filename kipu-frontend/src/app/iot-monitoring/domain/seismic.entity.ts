@@ -2,6 +2,7 @@ export class SeismicEntity {
   #id: string;
   #projectId: string;
   #unit: string;
+  #name: string;
   #location: string;
   #state: string;
   #lastLecture: number;
@@ -11,6 +12,7 @@ export class SeismicEntity {
   constructor() {
     this.#id = '';
     this.#projectId = '';
+    this.#name = '';
     this.#unit = '';
     this.#location = '';
     this.#state = '';
@@ -41,6 +43,14 @@ export class SeismicEntity {
 
   set unit(value: string) {
     this.#unit = value;
+  }
+
+  get name(): string {
+    return this.#name;
+  }
+
+  set name(value: string) {
+    this.#name = value;
   }
 
   get location(): string {

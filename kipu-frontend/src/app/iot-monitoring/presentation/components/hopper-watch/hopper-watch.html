@@ -1,33 +1,59 @@
-<div class="hopper-grid">
-  @for (sensor of hopperSensors(); track sensor.id) {
-    <mat-card class="hopper-card" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
-      <mat-card-header>
-        <span class="sensor-name">{{ sensor.name }}</span>
-        <span class="sensor-state" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
+<div class="monitoring-container">
+
+  <div class="hoppers-section">
+    <div class="hopper-grid">
+      @for (sensor of hopperSensors(); track sensor.id) {
+        <mat-card class="hopper-card" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
+          <mat-card-header>
+            <span class="sensor-name">{{ sensor.name }}</span>
+            <span class="sensor-state" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
           {{ sensor.state }}
         </span>
-      </mat-card-header>
-      <mat-card-content class="card-content-center">
-        <div class="visual-bar-container" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
-          <div class="visual-bar-fill"
-               [style.height.%]="sensor.lastLecture"
-               [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
-          </div>
-          <span class="bar-text" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
+          </mat-card-header>
+          <mat-card-content class="card-content-center">
+            <div class="visual-bar-container" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
+              <div class="visual-bar-fill"
+                   [style.height.%]="sensor.lastLecture"
+                   [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
+              </div>
+              <span class="bar-text" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
             {{ sensor.lastLecture }}%
           </span>
-        </div>
-      </mat-card-content>
-      <mat-card-footer [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
-        @if (getSensorStatusClass(sensor.lastLecture, sensor.limit) === 'status-danger') {
-          <strong>TICKET #{{ sensor.id }} GENERATED</strong>>
-          <span class="subtext">The system sent a request for dropping below {{sensor.limit}}%.</span>
-        } @else if (getSensorStatusClass(sensor.lastLecture, sensor.limit) === 'status-warning') {
-          <span class="subtext">The system suggest sending a request for dropping near {{sensor.limit}}%.</span>
-        } @else {
-          <span class="ok-text">ADEQUATE LEVELS</span>>
+            </div>
+          </mat-card-content>
+          <mat-card-footer [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
+            @if (getSensorStatusClass(sensor.lastLecture, sensor.limit) === 'status-danger') {
+              <strong>TICKET #{{ sensor.id }} GENERATED</strong>>
+              <span class="subtext">The system sent a request for dropping below {{sensor.limit}}%.</span>
+            } @else if (getSensorStatusClass(sensor.lastLecture, sensor.limit) === 'status-warning') {
+              <span class="subtext">The system suggest sending a request for dropping near {{sensor.limit}}%.</span>
+            } @else {
+              <span class="ok-text">ADEQUATE LEVELS</span>>
+            }
+          </mat-card-footer>
+        </mat-card>
+      }
+    </div>
+  </div>
+
+  <aside class="tickets-panel">
+    <mat-card class="tickets-container-card">
+      <h3>Tickets de Reabastecimiento</h3>
+
+      <div class="tickets-list">
+        @for (ticket of hopperSensors(); track ticket.id) {
+          <div class="ticket-item" [ngClass]="getTicketStatusBySensor(ticket.lastLecture, ticket.limit)">
+            <div class="ticket-info">
+              <span class="ticket-id">{{ ticket.id }}</span>
+              <span class="ticket-material">{{ ticket.name }}</span>
+            </div>
+            <span class="status-badge" [ngClass]="getTicketStatusBySensor(ticket.lastLecture, ticket.limit)">
+              {{ getTicketStatusBySensor(ticket.lastLecture, ticket.limit).toUpperCase() }}
+            </span>
+          </div>
         }
-      </mat-card-footer>
+      </div>
     </mat-card>
-  }
+  </aside>
+
 </div>
