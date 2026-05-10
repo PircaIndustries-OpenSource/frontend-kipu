@@ -1,12 +1,78 @@
 {
   "identity": [
     {
-      "email": "fdhbbf@hotmail.com",
-      "password": "kipu12345",
-      "id": "SIVyLM6"
+      "email": "kipu1234@hotmail.com",
+      "password": "master12345",
+      "name": "Usuario Nuevo",
+      "role": "Gestor Operativo",
+      "id": "Ve2rZ3G"
+    },
+    {
+      "email": "kipumaster@hotmail.com",
+      "password": "master123",
+      "name": "Usuario Nuevo",
+      "role": "Gestor Operativo",
+      "id": "RTNIUs8"
+    },
+    {
+      "email": "kipumaster1@hotmail.com",
+      "password": "kipu1234",
+      "name": "Usuario Nuevo",
+      "role": "Gestor Operativo",
+      "id": "KR5xCRx"
+    },
+    {
+      "email": "kipu2@hotmail.com",
+      "password": "kipu1234",
+      "name": "Usuario Nuevo",
+      "role": "Gestor Operativo",
+      "id": "M0IF9Qv"
     }
   ],
-  "project": [],
+  "projects": [
+    {
+      "id": "proj-01",
+      "name": "Edificio Corporativo Los Olivos",
+      "description": "Construcción de edificio corporativo de 12 pisos con 3 sótanos de estacionamiento",
+      "status": "IN_PROGRESS",
+      "startDate": "2026-01-15",
+      "location": "Av. Principal 123, Los Olivos, Lima",
+      "createdAt": "2026-01-10",
+      "createdBy": "SIVyLM6"
+    },
+    {
+      "id": "proj-02",
+      "name": "Residencial San Miguel",
+      "description": "Complejo residencial de 80 departamentos con áreas comunes",
+      "status": "PLANNED",
+      "startDate": "2026-07-01",
+      "location": "Calle Las Flores 456, San Miguel, Lima",
+      "createdAt": "2026-05-01",
+      "createdBy": "SIVyLM6"
+    },
+    {
+      "id": "proj-03",
+      "name": "Colegio Particular San José",
+      "description": "Construcción de nueva infraestructura educativa con 30 aulas y laboratorios",
+      "status": "COMPLETED",
+      "startDate": "2025-03-01",
+      "location": "Av. La Cultura 789, Cusco",
+      "createdAt": "2025-02-15",
+      "createdBy": "P-n4XLk"
+    },
+    {
+      "id": "X7Sf_1R",
+      "name": "EsoTilinProject",
+      "description": "Hola",
+      "status": "PLANNED",
+      "startDate": "2026-05-15T05:00:00.000Z",
+      "endDate": "2026-05-14T05:00:00.000Z",
+      "estimatedBudget": 60000,
+      "location": "aaaaa",
+      "createdAt": "2026-05-10",
+      "createdBy": "current-user"
+    }
+  ],
   "documents": [
     {
       "id": "doc-001",
@@ -798,6 +864,28 @@
         {
           "supplierOfferId": "soff-005",
           "quantity": 1
+        }
+      ],
+      "requestedBy": "",
+      "activity": ""
+    },
+    {
+      "id": "YZuFaTQ",
+      "projectId": "",
+      "requestDate": "2026-05-10",
+      "deadline": "2026-05-08T05:00:00.000Z",
+      "status": "PENDING",
+      "priority": "1",
+      "deliveryLocation": "aaaa",
+      "budgetLineId": "",
+      "purpose": "aasdasd",
+      "additionalNotes": "sdasd",
+      "suggestedSupplierId": "sup-003",
+      "attachments": [],
+      "items": [
+        {
+          "supplierOfferId": "soff-005",
+          "quantity": 20
         }
       ],
       "requestedBy": "",

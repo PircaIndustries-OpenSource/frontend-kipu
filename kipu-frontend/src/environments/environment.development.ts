@@ -1,9 +1,10 @@
 export const environment = {
   production: false,
-  kipuApiBaseUrl: 'http://localhost:4200/api/v1',
+  kipuApiBaseUrl: '/api/v1',
   kipuApiInventoryMaterialsEndpointPath: '/materials/inventory',
   kipuApiMaterialsEndpointPath: '/materials',
   kipuApiRequestEndpointPath: '/materials/requests',
+  kipuApiProjectsEndpointPath: '/projects',
   kipuApiMachineryEndpointPath: '/materials/tools',
   kipuApiTeamEndpointPath: '/team',
   kipuApiTeamUsersEndpointPath: '/team-users',
@@ -13,4 +14,9 @@ export const environment = {
   kipuApiCategoriesEndPath: '/materials/categories',
   kipuApiDocumentsEndpointPath: '/documents',
   kipuApiSupplierOfferEndPath: '/materials/supplierOffer/',
+  kipuApiIoTMonitoringEndpointPath: '/iot-monitoring',
+  kipuApiConcreteCuringEndpointPath: '/concrete-curing',
+  kipuApiGeolocalizationEndpointPath: '/geolocalization',
+  kipuApiHopperWatchEndpointPath: '/hopper-watch',
+  kipuApiSeismicControlEndpointPath: '/seismic-control',
 };

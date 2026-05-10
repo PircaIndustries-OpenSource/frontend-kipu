@@ -1,18 +1,47 @@
 import { Routes } from '@angular/router';
-import { RegisterComponent } from './presentation/components/register/register.component';
+import { RegisterComponent } from './identity/presentation/components/register/register.component';
 import { Layout } from './shared/presentation/layout/layout';
 import { LogisticsPage } from './logistics/presentation/logistics-page/logistics-page';
+import { LoginComponent } from './identity/presentation/components/login/login.component';
 import { TeamPage } from './team/presentation/team-page/team-page';
 
 export const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'register',
+    pathMatch: 'full',
+  },
   {
     path: 'register',
     component: RegisterComponent,
   },
   {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'verification',
+    loadComponent: () => import('./identity/presentation/components/verification/verification.component').then(m => m.VerificationComponent)
+  },
+  {
+    path: 'forgot-password',
+    loadComponent: () => import('./identity/presentation/components/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent)
+  },
+  {
+    path: 'reset-password',
+    loadComponent: () => import('./identity/presentation/components/reset-password/reset-password.component').then(m => m.ResetPasswordComponent)
+  },
+  {
     path: '',
     component: Layout,
     children: [
+      {
+        path: 'projects',
+        loadComponent: () =>
+          import('./projects/presentation/projects-dashboard/projects-dashboard.component').then(
+            (m) => m.ProjectsDashboardComponent,
+          ),
+      },
       {
         path: 'logistics',
         component: LogisticsPage,

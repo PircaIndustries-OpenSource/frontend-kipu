@@ -1,0 +1,121 @@
+.curing-card {
+  border-left: 5px solid transparent;
+  border-radius: 8px;
+  padding: 16px;
+  width: 350px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  transition: border-color 0.3s ease;
+}
+
+/* Cabecera */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.badges {
+  display: flex;
+  gap: 8px;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 4px;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.sensor-name { background-color: #344356; }
+.sensor-state { background-color: #2fb362; }
+.sensor-location { color: #555; font-size: 14px; }
+
+/* Contenido Central */
+.card-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 45%;
+}
+
+.value {
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: 1;
+  transition: color 0.3s ease;
+}
+
+.curing-card.status-warning {
+  border-left-color: #d98825;
+}
+.value.status-warning {
+  color: #d98825;
+}
+
+.curing-card.status-ok {
+  border-left-color: #2fb362;
+}
+.value.status-ok {
+  color: #2fb362;
+}
+
+.curing-card.status-danger {
+  border-left-color: #dc3545;
+}
+.value.status-danger {
+  color: #dc3545;
+}
+
+.label {
+  font-size: 12px;
+  color: #a0aec0;
+  margin-top: 8px;
+  letter-spacing: 1px;
+}
+
+.vertical-divider {
+  width: 1px;
+  height: 60px;
+  background-color: #e2e8f0;
+}
+
+/* Pie de tarjeta */
+.horizontal-divider {
+  border: 0;
+  border-top: 1px solid #e2e8f0;
+  margin-bottom: 16px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.alert-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.alert-label {
+  font-size: 12px;
+  color: #a0aec0;
+}
+
+.alert-value {
+  font-size: 14px;
+  color: #2d3748;
+}
+
+.config-btn {
+  background-color: #319795; /* Ajusta al azul de tu botón */
+}

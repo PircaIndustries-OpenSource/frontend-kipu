@@ -13,7 +13,7 @@ export class SeismicAssembler {
     seismicEntity.timeLecture = seismicResource.timeLecture;
 
     const states: Record<number, string> = { 1: 'NORMAL', 2: 'RISK' };
-    seismicEntity.state = states[seismicResource.state];
+    seismicEntity.state = states[seismicResource.state] || 'UNKNOWN';
 
     return seismicEntity;
   }
