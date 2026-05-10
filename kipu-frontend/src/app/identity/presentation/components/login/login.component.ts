@@ -45,6 +45,7 @@ export class LoginComponent {
       this.identityService.login(email, password).subscribe({
         next: (user) => {
           if (user) {
+            localStorage.setItem('currentUser', JSON.stringify(user));
             this.router.navigate(['/verification']);
           } else {
             alert('Credenciales incorrectas');

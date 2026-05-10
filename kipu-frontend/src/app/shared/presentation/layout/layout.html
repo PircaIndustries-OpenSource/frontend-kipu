@@ -2,7 +2,7 @@
   <app-sidebar class="flex-none h-full"></app-sidebar>
   <div class="flex flex-col flex-1 overflow-hidden">
     <header class="flex-none">
-      <app-header [currentProject]="'Lorem ipsum'"></app-header>
+      <app-header [currentProject]="currentProject()?.name || 'Seleccione un proyecto'"></app-header>
     </header>
     <main class="flex-1 overflow-y-auto p-xl bg-neutral-bg">
       <router-outlet></router-outlet>

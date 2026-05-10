@@ -7,6 +7,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CreateProjectDialogComponent } from '../components/create-project-dialog/create-project-dialog.component';
 import { ProjectsStore } from '../../application/projects.store';
 import { ChangeProjectStatusDialogComponent } from '../components/change-project-status-dialog/change-project-status-dialog.component';
+import { SelectProjectDialogComponent } from '../components/select-project-dialog/select-project-dialog.component';
 import { ProjectEntity } from '../../domain/project.entity';
 
 @Component({
@@ -20,6 +21,7 @@ export class ProjectsDashboardComponent implements OnInit {
     private projectsStore = inject(ProjectsStore);
 
     projects = this.projectsStore.projects;
+    currentProjectId = this.projectsStore.currentProjectId;
     isLoading = signal<boolean>(true);
 
     ngOnInit() {
@@ -47,8 +49,17 @@ export class ProjectsDashboardComponent implements OnInit {
         });
     }
 
-    openChangeStatusDialog(project: ProjectEntity) {
+    openChangeStatusDialog(event: Event, project: ProjectEntity) {
+        event.stopPropagation();
         this.dialog.open(ChangeProjectStatusDialogComponent, {
+            width: '400px',
+            data: { project }
+        });
+    }
+
+    openSelectProjectDialog(project: ProjectEntity) {
+        if (this.currentProjectId() === project.id) return;
+        this.dialog.open(SelectProjectDialogComponent, {
             width: '400px',
             data: { project }
         });

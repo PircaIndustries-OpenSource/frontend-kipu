@@ -1,0 +1,16 @@
+<h2 mat-dialog-title class="font-bold text-xl mb-4">Seleccionar Proyecto</h2>
+
+<mat-dialog-content>
+  <p class="text-gray-600 mb-2">
+    Estás a punto de seleccionar el proyecto:
+  </p>
+  <p class="font-bold text-lg text-blue-600 mb-4">{{ data.project.name }}</p>
+  <p class="text-sm text-gray-500">¿Quieres continuar?</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="pb-4 pr-4">
+  <button mat-stroked-button mat-dialog-close>Cancelar</button>
+  <button mat-flat-button color="primary" (click)="onConfirm()">
+    Continuar
+  </button>
+</mat-dialog-actions>

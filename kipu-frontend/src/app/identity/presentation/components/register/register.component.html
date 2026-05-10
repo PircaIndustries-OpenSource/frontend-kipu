@@ -10,6 +10,14 @@
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-2">
 
         <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Nombre y Apellidos</mat-label>
+          <input matInput formControlName="name" placeholder="Ej. Juan Pérez">
+          @if (registerForm.get('name')?.hasError('required')) {
+          <mat-error>El nombre es obligatorio.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
           <mat-label>Correo Electrónico</mat-label>
           <input matInput formControlName="email" type="email" placeholder="usuario@ejemplo.com">
 
@@ -36,6 +44,17 @@
           }
           @if (registerForm.get('password')?.hasError('minlength')) {
           <mat-error>Debe tener al menos 8 caracteres.</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Rol en el Proyecto</mat-label>
+          <mat-select formControlName="role">
+            <mat-option value="Gestor Operativo">Gestor Operativo</mat-option>
+            <mat-option value="Logística y Administración">Miembro de Logística y Administración</mat-option>
+          </mat-select>
+          @if (registerForm.get('role')?.hasError('required')) {
+          <mat-error>Debes seleccionar un rol.</mat-error>
           }
         </mat-form-field>
 

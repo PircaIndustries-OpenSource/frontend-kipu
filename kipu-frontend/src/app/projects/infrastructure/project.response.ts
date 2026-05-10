@@ -12,4 +12,5 @@ export interface ProjectResource {
   createdAt: string;
   createdBy: string;
   statusJustification?: string;
+  imageUrl?: string;
 }
