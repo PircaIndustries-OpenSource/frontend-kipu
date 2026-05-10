@@ -2,7 +2,8 @@
   <div class="bg-primary! text-white! px-xl! py-m! flex flex-row justify-between items-center m-0!">
     <div class="flex flex-row items-center gap-m">
       <span class="font-bold text-xl">{{ supplier().ruc }}</span>
-      <span class="text-xs font-bold tracking-widest uppercase">
+      <span class="text-xs font-bold tracking-widest uppercase bg-white/20 px-2 py-0.5 rounded">
+        {{supplier().status}}
       </span>
     </div>
     <div class="text-sm opacity-80">
@@ -28,6 +29,8 @@
         <p class="font-bold text-base text-primary">{{ supplier().email }}</p>
       </div>
     </div>
+
+    <!--
     <div class="flex flex-row gap-l">
       <div class="border! border-neutral-border! rounded-m! p-l! bg-neutral-bg! flex flex-cohl gap-s">
         <p class="font-bold text-primary">{{ 'suppliers.card.categories' | translate }}</p>
@@ -38,8 +41,10 @@
         <p class="text-sm text-primary leading-relaxed">{{ supplier().paymentTerms }}</p>
       </div>
     </div>
+    -->
+
   </mat-card-content>
-  <mat-card-actions class="px-xl! pb-xl! pt-0! flex! flex-row gap-l! w-full justify-between m-0!">
+  <mat-card-actions class=" pb-xl! pt-0! flex! w-[30%] self-start pl-xl!">
     <button (click)="openEdit()"
             class="flex-1 bg-accent! text-white! font-bold! rounded-m! py-s! cursor-pointer transition-base hover:brightness-110">
       {{ 'suppliers.card.actions.button-edit' | translate }}

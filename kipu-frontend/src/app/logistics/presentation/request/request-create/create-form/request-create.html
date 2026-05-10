@@ -50,7 +50,7 @@
         [disabled]="isSupplierDisabled()"
         [placeholder]="!isSupplierDisabled() ? ('request.create.placeholders.select' | translate) : 'Por favor selecciona un material'"
       ></app-autocomplete-filter-list>
-      @if (requestForm.get('category')?.invalid && requestForm.get('category')?.touched){
+      @if (requestForm.get('supplier')?.invalid && requestForm.get('supplier')?.touched){
         <mat-error>{{ 'Este campo es obligatorio' }}</mat-error>
       }
     </div>
@@ -92,11 +92,11 @@
           {{ 'request.create.fields.budget-line' | translate }}
         </span>
         <app-autocomplete-filter-list
-          [listOptions]="nameBudgetLines"
+          [listOptions]="nameBudgetLines()"
           (optionSelected)="onBudgetLineSelect($event)"
           [placeholder]="'request.create.placeholders.select' | translate"
         ></app-autocomplete-filter-list>
-        @if (requestForm.get('material')?.invalid && requestForm.get('material')?.touched){
+        @if (requestForm.get('budgetLine')?.invalid && requestForm.get('budgetLine')?.touched){
           <mat-error>{{ 'Este campo es obligatorio' }}</mat-error>
         }
       </div>

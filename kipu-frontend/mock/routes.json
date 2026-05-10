@@ -8,6 +8,8 @@
   "/api/v1/materials/inventory/:id": "/materialsInventory/:id",
   "/api/v1/materials/waste": "/materialsWaste",
   "/api/v1/materials/waste/:id": "/materialsWaste/:id",
+  "/api/v1/machinery": "/materialsTools",
+  "/api/v1/machinery/:id": "/materialsTools/:id",
   "/api/v1/materials/tools": "/materialsTools",
   "/api/v1/materials/tools/:id": "/materialsTools/:id",
   "/api/v1/materials/suppliers": "/materialsSuppliers",

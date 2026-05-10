@@ -8,6 +8,7 @@ import {
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
+  MatDialogClose,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
@@ -18,7 +19,7 @@ import { MatSelect } from '@angular/material/select';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { RequestViewModel } from '../../../../domain/request.entity';
+import { RequestEntity } from '../../../../domain/request.entity';
 
 @Component({
   selector: 'app-request-modify-dialog',
@@ -39,6 +40,7 @@ import { RequestViewModel } from '../../../../domain/request.entity';
     ReactiveFormsModule,
     TranslatePipe,
     MatFormFieldModule,
+    MatDialogClose,
   ],
   templateUrl: './request-modify-dialog.html',
   styleUrl: './request-modify-dialog.css',
@@ -46,7 +48,7 @@ import { RequestViewModel } from '../../../../domain/request.entity';
 export class RequestModifyDialog {
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<RequestModifyDialog>);
-  private data = inject<RequestViewModel>(MAT_DIALOG_DATA);
+  private data = inject<RequestEntity>(MAT_DIALOG_DATA);
 
   modifyForm: FormGroup = this.fb.group({
     quantity: [this.data.items[0]?.quantity ?? 1, [Validators.required, Validators.min(0.01)]],
@@ -62,7 +64,15 @@ export class RequestModifyDialog {
       this.modifyForm.markAllAsTouched();
       return;
     }
-    this.dialogRef.close(this.modifyForm.value);
+    const form = this.modifyForm.value;
+    this.dialogRef.close({
+      items: [{ ...this.data.items[0], quantity: form.quantity }],
+      priority: form.priority,
+      deadline: form.deadline,
+      deliveryLocation: form.deliveryLocation,
+      purpose: form.purpose,
+      additionalNotes: form.additionalNotes,
+    });
   }
 
   onCancel() {

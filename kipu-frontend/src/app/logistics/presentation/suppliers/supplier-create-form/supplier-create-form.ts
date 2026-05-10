@@ -33,20 +33,18 @@ export class SupplierCreateForm {
     contact: ['', Validators.required],
     phone: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-    categories: ['', Validators.required],
+    /*
+    * categories: ['', Validators.required],
     paymentTerms: ['', Validators.required],
+    * */
     status: ['active'],
   });
-
   onSave() {
     if (this.supplierForm.invalid) {
       this.supplierForm.markAllAsTouched();
       return;
     }
+    const formValue = this.supplierForm;
     this.dialogRef.close(this.supplierForm.value);
-  }
-
-  onCancel() {
-    this.dialogRef.close();
   }
 }

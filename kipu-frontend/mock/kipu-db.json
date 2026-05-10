@@ -202,98 +202,98 @@
     {
       "id": "mat-001",
       "name": "Ladrillo King Kong 18 huecos",
-      "category": "cat-001",
+      "categoryId": "cat-001",
       "subcategory": "Muros",
       "measureUnit": "und"
     },
     {
       "id": "mat-002",
       "name": "Cemento Portland Tipo I",
-      "category": "cat-002",
+      "categoryId": "cat-002",
       "subcategory": "Cementos",
       "measureUnit": "bolsa"
     },
     {
       "id": "mat-003",
       "name": "Arena Fina",
-      "category": "cat-003",
+      "categoryId": "cat-003",
       "subcategory": "Arenas",
       "measureUnit": "m3"
     },
     {
       "id": "mat-004",
       "name": "Acero Corrugado 1/2\" x 9m",
-      "category": "cat-004",
+      "categoryId": "cat-004",
       "subcategory": "Acero de refuerzo",
       "measureUnit": "varilla"
     },
     {
       "id": "mat-005",
       "name": "Triplay Fenólico 18mm",
-      "category": "cat-005",
+      "categoryId": "cat-005",
       "subcategory": "Encofrados",
       "measureUnit": "plancha"
     },
     {
       "id": "mat-006",
       "name": "Disco de Corte 7\"",
-      "category": "cat-006",
+      "categoryId": "cat-006",
       "subcategory": "Abrasivos",
       "measureUnit": "und"
     },
     {
       "id": "mat-007",
       "name": "Casco de Seguridad",
-      "category": "cat-007",
+      "categoryId": "cat-007",
       "subcategory": "Protección de cabeza",
       "measureUnit": "und"
     },
     {
       "id": "mat-008",
       "name": "Clavos 3\" para madera",
-      "category": "cat-004",
+      "categoryId": "cat-004",
       "subcategory": "Clavos y pernos",
       "measureUnit": "kg"
     },
     {
       "id": "mat-009",
       "name": "Piedra Chancada 1/2\"",
-      "category": "cat-003",
+      "categoryId": "cat-003",
       "subcategory": "Piedras",
       "measureUnit": "m3"
     },
     {
       "id": "mat-010",
       "name": "Bloque de Concreto 20x20x40",
-      "category": "cat-001",
+      "categoryId": "cat-001",
       "subcategory": "Bloques",
       "measureUnit": "und"
     },
     {
       "id": "mat-011",
       "name": "Cal Hidratada",
-      "category": "cat-002\"",
+      "categoryId": "cat-002",
       "subcategory": "Cal",
       "measureUnit": "bolsa"
     },
     {
       "id": "mat-012",
       "name": "Guantes de Cuero",
-      "category": "cat-007",
+      "categoryId": "cat-007",
       "subcategory": "Protección de manos",
       "measureUnit": "par"
     },
     {
       "id": "mat-013",
       "name": "Listón de Madera 2x3x300cm",
-      "category": "cat-005",
+      "categoryId": "cat-005",
       "subcategory": "Maderas",
       "measureUnit": "und"
     },
     {
       "id": "mat-014",
       "name": "Soldadura 6011 1/8\"",
-      "category": "cat-006",
+      "categoryId": "cat-006",
       "subcategory": "Soldadura",
       "measureUnit": "kg"
     }
@@ -487,15 +487,15 @@
   "materialsSuppliers": [
     {
       "id": "sup-001",
-      "ruc": "20100000001",
+      "ruc": "22222311110",
       "onboarded": "2024-01-15",
-      "socialReason": "Aceros Arequipa S.A.",
-      "contact": "Ventas Corporativas",
-      "phone": "01-555-0192",
-      "email": "ventas@acerosarequipa.pe",
-      "categories": "Metales y Acero",
+      "socialReason": "Aceros Arequipa S.A222",
+      "contact": "Ventas Corporativas2",
+      "phone": "01-555-01922",
+      "email": "ventas@acerosarequipa.2",
+      "categories": "Metales y Acero2",
       "paymentTerms": "NET 60",
-      "status": "ACTIVE"
+      "status": "active"
     },
     {
       "id": "sup-002",
@@ -555,7 +555,19 @@
       "email": "ventas@agregadossur.pe",
       "categories": "Agregados",
       "paymentTerms": "NET 30",
-      "status": "ACTIVE"
+      "status": "active"
+    },
+    {
+      "id": "HzrU-ec",
+      "ruc": "12332432423",
+      "onboarded": "",
+      "socialReason": "Esotilin S.A.C",
+      "contact": "Bailador",
+      "phone": "123456789",
+      "email": "esotilin@gmail.com",
+      "categories": "",
+      "paymentTerms": "",
+      "status": "active"
     }
   ],
   "materialsRequests": [
@@ -565,11 +577,11 @@
       "requestDate": "2026-05-01",
       "deadline": "2026-05-10",
       "status": "PENDING",
-      "priority": "2",
-      "deliveryLocation": "Sótano 2",
+      "priority": "MEDIUM",
+      "deliveryLocation": "Sótano 2211xdd",
       "budgetLineId": "PP-2026-05",
-      "purpose": "Es",
-      "additionalNotes": "Marca preferida: Sol o Pacasmayo. Entrega en parihuelas.",
+      "purpose": "esotilin\n",
+      "additionalNotes": "aaasdasd",
       "suggestedSupplierId": "sup-002",
       "attachments": [],
       "activity": "Muros y tabiques",
@@ -577,22 +589,23 @@
       "items": [
         {
           "supplierOfferId": "soff-003",
-          "quantity": 50
-        },
-        {
-          "supplierOfferId": "soff-013",
-          "quantity": 10
+          "quantity": 70,
+          "materialName": "Cemento Portland Tipo I",
+          "categoryName": "Aglomerantes",
+          "materialUnit": "bolsa",
+          "materialSubcategory": "Cementos",
+          "pricePerUnit": 28
         }
       ],
-      "quantity": 67
+      "quantity": 47
     },
     {
       "id": "req-002",
       "projectId": "proj-01",
       "requestDate": "2026-05-02",
       "deadline": "2026-05-08",
-      "status": "APPROVED",
-      "priority": 2,
+      "status": "REFUSED",
+      "priority": "LOW",
       "deliveryLocation": "",
       "budgetLineId": "PP-2026-05",
       "purpose": "Reposición de stock crítico de acero para refuerzo de losas",
@@ -614,8 +627,8 @@
       "projectId": "proj-01",
       "requestDate": "2026-05-03",
       "deadline": "2026-05-15",
-      "status": "PENDING",
-      "priority": 3,
+      "status": "APPROVED",
+      "priority": "LOW",
       "deliveryLocation": "Patio de Maderas",
       "budgetLineId": "PP-2026-06",
       "purpose": "Fabricación de encofrados para columnas y vigas del Piso 4",
@@ -640,8 +653,8 @@
       "projectId": "proj-01",
       "requestDate": "2026-05-04",
       "deadline": "2026-05-05",
-      "status": "PENDING",
-      "priority": 1,
+      "status": "APPROVED",
+      "priority": "LOW",
       "deliveryLocation": "Piso 3 - Área de trabajo",
       "budgetLineId": "PP-2026-05",
       "purpose": "Compra urgente de EPP para nuevo personal ingresante",
@@ -666,8 +679,8 @@
       "projectId": "proj-01",
       "requestDate": "2026-05-05",
       "deadline": "2026-05-20",
-      "status": "PENDING",
-      "priority": 2,
+      "status": "APPROVED",
+      "priority": "LOW",
       "deliveryLocation": "Patio de Agregados",
       "budgetLineId": "PP-2026-06",
       "purpose": "Preparación de mezcla para vaciado de losa del Piso 5",
@@ -697,7 +710,7 @@
       "requestDate": "2026-05-06",
       "deadline": "2026-05-07",
       "status": "PENDING",
-      "priority": 1,
+      "priority": "LOW",
       "deliveryLocation": "Estante 4B",
       "budgetLineId": "PP-2026-05",
       "purpose": "Discos de corte para amoladora por desgaste severo",
@@ -709,7 +722,12 @@
       "items": [
         {
           "supplierOfferId": "soff-009",
-          "quantity": 25
+          "quantity": 25,
+          "materialName": "Disco de Corte 7\"",
+          "categoryName": "Consumibles y Varios",
+          "materialUnit": "und",
+          "materialSubcategory": "Abrasivos",
+          "pricePerUnit": 12.8
         }
       ]
     },
@@ -719,7 +737,7 @@
       "requestDate": "2026-05-06",
       "deadline": "2026-05-18",
       "status": "PENDING",
-      "priority": 3,
+      "priority": "LOW",
       "deliveryLocation": "Almacén Principal",
       "budgetLineId": "PP-2026-06",
       "purpose": "Reposición de ladrillos y bloques para muros interiores",
@@ -745,7 +763,7 @@
       "requestDate": "2026-05-10",
       "deadline": "2026-05-11T05:00:00.000Z",
       "status": "PENDING",
-      "priority": "1",
+      "priority": "LOW",
       "deliveryLocation": "Mi casa",
       "budgetLineId": "",
       "purpose": "Ninguno",
@@ -767,7 +785,7 @@
       "requestDate": "2026-05-10",
       "deadline": "2026-05-16T05:00:00.000Z",
       "status": "PENDING",
-      "priority": "1",
+      "priority": "LOW",
       "deliveryLocation": "aaaa",
       "budgetLineId": "",
       "purpose": "asdasd",
@@ -789,7 +807,7 @@
       "requestDate": "2026-05-10",
       "deadline": "2026-05-13T05:00:00.000Z",
       "status": "PENDING",
-      "priority": "3",
+      "priority": "LOW",
       "deliveryLocation": "aaaa",
       "budgetLineId": "",
       "purpose": "aasdasd",
@@ -811,7 +829,7 @@
       "requestDate": "2026-05-10",
       "deadline": "2026-05-15T05:00:00.000Z",
       "status": "PENDING",
-      "priority": "3",
+      "priority": "LOW",
       "deliveryLocation": "sdasdasd",
       "budgetLineId": "",
       "purpose": "asdasda",
@@ -833,7 +851,7 @@
       "requestDate": "2026-05-10",
       "deadline": "2026-05-15T05:00:00.000Z",
       "status": "PENDING",
-      "priority": "1",
+      "priority": "LOW",
       "deliveryLocation": "aasd",
       "budgetLineId": "",
       "purpose": "asdaaaaaaaaa",
@@ -855,7 +873,7 @@
       "requestDate": "2026-05-10",
       "deadline": "2026-05-15T05:00:00.000Z",
       "status": "PENDING",
-      "priority": 1,
+      "priority": "LOW",
       "deliveryLocation": "asda",
       "budgetLineId": "",
       "purpose": "sdasdasd",
@@ -877,7 +895,7 @@
       "requestDate": "2026-05-10",
       "deadline": "2026-05-08T05:00:00.000Z",
       "status": "PENDING",
-      "priority": "1",
+      "priority": "LOW",
       "deliveryLocation": "aaaa",
       "budgetLineId": "",
       "purpose": "aasdasd",
@@ -899,7 +917,7 @@
       "requestDate": "2026-05-10",
       "deadline": "",
       "status": "PENDING",
-      "priority": "1",
+      "priority": "LOW",
       "deliveryLocation": "",
       "budgetLineId": "",
       "purpose": "",
@@ -921,7 +939,7 @@
       "requestDate": "2026-05-10",
       "deadline": "",
       "status": "PENDING",
-      "priority": 1,
+      "priority": "LOW",
       "deliveryLocation": "",
       "budgetLineId": "",
       "purpose": "",
@@ -943,7 +961,7 @@
       "requestDate": "2026-05-10",
       "deadline": "2026-05-30T05:00:00.000Z",
       "status": "PENDING",
-      "priority": "1",
+      "priority": "LOW",
       "deliveryLocation": "asdaaaaaaaaaaeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "budgetLineId": "",
       "purpose": "asdaaaaaaaaaaeeeeeeeeeeeeeeeeeeeeeeeeeee",
@@ -965,7 +983,7 @@
       "requestDate": "2026-05-10",
       "deadline": "",
       "status": "PENDING",
-      "priority": 1,
+      "priority": "LOW",
       "deliveryLocation": "",
       "budgetLineId": "",
       "purpose": "",
@@ -987,7 +1005,7 @@
       "requestDate": "2026-05-10",
       "deadline": "",
       "status": "PENDING",
-      "priority": 1,
+      "priority": "LOW",
       "deliveryLocation": "",
       "budgetLineId": "",
       "purpose": "",
@@ -1009,7 +1027,7 @@
       "requestDate": "2026-05-10",
       "deadline": "2026-05-08T05:00:00.000Z",
       "status": "PENDING",
-      "priority": "1",
+      "priority": "LOW",
       "deliveryLocation": "aadsa",
       "budgetLineId": "",
       "purpose": "sdasd",
@@ -1212,6 +1230,16 @@
       "registrationDate": "",
       "maintenanceHours": "",
       "assignmentDetail": "a"
+    },
+    {
+      "id": "PxmhJO_",
+      "name": "aaaaaa",
+      "status": "AVAILABLE",
+      "physicalStatus": "",
+      "assignedTo": "54343234 - Pedro Castro",
+      "registrationDate": "",
+      "maintenanceHours": "",
+      "assignmentDetail": "uwu"
     }
   ],
   "iot-telemetry": [],

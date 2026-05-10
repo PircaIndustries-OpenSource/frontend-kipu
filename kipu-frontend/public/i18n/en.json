@@ -35,7 +35,7 @@
     "summary": {
       "pending": "Pending",
       "approved-today": "Approved today",
-      "rejected": "Rejected"
+      "rejected": "Refused"
     },
     "filters": {
       "title": "Quick Filters",

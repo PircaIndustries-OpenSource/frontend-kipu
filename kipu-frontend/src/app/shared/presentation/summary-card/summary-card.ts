@@ -1,5 +1,5 @@
-import {Component, input} from '@angular/core';
-import {MatCardModule} from '@angular/material/card';
+import { Component, input } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
 @Component({
   selector: 'app-summary-card',
   imports: [MatCardModule],
@@ -9,4 +9,5 @@ import {MatCardModule} from '@angular/material/card';
 export class SummaryCard {
   title = input.required<string>();
   value = input.required<number>();
+  active = input<boolean>(false);
 }

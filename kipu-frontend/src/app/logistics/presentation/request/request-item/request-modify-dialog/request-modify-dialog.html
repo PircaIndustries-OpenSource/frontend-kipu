@@ -8,76 +8,75 @@
 
     <div class="flex flex-col w-full">
       <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-        <mat-label class="text-(--color-text-main)! font-bold">{{ 'request.create.fields.quantity' | translate }}</mat-label>
+        <mat-label class="text-(--color-text-main)!">{{ 'request.create.fields.quantity' | translate }}</mat-label>
         <input matInput formControlName="quantity" type="number" step="1" />
         @if (modifyForm.get('quantity')?.hasError('required') && modifyForm.get('quantity')?.touched) {
-          <mat-error class="text-(--color-danger)! font-bold">{{ 'request.create.validation.quantity-required' | translate }}</mat-error>
+          <mat-error class="text-(--color-danger)!">{{ 'request.create.validation.quantity-required' | translate }}</mat-error>
         }
         @if (modifyForm.get('quantity')?.hasError('min')) {
-          <mat-error class="text-(--color-danger)! font-bold">{{ 'request.create.validation.quantity-min' | translate }}</mat-error>
+          <mat-error class="text-(--color-danger)!">{{ 'request.create.validation.quantity-min' | translate }}</mat-error>
         }
       </mat-form-field>
     </div>
 
     <div class="flex flex-col w-full">
       <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-        <mat-label class="text-(--color-text-main)! font-bold">{{ 'request.create.fields.priority' | translate }}</mat-label>
+        <mat-label class="text-(--color-text-main)!">{{ 'request.create.fields.priority' | translate }}</mat-label>
         <mat-select formControlName="priority">
-          <mat-option value="1">{{ 'request.create.priority.low' | translate }}</mat-option>
-          <mat-option value="2">{{ 'request.create.priority.medium' | translate }}</mat-option>
-          <mat-option value="3">{{ 'request.create.priority.high' | translate }}</mat-option>
-          <mat-option value="4">{{ 'request.create.priority.critical' | translate }}</mat-option>
+          <mat-option value="LOW">{{ 'request.create.priority.low' | translate }}</mat-option>
+          <mat-option value="MEDIUM">{{ 'request.create.priority.medium' | translate }}</mat-option>
+          <mat-option value="HIGH">{{ 'request.create.priority.high' | translate }}</mat-option>
+          <mat-option value="CRITICAL">{{ 'request.create.priority.critical' | translate }}</mat-option>
         </mat-select>
         @if (modifyForm.get('priority')?.hasError('required') && modifyForm.get('priority')?.touched) {
-          <mat-error class="text-(--color-danger)! font-bold">{{ 'request.create.validation.priority-required' | translate }}</mat-error>
+          <mat-error class="text-(--color-danger)!">{{ 'request.create.validation.priority-required' | translate }}</mat-error>
         }
       </mat-form-field>
     </div>
 
     <div class="flex flex-col w-full">
       <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-        <mat-label class="text-(--color-text-main)! font-bold">{{ 'request.create.fields.required-date' | translate }}</mat-label>
+        <mat-label class="text-(--color-text-main)!">{{ 'request.create.fields.required-date' | translate }}</mat-label>
         <input matInput formControlName="deadline" [matDatepicker]="modifyPicker" readonly />
         <mat-datepicker-toggle matIconSuffix [for]="modifyPicker"></mat-datepicker-toggle>
         <mat-datepicker #modifyPicker></mat-datepicker>
         @if (modifyForm.get('deadline')?.hasError('required') && modifyForm.get('deadline')?.touched) {
-          <mat-error class="text-(--color-danger)! font-bold">{{ 'request.create.validation.date-required' | translate }}</mat-error>
+          <mat-error class="text-(--color-danger)!">{{ 'request.create.validation.date-required' | translate }}</mat-error>
         }
       </mat-form-field>
     </div>
 
     <div class="flex flex-col w-full">
       <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-        <mat-label class="text-(--color-text-main)! font-bold">{{ 'request.create.fields.delivery-location' | translate }}</mat-label>
+        <mat-label class="text-(--color-text-main)!">{{ 'request.create.fields.delivery-location' | translate }}</mat-label>
         <input matInput formControlName="deliveryLocation" [placeholder]="'request.create.placeholders.location' | translate" />
         @if (modifyForm.get('deliveryLocation')?.hasError('required') && modifyForm.get('deliveryLocation')?.touched) {
-          <mat-error class="text-(--color-danger)! font-bold">{{ 'request.create.validation.location-required' | translate }}</mat-error>
+          <mat-error class="text-(--color-danger)">{{ 'request.create.validation.location-required' | translate }}</mat-error>
         }
       </mat-form-field>
     </div>
 
     <div class="flex flex-col w-full">
       <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-        <mat-label class="text-(--color-text-main)! font-bold">{{ 'request.create.fields.purpose' | translate }}</mat-label>
+        <mat-label class="text-(--color-text-main)!">{{ 'request.create.fields.purpose' | translate }}</mat-label>
         <textarea matInput formControlName="purpose" rows="3" [placeholder]="'request.create.placeholders.purpose' | translate"></textarea>
         @if (modifyForm.get('purpose')?.hasError('required') && modifyForm.get('purpose')?.touched) {
-          <mat-error class="text-(--color-danger)! font-bold">{{ 'request.create.validation.purpose-required' | translate }}</mat-error>
+          <mat-error class="text-(--color-danger)!">{{ 'request.create.validation.purpose-required' | translate }}</mat-error>
         }
       </mat-form-field>
     </div>
 
     <div class="flex flex-col w-full">
       <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-        <mat-label class="text-(--color-text-main)! font-bold">{{ 'request.create.fields.additional-notes' | translate }}</mat-label>
+        <mat-label class="text-(--color-text-main)!">{{ 'request.create.fields.additional-notes' | translate }}</mat-label>
         <textarea matInput formControlName="additionalNotes" rows="2" [placeholder]="'request.create.placeholders.additional-notes' | translate"></textarea>
       </mat-form-field>
     </div>
   </mat-dialog-content>
 
   <mat-dialog-actions align="end" class="!px-8 !py-8 !m-0 !gap-4 bg-(--color-neutral-bg)! border-t border-(--color-neutral-border)!">
-    <button mat-button (click)="onCancel()" class="!rounded-xl !px-8 !py-6 !font-bold text-(--color-neutral-border)! hover:bg-white transition-all" type="button">
-      {{ 'request.modify.btn-cancel' | translate }}
-    </button>
+
+    <button mat-stroked-button mat-dialog-close>{{ 'request.modify.btn-cancel' | translate }}</button>
     <button
       mat-flat-button
       class="bg-accent! !text-white! !rounded-xl! !px-10! !py-6! !font-bold! !text-base! cursor-pointer transition-all hover:brightness-110 active:scale-95 shadow-md shadow-(--color-accent)/20"

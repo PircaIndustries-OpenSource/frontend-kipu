@@ -1,0 +1,98 @@
+<div [formGroup]="supplierForm" class="p-2">
+  <h2 mat-dialog-title class="text-2xl! font-bold! text-slate-800 mb-4!">
+    {{ 'suppliers.edit.title' | translate }}
+  </h2>
+  <mat-dialog-content class="flex! flex-col! gap-2! overflow-y-auto" style="max-height: 65vh;">
+    <div class="min-h-20">
+      <mat-form-field appearance="outline" class="w-full pt-3!" subscriptSizing="dynamic">
+        <mat-label>{{ 'suppliers.create.ruc-label' | translate }}</mat-label>
+        <input matInput formControlName="ruc" maxlength="11">
+        @if (supplierForm.get('ruc')?.hasError('required') && supplierForm.get('ruc')?.touched) {
+          <mat-error>{{ 'suppliers.create.ruc-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div class="min-h-20">
+      <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+        <mat-label>{{ 'suppliers.create.social-reason-label' | translate }}</mat-label>
+        <input matInput formControlName="socialReason">
+        @if (supplierForm.get('socialReason')?.hasError('required') && supplierForm.get('socialReason')?.touched) {
+          <mat-error>{{ 'suppliers.create.social-reason-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div class="flex flex-row gap-4 min-h-20">
+      <div class="flex-1">
+        <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+          <mat-label>{{ 'suppliers.create.contact-label' | translate }}</mat-label>
+          <input matInput formControlName="contact">
+          @if (supplierForm.get('contact')?.hasError('required') && supplierForm.get('contact')?.touched) {
+            <mat-error>{{ 'suppliers.create.contact-required' | translate }}</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="flex-1">
+        <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+          <mat-label>{{ 'suppliers.create.phone-label' | translate }}</mat-label>
+          <input matInput formControlName="phone">
+          @if (supplierForm.get('phone')?.hasError('required') && supplierForm.get('phone')?.touched) {
+            <mat-error>{{ 'suppliers.create.phone-required' | translate }}</mat-error>
+          }
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="min-h-20">
+      <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+        <mat-label>{{ 'suppliers.create.email-label' | translate }}</mat-label>
+        <input matInput formControlName="email">
+        @if (supplierForm.get('email')?.hasError('required') && supplierForm.get('email')?.touched) {
+          <mat-error>{{ 'suppliers.create.email-required' | translate }}</mat-error>
+        }
+        @if (supplierForm.get('email')?.hasError('email') && supplierForm.get('email')?.touched) {
+          <mat-error>{{ 'suppliers.create.email-invalid' | translate }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <!--
+    <div class="min-h-[80px]">
+      <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+        <mat-label>{{ 'suppliers.create.categories-label' | translate }}</mat-label>
+        <input matInput formControlName="categories">
+        @if (supplierForm.get('categories')?.hasError('required') && supplierForm.get('categories')?.touched) {
+          <mat-error>{{ 'suppliers.create.categories-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="min-h-[80px]">
+      <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+        <mat-label>{{ 'suppliers.create.payment-terms-label' | translate }}</mat-label>
+        <input matInput formControlName="paymentTerms">
+        @if (supplierForm.get('paymentTerms')?.hasError('required') && supplierForm.get('paymentTerms')?.touched) {
+          <mat-error>{{ 'suppliers.create.payment-terms-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    -->
+    <div class="min-h-20">
+      <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+        <mat-label>{{ 'suppliers.create.status-label' | translate }}</mat-label>
+        <mat-select formControlName="status">
+          <mat-option value="active">{{ 'suppliers.create.status-active' | translate }}</mat-option>
+          <mat-option value="inactive">{{ 'suppliers.create.status-inactive' | translate }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="gap-3! p-6! mt-4!">
+    <button mat-stroked-button mat-dialog-close>{{ 'request.modify.btn-cancel' | translate }}</button>
+    <button
+      mat-flat-button
+      class="bg-accent! !text-white! !rounded-xl! !px-10! !py-6! !font-bold! !text-base! cursor-pointer transition-all hover:brightness-110 active:scale-95 shadow-md shadow-(--color-accent)/20"
+      (click)="onSave()"
+      type="button"
+    >
+      {{ 'request.modify.btn-save' | translate }}
+    </button>
+  </mat-dialog-actions>
+</div>

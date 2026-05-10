@@ -6,7 +6,7 @@ export class MaterialsAssembler {
     return {
       id: resource.id,
       name: resource.name,
-      categoryId: resource.category,
+      categoryId: resource.categoryId,
       subcategory: resource.subcategory,
       measureUnit: resource.measureUnit,
     };

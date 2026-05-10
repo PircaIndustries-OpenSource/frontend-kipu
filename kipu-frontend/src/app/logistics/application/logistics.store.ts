@@ -1,7 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { InventoryMaterialEntity, InventoryViewModel } from '../domain/inventoryMaterial.entity';
+import { InventoryMaterialEntity } from '../domain/inventoryMaterial.entity';
 import { LogisticsApi } from '../infrastructure/logistics.api';
-import { RequestEntity, RequestViewModel } from '../domain/request.entity';
+import { RequestEntity } from '../domain/request.entity';
 import { MachineryEntity } from '../domain/machinery.entity';
 import { SupplierEntity } from '../domain/supplier.entity';
 import { WasteEntity } from '../domain/waste.entity';
@@ -9,6 +9,25 @@ import { BudgetStore } from '../../budget/application/budget-store';
 import { MaterialEntity } from '../domain/material.entity';
 import { CategoryEntity } from '../domain/category.entity';
 import { SupplierOfferEntity } from '../domain/supplierOffer.entity';
+
+export type EnrichedRequestItem = import('../domain/request.entity').RequestItem & {
+  materialName: string;
+  categoryName: string;
+  materialUnit: string;
+  materialSubcategory: string;
+  pricePerUnit: number;
+};
+
+export type EnrichedRequest = Omit<RequestEntity, 'items'> & {
+  items: EnrichedRequestItem[];
+};
+
+export type InventoryView = InventoryMaterialEntity & {
+  materialName: string;
+  materialCategory: string;
+  materialUnit: string;
+  materialSubcategory: string;
+};
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +38,6 @@ export class LogisticsStore {
   //MATERIAL
   private materialsSignal = signal<MaterialEntity[]>([]);
   private categoriesSignal = signal<CategoryEntity[]>([]);
-  readonly filteredMaterials = computed(() => this.filteredMaterialsSignal());
   readonly categories = computed(() => this.categoriesSignal());
   private selectedCategorySignal = signal<string>('');
   private selectedMaterialSignal = signal<string>('');
@@ -37,29 +55,38 @@ export class LogisticsStore {
     const materials = this.materialsSignal;
     return materials().find((material) => material.name === materialNameSelected);
   });
-  readonly filteredMaterialsSignal = computed(() => {
-    const category = this.selectedCategorySignal();
+  private filteredMaterialsSignal = computed(() => {
     const categories = this.categoriesSignal();
-    const categoryRelatedByName = categories.find((c) => c.name === this.selectedCategorySignal());
+    const activeCategories = categories.filter((c) => c.isActive);
+    const categoryRelatedByName = activeCategories.find(
+      (c) => c.name === this.selectedCategorySignal(),
+    );
     const allMaterials = this.materialsSignal();
     if (!categoryRelatedByName) {
       return allMaterials;
     }
     return allMaterials.filter((material) => material.categoryId === categoryRelatedByName.id);
   });
+  readonly filteredMaterials = this.filteredMaterialsSignal;
   filterByCategory(category: string) {
     this.selectedCategorySignal.set(category);
   }
   // INVENTORY
   private inventorySignal = signal<InventoryMaterialEntity[]>([]);
+  private criticalStockFilterSignal = signal<boolean>(false);
+  readonly criticalStockFilter = computed(() => this.criticalStockFilterSignal());
+
+  toggleCriticalStockFilter() {
+    this.criticalStockFilterSignal.update((v) => !v);
+  }
 
   readonly selectedCategory = computed(() => this.selectedCategorySignal());
 
   readonly inventoryMaterials = computed(() => this.inventorySignal());
-  readonly inventoryView = computed<InventoryViewModel[]>(() => {
+  readonly inventoryView = computed<InventoryView[]>(() => {
     const catalogMaterials = this.materialsSignal();
     const inventory = this.inventorySignal();
-    const categories = this.categoriesSignal();
+    const categories = this.categoriesSignal().filter((c) => c.isActive);
     return inventory.map((invItem) => {
       const materialRelated = catalogMaterials.find(
         (material) => material.id === invItem.materialId,
@@ -75,12 +102,15 @@ export class LogisticsStore {
     });
   });
   readonly filteredInventoryMaterials = computed(() => {
+    let result = this.inventoryView();
     const category = this.selectedCategorySignal();
-    const allInventoryMaterials = this.inventoryView();
-    if (!category) {
-      return allInventoryMaterials;
+    if (category) {
+      result = result.filter((i) => i.materialCategory === category);
     }
-    return allInventoryMaterials.filter((invItem) => invItem.materialCategory === category);
+    if (this.criticalStockFilterSignal()) {
+      result = result.filter((i) => i.currentStock <= i.miniumStock);
+    }
+    return result;
   });
   readonly totalInventoryMaterials = computed(() => this.inventoryMaterials().length);
   readonly criticalMaterialsCount = computed(
@@ -88,22 +118,23 @@ export class LogisticsStore {
       this.inventoryMaterials().filter((invItem) => invItem.currentStock <= invItem.miniumStock)
         .length,
   );
-  loadMaterials() {
-    if (this.materialsSignal().length === 0) {
+
+  loadMaterials(force = false) {
+    if (force || this.materialsSignal().length === 0) {
       this.logisticsApi.getAllMaterials().subscribe((data) => {
         this.materialsSignal.set(data);
       });
     }
   }
-  loadInventoryMaterials = () => {
-    if (this.inventorySignal().length === 0) {
+  loadInventoryMaterials = (force = false) => {
+    if (force || this.inventorySignal().length === 0) {
       this.logisticsApi.getAllInventoryMaterials().subscribe((data) => {
         this.inventorySignal.set(data);
       });
     }
   };
-  loadCategories() {
-    if (this.categoriesSignal().length === 0) {
+  loadCategories(force = false) {
+    if (force || this.categoriesSignal().length === 0) {
       this.logisticsApi.getAllCategories().subscribe((data) => {
         this.categoriesSignal.set(data);
       });
@@ -116,7 +147,8 @@ export class LogisticsStore {
   requestsSignal = signal<RequestEntity[]>([]);
   readonly requests = computed(() => this.requestsSignal());
   selectedRequestFilter = signal<string>('');
-  readonly requestDetailsView = computed<RequestViewModel[]>(() => {
+
+  readonly requestDetailsView = computed<EnrichedRequest[]>(() => {
     const requests = this.requestsSignal();
     const materials = this.materialsSignal();
     const categories = this.categoriesSignal();
@@ -124,20 +156,6 @@ export class LogisticsStore {
 
     return requests.map((request) => {
       const detailsItem = request.items.map((item) => {
-        /*
-       *  const material = materials.find(
-          (material) => material.id === item.supplierOfferId,
-        );
-        const category = categories.find((c) => c.id === material?.category);
-        return {
-          ...item,
-          materialId: material?.id || 'Unknown ID',
-          materialName: material?.name || 'Unknown Name',
-          materialCategory: category?.name || 'Without Category',
-          materialUnit: material?.measureUnit || 'Without unit',
-          materialSubcategory: material?.subcategory || 'Without Subcategory',
-        };
-       * */
         const supplierOfferRelated = supplierOffer.find((s) => s.id === item.supplierOfferId);
         const material = materials.find((m) => m.id === supplierOfferRelated?.materialId);
         const category = categories.find((c) => c.id === material?.categoryId);
@@ -156,48 +174,57 @@ export class LogisticsStore {
       };
     });
   });
-  readonly requestFiltered = computed<RequestViewModel[]>(() => {
-    const allRequest = this.requestDetailsView();
+  readonly requestFiltered = computed<EnrichedRequest[]>(() => {
+    let result = this.requestDetailsView();
     const filter = this.selectedRequestFilter;
     if (!filter) {
-      return allRequest;
+      return result;
     }
     const available = this.budgetStore.totalAvailable();
-    const budgeted = this.budgetStore.totalBudgeted();
+    if (this.pendingRequestFilterSignal()) {
+      result = result.filter((i) => i.status === 'PENDING');
+    }
+    if (this.approvedRequestFilterSignal()) {
+      result = result.filter((i) => i.status === 'APPROVED');
+    }
+    if (this.refusedRequestFilterSignal()) {
+      result = result.filter((i) => i.status === 'REFUSED');
+    }
     switch (filter()) {
       case 'within-budget':
-        return allRequest.filter((request) => {
+        return result.filter((request) => {
           const nextAmount = request.items.reduce((total, item) => {
             return total + Math.ceil(item.quantity * item.pricePerUnit);
           }, 0);
-          return nextAmount + available <= budgeted;
+          return nextAmount <= available;
         });
       case 'out-budget': {
-        return allRequest.filter((request) => {
+        return result.filter((request) => {
           const nextAmount = request.items.reduce((total, item) => {
             return total + Math.ceil(item.quantity * item.pricePerUnit);
           }, 0);
-          return nextAmount + available > budgeted;
+          return nextAmount > available;
         });
       }
       case 'expire-48h': {
-        return allRequest.filter((request) => {
+        return result.filter((request) => {
           const difference = new Date(request.deadline).getTime() - Date.now();
-          return difference / (1000 * 60 * 60 * 24) <= 2;
+          const result = difference / (1000 * 60 * 60 * 24);
+          return result <= 2 && result >= 0;
         });
       }
       case 'all': {
-        return allRequest;
+        return result;
       }
       default:
-        return allRequest;
+        return result;
     }
   });
   filterRequest(filter: string) {
     this.selectedRequestFilter.set(filter);
   }
-  loadRequest() {
-    if (this.requestsSignal().length === 0) {
+  loadRequest(force = false) {
+    if (force || this.requestsSignal().length === 0) {
       this.logisticsApi.getAllRequest().subscribe((data) => {
         this.requestsSignal.set(data);
       });
@@ -217,8 +244,7 @@ export class LogisticsStore {
   addRequest(request: RequestEntity, onSuccess?: () => void) {
     this.logisticsApi.postRequest(request).subscribe({
       next: (newRequest) => {
-        this.requestsSignal.update((prev) =>
-          [...prev, newRequest]);
+        this.requestsSignal.update((prev) => [...prev, newRequest]);
         onSuccess?.();
       },
       error: (err) => {
@@ -229,19 +255,37 @@ export class LogisticsStore {
   updateRequest(id: string, updates: Partial<RequestEntity>, onSuccess?: () => void) {
     this.logisticsApi.patchRequest(id, updates).subscribe({
       next: (updated) => {
-        this.requestsSignal.update((prev) =>
-          prev.map((r) => (r.id === id ? { ...r, ...updated } : r)),
-        );
+        this.requestsSignal.update((prev) => prev.map((r) => (r.id === id ? updated : r)));
         onSuccess?.();
       },
       error: (err) => {
-        console.error('Error updating request, applying locally', err);
-        this.requestsSignal.update((prev) =>
-          prev.map((r) => (r.id === id ? { ...r, ...updates } : r)),
-        );
-        onSuccess?.();
+        console.error('Error updating request:', err);
       },
     });
+  }
+
+  private pendingRequestFilterSignal = signal<boolean>(false);
+  private approvedRequestFilterSignal = signal<boolean>(false);
+  private refusedRequestFilterSignal = signal<boolean>(false);
+  readonly pendingRequestFilter = computed(() => this.pendingRequestFilterSignal());
+  readonly approvedRequestFilter = computed(() => this.approvedRequestFilterSignal());
+  readonly refusedRequestFilter = computed(() => this.refusedRequestFilterSignal());
+  togglePendingRequestFilter() {
+    this.pendingRequestFilterSignal.update((v) => !v);
+    this.approvedRequestFilterSignal.set(false);
+    this.refusedRequestFilterSignal.set(false);
+  }
+
+  toggleApprovedRequestFilter() {
+    this.approvedRequestFilterSignal.update((v) => !v);
+    this.pendingRequestFilterSignal.set(false);
+    this.refusedRequestFilterSignal.set(false);
+  }
+
+  toggleRefusedRequestFilter() {
+    this.refusedRequestFilterSignal.update((v) => !v);
+    this.pendingRequestFilterSignal.set(false);
+    this.approvedRequestFilterSignal.set(false);
   }
   //Notifications
   readonly hasUnreadRequests = computed(() => this.requestsSignal().length > 0);
@@ -252,8 +296,8 @@ export class LogisticsStore {
   //Machinery
   private machinerySignal = signal<MachineryEntity[]>([]);
   readonly machinery = computed(() => this.machinerySignal());
-  loadMachinery() {
-    if (this.machinerySignal().length === 0) {
+  loadMachinery(force = false) {
+    if (force || this.machinerySignal().length === 0) {
       this.logisticsApi.getAllMachinery().subscribe((data) => {
         this.machinerySignal.set(data);
       });
@@ -288,8 +332,8 @@ export class LogisticsStore {
   //SUPPLIERS OFFER
   supplierOfferSignal = signal<SupplierOfferEntity[]>([]);
   readonly supplierOffer = computed(() => this.supplierOfferSignal());
-  loadSupplierOffers() {
-    if (this.supplierOfferSignal().length === 0) {
+  loadSupplierOffers(force = false) {
+    if (force || this.supplierOfferSignal().length === 0) {
       this.logisticsApi.getAllSupplierOffer().subscribe((data) => {
         this.supplierOfferSignal.set(data);
       });
@@ -308,8 +352,8 @@ export class LogisticsStore {
   //Suppliers
   suppliersSignal = signal<SupplierEntity[]>([]);
   readonly suppliers = computed(() => this.suppliersSignal());
-  loadSuppliers() {
-    if (this.suppliersSignal().length === 0) {
+  loadSuppliers(force = false) {
+    if (force || this.suppliersSignal().length === 0) {
       this.logisticsApi.getAllSuppliers().subscribe((data) => {
         this.suppliersSignal.set(data);
       });
@@ -359,8 +403,8 @@ export class LogisticsStore {
   //Waste
   wasteSignal = signal<WasteEntity[]>([]);
   readonly waste = computed(() => this.wasteSignal());
-  loadWaste() {
-    if (this.wasteSignal().length === 0) {
+  loadWaste(force = false) {
+    if (force || this.wasteSignal().length === 0) {
       this.logisticsApi.getAllWaste().subscribe((data) => {
         this.wasteSignal.set(data);
       });

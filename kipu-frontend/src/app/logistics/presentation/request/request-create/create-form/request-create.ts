@@ -78,7 +78,7 @@ export class RequestCreate implements OnInit {
   materials = this.logisticsStore.filteredMaterials;
   nameCategories = computed<string[]>(() => this.categories().map((category) => category.name));
   nameMaterials = computed<string[]>(() => this.materials().map((material) => material.name));
-  nameBudgetLines = this.budgetStore.budgetItems().map((b) => `${b.code} - ${b.name}`);
+  nameBudgetLines = computed(() => this.budgetStore.budgetItems().map((b) => `${b.code} - ${b.name}`));
   suppliersByMaterial = computed(() => {
     const material = this.materialSelected();
     if (!material) return [];
