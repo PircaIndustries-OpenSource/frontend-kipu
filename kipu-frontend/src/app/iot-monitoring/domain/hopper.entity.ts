@@ -5,6 +5,7 @@ export class HopperEntity {
   #state: string;
   #lastLecture: number;
   #limit: number;
+  #name: string;
 
   constructor() {
     this.#id = '';
@@ -13,6 +14,7 @@ export class HopperEntity {
     this.#state = '';
     this.#limit = 0;
     this.#lastLecture = 0;
+    this.#name = '';
   }
 
   get id(): string {
@@ -61,5 +63,13 @@ export class HopperEntity {
 
   set limit(value: number) {
     this.#limit = value;
+  }
+
+  get name(): string {
+    return this.#name;
+  }
+
+  set name(value: string) {
+    this.#name = value;
   }
 }

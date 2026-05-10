@@ -1,0 +1,33 @@
+<div class="hopper-grid">
+  @for (sensor of hopperSensors(); track sensor.id) {
+    <mat-card class="hopper-card" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
+      <mat-card-header>
+        <span class="sensor-name">{{ sensor.name }}</span>
+        <span class="sensor-state" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
+          {{ sensor.state }}
+        </span>
+      </mat-card-header>
+      <mat-card-content class="card-content-center">
+        <div class="visual-bar-container" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
+          <div class="visual-bar-fill"
+               [style.height.%]="sensor.lastLecture"
+               [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
+          </div>
+          <span class="bar-text" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
+            {{ sensor.lastLecture }}%
+          </span>
+        </div>
+      </mat-card-content>
+      <mat-card-footer [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
+        @if (getSensorStatusClass(sensor.lastLecture, sensor.limit) === 'status-danger') {
+          <strong>TICKET #{{ sensor.id }} GENERATED</strong>>
+          <span class="subtext">The system sent a request for dropping below {{sensor.limit}}%.</span>
+        } @else if (getSensorStatusClass(sensor.lastLecture, sensor.limit) === 'status-warning') {
+          <span class="subtext">The system suggest sending a request for dropping near {{sensor.limit}}%.</span>
+        } @else {
+          <span class="ok-text">ADEQUATE LEVELS</span>>
+        }
+      </mat-card-footer>
+    </mat-card>
+  }
+</div>
