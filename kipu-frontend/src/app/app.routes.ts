@@ -111,12 +111,12 @@ export const routes: Routes = [
           import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
             (m) => m.InventoryPage,
           ),
-      },
+      },/*'./progress/presentation/progress-page/progress-page.component'*/
       {
         path: 'advances',
         loadComponent: () =>
-          import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
-            (m) => m.InventoryPage,
+          import('./progress/presentation/progress-page/progress-page').then(
+            (m) => m.ProgressPage,
           ),
       },
       {

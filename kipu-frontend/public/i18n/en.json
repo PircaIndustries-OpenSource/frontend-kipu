@@ -404,5 +404,25 @@
       "howto-step3": "Enter the verification code",
       "howto-step4": "The signature is automatically recorded"
     }
+  },
+  "progress": {
+    "title": "Construction Progress",
+    "actions": {
+      "viewAll": "View all"
+    },
+    "table": {
+      "id": "ID",
+      "name": "Project Name",
+      "location": "Location",
+      "progress": "Progress",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "status": {
+      "active": "Active",
+      "planned": "Planned",
+      "completed": "Completed",
+      "unknown": "Unknown"
+    }
   }
 }

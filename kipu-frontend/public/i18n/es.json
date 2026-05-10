@@ -434,5 +434,25 @@
       "howto-step3": "Ingresa el código de verificación",
       "howto-step4": "La firma se registra automáticamente"
     }
+  },
+  "progress": {
+    "title": "Avances de Obras",
+    "actions": {
+      "viewAll": "Ver todo"
+    },
+    "table": {
+      "id": "ID",
+      "name": "Nombre del Proyecto",
+      "location": "Ubicación",
+      "progress": "Progreso",
+      "status": "Estado",
+      "actions": "Acciones"
+    },
+    "status": {
+      "active": "En Curso",
+      "planned": "Planeado",
+      "completed": "Finalizado",
+      "unknown": "Desconocido"
+    }
   }
 }
