@@ -63,6 +63,15 @@ export class CreateProjectDialogComponent {
 
     const { name, description, status, startDate, endDate, estimatedBudget, location } = this.projectForm.value;
 
+    const placeholderImages = [
+      'project-image1.png',
+      'project-image2.png',
+      'project-image3.png',
+      'project-image4.jpg',
+      'project-image5.png'
+    ];
+    const randomImage = placeholderImages[Math.floor(Math.random() * placeholderImages.length)];
+
     const project = {
       id: '',
       name: name ?? '',
@@ -74,6 +83,7 @@ export class CreateProjectDialogComponent {
       location: location ?? '',
       createdAt: new Date().toISOString().split('T')[0],
       createdBy: 'current-user',
+      imageUrl: randomImage,
     };
 
     // Assuming the store calls API and handles it internally. 
