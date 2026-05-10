@@ -15,6 +15,7 @@ export class ProjectAssembler {
       createdAt: resource.createdAt,
       createdBy: resource.createdBy,
       statusJustification: resource.statusJustification,
+      imageUrl: resource.imageUrl,
     };
   }
 
@@ -35,6 +36,7 @@ export class ProjectAssembler {
       createdAt: entity.createdAt,
       createdBy: entity.createdBy,
       statusJustification: entity.statusJustification,
+      imageUrl: entity.imageUrl,
     };
   }
 }

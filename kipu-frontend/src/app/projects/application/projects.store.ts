@@ -9,8 +9,13 @@ export class ProjectsStore {
   projectsApi = inject(ProjectsApi);
 
   private projectsSignal = signal<ProjectEntity[]>([]);
+  private currentProjectIdSignal = signal<string | null>(localStorage.getItem('currentProjectId') || null);
 
   readonly projects = computed(() => this.projectsSignal());
+  readonly currentProjectId = computed(() => this.currentProjectIdSignal());
+  readonly currentProject = computed(() => 
+    this.projectsSignal().find(p => p.id === this.currentProjectIdSignal()) || null
+  );
 
   readonly totalProjects = computed(() => this.projects().length);
 
@@ -20,6 +25,11 @@ export class ProjectsStore {
         this.projectsSignal.set(data);
       });
     }
+  }
+
+  setCurrentProject(id: string) {
+    localStorage.setItem('currentProjectId', id);
+    this.currentProjectIdSignal.set(id);
   }
 
   addProject(project: ProjectEntity) {

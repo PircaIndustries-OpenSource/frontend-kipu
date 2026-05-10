@@ -10,6 +10,7 @@ export class ProjectEntity {
   createdAt: string;
   createdBy: string;
   statusJustification?: string;
+  imageUrl?: string;
 
   constructor() {
     this.id = '';
