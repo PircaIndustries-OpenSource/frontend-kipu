@@ -6,9 +6,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { IdentityService } from '../../../infrastructure/identity.service';
-import { RegisterSuccessDialogComponent } from './reset-password-success.component';
 import { AuthBannerComponent } from '../../../../shared/presentation/components/auth-banner/auth-banner.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { ResetSuccessDialogComponent } from './reset-password-success.component';
 
 
 function passwordMatch(control: AbstractControl) {
@@ -79,7 +79,7 @@ export class ResetPasswordComponent {
           return;
         }
 
-        const dialogRef = this.dialog.open(RegisterSuccessDialogComponent, {
+        const dialogRef = this.dialog.open(ResetSuccessDialogComponent, {
           width: '600px',
           panelClass: 'custom-dialog-container',
           disableClose: true,

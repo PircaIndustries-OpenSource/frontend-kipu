@@ -1,24 +1,32 @@
 {
   "identity": [
     {
-      "email": "fdhbbf@hotmail.com",
-      "password": "kipu12345",
-      "id": "SIVyLM6"
+      "email": "kipu1234@hotmail.com",
+      "password": "master12345",
+      "name": "Usuario Nuevo",
+      "role": "Gestor Operativo",
+      "id": "Ve2rZ3G"
     },
     {
-      "email": "kipu@hotmail.com",
-      "password": "kipu123",
-      "id": "P-n4XLk"
+      "email": "kipumaster@hotmail.com",
+      "password": "master123",
+      "name": "Usuario Nuevo",
+      "role": "Gestor Operativo",
+      "id": "RTNIUs8"
     },
     {
-      "email": "usuario@ejemplo.com",
-      "password": "kipu12345",
-      "id": "YaICORq"
+      "email": "kipumaster1@hotmail.com",
+      "password": "kipu1234",
+      "name": "Usuario Nuevo",
+      "role": "Gestor Operativo",
+      "id": "KR5xCRx"
     },
     {
-      "email": "ej@hotmail.com",
-      "password": "hola123",
-      "id": "bhjp9wt"
+      "email": "kipu2@hotmail.com",
+      "password": "kipu1234",
+      "name": "Usuario Nuevo",
+      "role": "Gestor Operativo",
+      "id": "M0IF9Qv"
     }
   ],
   "projects": [
