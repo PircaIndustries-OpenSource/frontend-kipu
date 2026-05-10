@@ -407,22 +407,27 @@
   },
   "progress": {
     "title": "Construction Progress",
+    "subtitle": "History of daily logs and execution statuses.",
     "actions": {
-      "viewAll": "View all"
+      "new": "New Daily Progress"
+    },
+    "filters": {
+      "project": "Filter by: Project",
+      "specialty": "Filter by: Specialty",
+      "date": "Select date range"
     },
     "table": {
-      "id": "ID",
-      "name": "Project Name",
-      "location": "Location",
-      "progress": "Progress",
-      "status": "Status",
-      "actions": "Actions"
+      "date": "Date",
+      "activity": "Performed Activity",
+      "specialty": "Specialty",
+      "advance": "Advance (%)",
+      "project": "Project",
+      "status": "Status"
     },
     "status": {
-      "active": "Active",
-      "planned": "Planned",
-      "completed": "Completed",
-      "unknown": "Unknown"
+      "finished": "Completed",
+      "active": "In Progress",
+      "delayed": "Delayed"
     }
   }
 }

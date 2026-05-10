@@ -1,18 +1,19 @@
 /**
- * Domain entity representing the progress of a construction project.
+ * Domain entity representing a specific construction activity progress.
  */
 export interface ProjectProgress {
   id: number;
   projectId: number;
   projectName: string;
-  location: string;
+  activityName: string;
+  details: string;
+  specialty: string;
   status: ProgressStatus;
-  imageUrl: string;
   currentPercentage: number;
   lastUpdate: Date;
 }
 
 /**
- * Allowed statuses for a project's progress.
+ * Allowed statuses for an activity.
  */
-export type ProgressStatus = 'Active' | 'Progress' | 'Finished';
+export type ProgressStatus = 'Active' | 'Finished' | 'Delayed';

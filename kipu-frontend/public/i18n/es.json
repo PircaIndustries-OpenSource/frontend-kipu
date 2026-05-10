@@ -436,23 +436,28 @@
     }
   },
   "progress": {
-    "title": "Avances de Obras",
+    "title": "Control de Avances",
+    "subtitle": "Historial de registros diarios y estados de ejecución.",
     "actions": {
-      "viewAll": "Ver todo"
+      "new": "Nuevo Avance Diario"
+    },
+    "filters": {
+      "project": "Filtrar por: Proyecto",
+      "specialty": "Filtrar por: Especialidad",
+      "date": "Seleccionar rango de fechas"
     },
     "table": {
-      "id": "ID",
-      "name": "Nombre del Proyecto",
-      "location": "Ubicación",
-      "progress": "Progreso",
-      "status": "Estado",
-      "actions": "Acciones"
+      "date": "Fecha",
+      "activity": "Actividad Realizada",
+      "specialty": "Especialidad",
+      "advance": "Avance (%)",
+      "project": "Proyecto",
+      "status": "Estado"
     },
     "status": {
+      "finished": "Completado",
       "active": "En Curso",
-      "planned": "Planeado",
-      "completed": "Finalizado",
-      "unknown": "Desconocido"
+      "delayed": "Demorado"
     }
   }
 }
