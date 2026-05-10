@@ -210,7 +210,7 @@
     {
       "id": "mat-005",
       "name": "Triplay Fenólico 18mm",
-      "category": "cat-005s",
+      "category": "cat-005",
       "subcategory": "Encofrados",
       "measureUnit": "plancha"
     },
@@ -978,15 +978,6 @@
       "id": "us-1778215899308"
     },
     {
-      "email": "waza@gmail.com",
-      "firstName": "pepe",
-      "lastName": "raros",
-      "role": "Administrador",
-      "fullName": "pepe raros",
-      "isActive": true,
-      "id": "us-1778215899308"
-    },
-    {
       "email": "Coral@gmail.com",
       "firstName": "Pele",
       "lastName": "mama",
@@ -994,15 +985,28 @@
       "fullName": "Pele mama",
       "isActive": true,
       "id": "us-1778218020628"
+    }
+  ],
+  "progress": [
+    {
+      "id": 1,
+      "projectId": 101,
+      "projectName": "Residencial Los Olivos",
+      "location": "Lima, Perú",
+      "status": "Active",
+      "imageUrl": "https://images.unsplash.com/photo-1541888946425-d81bb19480c5",
+      "currentPercentage": 75,
+      "lastUpdate": "2024-05-09T10:00:00Z"
     },
     {
-      "email": "qcres@asaa.com",
-      "firstName": "pero",
-      "lastName": "osad",
-      "role": "Administrador",
-      "fullName": "pero osad",
-      "isActive": true,
-      "id": "us-1778218035097"
+      "id": 2,
+      "projectId": 102,
+      "projectName": "Torre Empresarial",
+      "location": "Cusco, Perú",
+      "status": "Progress",
+      "imageUrl": "https://images.unsplash.com/photo-1503387762-592dea58ef21",
+      "currentPercentage": 40,
+      "lastUpdate": "2024-05-08T15:30:00Z"
     }
   ]
 }
