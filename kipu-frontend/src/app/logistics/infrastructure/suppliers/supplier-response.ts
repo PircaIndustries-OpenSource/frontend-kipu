@@ -1,5 +1,3 @@
-import { SupplierOfferEntity } from '../../domain/supplier';
-
 export type SupplierResponse = SupplierResource[];
 
 export interface SupplierResource {
@@ -13,5 +11,4 @@ export interface SupplierResource {
   categories: string;
   paymentTerms: string;
   status: string;
-  offerMaterials: SupplierOfferEntity[];
 }

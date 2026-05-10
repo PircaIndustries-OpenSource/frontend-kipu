@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import {RegisterComponent} from './presentation/components/register/register.component';
+import { RegisterComponent } from './presentation/components/register/register.component';
 import { Layout } from './shared/presentation/layout/layout';
-import {LogisticsPage} from './logistics/presentation/logistics-page/logistics-page';
+import { LogisticsPage } from './logistics/presentation/logistics-page/logistics-page';
 import { TeamPage } from './team/presentation/team-page/team-page';
 
 export const routes: Routes = [
@@ -32,8 +32,8 @@ export const routes: Routes = [
           {
             path: 'request/create',
             loadComponent: () =>
-              import('./logistics/presentation/request/request-create/create-page/create-page').then(
-                (m) => m.CreatePage,
+              import('./logistics/presentation/request/request-create/create-form/request-create').then(
+                (m) => m.RequestCreate,
               ),
           },
           {

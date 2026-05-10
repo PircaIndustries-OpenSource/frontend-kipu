@@ -1,13 +1,13 @@
 export class MaterialEntity {
   id: string;
   name: string;
-  category: string;
+  categoryId: string;
   subcategory: string;
   measureUnit: string;
   constructor() {
     this.id = '';
     this.name = '';
-    this.category = '';
+    this.categoryId = '';
     this.subcategory = '';
     this.measureUnit = '';
   }

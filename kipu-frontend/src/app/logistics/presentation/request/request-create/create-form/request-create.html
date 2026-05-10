@@ -1,4 +1,4 @@
-<form class="flex flex-col gap-xl animate-fade-in">
+<form [formGroup]="requestForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-xl animate-fade-in">
   <header class="flex flex-col gap-xs">
     <h1 class="text-2xl font-bold text-primary tracking-tight">
       {{ 'request.create.title' | translate }}
@@ -41,7 +41,7 @@
         </span>
         <mat-form-field>
           <input
-            [formControl]="quantityControl"
+            formControlName="quantity"
             matInput
             type="number"
             step="1"
@@ -62,7 +62,18 @@
         </div>
       </div>
     </div>
-
+    <div class="flex flex-col gap-1">
+      <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
+        {{ 'request.create.fields.suggested-supplier' | translate }}
+      </span>
+      <app-autocomplete-filter-list
+        [listOptions]="nameSuppliers()"
+        [resetSignal]="supplierResetCounter()"
+        (optionSelected)="onSupplierSelect($event)"
+        [disabled]="isSupplierDisabled()"
+        [placeholder]="!isSupplierDisabled() ? ('request.create.placeholders.select' | translate) : 'Por favor selecciona un material'"
+      ></app-autocomplete-filter-list>
+    </div>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-l">
       <div class="flex flex-col gap-1">
         <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
@@ -70,6 +81,7 @@
         </span>
         <app-autocomplete-filter-list
           [listOptions]="nameBudgetLines"
+          (optionSelected)="onBudgetLineSelect($event)"
           [placeholder]="'request.create.placeholders.select' | translate"
         ></app-autocomplete-filter-list>
       </div>
@@ -78,7 +90,7 @@
           {{ 'request.create.fields.priority' | translate }}
         </span>
         <mat-form-field>
-          <mat-select>
+          <mat-select formControlName="priority">
             <mat-option value="1">{{ 'request.create.priority.low' | translate }}</mat-option>
             <mat-option value="2">{{ 'request.create.priority.medium' | translate }}</mat-option>
             <mat-option value="3">{{ 'request.create.priority.high' | translate }}</mat-option>
@@ -94,7 +106,7 @@
           {{ 'request.create.fields.required-date' | translate }}
         </span>
         <mat-form-field>
-          <input matInput [matDatepicker]="picker" [placeholder]="'request.create.placeholders.date' | translate">
+          <input formControlName="requiredDate" matInput [matDatepicker]="picker" [placeholder]="'request.create.placeholders.date' | translate">
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -104,7 +116,7 @@
           {{ 'request.create.fields.delivery-location' | translate }}
         </span>
         <mat-form-field>
-          <input matInput [placeholder]="'request.create.placeholders.location' | translate">
+          <input formControlName="deliveryLocation" matInput [placeholder]="'request.create.placeholders.location' | translate">
         </mat-form-field>
       </div>
     </div>
@@ -114,7 +126,7 @@
         {{ 'request.create.fields.purpose' | translate }}
       </span>
       <mat-form-field class="w-full">
-        <textarea matInput rows="3" [placeholder]="'request.create.placeholders.purpose' | translate"></textarea>
+        <textarea formControlName="purpose" matInput rows="3" [placeholder]="'request.create.placeholders.purpose' | translate"></textarea>
       </mat-form-field>
     </div>
 
@@ -123,11 +135,10 @@
         {{ 'request.create.fields.additional-notes' | translate }}
       </span>
       <mat-form-field class="w-full">
-        <textarea matInput rows="2" [placeholder]="'request.create.placeholders.additional-notes' | translate"></textarea>
+        <textarea formControlName="additionalNotes" matInput rows="2" [placeholder]="'request.create.placeholders.additional-notes' | translate"></textarea>
       </mat-form-field>
     </div>
   </div>
-
   <div class="bg-white border border-neutral-border/20 rounded-m p-xl shadow-sm flex flex-col gap-l">
     <h3 class="text-xs font-black text-primary uppercase tracking-widest">
       {{ 'request.create.budget-verification.title' | translate }}
@@ -138,9 +149,7 @@
         <span class="text-xs text-neutral-border uppercase font-bold tracking-wider">
           {{ 'request.create.budget-verification.item-budget' | translate }}
         </span>
-        <!--
-        <span class="text-xl font-bold text-primary">S/ {{ budgetedAmount() | number }}</span>
-        -->
+        <span class="text-xl font-bold text-primary">S/ {{ budgetedAmount()}}</span>
       </div>
       <div class="flex flex-col items-center p-m bg-neutral-bg rounded-s border border-neutral-border/20">
         <span class="text-xs text-neutral-border uppercase font-bold tracking-wider">
@@ -187,16 +196,6 @@
   </div>
 
   <div class="bg-white border border-neutral-border/20 rounded-m p-xl shadow-sm flex flex-col gap-l">
-    <div class="flex flex-col gap-1">
-      <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
-        {{ 'request.create.fields.suggested-supplier' | translate }}
-      </span>
-      <app-autocomplete-filter-list
-        [listOptions]="nameSuppliers"
-        [placeholder]="'request.create.placeholders.select' | translate"
-      ></app-autocomplete-filter-list>
-    </div>
-
     <div class="flex flex-col gap-1">
       <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
         {{ 'request.create.fields.attachments' | translate }}

@@ -12,4 +12,5 @@ export const environment = {
   kipuApiWasteEndpointPath: '/materials/waste',
   kipuApiCategoriesEndPath: '/materials/categories',
   kipuApiDocumentsEndpointPath: '/documents',
+  kipuApiSupplierOfferEndPath: '/materials/supplierOffer/',
 };

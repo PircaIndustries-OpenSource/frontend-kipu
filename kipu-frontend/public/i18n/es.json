@@ -143,6 +143,11 @@
         "save-draft": "Guardar Borrador",
         "cancel": "Cancelar",
         "submit": "Enviar Solicitud"
+      },
+      "success": {
+        "title": "¡Éxito!",
+        "message": "Solicitud enviada exitosamente",
+        "close": "Cerrar"
       }
     }
   },

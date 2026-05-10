@@ -1,4 +1,4 @@
-import {RequestItem} from '../../domain/request.entity';
+import { RequestItem } from '../../domain/request.entity';
 
 export type RequestResponse = RequestResource[];
 export interface RequestResource {

@@ -18,6 +18,8 @@ export class InventoryPage implements OnInit {
   categoryNames = this.logisticsStore.categoryNames;
   ngOnInit() {
     this.logisticsStore.loadMaterials();
+    this.logisticsStore.loadInventoryMaterials();
+    this.logisticsStore.loadCategories();
   }
   onCategorySelect(category: string) {
     this.logisticsStore.filterByCategory(category);

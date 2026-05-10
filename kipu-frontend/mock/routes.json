@@ -1,6 +1,7 @@
 {
   "/api/v1/materials": "/materialsCatalog",
   "/api/v1/materials/categories": "/categoriesCatalog",
+  "/api/v1/materials/supplierOffer": "/supplierOffers",
   "/api/v1/materials/requests": "/materialsRequests",
   "/api/v1/materials/requests/:id": "/materialsRequests/:id",
   "/api/v1/materials/inventory": "/materialsInventory",

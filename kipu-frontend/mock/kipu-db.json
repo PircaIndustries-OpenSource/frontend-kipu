@@ -164,7 +164,7 @@
     {
       "id": "mat-005",
       "name": "Triplay Fenólico 18mm",
-      "category": "cat-005s",
+      "category": "cat-005",
       "subcategory": "Encofrados",
       "measureUnit": "plancha"
     },
@@ -185,49 +185,49 @@
     {
       "id": "mat-008",
       "name": "Clavos 3\" para madera",
-      "category": "Metales y Acero",
+      "category": "cat-004",
       "subcategory": "Clavos y pernos",
       "measureUnit": "kg"
     },
     {
       "id": "mat-009",
       "name": "Piedra Chancada 1/2\"",
-      "category": "Agregados",
+      "category": "cat-003",
       "subcategory": "Piedras",
       "measureUnit": "m3"
     },
     {
       "id": "mat-010",
       "name": "Bloque de Concreto 20x20x40",
-      "category": "Estructuras y Albañilería",
+      "category": "cat-001",
       "subcategory": "Bloques",
       "measureUnit": "und"
     },
     {
       "id": "mat-011",
       "name": "Cal Hidratada",
-      "category": "Aglomerantes",
+      "category": "cat-002\"",
       "subcategory": "Cal",
       "measureUnit": "bolsa"
     },
     {
       "id": "mat-012",
       "name": "Guantes de Cuero",
-      "category": "Equipos de Protección Personal (EPP)",
+      "category": "cat-007",
       "subcategory": "Protección de manos",
       "measureUnit": "par"
     },
     {
       "id": "mat-013",
       "name": "Listón de Madera 2x3x300cm",
-      "category": "Maderas y Encofrados",
+      "category": "cat-005",
       "subcategory": "Maderas",
       "measureUnit": "und"
     },
     {
       "id": "mat-014",
       "name": "Soldadura 6011 1/8\"",
-      "category": "Consumibles y Varios",
+      "category": "cat-006",
       "subcategory": "Soldadura",
       "measureUnit": "kg"
     }
@@ -332,6 +332,92 @@
       "location": "Estante 3C"
     }
   ],
+  "supplierOffers": [
+    {
+      "id": "soff-001",
+      "supplierId": "sup-001",
+      "materialId": "mat-004",
+      "unitPrice": 35.5
+    },
+    {
+      "id": "soff-002",
+      "supplierId": "sup-001",
+      "materialId": "mat-008",
+      "unitPrice": 8.2
+    },
+    {
+      "id": "soff-003",
+      "supplierId": "sup-002",
+      "materialId": "mat-002",
+      "unitPrice": 28
+    },
+    {
+      "id": "soff-004",
+      "supplierId": "sup-002",
+      "materialId": "mat-011",
+      "unitPrice": 15.5
+    },
+    {
+      "id": "soff-005",
+      "supplierId": "sup-003",
+      "materialId": "mat-001",
+      "unitPrice": 1.2
+    },
+    {
+      "id": "soff-006",
+      "supplierId": "sup-003",
+      "materialId": "mat-010",
+      "unitPrice": 4.5
+    },
+    {
+      "id": "soff-007",
+      "supplierId": "sup-004",
+      "materialId": "mat-005",
+      "unitPrice": 62
+    },
+    {
+      "id": "soff-008",
+      "supplierId": "sup-004",
+      "materialId": "mat-013",
+      "unitPrice": 18.5
+    },
+    {
+      "id": "soff-009",
+      "supplierId": "sup-005",
+      "materialId": "mat-006",
+      "unitPrice": 12.8
+    },
+    {
+      "id": "soff-010",
+      "supplierId": "sup-005",
+      "materialId": "mat-007",
+      "unitPrice": 8.5
+    },
+    {
+      "id": "soff-011",
+      "supplierId": "sup-005",
+      "materialId": "mat-012",
+      "unitPrice": 15
+    },
+    {
+      "id": "soff-012",
+      "supplierId": "sup-005",
+      "materialId": "mat-014",
+      "unitPrice": 9.3
+    },
+    {
+      "id": "soff-013",
+      "supplierId": "sup-006",
+      "materialId": "mat-003",
+      "unitPrice": 45
+    },
+    {
+      "id": "soff-014",
+      "supplierId": "sup-006",
+      "materialId": "mat-009",
+      "unitPrice": 55
+    }
+  ],
   "materialsSuppliers": [
     {
       "id": "sup-001",
@@ -343,19 +429,7 @@
       "email": "ventas@acerosarequipa.pe",
       "categories": "Metales y Acero",
       "paymentTerms": "NET 60",
-      "status": "ACTIVE",
-      "offerMaterials": [
-        {
-          "supplierId": "sup-001",
-          "materialId": "mat-004",
-          "unitPrice": 35.5
-        },
-        {
-          "supplierId": "sup-001",
-          "materialId": "mat-008",
-          "unitPrice": 8.2
-        }
-      ]
+      "status": "ACTIVE"
     },
     {
       "id": "sup-002",
@@ -367,19 +441,7 @@
       "email": "atencioncliente@cementospacasmayo.pe",
       "categories": "Aglomerantes",
       "paymentTerms": "NET 45",
-      "status": "ACTIVE",
-      "offerMaterials": [
-        {
-          "supplierId": "sup-002",
-          "materialId": "mat-002",
-          "unitPrice": 28
-        },
-        {
-          "supplierId": "sup-002",
-          "materialId": "mat-011",
-          "unitPrice": 15.5
-        }
-      ]
+      "status": "ACTIVE"
     },
     {
       "id": "sup-003",
@@ -391,19 +453,7 @@
       "email": "ventas@ladrillerasantarosa.pe",
       "categories": "Estructuras y Albañilería",
       "paymentTerms": "NET 30",
-      "status": "INACTIVE",
-      "offerMaterials": [
-        {
-          "supplierId": "sup-003",
-          "materialId": "mat-001",
-          "unitPrice": 1.2
-        },
-        {
-          "supplierId": "sup-003",
-          "materialId": "mat-010",
-          "unitPrice": 4.5
-        }
-      ]
+      "status": "INACTIVE"
     },
     {
       "id": "sup-004",
@@ -415,19 +465,7 @@
       "email": "ventas@maderasnorte.pe",
       "categories": "Maderas y Encofrados",
       "paymentTerms": "NET 30",
-      "status": "ACTIVE",
-      "offerMaterials": [
-        {
-          "supplierId": "sup-004",
-          "materialId": "mat-005",
-          "unitPrice": 62
-        },
-        {
-          "supplierId": "sup-004",
-          "materialId": "mat-013",
-          "unitPrice": 18.5
-        }
-      ]
+      "status": "ACTIVE"
     },
     {
       "id": "sup-005",
@@ -439,29 +477,7 @@
       "email": "ventas@ferreteriaindustrial.pe",
       "categories": "Consumibles y Varios, Equipos de Protección Personal (EPP)",
       "paymentTerms": "NET 15",
-      "status": "ACTIVE",
-      "offerMaterials": [
-        {
-          "supplierId": "sup-005",
-          "materialId": "mat-006",
-          "unitPrice": 12.8
-        },
-        {
-          "supplierId": "sup-005",
-          "materialId": "mat-007",
-          "unitPrice": 8.5
-        },
-        {
-          "supplierId": "sup-005",
-          "materialId": "mat-012",
-          "unitPrice": 15
-        },
-        {
-          "supplierId": "sup-005",
-          "materialId": "mat-014",
-          "unitPrice": 9.3
-        }
-      ]
+      "status": "ACTIVE"
     },
     {
       "id": "sup-006",
@@ -473,19 +489,7 @@
       "email": "ventas@agregadossur.pe",
       "categories": "Agregados",
       "paymentTerms": "NET 30",
-      "status": "ACTIVE",
-      "offerMaterials": [
-        {
-          "supplierId": "sup-006",
-          "materialId": "mat-003",
-          "unitPrice": 45
-        },
-        {
-          "supplierId": "sup-006",
-          "materialId": "mat-009",
-          "unitPrice": 55
-        }
-      ]
+      "status": "ACTIVE"
     }
   ],
   "materialsRequests": [
@@ -506,14 +510,12 @@
       "requestedBy": "us-01",
       "items": [
         {
-          "materialId": "mat-002",
-          "quantity": 50,
-          "pricePerUnit": 28
+          "supplierOfferId": "soff-003",
+          "quantity": 50
         },
         {
-          "materialId": "mat-003",
-          "quantity": 10,
-          "pricePerUnit": 45
+          "supplierOfferId": "soff-013",
+          "quantity": 10
         }
       ]
     },
@@ -534,9 +536,8 @@
       "requestedBy": "us-02",
       "items": [
         {
-          "materialId": "mat-004",
-          "quantity": 100,
-          "pricePerUnit": 35.5
+          "supplierOfferId": "soff-001",
+          "quantity": 100
         }
       ]
     },
@@ -557,14 +558,12 @@
       "requestedBy": "us-03",
       "items": [
         {
-          "materialId": "mat-005",
-          "quantity": 30,
-          "pricePerUnit": 62
+          "supplierOfferId": "soff-007",
+          "quantity": 30
         },
         {
-          "materialId": "mat-013",
-          "quantity": 80,
-          "pricePerUnit": 18.5
+          "supplierOfferId": "soff-008",
+          "quantity": 80
         }
       ]
     },
@@ -585,14 +584,12 @@
       "requestedBy": "us-01",
       "items": [
         {
-          "materialId": "mat-007",
-          "quantity": 20,
-          "pricePerUnit": 8.5
+          "supplierOfferId": "soff-010",
+          "quantity": 20
         },
         {
-          "materialId": "mat-012",
-          "quantity": 15,
-          "pricePerUnit": 15
+          "supplierOfferId": "soff-011",
+          "quantity": 15
         }
       ]
     },
@@ -613,19 +610,16 @@
       "requestedBy": "us-02",
       "items": [
         {
-          "materialId": "mat-003",
-          "quantity": 20,
-          "pricePerUnit": 45
+          "supplierOfferId": "soff-013",
+          "quantity": 20
         },
         {
-          "materialId": "mat-009",
-          "quantity": 35,
-          "pricePerUnit": 55
+          "supplierOfferId": "soff-014",
+          "quantity": 35
         },
         {
-          "materialId": "mat-002",
-          "quantity": 80,
-          "pricePerUnit": 28
+          "supplierOfferId": "soff-003",
+          "quantity": 80
         }
       ]
     },
@@ -646,9 +640,8 @@
       "requestedBy": "us-03",
       "items": [
         {
-          "materialId": "mat-006",
-          "quantity": 25,
-          "pricePerUnit": 12.8
+          "supplierOfferId": "soff-009",
+          "quantity": 25
         }
       ]
     },
@@ -669,16 +662,146 @@
       "requestedBy": "us-01",
       "items": [
         {
-          "materialId": "mat-001",
-          "quantity": 2000,
-          "pricePerUnit": 1.2
+          "supplierOfferId": "soff-005",
+          "quantity": 2000
         },
         {
-          "materialId": "mat-010",
-          "quantity": 500,
-          "pricePerUnit": 4.5
+          "supplierOfferId": "soff-006",
+          "quantity": 500
         }
       ]
+    },
+    {
+      "id": "lriqNjv",
+      "projectId": "",
+      "requestDate": "2026-05-10",
+      "deadline": "2026-05-11T05:00:00.000Z",
+      "status": "PENDING",
+      "priority": "1",
+      "deliveryLocation": "Mi casa",
+      "budgetLineId": "",
+      "purpose": "Ninguno",
+      "additionalNotes": "Ninguno",
+      "suggestedSupplierId": "sup-001",
+      "attachments": [],
+      "items": [
+        {
+          "supplierOfferId": "soff-001",
+          "quantity": 4
+        }
+      ],
+      "requestedBy": "",
+      "activity": ""
+    },
+    {
+      "id": "mkX4fMo",
+      "projectId": "",
+      "requestDate": "2026-05-10",
+      "deadline": "2026-05-16T05:00:00.000Z",
+      "status": "PENDING",
+      "priority": "1",
+      "deliveryLocation": "aaaa",
+      "budgetLineId": "",
+      "purpose": "asdasd",
+      "additionalNotes": "asdasd",
+      "suggestedSupplierId": "sup-001",
+      "attachments": [],
+      "items": [
+        {
+          "supplierOfferId": "soff-001",
+          "quantity": 5
+        }
+      ],
+      "requestedBy": "",
+      "activity": ""
+    },
+    {
+      "id": "Y5vaEKP",
+      "projectId": "",
+      "requestDate": "2026-05-10",
+      "deadline": "2026-05-13T05:00:00.000Z",
+      "status": "PENDING",
+      "priority": "3",
+      "deliveryLocation": "aaaa",
+      "budgetLineId": "",
+      "purpose": "aasdasd",
+      "additionalNotes": "asdasdsadasd",
+      "suggestedSupplierId": "sup-002",
+      "attachments": [],
+      "items": [
+        {
+          "supplierOfferId": "soff-003",
+          "quantity": 1
+        }
+      ],
+      "requestedBy": "",
+      "activity": ""
+    },
+    {
+      "id": "AQqeedg",
+      "projectId": "",
+      "requestDate": "2026-05-10",
+      "deadline": "2026-05-15T05:00:00.000Z",
+      "status": "PENDING",
+      "priority": "3",
+      "deliveryLocation": "sdasdasd",
+      "budgetLineId": "",
+      "purpose": "asdasda",
+      "additionalNotes": "asdasdasdasdasdasd",
+      "suggestedSupplierId": "sup-005",
+      "attachments": [],
+      "items": [
+        {
+          "supplierOfferId": "soff-009",
+          "quantity": 1
+        }
+      ],
+      "requestedBy": "",
+      "activity": ""
+    },
+    {
+      "id": "C4RkOAI",
+      "projectId": "",
+      "requestDate": "2026-05-10",
+      "deadline": "2026-05-15T05:00:00.000Z",
+      "status": "PENDING",
+      "priority": "1",
+      "deliveryLocation": "aasd",
+      "budgetLineId": "",
+      "purpose": "asdaaaaaaaaa",
+      "additionalNotes": "aaaaaaaa",
+      "suggestedSupplierId": "sup-003",
+      "attachments": [],
+      "items": [
+        {
+          "supplierOfferId": "soff-005",
+          "quantity": 1
+        }
+      ],
+      "requestedBy": "",
+      "activity": ""
+    },
+    {
+      "id": "3CYg0k6",
+      "projectId": "",
+      "requestDate": "2026-05-10",
+      "deadline": "2026-05-15T05:00:00.000Z",
+      "status": "PENDING",
+      "priority": 1,
+      "deliveryLocation": "asda",
+      "budgetLineId": "",
+      "purpose": "sdasdasd",
+      "additionalNotes": "asdasdas",
+      "suggestedSupplierId": "sup-003",
+      "attachments": [],
+      "items": [
+        {
+          "supplierOfferId": "soff-005",
+          "quantity": 1
+        }
+      ],
+      "requestedBy": "",
+      "activity": ""
     }
   ],
   "materialsWaste": [

@@ -1,23 +1,16 @@
 import { Component, inject, OnInit } from '@angular/core';
-import {RequestList} from '../request-list/request-list';
-import {LogisticsStore} from '../../../application/logistics.store';
+import { RequestList } from '../request-list/request-list';
+import { LogisticsStore } from '../../../application/logistics.store';
 import { SummaryCard } from '../../../../shared/presentation/summary-card/summary-card';
-import {TranslatePipe} from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatRipple } from '@angular/material/core';
-import {BudgetStore} from '../../../../budget/application/budget-store';
+import { BudgetStore } from '../../../../budget/application/budget-store';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-request-page',
-  imports: [
-    RequestList,
-    SummaryCard,
-    TranslatePipe,
-    MatIcon,
-    MatRipple,
-    RouterModule,
-  ],
+  imports: [RequestList, SummaryCard, TranslatePipe, MatIcon, MatRipple, RouterModule],
   templateUrl: './request-page.html',
   styleUrl: './request-page.css',
 })
@@ -29,6 +22,9 @@ export class RequestPage implements OnInit {
   totalBudget = this.budgetStore.totalBudgeted;
   ngOnInit() {
     this.logisticsStore.loadRequest();
+    this.logisticsStore.loadSupplierOffers();
+    this.logisticsStore.loadMaterials();
+    this.logisticsStore.loadCategories();
   }
   onFilterChange(filter: string) {
     this.logisticsStore.filterRequest(filter);
