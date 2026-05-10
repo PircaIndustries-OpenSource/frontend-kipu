@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatSelectModule } from '@angular/material/select';
 
 import { AuthBannerComponent } from '../../../../shared/presentation/components/auth-banner/auth-banner.component';
 import { Identity } from '../../../domain/identity.model';
@@ -33,6 +34,7 @@ import { Router } from '@angular/router';
     MatButtonModule,
     MatCheckboxModule,
     MatDividerModule,
+    MatSelectModule,
     AuthBannerComponent,
   ],
   templateUrl: './register.component.html',
@@ -49,8 +51,10 @@ export class RegisterComponent {
 
   constructor() {
     this.registerForm = this.fb.group({
+      name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email], [this.emailDuplicationValidator()]],
       password: ['', [Validators.required, Validators.minLength(8)]],
+      role: ['', [Validators.required]],
     });
   }
 
@@ -71,10 +75,10 @@ export class RegisterComponent {
   onSubmit() {
     if (this.registerForm.valid) {
       const newIdentity: Identity = {
+        name: this.registerForm.value.name,
         email: this.registerForm.value.email,
         password: this.registerForm.value.password,
-        name: 'Usuario Nuevo',
-        role: 'Gestor Operativo'
+        role: this.registerForm.value.role
       };
 
 
