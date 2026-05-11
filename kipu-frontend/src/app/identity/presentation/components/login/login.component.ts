@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -24,6 +25,7 @@ import { AuthStore } from '../../../application/auth.store';
     MatCheckboxModule,
     MatDividerModule,
     AuthBannerComponent,
+    TranslateModule
   ],
   templateUrl: './login.component.html',
 })

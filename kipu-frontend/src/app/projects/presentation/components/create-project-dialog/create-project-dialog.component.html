@@ -1,65 +1,65 @@
-<h2 mat-dialog-title class="font-bold text-xl mb-4">Nuevo Proyecto de Obra</h2>
+<h2 mat-dialog-title class="font-bold text-xl mb-4">{{ 'projects_dashboard.create_title' | translate }}</h2>
 
 <mat-dialog-content>
   <form [formGroup]="projectForm" class="flex flex-col gap-4 mt-2">
     <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Nombre del Proyecto</mat-label>
-      <input matInput formControlName="name" placeholder="Ej: Edificio Corporativo Los Olivos">
+      <mat-label>{{ 'projects_dashboard.create_name' | translate }}</mat-label>
+      <input matInput formControlName="name" [placeholder]="'projects_dashboard.create_name_placeholder' | translate">
       @if (projectForm.get('name')?.hasError('required')) {
-        <mat-error>El nombre es obligatorio.</mat-error>
+        <mat-error>{{ 'projects_dashboard.create_err_name_req' | translate }}</mat-error>
       }
       @if (projectForm.get('name')?.hasError('nameDuplicated')) {
-        <mat-error>Ya existe un proyecto con este nombre.</mat-error>
+        <mat-error>{{ 'projects_dashboard.create_err_name_dup' | translate }}</mat-error>
       }
       @if (projectForm.get('name')?.pending) {
-        <mat-hint class="text-blue-500">Verificando disponibilidad...</mat-hint>
+        <mat-hint class="text-blue-500">{{ 'projects_dashboard.create_hint_verify' | translate }}</mat-hint>
       }
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Descripción</mat-label>
-      <textarea matInput formControlName="description" rows="3" placeholder="Describe el alcance del proyecto"></textarea>
+      <mat-label>{{ 'projects_dashboard.create_desc' | translate }}</mat-label>
+      <textarea matInput formControlName="description" rows="3" [placeholder]="'projects_dashboard.create_desc_placeholder' | translate"></textarea>
       @if (projectForm.get('description')?.hasError('required')) {
-        <mat-error>La descripción es obligatoria.</mat-error>
+        <mat-error>{{ 'projects_dashboard.create_err_desc_req' | translate }}</mat-error>
       }
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Ubicación</mat-label>
-      <input matInput formControlName="location" placeholder="Ej: Av. Principal 123, Lima">
+      <mat-label>{{ 'projects_dashboard.create_loc' | translate }}</mat-label>
+      <input matInput formControlName="location" [placeholder]="'projects_dashboard.create_loc_placeholder' | translate">
       @if (projectForm.get('location')?.hasError('required')) {
-        <mat-error>La ubicación es obligatoria.</mat-error>
+        <mat-error>{{ 'projects_dashboard.create_err_loc_req' | translate }}</mat-error>
       }
     </mat-form-field>
 
     <div class="flex flex-row gap-4">
       <mat-form-field appearance="outline" class="flex-1">
-        <mat-label>Estado Inicial</mat-label>
+        <mat-label>{{ 'projects_dashboard.create_status' | translate }}</mat-label>
         <mat-select formControlName="status">
-          <mat-option value="PLANNED">Planificado</mat-option>
-          <mat-option value="IN_PROGRESS">En Progreso</mat-option>
+          <mat-option value="PLANNED">{{ 'projects_dashboard.create_status_planned' | translate }}</mat-option>
+          <mat-option value="IN_PROGRESS">{{ 'projects_dashboard.create_status_in_progress' | translate }}</mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="flex-1">
-        <mat-label>Presupuesto Estimado</mat-label>
-        <input matInput formControlName="estimatedBudget" type="number" placeholder="Ej: 500000">
+        <mat-label>{{ 'projects_dashboard.create_budget' | translate }}</mat-label>
+        <input matInput formControlName="estimatedBudget" type="number" [placeholder]="'projects_dashboard.create_budget_placeholder' | translate">
       </mat-form-field>
     </div>
 
     <div class="flex flex-row gap-4">
       <mat-form-field appearance="outline" class="flex-1">
-        <mat-label>Fecha de Inicio</mat-label>
+        <mat-label>{{ 'projects_dashboard.create_start_date' | translate }}</mat-label>
         <input matInput [matDatepicker]="pickerStart" formControlName="startDate">
         <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
         <mat-datepicker #pickerStart></mat-datepicker>
         @if (projectForm.get('startDate')?.hasError('required')) {
-          <mat-error>Obligatorio.</mat-error>
+          <mat-error>{{ 'projects_dashboard.create_err_req' | translate }}</mat-error>
         }
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="flex-1">
-        <mat-label>Fecha Fin (Opcional)</mat-label>
+        <mat-label>{{ 'projects_dashboard.create_end_date' | translate }}</mat-label>
         <input matInput [matDatepicker]="pickerEnd" formControlName="endDate">
         <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker #pickerEnd></mat-datepicker>
@@ -69,8 +69,8 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end" class="pb-4 pr-4">
-  <button mat-stroked-button mat-dialog-close>Cancelar</button>
+  <button mat-stroked-button mat-dialog-close>{{ 'projects_dashboard.create_cancel' | translate }}</button>
   <button mat-flat-button color="primary" (click)="onSubmit()" [disabled]="projectForm.invalid || projectForm.pending">
-    Crear Proyecto
+    {{ 'projects_dashboard.create_submit' | translate }}
   </button>
 </mat-dialog-actions>

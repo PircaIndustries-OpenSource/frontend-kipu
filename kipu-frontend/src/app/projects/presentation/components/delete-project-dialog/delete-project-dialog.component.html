@@ -1,0 +1,27 @@
+<div class="relative p-6">
+    <button mat-icon-button class="absolute top-2 right-2 text-gray-500 hover:text-gray-800" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </button>
+
+    <div class="text-center mb-6">
+        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <mat-icon class="text-red-500 scale-150">warning</mat-icon>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ 'projects_dashboard.delete_title' | translate }}</h2>
+        <p class="text-gray-600">
+            {{ 'projects_dashboard.delete_desc_1' | translate }} <strong class="text-red-600">"{{ data.project.name }}"</strong>{{ 'projects_dashboard.delete_desc_2' | translate }}
+        </p>
+    </div>
+
+    <div class="mb-6">
+        <p class="text-sm text-gray-500 mb-2 text-center">{{ 'projects_dashboard.delete_prompt_1' | translate }} <strong>"{{ data.project.name }}"</strong> {{ 'projects_dashboard.delete_prompt_2' | translate }}</p>
+        <mat-form-field appearance="outline" class="w-full">
+            <input matInput [(ngModel)]="confirmationText" [placeholder]="'projects_dashboard.delete_placeholder' | translate" autocomplete="off">
+        </mat-form-field>
+    </div>
+
+    <button mat-flat-button color="warn" class="w-full !py-6" [disabled]="confirmationText !== data.project.name"
+        (click)="onDelete()">
+        {{ 'projects_dashboard.delete_submit' | translate }}
+    </button>
+</div>
