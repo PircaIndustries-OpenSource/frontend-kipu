@@ -566,14 +566,28 @@
   },
   "signatures": {
     "dialog": {
-      "title": "Firmar Documento",
-      "description": "Ingresa el código de verificación que recibiste por correo electrónico.",
-      "token-sent": "Se ha enviado un código de 6 dígitos a tu correo electrónico.",
-      "token-label": "Código de verificación",
-      "token-hint": "Ingresa los 6 dígitos",
+      "add-document-title": "Crear Nuevo Documento",
+      "document-type": "TIPO DE DOCUMENTO",
+      "type-placeholder": "Seleccionar tipo de documento",
+      "deadline": "FECHA LÍMITE",
+      "deadline-placeholder": "Seleccionar fecha",
+      "assign-users": "ASIGNAR A USUARIOS",
+      "users-placeholder": "Buscar o seleccionar usuarios",
+      "attach-document": "ADJUNTAR DOCUMENTO",
+      "dropzone": "Arrastra o haz clic para subir el documento",
+      "dropzone-hint": "PDF, DOC, DOCX, JPG, PNG (máx. 10MB)",
+      "selected-count": "Usuarios seleccionados",
+      "btn-create": "Crear Documento",
       "btn-cancel": "Cancelar",
-      "btn-confirm": "Confirmar Firma"
-    },
+      "validation": {
+        "type-required": "El tipo de documento es requerido",
+        "deadline-required": "La fecha límite es requerida",
+        "users-required": "Debes seleccionar al menos un usuario"
+      },
+      "title": "Ingresa el Token de verificación",
+      "description": "Un código de verificación ha sido enviado a tu correo",
+      "token-sent": "Ingresa el código de 6 dígitos",
+      "btn-confirm": "Confirmar",
     "page": {
       "title": "Documentos",
       "pending-title": "Documentos Pendientes de Tu Firma",
@@ -593,7 +607,8 @@
       "howto-step1": "Revisa el documento completo",
       "howto-step2": "Haz clic en 'Firmar Documento'",
       "howto-step3": "Ingresa el código de verificación",
-      "howto-step4": "La firma se registra automáticamente"
+      "howto-step4": "La firma se registra automáticamente",
+      "btn-create": "Crear documento"
     }
   },
   "progress": {
