@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, map, identity, of } from 'rxjs';
 import { TeamUsersEntity } from '../domain/model/team-users.entity';
 import { TeamUsersResponse } from './team-users.response';
 import { TeamUsersAssembler } from './team-users.assembler';
@@ -11,6 +11,7 @@ import { TeamWorkersEntity } from '../../team-workers/domain/model/team-workers.
 import { TeamWorkersResponse } from '../../team-workers/infrastructure/team-workers.response';
 import { TeamWorkersAssembler } from '../../team-workers/infrastructure/team-workers.assembler';
 import { TeamUsersStore } from '../application/team-users.store';
+import { Identity } from '../../../identity/domain/identity.model';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,18 @@ export class TeamUsersApi {
       .pipe(map((response) => TeamUsersAssembler.toEntitiesFromResponse(response)));
   }
 
+  getCurrentUser(): Observable<Identity | null> {
+    const storedUser = localStorage.getItem('currentUser');
+
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      console.log('✅ Current user obtenido de localStorage:', user);
+      return of(user);
+    }
+
+    console.warn('⚠️ No hay usuario en localStorage');
+    return of(null);
+  }
 
   postUser(user: TeamUsersEntity): Observable<TeamUsersEntity> {
     return this.http.post<TeamUsersEntity>(this.teamUsersUrl, user);

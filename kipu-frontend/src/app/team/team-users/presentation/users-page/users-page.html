@@ -60,8 +60,32 @@
           </div>
 
           <div class="table-body max-h-120 overflow-y-scroll">
+            <div class="grid grid-cols-4 p-3 border-b hover:bg-gray-50 pl-5">
+              <div class="flex justify-start items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent font-semibold text-sm">
+                  {{ getInitials(this.currentUser().fullName) }}
+                </div>
+                <div>
+                    <span class="font-medium">
+                      {{ this.currentUser().fullName }}
+                        <span class="text-xs text-gray-500 ml-1">({{'team.users.assigned-roles.user-profile-you' | translate}})</span>
+                    </span>
+                </div>
+              </div>
+              <div class="flex justify-start text-gray-600 pl-5">
+                {{ this.currentUser().email }}
+              </div>
+              <div class="flex justify-center">
+                  <span [class]="getRoleBadgeClass(this.currentUser().role)">
+                    {{ getRoleTranslation(this.currentUser().role) }}
+                  </span>
+              </div>
+
+
+
+            </div>
             @for (user of teamStore.filteredUsers(); track user.id) {
-              <div class="grid grid-cols-4 p-3 border-b hover:bg-gray-50 justify-items-center">
+              <div class="grid grid-cols-4 p-3 border-b hover:bg-gray-50 pl-5">
                 <div class="flex justify-start items-center gap-3">
                   <div class="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent font-semibold text-sm">
                     {{ getInitials(user.fullName) }}
@@ -69,23 +93,20 @@
                   <div>
                     <span class="font-medium">
                       {{ user.fullName }}
-                      @if (isCurrentUser(user)) {
-                        <span class="text-xs text-gray-500 ml-1">({{'team.users.assigned-roles.user-profile-you' | translate}})</span>
-                      }
                     </span>
                   </div>
                 </div>
-                <div class="flex justify-start text-gray-600">
+                <div class="flex justify-start text-gray-600 pl-5">
                   {{ user.email }}
                 </div>
-                <div class="flex justify-start">
+                <div class="flex justify-center">
                   <span [class]="getRoleBadgeClass(user.role)">
                     {{ getRoleTranslation(user.role) }}
                   </span>
                 </div>
 
                 @if (user.isActive){
-                  <div class="flex justify-start">
+                  <div class="flex justify-center pl-5">
                     <button
                       class="text-red-600 hover:text-red-800 hover:bg-red-50 font-medium text-sm transition-all duration-200 px-3 py-1 cursor-pointer rounded-md"
                       (click)="this.teamStore.toggleUserStatus(user)"
@@ -95,7 +116,7 @@
                   </div>
                 }
                 @else {
-                  <div class="flex justify-start">
+                  <div class="flex justify-center pl-5">
                     <button    (click)="this.teamStore.toggleUserStatus(user)"
                              class="text-gray-400 bg-gray-100 font-medium text-sm px-3 py-1 rounded-md cursor-pointer"
                     >

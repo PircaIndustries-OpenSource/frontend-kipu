@@ -3,6 +3,9 @@ import { TeamUsersEntity } from '../domain/model/team-users.entity';
 import { TeamWorkersEntity } from '../../team-workers/domain/model/team-workers.entity';
 import { TeamUsersApi } from '../infrastructure/team-users.api';
 import { TranslateModule, TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { Identity } from '../../../identity/domain/identity.model';
+import { TeamUsersAssembler } from '../infrastructure/team-users.assembler';
+import { map, switchMap } from 'rxjs';
 
 
 @Injectable({
@@ -14,7 +17,9 @@ export class TeamUsersStore {
 
   private teamUsersSignal = signal<TeamUsersEntity[]>([]);
   private searchTermSignal = signal<string>('');
+  private currentUserSignal = signal<TeamUsersEntity>(new TeamUsersEntity());
   readonly teamUsers = computed(() => this.teamUsersSignal());
+  readonly currentUser = computed(() => this.currentUserSignal());
   readonly filteredUsers = computed(() => {
     const users = this.teamUsers();
     const searchTeam = this.searchTermSignal().toLowerCase().trim();
@@ -34,7 +39,8 @@ export class TeamUsersStore {
     () => this.teamUsers().filter((user) => user.isActive).length,
   );
   readonly totalManagers = computed(
-    () => this.teamUsers().filter((user) => user.isActive && user.role == 'Gestor').length,
+    () => this.teamUsers().filter((user) => user.isActive && user.role == 'Gestor'
+    || user.role == "Gestor Operativo").length,
   );
   readonly totalLogistics = computed(
     () => this.teamUsers().filter((user) => user.isActive && user.role == 'Logistica').length,
@@ -54,13 +60,33 @@ export class TeamUsersStore {
     return translationMap[role] || role;
   }
 
-  loadUsers() {
-    if (this.teamUsersSignal().length == 0) {
-      this.teamApi.getAllUsers().subscribe((data) => {
-        this.teamUsersSignal.set(data);
+
+loadUsers() {
+  if (this.teamUsersSignal().length === 0) {
+    this.teamApi.getAllUsers()
+      .pipe(
+        switchMap(allUsers =>
+          this.teamApi.getCurrentUser().pipe(
+            map(currentUser => ({ allUsers, currentUser }))
+          )
+        )
+      )
+      .subscribe({
+        next: ({ allUsers, currentUser }) => {
+          const currentUserEntity = TeamUsersAssembler.toEntityFromIdentity(currentUser);
+          this.currentUserSignal.set(currentUserEntity);
+          // Verificar si ya existe
+          const userExists = allUsers.some(user => user.id === currentUserEntity.id);
+
+          // Agregar solo si no existe
+          const finalUsers = userExists ? allUsers : [...allUsers, currentUserEntity];
+
+          this.teamUsersSignal.set(finalUsers);
+        },
+        error: (err) => console.error('Error loading users:', err)
       });
-    }
   }
+}
 
   updateSearchTerm(term: string) {
     this.searchTermSignal.set(term);
