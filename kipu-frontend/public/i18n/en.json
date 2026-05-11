@@ -664,13 +664,28 @@
   },
   "signatures": {
     "dialog": {
-      "title": "Sign Document",
-      "description": "Enter the verification code you received by email.",
-      "token-sent": "A 6-digit code has been sent to your email.",
-      "token-label": "Verification code",
-      "token-hint": "Enter the 6 digits",
+      "add-document-title": "Create New Document",
+      "document-type": "DOCUMENT TYPE",
+      "type-placeholder": "Select document type",
+      "deadline": "DEADLINE",
+      "deadline-placeholder": "Select date",
+      "assign-users": "ASSIGN TO USERS",
+      "users-placeholder": "Search or select users",
+      "attach-document": "ATTACH DOCUMENT",
+      "dropzone": "Drag or click to upload the document",
+      "dropzone-hint": "PDF, DOC, DOCX, JPG, PNG (max. 10MB)",
+      "selected-count": "Selected users",
+      "btn-create": "Create Document",
       "btn-cancel": "Cancel",
-      "btn-confirm": "Confirm Signature"
+      "validation": {
+        "type-required": "Document type is required",
+        "deadline-required": "Deadline is required",
+        "users-required": "You must select at least one user"
+      },
+      "title": "Enter the verification Token",
+      "description": "A verification code has been sent to your email",
+      "token-sent": "Enter the 6 digits code",
+      "btn-confirm": "Confirm"
     },
     "page": {
       "title": "Documents",
@@ -691,7 +706,8 @@
       "howto-step1": "Review the complete document",
       "howto-step2": "Click on 'Sign Document'",
       "howto-step3": "Enter the verification code",
-      "howto-step4": "The signature is automatically recorded"
+      "howto-step4": "The signature is automatically recorded",
+      "btn-create": "Create Document"
     }
   },
   "progress": {

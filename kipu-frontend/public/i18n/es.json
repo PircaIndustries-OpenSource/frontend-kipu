@@ -694,100 +694,116 @@
   },
   "signatures": {
     "dialog": {
-      "title": "Firmar Documento",
-      "description": "Ingresa el código de verificación que recibiste por correo electrónico.",
-      "token-sent": "Se ha enviado un código de 6 dígitos a tu correo electrónico.",
-      "token-label": "Código de verificación",
-      "token-hint": "Ingresa los 6 dígitos",
+      "add-document-title": "Crear Nuevo Documento",
+      "document-type": "TIPO DE DOCUMENTO",
+      "type-placeholder": "Seleccionar tipo de documento",
+      "deadline": "FECHA LÍMITE",
+      "deadline-placeholder": "Seleccionar fecha",
+      "assign-users": "ASIGNAR A USUARIOS",
+      "users-placeholder": "Buscar o seleccionar usuarios",
+      "attach-document": "ADJUNTAR DOCUMENTO",
+      "dropzone": "Arrastra o haz clic para subir el documento",
+      "dropzone-hint": "PDF, DOC, DOCX, JPG, PNG (máx. 10MB)",
+      "selected-count": "Usuarios seleccionados",
+      "btn-create": "Crear Documento",
       "btn-cancel": "Cancelar",
-      "btn-confirm": "Confirmar Firma"
-    },
-    "page": {
-      "title": "Documentos",
-      "pending-title": "Documentos Pendientes de Tu Firma",
-      "signed-title": "Documentos Firmados",
-      "deadline": "Vence",
-      "signers": "Firmantes",
-      "btn-sign": "Firmar Documento",
-      "empty-pending": "No hay documentos pendientes",
-      "empty-signed": "No hay documentos firmados",
-      "signed-at": "Firmado el",
-      "summary-title": "Resumen",
-      "summary-pending": "Pendientes",
-      "summary-signed": "Firmados",
-      "security-title": "Firma Digital Segura",
-      "security-description": "Todas las firmas son encriptadas y tienen validez legal según normativa vigente.",
-      "howto-title": "¿Cómo firmar?",
-      "howto-step1": "Revisa el documento completo",
-      "howto-step2": "Haz clic en 'Firmar Documento'",
-      "howto-step3": "Ingresa el código de verificación",
-      "howto-step4": "La firma se registra automáticamente"
-    }
-  },
-  "progress": {
-    "title": "Control de Avances",
-    "subtitle": "Historial de registros diarios y estados de ejecución.",
-    "actions": {
-      "new": "Nuevo Avance Diario",
-      "save": "Guardar Avance",
-      "cancel": "Cancelar",
-      "export": "Exportar Reporte",
-      "upload": "Subir Fotos"
-    },
-    "tabs": {
-      "log": "Registro de Avance (PPC)",
-      "photos": "Bitácora Fotográfica"
-    },
-    "filters": {
-      "activity": "Buscar actividad...",
-      "specialty": "Filtrar por: Especialidad",
-      "start_date": "Fecha inicio",
-      "end_date": "Fecha fin"
-    },
-    "table": {
-      "date": "Fecha",
-      "activity": "Actividad Realizada",
-      "specialty": "Especialidad",
-      "advance": "Avance (%)",
-      "status": "Estado"
-    },
-    "form": {
-      "title": "Nuevo Avance Diario",
-      "date": "Fecha del Avance",
-      "specialty": "Especialidad",
-      "activity": "Actividad Realizada",
-      "activity_placeholder": "Ej: Vaciado de losa del segundo nivel",
-      "location": "Ubicación/Sector",
-      "location_placeholder": "Ej: Nivel 2 - Eje A-B",
-      "percentage": "Porcentaje de Avance",
-      "description": "Descripción Detallada",
-      "description_placeholder": "Describe el trabajo realizado, métodos utilizados, condiciones...",
-      "responsible": "Responsable",
-      "workers": "Personal en Cuadrilla",
-      "weather": {
-        "label": "Condiciones Climáticas",
-        "sunny": "Soleado",
-        "cloudy": "Nublado",
-        "rainy": "Lluvia",
-        "storm": "Tormenta"
+      "validation": {
+        "type-required": "El tipo de documento es requerido",
+        "deadline-required": "La fecha límite es requerida",
+        "users-required": "Debes seleccionar al menos un usuario"
+      },
+      "title": "Ingresa el Token de verificación",
+      "description": "Un código de verificación ha sido enviado a tu correo",
+      "token-sent": "Ingresa el código de 6 dígitos",
+      "btn-confirm": "Confirmar",
+      "page": {
+        "title": "Documentos",
+        "pending-title": "Documentos Pendientes de Tu Firma",
+        "signed-title": "Documentos Firmados",
+        "deadline": "Vence",
+        "signers": "Firmantes",
+        "btn-sign": "Firmar Documento",
+        "empty-pending": "No hay documentos pendientes",
+        "empty-signed": "No hay documentos firmados",
+        "signed-at": "Firmado el",
+        "summary-title": "Resumen",
+        "summary-pending": "Pendientes",
+        "summary-signed": "Firmados",
+        "security-title": "Firma Digital Segura",
+        "security-description": "Todas las firmas son encriptadas y tienen validez legal según normativa vigente.",
+        "howto-title": "¿Cómo firmar?",
+        "howto-step1": "Revisa el documento completo",
+        "howto-step2": "Haz clic en 'Firmar Documento'",
+        "howto-step3": "Ingresa el código de verificación",
+        "howto-step4": "La firma se registra automáticamente",
+        "btn-create": "Crear documento"
       }
     },
-    "status": {
-      "finished": "Terminado",
-      "active": "En Curso",
-      "delayed": "Demorado"
+    "progress": {
+      "title": "Control de Avances",
+      "subtitle": "Historial de registros diarios y estados de ejecución.",
+      "actions": {
+        "new": "Nuevo Avance Diario",
+        "save": "Guardar Avance",
+        "cancel": "Cancelar",
+        "export": "Exportar Reporte",
+        "upload": "Subir Fotos"
+      },
+      "tabs": {
+        "log": "Registro de Avance (PPC)",
+        "photos": "Bitácora Fotográfica"
+      },
+      "filters": {
+        "activity": "Buscar actividad...",
+        "specialty": "Filtrar por: Especialidad",
+        "start_date": "Fecha inicio",
+        "end_date": "Fecha fin"
+      },
+      "table": {
+        "date": "Fecha",
+        "activity": "Actividad Realizada",
+        "specialty": "Especialidad",
+        "advance": "Avance (%)",
+        "status": "Estado"
+      },
+      "form": {
+        "title": "Nuevo Avance Diario",
+        "date": "Fecha del Avance",
+        "specialty": "Especialidad",
+        "activity": "Actividad Realizada",
+        "activity_placeholder": "Ej: Vaciado de losa del segundo nivel",
+        "location": "Ubicación/Sector",
+        "location_placeholder": "Ej: Nivel 2 - Eje A-B",
+        "percentage": "Porcentaje de Avance",
+        "description": "Descripción Detallada",
+        "description_placeholder": "Describe el trabajo realizado, métodos utilizados, condiciones...",
+        "responsible": "Responsable",
+        "workers": "Personal en Cuadrilla",
+        "weather": {
+          "label": "Condiciones Climáticas",
+          "sunny": "Soleado",
+          "cloudy": "Nublado",
+          "rainy": "Lluvia",
+          "storm": "Tormenta"
+        }
+      },
+      "status": {
+        "finished": "Terminado",
+        "active": "En Curso",
+        "delayed": "Demorado"
+      },
+      "dialog": {
+        "title": "¿Guardar cambios?",
+        "question": "¿Deseas guardar los cambios?",
+        "warning": "De no hacerlo, serán borrados.",
+        "discard": "No, descartar cambios",
+        "save": "Guardar cambios"
+      }
     },
-    "dialog": {
-      "title": "¿Guardar cambios?",
-      "question": "¿Deseas guardar los cambios?",
-      "warning": "De no hacerlo, serán borrados.",
-      "discard": "No, descartar cambios",
-      "save": "Guardar cambios"
+    "logout": {
+      "title": "Sesión cerrada",
+      "description": "Se ha cerrado la sesión correctamente.",
+      "continue": "Continuar"
     }
-  },
-  "logout": {
-    "title": "Sesión cerrada",
-    "description": "Se ha cerrado la sesión correctamente.",
-    "continue": "Continuar"
   }
 }

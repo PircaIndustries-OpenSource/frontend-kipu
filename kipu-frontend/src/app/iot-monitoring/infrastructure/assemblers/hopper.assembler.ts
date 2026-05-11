@@ -14,6 +14,8 @@ export class HopperAssembler {
     const states : Record<number, string> = {1: 'OPTIMUM', 2: 'CRITIC'};
     hopperEntity.state = states[hopperResource.state] || 'UNKNOWN';
 
+    hopperEntity.name = hopperResource.name;
+
     return hopperEntity;
   }
   static toEntitiesFromResponse(hopperResponse: HopperResponse): HopperEntity [] {

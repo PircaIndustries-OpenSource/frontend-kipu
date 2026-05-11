@@ -16,6 +16,13 @@ export class IoTMonitoringStore {
   private loadingSignal = signal<boolean>(false);
   private errorSignal = signal<string | null>(null);
 
+  public concreteSensors = this.concreteSensorsSignal.asReadonly();
+  public geolocalizationPoints = this.geolocalizationPointsSignal.asReadonly();
+  public hopperSensors = this.hopperSensorsSignal.asReadonly();
+  public seismicSensors = this.seismicSensorsSignal.asReadonly();
+  public isLoading = this.loadingSignal.asReadonly();
+  public errorSign = this.errorSignal.asReadonly();
+
   loadConcreteSensors() {
     this.loadingSignal.set(true); // Empieza a cargar
     this.iotMonitoringApiService.getAllConcreteSensors().subscribe({
@@ -24,9 +31,7 @@ export class IoTMonitoringStore {
         this.loadingSignal.set(false);
       },
       error: (err) => {
-        this.errorSignal.set(
-          'Error al conectar con los sensores de curado de concreto.',
-        );
+        this.errorSignal.set('Error al conectar con los sensores de curado de concreto.');
         this.loadingSignal.set(false);
       },
     });
@@ -40,9 +45,7 @@ export class IoTMonitoringStore {
         this.loadingSignal.set(false);
       },
       error: (err) => {
-        this.errorSignal.set(
-          'Error al conectar con los sensores de control sismico.',
-        );
+        this.errorSignal.set('Error al conectar con los sensores de control sismico.');
         this.loadingSignal.set(false);
       },
     });
@@ -50,18 +53,19 @@ export class IoTMonitoringStore {
 
   loadHopperSensors() {
     this.loadingSignal.set(true);
+    console.log('Intentando cargar tolvas desde la API...'); // <--- LOG 1
+
     this.iotMonitoringApiService.getAllHopperSensors().subscribe({
       next: (sensors) => {
+        console.log('Datos recibidos de la API:', sensors); // <--- LOG 2
         this.hopperSensorsSignal.set(sensors);
         this.loadingSignal.set(false);
       },
       error: (err) => {
-        this.errorSignal.set(
-          'Error al conectar con los sensores de las tolvas.',
-        );
+        console.error('Error fatal en el Store:', err); // <--- LOG 3
         this.loadingSignal.set(false);
-      }
-    })
+      },
+    });
   }
 
   loadGeolocalizationPoints() {
@@ -72,11 +76,9 @@ export class IoTMonitoringStore {
         this.loadingSignal.set(false);
       },
       error: (err) => {
-        this.errorSignal.set(
-          'Error al conectar con los puntos',
-        );
+        this.errorSignal.set('Error al conectar con los puntos');
         this.loadingSignal.set(false);
-      }
-    })
+      },
+    });
   }
 }
