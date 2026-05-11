@@ -13,6 +13,13 @@
       "password": "paupau707",
       "role": "Logística y Administración",
       "id": "egiZUjv"
+    },
+    {
+      "name": "Juan Perez",
+      "email": "kipu3@hotmail.com",
+      "password": "kipu12345",
+      "role": "Gestor Operativo",
+      "id": "w25vbLd"
     }
   ],
   "projects": [
@@ -882,9 +889,9 @@
     {
       "id": "tool-001",
       "name": "Amoladora Angular 9\"",
-      "status": "URGENT_MAINTENANCE",
+      "status": "IN_USE",
       "physicalStatus": "a",
-      "assignedTo": "",
+      "assignedTo": "Miguel Estrada",
       "registrationDate": "2026-04-15",
       "maintenanceHours": 1,
       "assignmentDetail": "Entregado a Carlos Mendoza para trabajos de corte de acero en Sótano 2."
@@ -1000,7 +1007,90 @@
       "assignmentDetail": "a"
     }
   ],
-  "iot-telemetry": [],
+  "concrete-curing": [
+    {
+      "id": "1",
+      "name": "S-TMP-02",
+      "state": 1,
+      "location": "Floor Level 3",
+      "temperature": 34.5,
+      "humidity": 58,
+      "limit": 35,
+      "unit": "C"
+    },
+    {
+      "id": "2",
+      "name": "S-TMP-01",
+      "state": 1,
+      "location": "Columns B Sec.",
+      "temperature": 28,
+      "humidity": 65,
+      "limit": 35,
+      "unit": "C"
+    }
+  ],
+  "geolocalization": [
+    {
+      "numberId": 1,
+      "id": "1",
+      "name": "Full Station #1",
+      "state": 0,
+      "longitude": 45,
+      "latitude": 35
+    },
+    {
+      "numberId": 2,
+      "id": "2",
+      "name": "Concrete Vibrator #2",
+      "state": 1,
+      "longitude": 65,
+      "latitude": 55
+    }
+  ],
+  "hopper-watch": [
+    {
+      "id": "SM-088",
+      "projectId": "",
+      "unit": "%",
+      "state": 2,
+      "lastLecture": 12,
+      "limit": 15,
+      "name": "Fine Sand"
+    },
+    {
+      "id": "SM-082",
+      "projectId": "",
+      "unit": "%",
+      "state": 1,
+      "lastLecture": 80,
+      "limit": 15,
+      "name": "Crushed Stone"
+    }
+  ],
+  "seismic-control": [
+    {
+      "id": "S-VIB-02",
+      "projectId": "",
+      "unit": "mm/s",
+      "name": "S-VIB-02",
+      "location": "South Wall",
+      "state": 2,
+      "lastLecture": 7.2,
+      "limit": 5,
+      "timeLecture": "16/04/2026 10:30"
+    },
+    {
+      "id": "S-VIB-01",
+      "projectId": "",
+      "unit": "mm/s",
+      "name": "S-VIB-01",
+      "location": "North Excavation",
+      "state": 1,
+      "lastLecture": 2.4,
+      "limit": 5,
+      "timeLecture": "16/04/2026 10:30"
+    }
+  ],
   "field": [],
   "team-workers": [
     {
@@ -1009,9 +1099,7 @@
       "fullName": "Pedro Castro",
       "role": "Manejador",
       "status": "inactivo",
-      "assignedTools": [
-        "Escuela"
-      ]
+      "assignedTools": ["Escuela"]
     },
     {
       "id": "w-3",
@@ -1026,10 +1114,7 @@
       "fullName": "Neo Ramos",
       "role": "Capataz",
       "status": "activo",
-      "assignedTools": [
-        "Tolva",
-        "Marañón"
-      ],
+      "assignedTools": ["Tolva", "Marañón"],
       "id": "w-1778261706149"
     }
   ],

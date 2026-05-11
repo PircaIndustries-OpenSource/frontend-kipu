@@ -1,9 +1,10 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { GeolocalizationEntity } from '../../../domain/geolocalization.entity';
 import { MatButton } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
 import { NgClass } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
+import { IoTMonitoringStore } from '../../../application/iot-monitoring.store';
 
 @Component({
   selector: 'app-geolocalization-and-geofence',
@@ -12,5 +13,15 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './geolocalization-and-geofence.css',
 })
 export class GeolocalizationAndGeofence {
-  geolocalizationPoints = input.required<GeolocalizationEntity[]>();
+  //readonly geolocalizationPoints = input.required<GeolocalizationEntity[]>();
+
+  private store = inject(IoTMonitoringStore);
+
+  geolocalizationPoints = this.store.geolocalizationPoints;
+
+  ngOnInit(): void {
+    if (this.geolocalizationPoints().length === 0) {
+      this.store.loadGeolocalizationPoints();
+    }
+  }
 }

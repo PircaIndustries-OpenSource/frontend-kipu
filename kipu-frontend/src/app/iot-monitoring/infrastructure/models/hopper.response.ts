@@ -6,4 +6,5 @@ export interface HopperResource {
   state: number;
   lastLecture: number;
   limit: number;
+  name: string;
 }
