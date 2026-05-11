@@ -770,10 +770,5 @@
       "discard": "No, discard changes",
       "save": "Save changes"
     }
-  },
-  "logout": {
-    "title": "Logged out",
-    "description": "You have been successfully logged out of your account.",
-    "continue": "Continue"
   }
 }
