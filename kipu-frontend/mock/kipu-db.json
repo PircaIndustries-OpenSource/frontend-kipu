@@ -3,7 +3,7 @@
     {
       "name": "Juan Perez",
       "email": "kipu3@hotmail.com",
-      "password": "kipu12345",
+      "password": "kipu1234",
       "role": "Gestor Operativo",
       "id": "vkgT3Nh"
     },
@@ -15,136 +15,53 @@
       "id": "egiZUjv"
     },
     {
-      "name": "Juan Perez",
-      "email": "kipu3@hotmail.com",
-      "password": "kipu12345",
-      "role": "Gestor Operativo",
-      "id": "w25vbLd"
+      "name": "John Doe",
+      "email": "john@hotmail.com",
+      "password": "kipu1234",
+      "role": "Logística y Administración",
+      "id": "syKqGWI"
     }
   ],
   "projects": [
     {
-      "id": "proj-01",
+      "id": 1,
       "name": "Edificio Corporativo Los Olivos",
       "description": "Construcción de edificio corporativo de 12 pisos con 3 sótanos de estacionamiento",
       "status": "IN_PROGRESS",
-      "startDate": "2026-01-15",
+      "startDate": "2026-05-11T05:00:00.000Z",
+      "endDate": "2026-05-16T05:00:00.000Z",
+      "estimatedBudget": 500000,
       "location": "Av. Principal 123, Los Olivos, Lima",
-      "createdAt": "2026-01-10",
-      "createdBy": "SIVyLM6",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
       "imageUrl": "project-image1.png"
     },
     {
-      "id": "proj-02",
+      "id": 2,
       "name": "Residencial San Miguel",
       "description": "Complejo residencial de 80 departamentos con áreas comunes",
       "status": "PLANNED",
-      "startDate": "2026-07-01",
+      "startDate": "2026-05-09T05:00:00.000Z",
+      "endDate": "2026-05-25T05:00:00.000Z",
+      "estimatedBudget": 450000,
       "location": "Calle Las Flores 456, San Miguel, Lima",
-      "createdAt": "2026-05-01",
-      "createdBy": "SIVyLM6",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
       "imageUrl": "project-image4.png"
     },
     {
-      "id": "proj-03",
+      "id": 3,
       "name": "Colegio Particular San José",
       "description": "Construcción de nueva infraestructura educativa con 30 aulas y laboratorios",
-      "status": "COMPLETED",
-      "startDate": "2025-03-01",
+      "status": "ON_HOLD",
+      "startDate": "2026-05-12T05:00:00.000Z",
+      "endDate": "2026-05-24T05:00:00.000Z",
+      "estimatedBudget": 750000,
       "location": "Av. La Cultura 789, Cusco",
-      "createdAt": "2025-02-15",
-      "createdBy": "P-n4XLk",
-      "imageUrl": "project-image3.png"
-    },
-    {
-      "id": "pyXfjIq",
-      "name": "a",
-      "description": "a",
-      "status": "IN_PROGRESS",
-      "startDate": "2026-05-13T05:00:00.000Z",
-      "endDate": "2026-05-26T05:00:00.000Z",
-      "estimatedBudget": 212121,
-      "location": "xd",
       "createdAt": "2026-05-11",
       "createdBy": "current-user",
-      "imageUrl": "project-image3.png"
-    },
-    {
-      "id": "vEXQoL6",
-      "name": "aaaaa",
-      "description": "asd",
-      "status": "PLANNED",
-      "startDate": "2026-05-12T05:00:00.000Z",
-      "endDate": "2026-05-20T05:00:00.000Z",
-      "estimatedBudget": 1231,
-      "location": "asdasd",
-      "createdAt": "2026-05-11",
-      "createdBy": "current-user",
-      "imageUrl": "project-image1.png"
-    },
-    {
-      "id": "whceCRF",
-      "name": "aasdasdasd",
-      "description": "asdasd",
-      "status": "IN_PROGRESS",
-      "startDate": "2026-05-12T05:00:00.000Z",
-      "endDate": "2026-05-12T05:00:00.000Z",
-      "estimatedBudget": 123123,
-      "location": "asdasd",
-      "createdAt": "2026-05-11",
-      "createdBy": "current-user",
-      "imageUrl": "project-image3.png"
-    },
-    {
-      "id": "8IZsgo_",
-      "name": "aaaaaaaaaaaaaaaaaa",
-      "description": "aaaaaaaaaaaaaaaaaa",
-      "status": "PLANNED",
-      "startDate": "2026-05-20T05:00:00.000Z",
-      "endDate": "2026-05-31T05:00:00.000Z",
-      "estimatedBudget": 123123,
-      "location": "aaaaaaaaaaaaaaaaaaa",
-      "createdAt": "2026-05-11",
-      "createdBy": "current-user",
-      "imageUrl": "project-image4.jpg"
-    },
-    {
-      "id": "lluhwVv",
-      "name": "xdd....",
-      "description": ".....",
-      "status": "PLANNED",
-      "startDate": "2026-05-21T05:00:00.000Z",
-      "endDate": "2026-05-31T05:00:00.000Z",
-      "estimatedBudget": 123123,
-      "location": "....",
-      "createdAt": "2026-05-11",
-      "createdBy": "current-user",
-      "imageUrl": "project-image1.png"
-    },
-    {
-      "id": "YgMohp6",
-      "name": "aaaa21",
-      "description": "a",
-      "status": "PLANNED",
-      "startDate": "2026-05-27T05:00:00.000Z",
-      "endDate": "2026-05-25T05:00:00.000Z",
-      "estimatedBudget": 121,
-      "location": "as",
-      "createdAt": "2026-05-11",
-      "createdBy": "current-user",
-      "imageUrl": "project-image2.png"
-    },
-    {
-      "id": "bINNav6",
-      "name": "asdasd",
-      "description": "a",
-      "status": "PLANNED",
-      "startDate": "2026-05-14T05:00:00.000Z",
-      "endDate": "2026-05-19T05:00:00.000Z",
-      "location": "sdasd",
-      "createdAt": "2026-05-11",
-      "createdBy": "current-user",
-      "imageUrl": "project-image5.png"
+      "imageUrl": "project-image2.png",
+      "statusJustification": "sin presupuesto"
     }
   ],
   "documents": [
@@ -1162,7 +1079,9 @@
       "fullName": "Pedro Castro",
       "role": "Manejador",
       "status": "inactivo",
-      "assignedTools": ["Escuela"]
+      "assignedTools": [
+        "Escuela"
+      ]
     },
     {
       "id": "w-3",
@@ -1177,7 +1096,10 @@
       "fullName": "Neo Ramos",
       "role": "Capataz",
       "status": "activo",
-      "assignedTools": ["Tolva", "Marañón"],
+      "assignedTools": [
+        "Tolva",
+        "Marañón"
+      ],
       "id": "w-1778261706149"
     }
   ],

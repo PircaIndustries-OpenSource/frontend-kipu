@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -36,6 +37,7 @@ import { Router } from '@angular/router';
     MatDividerModule,
     MatSelectModule,
     AuthBannerComponent,
+    TranslateModule
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',

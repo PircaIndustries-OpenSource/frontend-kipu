@@ -17,10 +17,12 @@ function passwordMatch(control: AbstractControl) {
   return password === confirmPassword ? null : { mismatch: true };
 }
 
+import { TranslateModule } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-reset-password',
   standalone: true,
-  imports: [ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule, RouterLink, MatDividerModule, AuthBannerComponent],
+  imports: [ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule, RouterLink, MatDividerModule, AuthBannerComponent, TranslateModule],
   templateUrl: './reset-password.component.html',
 })
 export class ResetPasswordComponent {

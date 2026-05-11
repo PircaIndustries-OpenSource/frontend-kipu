@@ -49,4 +49,14 @@ export class ProjectsStore {
       );
     });
   }
+
+  deleteProject(id: string) {
+    this.projectsApi.delete(id).subscribe(() => {
+      this.projectsSignal.update((projects) => projects.filter((p) => p.id !== id));
+      if (this.currentProjectIdSignal() === id) {
+        this.currentProjectIdSignal.set(null);
+        localStorage.removeItem('currentProjectId');
+      }
+    });
+  }
 }

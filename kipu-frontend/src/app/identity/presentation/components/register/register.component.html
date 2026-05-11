@@ -4,72 +4,73 @@
     <app-auth-banner></app-auth-banner>
 
     <div class="md:w-1/2 p-12 bg-gray-50 flex flex-col justify-center">
-      <h2 class="text-3xl font-bold text-gray-800 mb-1">Registro</h2>
-      <p class="text-gray-500 mb-8 text-sm">Ingresa tus credenciales para continuar</p>
+      <h2 class="text-3xl font-bold text-gray-800 mb-1">{{ 'identity.register_title' | translate }}</h2>
+      <p class="text-gray-500 mb-8 text-sm">{{ 'identity.register_description' | translate }}</p>
 
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-2">
 
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Nombre y Apellidos</mat-label>
-          <input matInput formControlName="name" placeholder="Ej. Juan Pérez">
+          <mat-label>{{ 'identity.name' | translate }}</mat-label>
+          <input matInput formControlName="name" [placeholder]="'identity.name_placeholder' | translate">
           @if (registerForm.get('name')?.hasError('required')) {
-          <mat-error>El nombre es obligatorio.</mat-error>
+          <mat-error>{{ 'identity.err_name_required' | translate }}</mat-error>
           }
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Correo Electrónico</mat-label>
-          <input matInput formControlName="email" type="email" placeholder="usuario@ejemplo.com">
+          <mat-label>{{ 'identity.email' | translate }}</mat-label>
+          <input matInput formControlName="email" type="email" [placeholder]="'identity.email_placeholder' | translate">
 
           @if (registerForm.get('email')?.hasError('required')) {
-          <mat-error>El correo es obligatorio.</mat-error>
+          <mat-error>{{ 'identity.err_email_required' | translate }}</mat-error>
           }
           @if (registerForm.get('email')?.hasError('email')) {
-          <mat-error>El formato del correo no es válido.</mat-error>
+          <mat-error>{{ 'identity.err_email_invalid' | translate }}</mat-error>
           }
           @if (registerForm.get('email')?.hasError('emailDuplicated')) {
-          <mat-error>Este correo ya se encuentra activo en el sistema.</mat-error>
+          <mat-error>{{ 'identity.err_email_taken' | translate }}</mat-error>
           }
           @if (registerForm.get('email')?.pending) {
-          <mat-hint class="text-blue-500">Verificando disponibilidad...</mat-hint>
+          <mat-hint class="text-blue-500">{{ 'identity.hint_checking_email' | translate }}</mat-hint>
           }
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Contraseña</mat-label>
-          <input matInput formControlName="password" type="password" placeholder="••••••••">
+          <mat-label>{{ 'identity.password' | translate }}</mat-label>
+          <input matInput formControlName="password" type="password"
+            [placeholder]="'identity.password_placeholder' | translate">
 
           @if (registerForm.get('password')?.hasError('required')) {
-          <mat-error>La contraseña es obligatoria.</mat-error>
+          <mat-error>{{ 'identity.err_password_required' | translate }}</mat-error>
           }
           @if (registerForm.get('password')?.hasError('minlength')) {
-          <mat-error>Debe tener al menos 8 caracteres.</mat-error>
+          <mat-error>{{ 'identity.err_password_min' | translate }}</mat-error>
           }
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Rol en el Proyecto</mat-label>
+          <mat-label>{{ 'identity.role' | translate }}</mat-label>
           <mat-select formControlName="role">
-            <mat-option value="Gestor Operativo">Gestor Operativo</mat-option>
-            <mat-option value="Logística y Administración">Miembro de Logística y Administración</mat-option>
+            <mat-option value="Gestor Operativo">{{ 'identity.role_manager' | translate }}</mat-option>
+            <mat-option value="Logística y Administración">{{ 'identity.role_logistics' | translate }}</mat-option>
           </mat-select>
           @if (registerForm.get('role')?.hasError('required')) {
-          <mat-error>Debes seleccionar un rol.</mat-error>
+          <mat-error>{{ 'identity.err_role_required' | translate }}</mat-error>
           }
         </mat-form-field>
 
         <div class="flex items-center justify-between mb-4">
-          <mat-checkbox color="primary" class="text-sm">Recordarme</mat-checkbox>
+          <mat-checkbox color="primary" class="text-sm">{{ 'identity.remember_me' | translate }}</mat-checkbox>
         </div>
 
         <button mat-flat-button color="primary" type="submit" class="!py-6 text-lg"
           [disabled]="registerForm.invalid || registerForm.pending">
-          Registrar
+          {{ 'identity.register_button' | translate }}
         </button>
 
         <div class="flex items-center gap-4 my-6">
           <mat-divider class="flex-grow"></mat-divider>
-          <span class="text-xs text-gray-400">o continúa con</span>
+          <span class="text-xs text-gray-400">{{ 'identity.continue' | translate }}</span>
           <mat-divider class="flex-grow"></mat-divider>
         </div>
 
@@ -83,8 +84,8 @@
         </div>
 
         <p class="text-center text-xs text-gray-500 mt-6">
-          ¿Ya tienes una cuenta? <a href="/login" class="text-blue-500 hover:underline">Ingresa
-            aquí</a>
+          {{ 'identity.has_account' | translate }} <a href="/login" class="text-blue-500 hover:underline">{{
+            'identity.login_link' | translate }}</a>
         </p>
       </form>
     </div>

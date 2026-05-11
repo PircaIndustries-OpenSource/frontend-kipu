@@ -6,10 +6,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthBannerComponent } from '../../../../shared/presentation/components/auth-banner/auth-banner.component';
 import { ResendDialogComponent } from './verification-resend.component';
 
+import { TranslateModule } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-verification',
   standalone: true,
-  imports: [RouterLink, MatButtonModule, MatCardModule, AuthBannerComponent],
+  imports: [RouterLink, MatButtonModule, MatCardModule, AuthBannerComponent, TranslateModule],
   templateUrl: './verification.component.html',
 })
 export class VerificationComponent implements OnDestroy {

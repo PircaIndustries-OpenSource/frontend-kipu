@@ -11,6 +11,8 @@ import { catchError, map, Observable, of, switchMap, timer } from 'rxjs';
 import { ProjectsStore } from '../../../application/projects.store';
 import { SuccessDialog } from '../../../../shared/presentation/success-dialog/success-dialog';
 
+import { TranslateModule } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-create-project-dialog',
   standalone: true,
@@ -23,6 +25,7 @@ import { SuccessDialog } from '../../../../shared/presentation/success-dialog/su
     MatDatepickerModule,
     MatNativeDateModule,
     MatDialogModule,
+    TranslateModule,
   ],
   templateUrl: './create-project-dialog.component.html',
 })
@@ -68,7 +71,7 @@ export class CreateProjectDialogComponent {
       'project-image1.png',
       'project-image2.png',
       'project-image3.png',
-      'project-image4.jpg',
+      'project-image4.png',
       'project-image5.png',
     ];
     const randomImage = placeholderImages[Math.floor(Math.random() * placeholderImages.length)];

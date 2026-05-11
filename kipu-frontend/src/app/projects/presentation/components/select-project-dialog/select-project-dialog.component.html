@@ -1,16 +1,16 @@
-<h2 mat-dialog-title class="font-bold text-xl mb-4">Seleccionar Proyecto</h2>
+<h2 mat-dialog-title class="font-bold text-xl mb-4">{{ 'projects_dashboard.select_title' | translate }}</h2>
 
 <mat-dialog-content>
   <p class="text-gray-600 mb-2">
-    Estás a punto de seleccionar el proyecto:
+    {{ 'projects_dashboard.select_desc' | translate }}
   </p>
   <p class="font-bold text-lg text-blue-600 mb-4">{{ data.project.name }}</p>
-  <p class="text-sm text-gray-500">¿Quieres continuar?</p>
+  <p class="text-sm text-gray-500">{{ 'projects_dashboard.select_prompt' | translate }}</p>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end" class="pb-4 pr-4">
-  <button mat-stroked-button mat-dialog-close>Cancelar</button>
+  <button mat-stroked-button mat-dialog-close>{{ 'projects_dashboard.select_cancel' | translate }}</button>
   <button mat-flat-button color="primary" (click)="onConfirm()">
-    Continuar
+    {{ 'projects_dashboard.select_continue' | translate }}
   </button>
 </mat-dialog-actions>
