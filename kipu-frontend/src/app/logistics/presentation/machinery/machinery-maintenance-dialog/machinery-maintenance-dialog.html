@@ -1,0 +1,49 @@
+<div [formGroup]="maintenanceForm" class="flex flex-col border-(--color-neutral-border)! bg-white!">
+
+  <h2 mat-dialog-title class="!m-0 !p-8 !text-2xl !font-black text-(--color-primary)! border-b border-(--color-neutral-border)! bg-(--color-neutral-bg)! rounded-t-xl!">
+    {{ 'machinery.maintenance.title' | translate }}
+  </h2>
+
+  <mat-dialog-content class="!flex !flex-col !gap-8 !p-10 !m-0 overflow-y-auto max-h-[65vh]">
+
+    <div class="flex flex-col w-full">
+      <mat-form-field appearance="outline" class="w-full!" subscriptSizing="dynamic">
+        <mat-label class="text-(--color-text-main)!">{{ 'machinery.maintenance.physical-status-label' | translate }}</mat-label>
+        <input matInput formControlName="physicalStatus"
+               [placeholder]="'machinery.maintenance.physical-status-placeholder' | translate">
+        @if (maintenanceForm.get('physicalStatus')?.hasError('required') && maintenanceForm.get('physicalStatus')?.touched) {
+          <mat-error class="text-(--color-danger)!">{{ 'machinery.maintenance.physical-status-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-col w-full">
+      <mat-form-field appearance="outline" class="w-full!" subscriptSizing="dynamic">
+        <mat-label class="text-(--color-text-main)!">{{ 'machinery.maintenance.hours-label' | translate }}</mat-label>
+        <input matInput formControlName="maintenanceHours" type="number"
+               [placeholder]="'machinery.maintenance.hours-placeholder' | translate">
+        @if (maintenanceForm.get('maintenanceHours')?.hasError('required') && maintenanceForm.get('maintenanceHours')?.touched) {
+          <mat-error class="text-(--color-danger)!">{{ 'machinery.maintenance.hours-required' | translate }}</mat-error>
+        }
+        @if (maintenanceForm.get('maintenanceHours')?.hasError('min') && maintenanceForm.get('maintenanceHours')?.touched) {
+          <mat-error class="text-(--color-danger)!">{{ 'machinery.maintenance.hours-min' | translate }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="!px-8 !py-8 !m-0 !gap-4 bg-(--color-neutral-bg)! border-t border-(--color-neutral-border)!">
+    <button mat-stroked-button mat-dialog-close class="!rounded-xl !px-8 !py-6 !font-bold text-(--color-neutral-border)! hover:bg-white! transition-all" type="button">
+      {{ 'request.modify.btn-cancel' | translate }}
+    </button>
+    <button
+      mat-flat-button
+      class="bg-(--color-accent)! text-white! py-6! px-10! rounded-xl! font-bold! text-base! cursor-pointer! transition-all hover:brightness-110! active:scale-95! shadow-md shadow-(--color-accent)/20"
+      (click)="onSave()"
+      type="button"
+    >
+      {{ 'machinery.maintenance.btn-save' | translate }}
+    </button>
+  </mat-dialog-actions>
+</div>

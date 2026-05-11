@@ -3,11 +3,16 @@
     <h1 class="text-3xl font-bold text-primary tracking-tight">
       {{ 'suppliers.title' | translate }}
     </h1>
-    <button matRipple class="w-60 bg-accent text-white! py-5! rounded-m! font-bold! text-base! shadow-md! cursor-pointer transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2">
+    <button (click)="openCreateDialog()" matRipple class="w-60 bg-accent text-white! py-5! rounded-m! font-bold! text-base! shadow-md! cursor-pointer transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2">
       <mat-icon>add_circle</mat-icon>
       {{ 'suppliers.button-create' | translate }}
     </button>
   </header>
+  <mat-form-field appearance="outline" class="w-full max-w-md">
+    <mat-label>{{ 'suppliers.search-ruc' | translate }}</mat-label>
+    <input matInput [value]="searchRuc()" (input)="onSearchRucChange($any($event.target).value)" [placeholder]="'suppliers.search-ruc-placeholder' | translate">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
   <div class="flex flex-row gap-xl">
     <div class="flex-1 min-w-0 flex flex-col gap-l">
       <app-supplier-list [suppliers]="suppliers()"></app-supplier-list>
@@ -19,12 +24,20 @@
           {{ 'general.summary' | translate }}
         </h3>
         <div class="flex flex-col items-center">
-          <app-summary-card [title]="'suppliers.summary.active' | translate" [value]="suppliersActive">
-          </app-summary-card>
-        </div>
+          <button (click)="toggleActiveSupplierFilter()">
+            <app-summary-card [title]="'suppliers.summary.active' | translate" [value]="suppliersActive()" [active]="activeSupplierFilter()">
+            </app-summary-card>
+          </button>
 
+        </div>
+        <div class="flex flex-col items-center">
+          <button (click)="toggleInactiveSupplierFilter()">
+            <app-summary-card [title]="'suppliers.summary.inactive' | translate" [value]="supplierInactive()"  [active]="inactiveSupplierFilter()">
+            </app-summary-card>
+          </button>
+
+        </div>
       </div>
     </aside>
   </div>
-
 </section>

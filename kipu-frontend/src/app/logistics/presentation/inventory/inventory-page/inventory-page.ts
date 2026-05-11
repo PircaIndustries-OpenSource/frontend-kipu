@@ -8,7 +8,6 @@ import { AutocompleteFilterList } from '../../../../shared/presentation/autocomp
   selector: 'app-inventory-page',
   imports: [TranslatePipe, InventoryList, SummaryCard, AutocompleteFilterList],
   templateUrl: './inventory-page.html',
-  styleUrl: './inventory-page.css',
 })
 export class InventoryPage implements OnInit {
   protected logisticsStore = inject(LogisticsStore);
@@ -16,6 +15,7 @@ export class InventoryPage implements OnInit {
   materialsCount = this.logisticsStore.totalInventoryMaterials;
   criticalMaterialsCount = this.logisticsStore.criticalMaterialsCount;
   categoryNames = this.logisticsStore.categoryNames;
+  readonly criticalStockActive = this.logisticsStore.criticalStockFilter;
   ngOnInit() {
     this.logisticsStore.loadMaterials();
     this.logisticsStore.loadInventoryMaterials();
@@ -23,5 +23,8 @@ export class InventoryPage implements OnInit {
   }
   onCategorySelect(category: string) {
     this.logisticsStore.filterByCategory(category);
+  }
+  toggleCriticalStock() {
+    this.logisticsStore.toggleCriticalStockFilter();
   }
 }

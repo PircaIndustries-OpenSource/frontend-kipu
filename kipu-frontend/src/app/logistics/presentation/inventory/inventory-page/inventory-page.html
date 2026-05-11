@@ -15,9 +15,13 @@
           {{ 'general.summary' | translate }}
         </h3>
         <app-summary-card  [title]="'inventory.summary.registered-materials' | translate"
-                           [value]="materialsCount()"></app-summary-card>
-        <app-summary-card  class="text-danger!" [title]="'inventory.summary.critical-stock-alert' | translate"
-                           [value]="criticalMaterialsCount()"></app-summary-card>
+                           [value]="materialsCount()"
+        ></app-summary-card>
+        <button (click)="toggleCriticalStock()" type="button">
+          <app-summary-card  class="text-danger!" [title]="'inventory.summary.critical-stock-alert' | translate"
+                             [value]="criticalMaterialsCount()"
+                             [active]="criticalStockActive()"></app-summary-card>
+        </button>
       </div>
       <div class="flex flex-col gap-m">
         <h3 class="text-xs font-black text-primary uppercase tracking-widest">
@@ -31,5 +35,4 @@
       </div>
     </aside>
   </div>
-
 </section>

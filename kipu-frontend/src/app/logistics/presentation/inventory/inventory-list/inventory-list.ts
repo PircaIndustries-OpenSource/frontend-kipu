@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { InventoryItem } from '../inventory-item/inventory-item';
-import { InventoryViewModel } from '../../../domain/inventoryMaterial.entity';
+import { InventoryView } from '../../../application/logistics.store';
 @Component({
   selector: 'app-inventory-list',
   imports: [InventoryItem],
@@ -8,5 +8,5 @@ import { InventoryViewModel } from '../../../domain/inventoryMaterial.entity';
   styleUrl: './inventory-list.css',
 })
 export class InventoryList {
-  inventoryMaterials = input.required<InventoryViewModel[]>();
+  inventoryMaterials = input.required<InventoryView[]>();
 }

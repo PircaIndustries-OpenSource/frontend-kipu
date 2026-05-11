@@ -1,0 +1,77 @@
+<div [formGroup]="wasteForm" class="flex flex-col border-(--color-neutral-border)! bg-white!">
+
+  <h2 mat-dialog-title class="m-0! !p-8 !text-2xl !font-black text-(--color-primary)! border-b border-(--color-neutral-border)! bg-(--color-neutral-bg)! rounded-t-xl!">
+    {{ 'waste.card.create.title' | translate }}
+  </h2>
+
+  <mat-dialog-content class="!flex flex-col! !gap-8 p-10! !m-0 overflow-y-auto max-h-[65vh]">
+
+    <div class="flex flex-col w-full">
+      <app-autocomplete-filter-list
+        (optionSelected)="onInventoryMaterialSelect($event)"
+        [listOptions]="nameMaterials()"
+        [placeholder]="'request.create.placeholders.select' | translate"
+      ></app-autocomplete-filter-list>
+    </div>
+
+    <div class="flex flex-row gap-4">
+      <div class="flex flex-col flex-1">
+        <mat-form-field appearance="outline" class="w-full!" subscriptSizing="dynamic">
+          <mat-label class="text-(--color-text-main)!">{{ 'waste.card.create.quantity-label' | translate }}</mat-label>
+          <input matInput formControlName="quantity" type="number" step="1">
+          @if (wasteForm.get('quantity')?.hasError('required') && wasteForm.get('quantity')?.touched) {
+            <mat-error class="text-(--color-danger)!">{{ 'waste.card.create.quantity-required' | translate }}</mat-error>
+          }
+          @if (wasteForm.get('quantity')?.hasError('min') && wasteForm.get('quantity')?.touched) {
+            <mat-error class="text-(--color-danger)!">{{ 'waste.card.create.quantity-min' | translate }}</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="w-full min-h-14 flex items-center px-4 rounded-m border border-neutral-border/20 bg-white text-sm">
+        @if (selectedUnit()) {
+          <span class="text-primary font-medium">{{selectedUnit()}}</span>
+        } @else {
+          <span class="text-neutral-border">{{ 'request.create.placeholders.unit-empty' | translate }}</span>
+        }
+      </div>
+    </div>
+
+    <div class="flex flex-col w-full">
+      <mat-form-field appearance="outline" class="w-full!" subscriptSizing="dynamic">
+        <mat-label class="text-(--color-text-main)!">{{ 'waste.card.create.date-label' | translate }}</mat-label>
+        <input matInput formControlName="date" [matDatepicker]="wasteDatePicker">
+        <mat-datepicker-toggle matIconSuffix [for]="wasteDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #wasteDatePicker></mat-datepicker>
+        @if (wasteForm.get('date')?.hasError('required') && wasteForm.get('date')?.touched) {
+          <mat-error class="text-(--color-danger)!">{{ 'waste.card.create.date-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-col w-full">
+      <mat-form-field appearance="outline" class="w-full!" subscriptSizing="dynamic">
+        <mat-label class="text-(--color-text-main)!">{{ 'waste.card.create.description-label' | translate }}</mat-label>
+        <textarea matInput formControlName="description" rows="3"
+                  [placeholder]="'waste.card.create.description-placeholder' | translate"></textarea>
+        @if (wasteForm.get('description')?.hasError('required') && wasteForm.get('description')?.touched) {
+          <mat-error class="text-(--color-danger)!">{{ 'waste.card.create.description-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="!px-8 !py-8 m-0! !gap-4 bg-(--color-neutral-bg)! border-t border-(--color-neutral-border)!">
+    <button mat-stroked-button mat-dialog-close class="!rounded-xl !px-8 !py-6 !font-bold text-(--color-neutral-border)! hover:bg-white! transition-all" type="button">
+      {{ 'request.modify.btn-cancel' | translate }}
+    </button>
+    <button
+      mat-flat-button
+      class="bg-(--color-accent)! text-white! py-6! px-10! rounded-xl! font-bold! text-base! cursor-pointer! transition-all hover:brightness-110! active:scale-95! shadow-md shadow-(--color-accent)/20"
+      (click)="onSave()"
+      type="button"
+    >
+      {{ 'waste.card.create.btn-save' | translate }}
+    </button>
+  </mat-dialog-actions>
+</div>

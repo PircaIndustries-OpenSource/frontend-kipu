@@ -6,20 +6,13 @@ export class RequestItem {
     this.quantity = 0;
   }
 }
-export type RequestItemViewModel = RequestItem & {
-  materialName: string;
-  categoryName: string;
-  materialUnit: string;
-  materialSubcategory: string;
-  pricePerUnit: number;
-};
 export class RequestEntity {
   id: string;
   projectId: string;
   requestDate: string;
   deadline: string;
   status: string;
-  priority: number;
+  priority: string;
   deliveryLocation: string;
   budgetLineId: string;
   purpose: string;
@@ -34,8 +27,8 @@ export class RequestEntity {
     this.projectId = '';
     this.requestDate = '';
     this.deadline = '';
-    this.status = 'PENDING';
-    this.priority = 0;
+    this.status = '';
+    this.priority = '';
     this.deliveryLocation = '';
     this.budgetLineId = '';
     this.purpose = '';
@@ -47,6 +40,3 @@ export class RequestEntity {
     this.activity = '';
   }
 }
-export type RequestViewModel = Omit<RequestEntity, 'items'> & {
-  items: RequestItemViewModel[];
-};

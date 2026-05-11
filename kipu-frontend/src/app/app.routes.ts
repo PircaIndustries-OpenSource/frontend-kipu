@@ -83,13 +83,6 @@ export const routes: Routes = [
               ),
           },
           {
-            path: 'machinery',
-            loadComponent: () =>
-              import('./logistics/presentation/machinery/machinery-page/machinery-page').then(
-                (m) => m.MachineryPage,
-              ),
-          },
-          {
             path: 'suppliers',
             loadComponent: () =>
               import('./logistics/presentation/suppliers/suppliers-page/suppliers-page').then(
@@ -111,13 +104,19 @@ export const routes: Routes = [
           import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
             (m) => m.InventoryPage,
           ),
-      },/*'./progress/presentation/progress-page/progress-page.component'*/
+      },
+      {
+        path: 'machinery',
+        loadComponent: () =>
+          import('./logistics/presentation/machinery/machinery-page/machinery-page').then(
+            (m) => m.MachineryPage,
+          ),
+      },
+      /*'./progress/presentation/progress-page/progress-page.component'*/
       {
         path: 'advances',
         loadComponent: () =>
-          import('./progress/presentation/progress-page/progress-page').then(
-            (m) => m.ProgressPage,
-          ),
+          import('./progress/presentation/progress-page/progress-page').then((m) => m.ProgressPage),
       },
       {
         path: 'rnc',

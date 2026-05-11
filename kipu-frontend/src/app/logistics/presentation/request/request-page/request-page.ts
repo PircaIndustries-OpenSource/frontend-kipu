@@ -33,4 +33,17 @@ export class RequestPage implements OnInit {
   goToCreatePage() {
     this.router.navigate(['/logistics/request/create']).then();
   }
+  readonly pendingIsActive = this.logisticsStore.pendingRequestFilter;
+  readonly approvedIsActive = this.logisticsStore.approvedRequestFilter;
+  readonly refusedIsActive = this.logisticsStore.refusedRequestFilter;
+
+  togglePendingIsActive() {
+    this.logisticsStore.togglePendingRequestFilter();
+  }
+  toggleApprovedIsActive() {
+    this.logisticsStore.toggleApprovedRequestFilter();
+  }
+  toggleRefusedIsActive() {
+    this.logisticsStore.toggleRefusedRequestFilter();
+  }
 }

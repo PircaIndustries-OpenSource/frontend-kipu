@@ -14,10 +14,3 @@ export class InventoryMaterialEntity{
   }
 }
 
-export type InventoryViewModel = InventoryMaterialEntity & {
-  materialName: string;
-  materialCategory: string;
-  materialUnit: string;
-  materialSubcategory: string;
-};
-

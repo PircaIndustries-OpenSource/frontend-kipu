@@ -7,7 +7,7 @@ export interface RequestResource {
   requestDate: string;
   deadline: string;
   status: string;
-  priority: number;
+  priority: string;
   deliveryLocation: string;
   budgetLineId: string;
   purpose: string;

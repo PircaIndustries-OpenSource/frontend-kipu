@@ -8,8 +8,6 @@ export class WasteAssembler {
       projectId: resource.projectId,
       materialId: resource.materialId,
       quantity: resource.quantity,
-      unit: resource.unit,
-      classificationType: resource.classificationType,
       date: resource.date,
       description: resource.description,
       reportedBy: resource.reportedBy,

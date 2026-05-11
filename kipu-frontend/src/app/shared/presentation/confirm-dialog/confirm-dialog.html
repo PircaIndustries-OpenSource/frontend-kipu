@@ -1,0 +1,16 @@
+<div class="flex flex-col items-center justify-center p-6 text-center">
+  <div class="bg-red-100 text-danger rounded-full p-4 mb-4">
+    <mat-icon class="scale-150">warning_amber</mat-icon>
+  </div>
+  <h2 class="text-xl font-bold mb-2">{{ title() | translate }}</h2>
+  <p class="text-gray-500 mb-6">{{ subtitle() | translate }}</p>
+  <div class="flex gap-3 w-full">
+    <button mat-stroked-button mat-dialog-close class="flex-1 py-6!">
+      {{ 'general.cancel' | translate }}
+    </button>
+    <button mat-flat-button class="flex-1 py-6! bg-danger! text-white!"
+            (click)="onConfirm()">
+      {{ confirmText() | translate }}
+    </button>
+  </div>
+</div>

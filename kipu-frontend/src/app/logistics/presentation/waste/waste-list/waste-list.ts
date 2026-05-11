@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
-import { WasteEntity } from '../../../domain/waste.entity';
 import { WasteItem } from '../waste-item/waste-item';
+import { WasteView } from '../../../application/logistics.store';
 
 @Component({
   selector: 'app-waste-list',
@@ -9,5 +9,5 @@ import { WasteItem } from '../waste-item/waste-item';
   styleUrl: './waste-list.css',
 })
 export class WasteList {
-  wasteList = input.required<WasteEntity[]>();
+  wasteList = input.required<WasteView[]>();
 }

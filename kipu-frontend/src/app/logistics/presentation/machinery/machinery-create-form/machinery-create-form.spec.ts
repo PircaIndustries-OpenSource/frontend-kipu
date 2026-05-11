@@ -1,17 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MachineryCreateForm } from './machinery-create-form';
 
-import { InventoryPage } from './inventory-page';
-
-describe('InventoryPage', () => {
-  let component: InventoryPage;
-  let fixture: ComponentFixture<InventoryPage>;
+describe('MachineryCreateForm', () => {
+  let component: MachineryCreateForm;
+  let fixture: ComponentFixture<MachineryCreateForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InventoryPage],
+      imports: [MachineryCreateForm],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(InventoryPage);
+    fixture = TestBed.createComponent(MachineryCreateForm);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

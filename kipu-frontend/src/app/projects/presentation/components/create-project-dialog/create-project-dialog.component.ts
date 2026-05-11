@@ -9,7 +9,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogRef, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { catchError, map, Observable, of, switchMap, timer } from 'rxjs';
 import { ProjectsStore } from '../../../application/projects.store';
-import { ProjectSuccessDialogComponent } from '../project-success-dialog/project-success-dialog.component';
+import { SuccessDialog } from '../../../../shared/presentation/success-dialog/success-dialog';
 
 @Component({
   selector: 'app-create-project-dialog',
@@ -22,7 +22,7 @@ import { ProjectSuccessDialogComponent } from '../project-success-dialog/project
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   templateUrl: './create-project-dialog.component.html',
 })
@@ -61,14 +61,15 @@ export class CreateProjectDialogComponent {
       return;
     }
 
-    const { name, description, status, startDate, endDate, estimatedBudget, location } = this.projectForm.value;
+    const { name, description, status, startDate, endDate, estimatedBudget, location } =
+      this.projectForm.value;
 
     const placeholderImages = [
       'project-image1.png',
       'project-image2.png',
       'project-image3.png',
       'project-image4.jpg',
-      'project-image5.png'
+      'project-image5.png',
     ];
     const randomImage = placeholderImages[Math.floor(Math.random() * placeholderImages.length)];
 
@@ -86,15 +87,20 @@ export class CreateProjectDialogComponent {
       imageUrl: randomImage,
     };
 
-    // Assuming the store calls API and handles it internally. 
+    // Assuming the store calls API and handles it internally.
     // In a real app we might want to wait for the subscription, but the store abstraction doesn't return an observable from addProject.
     // Wait, addProject in store.ts adds to signal asynchronously, so the project gets created.
     this.projectsStore.addProject(project);
 
     this.dialogRef.close();
-    this.dialog.open(ProjectSuccessDialogComponent, {
+    this.dialog.open(SuccessDialog, {
       width: '400px',
-      disableClose: true
+      disableClose: true,
+      data: {
+        title: '¡Proyecto Creado!',
+        subtitle: 'El nuevo proyecto ha sido registrado y está listo para ser gestionado.',
+        textButton: 'Entendido',
+      },
     });
   }
 }

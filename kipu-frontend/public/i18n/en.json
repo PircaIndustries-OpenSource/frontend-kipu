@@ -1,6 +1,7 @@
 {
   "general": {
-    "summary": "Summary"
+    "summary": "Summary",
+    "cancel": "Cancel"
   },
   "inventory": {
     "tab-inventory": "Inventory",
@@ -35,7 +36,7 @@
     "summary": {
       "pending": "Pending",
       "approved-today": "Approved today",
-      "rejected": "Rejected"
+      "rejected": "Refused"
     },
     "filters": {
       "title": "Quick Filters",
@@ -68,7 +69,8 @@
         "requester": "Requester",
         "budget-line": "Budget Line",
         "required-date": "Required Date",
-        "in-days": "In {{days}} days"
+        "in-days": "In {{days}} days",
+        "time-exceeded": "Time exceeded"
       },
       "purpose": {
         "title": "Purpose/Use"
@@ -128,7 +130,9 @@
         "additional-notes": "Technical specs, preferred brand, etc...",
         "dropzone": "Drag files here or click to select",
         "dropzone-hint": "PDF, DOC, XLS, images (Max. 10MB)",
-        "unit-empty": "Select a material first"
+        "unit-empty": "Select a material first",
+        "select-category-first": "Please select a category first",
+        "select-material-first": "Please select a material first"
       },
       "budget-verification": {
         "title": "Budget Verification",
@@ -148,14 +152,46 @@
         "title": "Success!",
         "message": "Request successfully submitted",
         "close": "Close"
+      },
+      "validation": {
+        "category-required": "Category is required.",
+        "material-required": "Material is required.",
+        "supplier-required": "Supplier is required.",
+        "budget-line-required": "Budget line is required.",
+        "quantity-required": "Quantity is required.",
+        "quantity-min": "Quantity must be greater than 0.",
+        "priority-required": "Priority is required.",
+        "date-required": "Required date is mandatory.",
+        "location-required": "Delivery location is mandatory.",
+        "purpose-required": "Purpose is mandatory."
+      }
+    },
+    "modify": {
+      "title": "Request Modification",
+      "btn-save": "Save Changes",
+      "btn-cancel": "Cancel"
+    },
+    "detail": {
+      "title": "Full Request Detail",
+      "btn-close": "Close",
+      "remaining-days": "{{days}}d remaining",
+      "per-unit": "/ unit",
+      "total-investment": "Total Investment",
+      "budget-validated": "Validated Budget",
+      "section": {
+        "material-info": "Material Information",
+        "logistics": "Logistics & Assignment"
       }
     }
   },
   "suppliers": {
     "title": "Supplier Directory",
     "button-create": "Register new supplier",
+    "search-ruc": "Search by RUC",
+    "search-ruc-placeholder": "Enter supplier RUC",
     "summary": {
-      "active": "Active"
+      "active": "Active",
+      "inactive": "Inactive"
     },
     "card": {
       "ruc": "RUC",
@@ -168,8 +204,51 @@
       "payment-terms": "Standard Payment Terms",
       "actions": {
         "button-edit": "Edit supplier",
-        "button-add": "Add new supplier"
+        "button-add": "Add new supplier",
+        "button-delete": "Delete supplier"
+      },
+      "delete": {
+        "title": "Delete Supplier",
+        "subtitle": "Are you sure?",
+        "confirm": "Confirm",
+        "cancel": "Cancel"
       }
+    },
+    "create": {
+      "title": "Register New Supplier",
+      "ruc-label": "RUC",
+      "ruc-placeholder": "11 digits",
+      "ruc-required": "RUC is required.",
+      "ruc-invalid": "RUC must have 11 digits.",
+      "social-reason-label": "Business Name",
+      "social-reason-placeholder": "e.g., Aceros Arequipa S.A.",
+      "social-reason-required": "Business name is required.",
+      "contact-label": "Main Contact",
+      "contact-placeholder": "Contact name",
+      "contact-required": "Contact is required.",
+      "phone-label": "Phone",
+      "phone-placeholder": "e.g., +51 987 654 321",
+      "phone-required": "Phone is required.",
+      "email-label": "Email",
+      "email-placeholder": "supplier@company.com",
+      "email-required": "Email is required.",
+      "email-invalid": "Please enter a valid email.",
+      "categories-label": "Categories",
+      "categories-placeholder": "e.g., Steel, Cement",
+      "categories-required": "Categories are required.",
+      "payment-terms-label": "Payment Terms",
+      "payment-terms-placeholder": "e.g., 30 days, Cash",
+      "payment-terms-required": "Payment terms are required.",
+      "status-label": "Status",
+      "status-active": "Active",
+      "status-inactive": "Inactive",
+      "btn-save": "Save Supplier",
+      "btn-cancel": "Cancel"
+    },
+    "edit": {
+      "title": "Edit Supplier",
+      "btn-save": "Save Changes",
+      "btn-cancel": "Cancel"
     }
   },
   "machinery": {
@@ -182,14 +261,18 @@
     "filter": {
       "show-all": "Show all",
       "critical-equipment": "Critical equipment",
-      "only-assigned": "Only Assigned"
+      "only-assigned": "Only Assigned",
+      "unassigned": "Unassigned"
     },
     "card": {
       "header": {
         "registration": "Registration",
+        "history": "History",
         "status": {
           "in-use": "In use",
-          "urgent": "URGENT MAINTENANCE"
+          "urgent": "URGENT MAINTENANCE",
+          "available": "Available",
+          "maintenance": "In Maintenance"
         }
       },
       "fields": {
@@ -210,6 +293,56 @@
       "total": "Total Tools",
       "in-use": "In Use",
       "maintenance": "Requires Maintenance"
+    },
+    "create": {
+      "title": "Add Machinery",
+      "name-label": "Equipment Name",
+      "name-placeholder": "e.g., CAT 320 Excavator",
+      "name-required": "Equipment name is required.",
+      "physical-status-label": "Physical Status",
+      "physical-status-placeholder": "e.g., Operational, Good condition",
+      "physical-status-required": "Physical status is required.",
+      "status-label": "Status",
+      "status-available": "Available",
+      "status-in-use": "In Use",
+      "status-urgent-maintenance": "Urgent Maintenance",
+      "status-required": "Status is required.",
+      "maintenance-hours-label": "Maintenance Hours",
+      "maintenance-hours-placeholder": "e.g., 150",
+      "maintenance-hours-required": "Maintenance hours are required.",
+      "assignment-detail-label": "Assignment Detail",
+      "assignment-detail-placeholder": "Describe the equipment assignment...",
+      "worker-label": "Assign to Worker (optional)",
+      "worker-none": "None",
+        "assignment-detail-required": "Assignment detail is required.",
+        "btn-save": "Save Equipment",
+        "btn-cancel": "Cancel"
+    },
+    "assign": {
+      "title": "Assign Operator",
+      "worker-label": "Select Worker",
+      "worker-required": "You must select a worker.",
+      "btn-cancel": "Cancel",
+      "btn-assign": "Assign"
+    },
+    "maintenance": {
+      "title": "Register Maintenance",
+      "physical-status-label": "Current Physical Status",
+      "physical-status-placeholder": "e.g., Tire wear",
+      "physical-status-required": "Physical status is required.",
+      "hours-label": "Maintenance Hours",
+      "hours-placeholder": "e.g., 200",
+        "hours-required": "Maintenance hours are required.",
+        "hours-min": "Hours must be greater than 0.",
+        "btn-save": "Register Maintenance",
+      "btn-cancel": "Cancel"
+    },
+    "history": {
+      "title": "Assignment History",
+      "current-status": "Current status",
+      "assignment-log": "Assignment Log",
+      "no-records": "No historical records for this equipment.",
+      "btn-close": "Close"
     }
   },
   "budget": {
@@ -259,8 +392,12 @@
     }
   },
   "waste": {
-    "title": "Waste Registry",
+    "title": "Waste Records",
     "button-report": "Report Damaged Material",
+    "date-range-label": "Filter by date range",
+    "date-start-placeholder": "Start date",
+    "date-end-placeholder": "End date",
+    "date-hint": "MM/DD/YYYY – MM/DD/YYYY",
     "summary": {
       "title": "Summary",
       "damaged": "Damaged"
@@ -280,6 +417,30 @@
       },
       "actions": {
         "view-photo": "View attached photo"
+      },
+      "create": {
+        "title": "Report Waste",
+        "material-label": "Affected Material",
+        "material-required": "You must select a material.",
+        "quantity-label": "Quantity",
+        "quantity-required": "Quantity is required.",
+        "quantity-min": "Quantity must be greater than 0.",
+        "unit-label": "Unit",
+        "unit-placeholder": "e.g., kg, m, unit",
+        "unit-required": "Unit is required.",
+        "classification-label": "Classification Type",
+        "classification-placeholder": "e.g., Damaged, Expired, Loss",
+        "classification-required": "Classification is required.",
+        "date-label": "Report Date",
+        "date-required": "Date is required.",
+        "description-label": "Reason Description",
+        "description-placeholder": "Describe why this material is being deducted...",
+        "description-required": "Description is required.",
+        "reported-by-label": "Reported by",
+        "reported-by-placeholder": "Name of the reporter",
+        "reported-by-required": "Reporter name is required.",
+        "btn-save": "Report Waste",
+        "btn-cancel": "Cancel"
       }
     }
   },

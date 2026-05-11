@@ -2,12 +2,19 @@
   <div class="bg-primary! text-white! px-xl! py-m! flex flex-row justify-between items-center m-0!">
     <div class="flex flex-row items-center gap-m">
       <span class="font-bold text-xl">{{ item().id }}</span>
-      <span class="text-xs font-bold tracking-widest uppercase">
-        {{ (item().status === 'IN_USE' ? 'machinery.card.header.status.in-use' : 'machinery.card.header.status.urgent') | translate }}
+      <span class="text-xs font-bold tracking-widest uppercase bg-white/20 px-2 py-0.5 rounded">
+        {{ statusKey | translate }}
       </span>
     </div>
-    <div class="text-sm opacity-80">
-      {{ 'machinery.card.header.registration' | translate }}: {{ item().registrationDate }}
+    <div class="flex flex-row items-center gap-m">
+      <span class="text-sm opacity-80">
+        {{ 'machinery.card.header.registration' | translate }}: {{ item().registrationDate }}
+      </span>
+      <button (click)="openHistory()"
+              class="bg-white/20 hover:bg-white/30 text-white rounded-full w-8 h-8 flex items-center justify-center cursor-pointer transition-colors"
+              [title]="'machinery.card.header.history' | translate">
+        <mat-icon class="text-lg">history</mat-icon>
+      </button>
     </div>
   </div>
   <mat-card-content class="p-xl! flex! flex-col gap-xl! m-0!">
@@ -16,13 +23,10 @@
         <p class="text-xs text-neutral-border font-medium">{{ 'machinery.card.fields.equipment' | translate }}</p>
         <p class="font-bold text-lg text-primary">{{ item().name }}</p>
       </div>
-      <div class="flex flex-col gap-1">
-        <p class="text-xs text-neutral-border font-medium">{{ 'machinery.card.fields.physical-status' | translate }}</p>
-        <p class="text-base font-medium text-primary">{{ item().physicalStatus }}</p>
-      </div>
+
       <div class="flex flex-col gap-1">
         <p class="text-xs text-neutral-border font-medium">{{ 'machinery.card.fields.assigned' | translate }}</p>
-        <p class="text-base font-medium text-primary">{{ item().assignedTo }}</p>
+        <p class="text-base font-medium text-primary">{{ item().assignedTo || '-' }}</p>
       </div>
       <div class="flex flex-col gap-1">
         <p class="text-xs text-neutral-border font-medium">{{ 'machinery.card.fields.maintenance' | translate }}</p>
@@ -36,19 +40,19 @@
   </mat-card-content>
   <mat-card-actions class="px-xl! pb-xl! pt-0! flex! flex-row gap-l! w-full justify-between m-0!">
     @if (item().status === 'IN_USE') {
-      <button class="flex-1 bg-accent! text-white! font-bold! rounded-m! py-s! cursor-pointer transition-base hover:brightness-110">
+      <button (click)="registerReturn()"
+              class="flex-1 bg-accent! text-white! font-bold! rounded-m! py-s! cursor-pointer transition-base hover:brightness-110">
         {{ 'machinery.card.actions.return' | translate }}
       </button>
-      <button class="flex-1 bg-neutral-border! bg-opacity-80! text-primary! font-medium! rounded-m! py-s! cursor-pointer">
-        {{ 'machinery.card.actions.history' | translate }}
-      </button>
     } @else {
-      <button class="flex-1 bg-danger! text-white! font-bold! rounded-m! py-s! cursor-pointer transition-base hover:brightness-110">
-        {{ 'machinery.card.actions.maintenance' | translate }}
-      </button>
-      <button class="flex-1 bg-neutral-border! bg-opacity-80! text-primary! font-medium! rounded-m! py-s! cursor-pointer">
+      <button (click)="openAssign()"
+              class="flex-1 bg-accent! text-white! font-bold! rounded-m! py-s! cursor-pointer transition-base hover:brightness-110">
         {{ 'machinery.card.actions.assign' | translate }}
       </button>
     }
+    <button (click)="registerMaintenance()"
+            class="flex-1 bg-danger! text-white! font-bold! rounded-m! py-s! cursor-pointer transition-base hover:brightness-110">
+      {{ 'machinery.card.actions.maintenance' | translate }}
+    </button>
   </mat-card-actions>
 </mat-card>

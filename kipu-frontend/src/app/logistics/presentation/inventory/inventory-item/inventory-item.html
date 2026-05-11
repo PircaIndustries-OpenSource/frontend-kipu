@@ -1,5 +1,5 @@
-<mat-card class="bg-white! border! rounded-m! w-full h-80! overflow-hidden! flex! flex-col p-0! mb-l transition-all duration-200 hover:shadow-md">
-  <div class="px-xl! py-m! flex flex-row justify-between items-center m-0!">
+<mat-card class="bg-neutral-bg! border! rounded-m! w-full h-70! overflow-hidden! flex! flex-col p-0! mb-l transition-all duration-200 hover:shadow-md">
+  <div class="px-xl! py-m! flex flex-row justify-between items-center m-0! bg-primary text-neutral-bg">
     <div class="flex flex-row items-center gap-m">
       <span class="font-bold text-xl">{{inventoryMaterial().id}}</span>
     </div>
@@ -13,32 +13,29 @@
       <div class="flex flex-col gap-1">
         <p class="text-xs text-neutral-border font-medium">{{'inventory.card.equipment'|translate}}</p>
         <p class="font-bold text-lg text-primary h-3xl">{{inventoryMaterial().materialName}}</p>
-        <p class="text-xs text-neutral-border italic">{{inventoryMaterial().materialSubcategory || '---'}}</p>
       </div>
       <div class="flex flex-col gap-1">
         <p class="text-xs text-neutral-border font-medium">{{'inventory.card.min-limit' | translate}}</p>
-        <p class="font-medium text-xl text-primary">{{inventoryMaterial().miniumStock}} {{inventoryMaterial().materialUnit}}</p>
+        <p class="font-bold text-lg text-primary h-3xl">{{inventoryMaterial().miniumStock}} {{inventoryMaterial().materialUnit}}</p>
       </div>
       <div class="flex flex-col gap-1">
         <p class="text-xs text-neutral-border font-medium">{{'inventory.card.current-stock' | translate}}</p>
         <div class="flex items-baseline gap-2">
-          <p class="font-bold text-xl">
-            {{inventoryMaterial().currentStock}}
-          </p>
+          @if(inventoryMaterial().currentStock < inventoryMaterial().miniumStock){
+            <p class="font-bold text-lg h-3xl text-danger">
+              {{inventoryMaterial().currentStock}}
+            </p>
+          } @else {
+            <p class="font-bold text-lg text-primary h-3xl">
+              {{inventoryMaterial().currentStock}}
+            </p>
+          }
           <span class="text-sm font-medium text-neutral-border">{{inventoryMaterial().materialUnit}}</span>
         </div>
       </div>
     </div>
   </mat-card-content>
-  <mat-card-actions class="px-xl! pb-xl! pt-0! flex! flex-row gap-m! w-full m-0!">
-    <button matRipple
-            class="flex-1 bg-accent text-white! py-s! rounded-m! font-bold! cursor-pointer transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2">
-      <mat-icon class="text-sm! w-4! h-4!">add_circle</mat-icon>
-      {{'inventory.card.actions.add-stock'|translate}}
-    </button>
-    <button matRipple
-            class="flex-1 border-2! border-neutral-border/30! text-primary! py-s! rounded-m! font-medium! cursor-pointer hover:bg-neutral-bg">
-      {{'request.card.actions.view-details'|translate}}
-    </button>
-  </mat-card-actions>
+  <mat-card-footer>
+    <p class="px-xl! text-xs text-neutral-border italic font-bold">{{inventoryMaterial().materialSubcategory || '---'}}</p>
+  </mat-card-footer>
 </mat-card>

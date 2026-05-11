@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SupplierItem } from './supplier-item';
+import { RequestDetailDialog } from './request-detail-dialog';
 
-describe('SupplierItem', () => {
-  let component: SupplierItem;
-  let fixture: ComponentFixture<SupplierItem>;
+describe('RequestDetailDialog', () => {
+  let component: RequestDetailDialog;
+  let fixture: ComponentFixture<RequestDetailDialog>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SupplierItem],
+      imports: [RequestDetailDialog],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SupplierItem);
+    fixture = TestBed.createComponent(RequestDetailDialog);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

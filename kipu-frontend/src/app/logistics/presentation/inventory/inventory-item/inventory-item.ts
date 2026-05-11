@@ -3,7 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatRipple } from '@angular/material/core';
-import { InventoryViewModel } from '../../../domain/inventoryMaterial.entity';
+import { InventoryView } from '../../../application/logistics.store';
 
 @Component({
   selector: 'app-inventory-item',
@@ -12,5 +12,5 @@ import { InventoryViewModel } from '../../../domain/inventoryMaterial.entity';
   styleUrl: './inventory-item.css',
 })
 export class InventoryItem {
-  inventoryMaterial = input.required<InventoryViewModel>();
+  inventoryMaterial = input.required<InventoryView>();
 }

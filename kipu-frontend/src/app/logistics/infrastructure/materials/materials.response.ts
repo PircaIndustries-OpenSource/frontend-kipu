@@ -2,7 +2,7 @@ export type MaterialsResponse = MaterialResource[];
 export interface MaterialResource {
   id: string;
   name: string;
-  category: string;
+  categoryId: string;
   subcategory: string;
   measureUnit: string;
 }
