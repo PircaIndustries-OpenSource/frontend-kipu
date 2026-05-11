@@ -1,72 +1,183 @@
-<div class="p-6 bg-gray-50 min-h-screen font-inter">
+<div class="p-8 bg-gray-50 min-h-screen">
 
-  <div class="flex justify-between items-center mb-8 border-b border-gray-200 pb-5">
-    <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">
-      {{ 'progress.title' | translate }}
-    </h1>
-    <button mat-flat-button color="primary" class="!rounded-full px-6 font-semibold text-sm">
-      {{ 'progress.actions.viewAll' | translate }}
-    </button>
-  </div>
+  @if (currentView() === 'list') {
+    <div class="flex justify-between items-center mb-6">
+      <div>
+        <h1 class="text-2xl font-bold text-gray-800">{{ 'progress.title' | translate }}</h1>
+        <p class="text-sm text-gray-500">{{ 'progress.subtitle' | translate }}</p>
+      </div>
+      <button mat-flat-button color="primary" class="!rounded-lg !py-6" (click)="openCreateForm()">
+        <mat-icon>add</mat-icon> {{ 'progress.actions.new' | translate }}
+      </button>
+    </div>
 
-  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-    <table class="w-full text-left border-collapse">
-      <thead class="bg-gray-50 border-b border-gray-100">
-      <tr>
-        <th class="px-6 py-4 text-xs uppercase font-bold text-gray-500 tracking-wider w-20">
-          {{ 'progress.table.id' | translate }}
-        </th>
-        <th class="px-6 py-4 text-xs uppercase font-bold text-gray-500 tracking-wider">
-          {{ 'progress.table.name' | translate }}
-        </th>
-        <th class="px-6 py-4 text-xs uppercase font-bold text-gray-500 tracking-wider">
-          {{ 'progress.table.location' | translate }}
-        </th>
-        <th class="px-6 py-4 text-xs uppercase font-bold text-gray-500 tracking-wider w-48">
-          {{ 'progress.table.progress' | translate }}
-        </th>
-        <th class="px-6 py-4 text-xs uppercase font-bold text-gray-500 tracking-wider">
-          {{ 'progress.table.status' | translate }}
-        </th>
-        <th class="px-6 py-4 w-16 text-center text-xs uppercase font-bold text-gray-500 tracking-wider">
-          {{ 'progress.table.actions' | translate }}
-        </th>
-      </tr>
-      </thead>
+    <mat-tab-group animationDuration="0ms" class="bg-white rounded-t-xl shadow-sm border-b border-gray-100">
 
-      <tbody class="divide-y divide-gray-100">
-        @for (project of projects(); track project.id) {
-          <tr class="hover:bg-gray-50/50 transition-colors duration-150">
-            <td class="px-6 py-4 text-sm font-mono text-gray-400">
-              00{{ project.id }}
-            </td>
-            <td class="px-6 py-4 text-sm font-bold text-gray-900">
-              {{ project.projectName }}
-            </td>
-            <td class="px-6 py-4 text-sm text-gray-600">
-              {{ project.location }}
-            </td>
-            <td class="px-6 py-4">
-              <div class="flex items-center gap-3">
-                <div class="w-full bg-gray-200 rounded-full h-2.5">
-                  <div class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" [style.width.%]="project.currentPercentage"></div>
-                </div>
-                <span class="text-xs font-bold text-gray-700 w-8">{{ project.currentPercentage }}%</span>
-              </div>
-            </td>
-            <td class="px-6 py-4">
-              <span [class]="getStatusBadgeClass(project.status)">
-                {{ getStatusKey(project.status) | translate }}
-              </span>
-            </td>
-            <td class="px-6 py-4 text-center">
-              <button mat-icon-button class="!text-gray-400">
-                <mat-icon>more_vert</mat-icon>
-              </button>
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
-  </div>
+      <mat-tab [label]="'progress.tabs.log' | translate">
+        <div class="p-6">
+          <div class="flex flex-wrap gap-4 mb-6 items-center">
+            <div class="w-[280px]">
+              <app-autocomplete-filter-list
+                [listOptions]="activityOptions"
+                [placeholder]="'progress.filters.activity' | translate"
+                (optionSelected)="onSearchChange($event)">
+              </app-autocomplete-filter-list>
+            </div>
+            <div class="w-[280px]">
+              <app-autocomplete-filter-list
+                [listOptions]="specialtiesOptions"
+                [placeholder]="'progress.filters.specialty' | translate"
+                (optionSelected)="onSpecialtySelected($event)">
+              </app-autocomplete-filter-list>
+            </div>
+            <div class="w-[300px]">
+              <mat-form-field appearance="outline" class="w-full bg-white !mb-[-1.25em]">
+                <mat-date-range-input [rangePicker]="picker">
+                  <input matStartDate [placeholder]="'progress.filters.start_date' | translate" #startInput>
+                  <input matEndDate [placeholder]="'progress.filters.end_date' | translate" #endInput (dateChange)="onDateRangeChange(startInput.valueAsDate, endInput.valueAsDate)">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="border border-gray-100 rounded-lg overflow-hidden">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-gray-50 text-gray-400 uppercase font-semibold text-xs">
+              <tr>
+                <th class="px-6 py-4">{{ 'progress.table.date' | translate }}</th>
+                <th class="px-6 py-4">{{ 'progress.table.activity' | translate }}</th>
+                <th class="px-6 py-4">{{ 'progress.table.specialty' | translate }}</th>
+                <th class="px-6 py-4">{{ 'progress.table.advance' | translate }}</th>
+                <th class="px-6 py-4">{{ 'progress.table.status' | translate }}</th>
+                <th class="px-6 py-4"></th>
+              </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                @for (item of store.progressList(); track item.id) {
+                  <tr class="hover:bg-gray-50 transition-colors">
+                    <td class="px-6 py-4">{{ item.lastUpdate | date:'dd/MM/yyyy' }}</td>
+                    <td class="px-6 py-4">
+                      <div class="font-bold text-gray-800">{{ item.activityName }}</div>
+                      <div class="text-xs text-gray-400 font-normal">{{ item.details }}</div>
+                    </td>
+                    <td class="px-6 py-4 text-gray-500">{{ item.specialty }}</td>
+                    <td class="px-6 py-4 font-bold">{{ item.currentPercentage }}%</td>
+                    <td class="px-6 py-4">
+                      <span [class]="getStatusBadgeClass(item.status)">
+                        {{ 'progress.status.' + item.status.toLowerCase() | translate }}
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 text-right"><mat-icon class="text-gray-300">chevron_right</mat-icon></td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab [label]="'progress.tabs.photos' | translate">
+        <div class="p-6">
+          <div class="flex justify-between items-center mb-6">
+            <div class="flex gap-2">
+              <button mat-stroked-button class="!rounded-md !text-blue-500 !border-blue-500">Excavaciones</button>
+              <button mat-stroked-button class="!rounded-md !text-blue-500 !border-blue-500">Cimentación</button>
+            </div>
+            <div class="flex gap-2">
+              <button mat-button class="text-gray-500"><mat-icon>download</mat-icon> {{ 'progress.actions.export' | translate }}</button>
+              <button mat-flat-button class="!bg-gray-800 !text-white !rounded-md"><mat-icon>add</mat-icon> {{ 'progress.actions.upload' | translate }}</button>
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-4">
+            <div class="h-48 bg-gray-200 rounded-xl relative overflow-hidden bg-cover bg-center" style="background-image: url('https://placehold.co/600x400')"></div>
+            <div class="h-48 bg-gray-200 rounded-xl relative overflow-hidden bg-cover bg-center" style="background-image: url('https://placehold.co/600x400')"></div>
+            <div class="h-48 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center text-gray-400 cursor-pointer"><mat-icon>add</mat-icon></div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  }
+
+  @if (currentView() === 'create') {
+    <div class="flex gap-6">
+      <div class="flex-grow bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">{{ 'progress.form.title' | translate }}</h2>
+
+        <form [formGroup]="progressForm" class="grid grid-cols-2 gap-x-6 gap-y-4">
+          <div class="flex flex-col gap-1">
+            <label class="text-xs font-bold text-gray-400 uppercase">{{ 'progress.form.date' | translate }}</label>
+            <input type="date" formControlName="date" class="bg-gray-50 border border-gray-200 p-3 rounded-lg outline-none">
+          </div>
+          <div class="flex flex-col gap-1">
+            <label class="text-xs font-bold text-gray-400 uppercase">{{ 'progress.form.specialty' | translate }}</label>
+            <select formControlName="specialty" class="bg-gray-50 border border-gray-200 p-3 rounded-lg outline-none">
+              <option value="">{{ 'progress.form.specialty' | translate }}</option>
+              @for (opt of specialtiesOptions; track opt) { <option [value]="opt">{{opt}}</option> }
+            </select>
+          </div>
+          <div class="col-span-2 flex flex-col gap-1">
+            <label class="text-xs font-bold text-gray-400 uppercase">{{ 'progress.form.activity' | translate }}</label>
+            <input type="text" formControlName="activityName" [placeholder]="'progress.form.activity_placeholder' | translate" class="bg-gray-50 border border-gray-200 p-3 rounded-lg outline-none">
+          </div>
+          <div class="flex flex-col gap-1">
+            <label class="text-xs font-bold text-gray-400 uppercase">{{ 'progress.form.location' | translate }}</label>
+            <input type="text" formControlName="location" [placeholder]="'progress.form.location_placeholder' | translate" class="bg-gray-50 border border-gray-200 p-3 rounded-lg outline-none">
+          </div>
+          <div class="flex flex-col gap-1">
+            <label class="text-xs font-bold text-gray-400 uppercase">{{ 'progress.form.percentage' | translate }}</label>
+            <div class="relative"><input type="number" formControlName="percentage" class="bg-gray-50 border border-gray-200 p-3 rounded-lg outline-none w-full pr-10"><span class="absolute right-4 top-3 text-gray-400 font-bold">%</span></div>
+          </div>
+          <div class="col-span-2 flex flex-col gap-1">
+            <label class="text-xs font-bold text-gray-400 uppercase">{{ 'progress.form.description' | translate }}</label>
+            <textarea formControlName="description" rows="4" [placeholder]="'progress.form.description_placeholder' | translate" class="bg-gray-50 border border-gray-200 p-3 rounded-lg outline-none resize-none"></textarea>
+          </div>
+          <div class="flex flex-col gap-1">
+            <label class="text-xs font-bold text-gray-400 uppercase">{{ 'progress.form.responsible' | translate }}</label>
+            <input type="text" formControlName="responsible" class="bg-gray-50 border border-gray-200 p-3 rounded-lg outline-none">
+          </div>
+          <div class="flex flex-col gap-1">
+            <label class="text-xs font-bold text-gray-400 uppercase">{{ 'progress.form.workers' | translate }}</label>
+            <input type="number" formControlName="workers" class="bg-gray-50 border border-gray-200 p-3 rounded-lg outline-none">
+          </div>
+          <div class="col-span-2 flex flex-col gap-2 mt-2">
+            <label class="text-xs font-bold text-gray-400 uppercase">{{ 'progress.form.weather.label' | translate }}</label>
+            <div class="flex gap-2">
+              <button type="button" (click)="setWeather('sunny')" [class]="selectedWeather() === 'sunny' ? 'bg-gray-800 text-white' : 'border border-gray-200 text-gray-600'" class="px-6 py-2 rounded-md text-sm font-medium transition-colors">{{ 'progress.form.weather.sunny' | translate }}</button>
+              <button type="button" (click)="setWeather('cloudy')" [class]="selectedWeather() === 'cloudy' ? 'bg-gray-800 text-white' : 'border border-gray-200 text-gray-600'" class="px-6 py-2 rounded-md text-sm font-medium transition-colors">{{ 'progress.form.weather.cloudy' | translate }}</button>
+              <button type="button" (click)="setWeather('rainy')" [class]="selectedWeather() === 'rainy' ? 'bg-gray-800 text-white' : 'border border-gray-200 text-gray-600'" class="px-6 py-2 rounded-md text-sm font-medium transition-colors">{{ 'progress.form.weather.rainy' | translate }}</button>
+            </div>
+          </div>
+        </form>
+
+        <div class="mt-10 flex gap-4">
+          <button mat-flat-button class="!bg-gray-800 !text-white !py-6 flex-grow rounded-lg text-lg font-bold" (click)="saveProgress()">{{ 'progress.actions.save' | translate }}</button>
+          <button mat-button class="w-1/4 text-gray-500 font-bold" (click)="cancelCreation()">{{ 'progress.actions.cancel' | translate }}</button>
+        </div>
+      </div>
+      <div class="w-[350px] flex flex-col gap-6">
+        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm h-fit">
+          <h3 class="font-bold text-gray-800 text-sm mb-4">Daily Statistics</h3>
+          <div class="flex flex-col gap-3 text-sm text-gray-600">
+            <div class="flex justify-between border-b pb-2"><span>Personnel on site:</span> <strong>18</strong></div>
+            <div class="flex justify-between"><span>Weather:</span> <strong>Sunny 25°C</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <ng-template #confirmDialogTemplate>
+    <div class="p-6 text-center">
+      <h2 class="text-xl font-bold mb-2">{{ 'progress.dialog.title' | translate }}</h2>
+      <p class="text-gray-800 font-medium">{{ 'progress.dialog.question' | translate }}</p>
+      <p class="text-xs text-gray-400 mt-1">{{ 'progress.dialog.warning' | translate }}</p>
+      <div class="flex gap-4 mt-8">
+        <button mat-stroked-button mat-dialog-close="discard" class="flex-grow !py-5">{{ 'progress.dialog.discard' | translate }}</button>
+        <button mat-flat-button color="primary" mat-dialog-close="save" class="flex-grow !py-5">{{ 'progress.dialog.save' | translate }}</button>
+      </div>
+    </div>
+  </ng-template>
+
 </div>

@@ -1,18 +1,23 @@
 /**
- * Domain entity representing the progress of a construction project.
+ * Complete domain entity for progress records.
+ * Includes scheduling, execution, and weather metrics.
  */
 export interface ProjectProgress {
   id: number;
   projectId: number;
   projectName: string;
-  location: string;
+  activityName: string;
+  details: string;
+  specialty: string;
   status: ProgressStatus;
-  imageUrl: string;
   currentPercentage: number;
+  startDate: Date;
+  endDate: Date;
   lastUpdate: Date;
+  // New fields from mockup
+  responsible?: string;
+  workers?: number;
+  weather?: string;
 }
 
-/**
- * Allowed statuses for a project's progress.
- */
-export type ProgressStatus = 'Active' | 'Progress' | 'Finished';
+export type ProgressStatus = 'Active' | 'Finished' | 'Delayed';
