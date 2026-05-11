@@ -31,7 +31,7 @@
               'bg-(--color-neutral-border)! text-(--color-text-main)! border-(--color-neutral-border)!'
             "
           >
-            {{data.priority}}
+            {{ 'request.create.priority.' + data.priority.toLowerCase() | translate }}
           </span>
         </div>
       </div>
@@ -44,7 +44,7 @@
     @if (remainingDays() <= 3 && remainingDays() > 0) {
       <div class="flex items-center gap-2 bg-white text-(--color-warning)! px-3 py-1.5 rounded-lg border border-(--color-warning)!">
         <mat-icon class="text-(--color-warning)! !w-5 !h-5 !text-xl">timer</mat-icon>
-        <span class="text-xs font-black italic">{{ remainingDays() }}d restantes</span>
+        <span class="text-xs font-black italic">{{ 'request.detail.remaining-days' | translate: { days: remainingDays() } }}</span>
       </div>
     }
   </header>
@@ -52,7 +52,7 @@
   <mat-dialog-content class="!p-8 !m-0 flex flex-col gap-8 bg-white overflow-y-auto max-h-[70vh]">
 
     <section class="flex flex-col gap-4">
-      <h3 class="text-[10px] font-black text-(--color-neutral-border)! uppercase tracking-widest border-b pb-2">Información del Material</h3>
+      <h3 class="text-[10px] font-black text-(--color-neutral-border)! uppercase tracking-widest border-b pb-2">{{ 'request.detail.section.material-info' | translate }}</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="p-6 border border-(--color-neutral-border)! rounded-xl flex items-center gap-4">
           <div class="p-3 bg-(--color-neutral-bg)! rounded-lg">
@@ -72,14 +72,14 @@
           <div class="flex flex-col">
             <span class="text-xs text-(--color-neutral-border)! font-bold uppercase tracking-tighter">{{ 'request.create.fields.quantity' | translate }}</span>
             <span class="text-lg font-black text-(--color-primary)!">{{ data.items[0]?.quantity }} {{ data.items[0]?.materialUnit }}</span>
-            <span class="text-xs text-(--color-text-main)! opacity-60">S/ {{ data.items[0]?.pricePerUnit | number }} / unidad</span>
+            <span class="text-xs text-(--color-text-main)! opacity-60">S/ {{ data.items[0]?.pricePerUnit | number }} {{ 'request.detail.per-unit' | translate }}</span>
           </div>
         </div>
       </div>
     </section>
 
     <section class="flex flex-col gap-4 mt-m mb-m">
-      <h3 class="text-[10px] font-black text-(--color-neutral-border)! uppercase tracking-widest border-b pb-2">Logística y Asignación</h3>
+      <h3 class="text-[10px] font-black text-(--color-neutral-border)! uppercase tracking-widest border-b pb-2">{{ 'request.detail.section.logistics' | translate }}</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="flex flex-col gap-1">
           <span class="text-[10px] font-bold text-(--color-neutral-border)! uppercase tracking-wider">{{ 'request.card.fields.requester' | translate }}</span>
@@ -116,7 +116,7 @@
     <section>
       <div class="bg-(--color-primary)! rounded-xl p-8 flex flex-row justify-between items-center">
         <div class="flex flex-col gap-1">
-          <span class="text-[10px] text-(--color-neutral-border)! uppercase font-black tracking-widest">Total de Inversión</span>
+          <span class="text-[10px] text-(--color-neutral-border)! uppercase font-black tracking-widest">{{ 'request.detail.total-investment' | translate }}</span>
           <div class="flex items-baseline gap-2">
             <span class="text-xs text-(--color-success)! font-bold">S/</span>
             <span class="text-4xl font-black text-white tracking-tighter">{{ totalRequested() | number }}</span>
@@ -126,7 +126,7 @@
         <div class="px-4 py-2 bg-(--color-success-soft)! border border-(--color-success)! rounded-lg flex items-center justify-center">
           <span class="text-(--color-success)! text-xs font-bold flex items-center gap-2 leading-none">
             <mat-icon class="!w-4 !h-4 !text-[16px] flex items-center justify-center">check_circle</mat-icon>
-            Presupuesto Validado
+            {{ 'request.detail.budget-validated' | translate }}
           </span>
         </div>
       </div>

@@ -29,6 +29,11 @@ export type InventoryView = InventoryMaterialEntity & {
   materialSubcategory: string;
 };
 
+export type WasteView = WasteEntity & {
+  materialName: string;
+  materialUnit: string;
+};
+
 @Injectable({
   providedIn: 'root',
 })
@@ -75,7 +80,16 @@ export class LogisticsStore {
   private inventorySignal = signal<InventoryMaterialEntity[]>([]);
   private criticalStockFilterSignal = signal<boolean>(false);
   readonly criticalStockFilter = computed(() => this.criticalStockFilterSignal());
-
+  private selectedInventoryMaterialSignal = signal<string>('');
+  readonly selectedInventoryMaterial = computed(() => this.selectedInventoryMaterialSignal());
+  getInventoryMaterialSelected = computed<InventoryView | undefined>(() => {
+    const inventoryMaterialNameSelected = this.selectedInventoryMaterialSignal();
+    const materials = this.inventoryView;
+    return materials().find((material) => material.materialName === inventoryMaterialNameSelected);
+  });
+  setInventorySelectedMaterial(inventoryMaterialName: string) {
+    this.selectedInventoryMaterialSignal.set(inventoryMaterialName);
+  }
   toggleCriticalStockFilter() {
     this.criticalStockFilterSignal.update((v) => !v);
   }
@@ -385,13 +399,26 @@ export class LogisticsStore {
       },
     });
   }
+  deleteSupplier(id: string) {
+    this.logisticsApi.deleteSupplier(id).subscribe({
+      next: () => {
+        this.suppliersSignal.update((prev) => prev.filter((s) => s.id !== id));
+      },
+      error: (err) => console.error('Error deleting supplier', err),
+    });
+  }
   numberSuppliersActive = computed(() => {
     const activeSuppliers = this.suppliersSignal().filter(
-      (supplier) => supplier.status === 'active',
+      (supplier) => supplier.status === 'ACTIVE',
     );
     return activeSuppliers.length;
   });
-
+  numberSuppliersInactive = computed(() => {
+    const inactiveSuppliers = this.suppliersSignal().filter(
+      (supplier) => supplier.status === 'INACTIVE',
+    );
+    return inactiveSuppliers.length;
+  });
   selectedSupplier = signal<string>('');
   setSelectedSupplier = (supplierSocialReason: string) => {
     this.selectedSupplier.set(supplierSocialReason);
@@ -400,9 +427,43 @@ export class LogisticsStore {
     const suppliers = this.suppliersSignal();
     return suppliers.find((s) => s.socialReason === this.selectedSupplier());
   });
+  private activeSupplierFilterSignal = signal<boolean>(false);
+  readonly activeSupplierFilter = computed(() => this.activeSupplierFilterSignal());
+
+  toggleActiveSupplierFilter() {
+    this.activeSupplierFilterSignal.update((v) => !v);
+    this.inactiveSupplierFilterSignal.set(false);
+  }
+  private inactiveSupplierFilterSignal = signal<boolean>(false);
+  readonly inactiveSupplierFilter = computed(() => this.inactiveSupplierFilterSignal());
+
+  toggleInactiveSupplierFilter() {
+    this.inactiveSupplierFilterSignal.update((v) => !v);
+    this.activeSupplierFilterSignal.set(false);
+  }
+  searchRuc = signal('');
+  readonly filteredSuppliers = computed(() => {
+    let result = this.suppliers();
+    const ruc = this.searchRuc().trim();
+    if (ruc) result = result.filter((s) => s.ruc.includes(ruc));
+    if (this.inactiveSupplierFilterSignal()) result = result.filter((s) => s.status === 'INACTIVE');
+    if (this.activeSupplierFilterSignal()) result = result.filter((s) => s.status === 'ACTIVE');
+    return result;
+  });
   //Waste
   wasteSignal = signal<WasteEntity[]>([]);
   readonly waste = computed(() => this.wasteSignal());
+  readonly wasteView = computed<WasteView[]>(() => {
+    const inventory = this.inventoryView();
+    return this.wasteSignal().map((w) => {
+      const material = inventory.find((i) => i.materialId === w.materialId);
+      return {
+        ...w,
+        materialName: material?.materialName ?? 'Unknown',
+        materialUnit: material?.materialUnit ?? '',
+      };
+    });
+  });
   loadWaste(force = false) {
     if (force || this.wasteSignal().length === 0) {
       this.logisticsApi.getAllWaste().subscribe((data) => {

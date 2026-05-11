@@ -10,12 +10,12 @@
   </header>
   <mat-form-field appearance="outline" class="w-full max-w-md">
     <mat-label>{{ 'suppliers.search-ruc' | translate }}</mat-label>
-    <input matInput [(ngModel)]="searchRuc" [placeholder]="'suppliers.search-ruc-placeholder' | translate">
+    <input matInput [value]="searchRuc()" (input)="onSearchRucChange($any($event.target).value)" [placeholder]="'suppliers.search-ruc-placeholder' | translate">
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
   <div class="flex flex-row gap-xl">
     <div class="flex-1 min-w-0 flex flex-col gap-l">
-      <app-supplier-list [suppliers]="filteredSuppliers()"></app-supplier-list>
+      <app-supplier-list [suppliers]="suppliers()"></app-supplier-list>
     </div>
     <aside class="w-64 flex flex-col gap-xl">
       <div class="flex flex-col gap-m">
@@ -24,8 +24,18 @@
           {{ 'general.summary' | translate }}
         </h3>
         <div class="flex flex-col items-center">
-          <app-summary-card [title]="'suppliers.summary.active' | translate" [value]="suppliersActive">
-          </app-summary-card>
+          <button (click)="toggleActiveSupplierFilter()">
+            <app-summary-card [title]="'suppliers.summary.active' | translate" [value]="suppliersActive()" [active]="activeSupplierFilter()">
+            </app-summary-card>
+          </button>
+
+        </div>
+        <div class="flex flex-col items-center">
+          <button (click)="toggleInactiveSupplierFilter()">
+            <app-summary-card [title]="'suppliers.summary.inactive' | translate" [value]="supplierInactive()"  [active]="inactiveSupplierFilter()">
+            </app-summary-card>
+          </button>
+
         </div>
       </div>
     </aside>

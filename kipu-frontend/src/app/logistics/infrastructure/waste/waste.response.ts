@@ -5,8 +5,6 @@ export interface WasteResource {
   projectId: string;
   materialId: string;
   quantity: number;
-  unit: string;
-  classificationType: string;
   date: string;
   description: string;
   reportedBy: string;

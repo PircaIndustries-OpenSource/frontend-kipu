@@ -5,6 +5,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { SupplierEntity } from '../../../domain/supplier.entity';
 import { SupplierEditDialog } from '../supplier-edit-dialog/supplier-edit-dialog';
 import { LogisticsStore } from '../../../application/logistics.store';
+import { ConfirmDialog } from '../../../../shared/presentation/confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-supplier-item',
@@ -25,6 +26,21 @@ export class SupplierItem {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.logisticsStore.updateSupplier(this.supplier().id, result);
+      }
+    });
+  }
+  deleteSupplier() {
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      width: '400px',
+      data: {
+        title: 'suppliers.card.delete.title',
+        subtitle: 'suppliers.card.delete.subtitle',
+        confirmText: 'suppliers.card.delete.confirm',
+      },
+    });
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (confirmed) {
+        this.logisticsStore.deleteSupplier(this.supplier().id);
       }
     });
   }

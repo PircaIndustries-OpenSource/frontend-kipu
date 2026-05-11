@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RequestSuccessDialog } from './request-success-dialog';
+import { SuccessDialog } from './success-dialog';
 
-describe('RequestSuccessDialog', () => {
-  let component: RequestSuccessDialog;
-  let fixture: ComponentFixture<RequestSuccessDialog>;
+describe('SuccessDialog', () => {
+  let component: SuccessDialog;
+  let fixture: ComponentFixture<SuccessDialog>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RequestSuccessDialog],
+      imports: [SuccessDialog],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(RequestSuccessDialog);
+    fixture = TestBed.createComponent(SuccessDialog);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

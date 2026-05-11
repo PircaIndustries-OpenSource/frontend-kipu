@@ -9,6 +9,7 @@ import { IdentityService } from '../../../infrastructure/identity.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { AuthBannerComponent } from '../../../../shared/presentation/components/auth-banner/auth-banner.component';
+import { AuthStore } from '../../../application/auth.store';
 
 @Component({
   selector: 'app-login',
@@ -22,11 +23,12 @@ import { AuthBannerComponent } from '../../../../shared/presentation/components/
     MatButtonModule,
     MatCheckboxModule,
     MatDividerModule,
-    AuthBannerComponent
+    AuthBannerComponent,
   ],
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
+  authStore = inject(AuthStore);
   loginForm: FormGroup;
   private fb = inject(FormBuilder);
   private identityService = inject(IdentityService);
@@ -45,7 +47,7 @@ export class LoginComponent {
       this.identityService.login(email, password).subscribe({
         next: (user) => {
           if (user) {
-            localStorage.setItem('currentUser', JSON.stringify(user));
+            this.authStore.login(user);
             this.router.navigate(['/verification']);
           } else {
             alert('Credenciales incorrectas');

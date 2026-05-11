@@ -1,5 +1,5 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { LogisticsStore } from '../../../application/logistics.store';
+import { LogisticsStore, WasteView } from '../../../application/logistics.store';
 import { WasteList } from '../waste-list/waste-list';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatIcon } from '@angular/material/icon';
@@ -24,7 +24,7 @@ export class WastePage implements OnInit {
   logisticsStore = inject(LogisticsStore);
   private dialog = inject(MatDialog);
 
-  waste = this.logisticsStore.waste;
+  waste = this.logisticsStore.wasteView;
   dateStart = signal<Date | null>(null);
   dateEnd = signal<Date | null>(null);
 
@@ -48,6 +48,8 @@ export class WastePage implements OnInit {
 
   ngOnInit() {
     this.logisticsStore.loadWaste();
+    this.logisticsStore.loadInventoryMaterials();
+    this.logisticsStore.loadMaterials();
   }
 
   openReportDialog() {

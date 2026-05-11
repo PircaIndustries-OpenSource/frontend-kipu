@@ -12,42 +12,32 @@
   </div>
   <mat-card-content class="p-xl! flex! flex-col gap-xl! m-0!">
     <div class="grid grid-cols-4 gap-l">
-      <div class="flex flex-col gap-1">
+      <div class="flex flex-col gap-1 min-w-0">
         <p class="text-xs text-neutral-border font-medium">{{ 'suppliers.card.social-reason' | translate }}</p>
-        <p class="font-bold text-lg text-primary">{{ supplier().socialReason}}</p>
+        <p class="font-bold text-lg text-primary truncate">{{ supplier().socialReason }}</p>
       </div>
-      <div class="flex flex-col gap-1">
+      <div class="flex flex-col gap-1 min-w-0">
         <p class="text-xs text-neutral-border font-medium">{{ 'suppliers.card.contact' | translate }}</p>
-        <p class="text-base font-medium text-primary">{{ supplier().contact }}</p>
+        <p class="text-base font-medium text-primary truncate">{{ supplier().contact }}</p>
       </div>
-      <div class="flex flex-col gap-1">
+      <div class="flex flex-col gap-1 min-w-0">
         <p class="text-xs text-neutral-border font-medium">{{ 'suppliers.card.phone' | translate }}</p>
-        <p class="text-base font-medium text-primary">{{ supplier().phone }}</p>
+        <p class="text-base font-medium text-primary truncate">{{ supplier().phone }}</p>
       </div>
-      <div class="flex flex-col gap-1">
+      <div class="flex flex-col gap-1 min-w-0">
         <p class="text-xs text-neutral-border font-medium">{{ 'suppliers.card.email' | translate }}</p>
-        <p class="font-bold text-base text-primary">{{ supplier().email }}</p>
+        <p class="font-bold text-base text-primary break-all">{{ supplier().email }}</p>
       </div>
     </div>
-
-    <!--
-    <div class="flex flex-row gap-l">
-      <div class="border! border-neutral-border! rounded-m! p-l! bg-neutral-bg! flex flex-cohl gap-s">
-        <p class="font-bold text-primary">{{ 'suppliers.card.categories' | translate }}</p>
-        <p class="text-sm text-primary leading-relaxed">{{ supplier().categories }}</p>
-      </div>
-      <div class="border! border-neutral-border! rounded-m! p-l! bg-neutral-bg! flex flex-cohl gap-s">
-        <p class="font-bold text-primary">{{ 'suppliers.card.payment-terms' | translate }}</p>
-        <p class="text-sm text-primary leading-relaxed">{{ supplier().paymentTerms }}</p>
-      </div>
-    </div>
-    -->
-
   </mat-card-content>
-  <mat-card-actions class=" pb-xl! pt-0! flex! w-[30%] self-start pl-xl!">
+  <mat-card-actions class=" pb-xl! pt-0! flex! w-[30%] self-start pl-xl! gap-m!">
     <button (click)="openEdit()"
             class="flex-1 bg-accent! text-white! font-bold! rounded-m! py-s! cursor-pointer transition-base hover:brightness-110">
       {{ 'suppliers.card.actions.button-edit' | translate }}
+    </button>
+    <button (click)="deleteSupplier()"
+            class="flex-1 bg-danger! text-white! font-bold! rounded-m! py-s! cursor-pointer transition-base hover:brightness-110">
+      {{ 'suppliers.card.actions.button-delete' | translate }}
     </button>
   </mat-card-actions>
 </mat-card>

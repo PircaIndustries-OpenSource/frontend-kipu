@@ -3,8 +3,6 @@ export class WasteEntity {
   projectId: string;
   materialId: string;
   quantity: number;
-  unit: string;
-  classificationType: string;
   date: string;
   description: string;
   reportedBy: string;
@@ -15,8 +13,6 @@ export class WasteEntity {
     this.projectId = '';
     this.materialId = '';
     this.quantity = 0;
-    this.unit = '';
-    this.classificationType = '';
     this.date = '';
     this.description = '';
     this.reportedBy = '';

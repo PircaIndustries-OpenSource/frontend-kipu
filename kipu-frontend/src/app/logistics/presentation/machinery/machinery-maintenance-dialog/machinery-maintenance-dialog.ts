@@ -11,8 +11,13 @@ import { TranslatePipe } from '@ngx-translate/core';
   selector: 'app-machinery-maintenance-dialog',
   standalone: true,
   imports: [
-    MatDialogModule, ReactiveFormsModule, MatFormFieldModule,
-    MatInputModule, MatButtonModule, MatIconModule, TranslatePipe,
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    TranslatePipe,
   ],
   templateUrl: './machinery-maintenance-dialog.html',
 })
@@ -22,7 +27,7 @@ export class MachineryMaintenanceDialog {
 
   maintenanceForm: FormGroup = this.fb.group({
     physicalStatus: ['', Validators.required],
-    maintenanceHours: ['', Validators.required],
+    maintenanceHours: ['1', [Validators.required, Validators.min(1)]],
   });
 
   onSave() {

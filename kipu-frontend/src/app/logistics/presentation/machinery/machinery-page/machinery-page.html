@@ -32,33 +32,24 @@
                             class="text-warning!"></app-summary-card>
         </div>
       </div>
-      <div class="bg-white border border-neutral-border/20 rounded-m p-xl shadow-sm
-                  flex flex-col gap-m">
+      <div class="bg-white border border-neutral-border/20 rounded-m p-xl shadow-sm flex flex-col gap-m">
         <h3 class="text-xs font-black text-primary uppercase tracking-widest">
           {{ 'machinery.tabs.filters' | translate }}
         </h3>
         <ul class="flex flex-col gap-m text-sm">
           <li (click)="setFilter('all')"
-              [class.bg-primary]="filterSignal() === 'all'"
-              [class.text-white]="filterSignal() === 'all'"
               class="px-m py-s border border-neutral-border/20 rounded-s text-sm font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
             {{'machinery.filter.show-all'|translate}}
           </li>
           <li (click)="setFilter('assigned')"
-              [class.bg-primary]="filterSignal() === 'assigned'"
-              [class.text-white]="filterSignal() === 'assigned'"
               class="px-m py-s border border-neutral-border/20 rounded-s text-sm font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
             {{'machinery.filter.only-assigned'|translate}}
           </li>
           <li (click)="setFilter('maintenance')"
-              [class.bg-primary]="filterSignal() === 'maintenance'"
-              [class.text-white]="filterSignal() === 'maintenance'"
               class="px-m py-s border border-neutral-border/20 rounded-s text-sm font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
             {{'machinery.filter.critical-equipment'|translate}}
           </li>
           <li (click)="setFilter('unassigned')"
-              [class.bg-primary]="filterSignal() === 'unassigned'"
-              [class.text-white]="filterSignal() === 'unassigned'"
               class="px-m py-s border border-neutral-border/20 rounded-s text-sm font-medium cursor-pointer hover:bg-neutral-bg hover:border-primary transition-all">
             {{'machinery.filter.unassigned'|translate}}
           </li>

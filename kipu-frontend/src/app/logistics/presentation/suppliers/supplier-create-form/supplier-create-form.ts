@@ -37,7 +37,7 @@ export class SupplierCreateForm {
     * categories: ['', Validators.required],
     paymentTerms: ['', Validators.required],
     * */
-    status: ['active'],
+    status: ['ACTIVE'],
   });
   onSave() {
     if (this.supplierForm.invalid) {

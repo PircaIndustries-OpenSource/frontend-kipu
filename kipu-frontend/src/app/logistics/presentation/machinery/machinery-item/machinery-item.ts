@@ -66,7 +66,6 @@ export class MachineryItem {
         this.logisticsStore.updateMachinery(this.item().id, {
           status: 'URGENT_MAINTENANCE',
           maintenanceHours: result.maintenanceHours,
-          physicalStatus: result.physicalStatus,
         });
       }
     });

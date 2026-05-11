@@ -1,6 +1,7 @@
 {
   "general": {
-    "summary": "Resumen"
+    "summary": "Resumen",
+    "cancel": "Cancelar"
   },
   "inventory": {
     "tab-inventory": "Inventario",
@@ -97,7 +98,8 @@
         "requester": "Solicitante",
         "budget-line": "Línea Presupuestaria",
         "required-date": "Fecha Requerida",
-        "in-days": "En {{days}} días"
+        "in-days": "En {{days}} días",
+        "time-exceeded": "Tiempo excedido"
       },
       "purpose": {
         "title": "Propósito / Uso"
@@ -157,7 +159,9 @@
         "additional-notes": "Especificaciones técnicas, marca preferida, etc...",
         "dropzone": "Arrastra archivos aquí o haz clic para seleccionar",
         "dropzone-hint": "PDF, DOC, XLS, imágenes (Máx. 10MB)",
-        "unit-empty": "Seleccione un material primero"
+        "unit-empty": "Seleccione un material primero",
+        "select-category-first": "Por favor selecciona una categoría",
+        "select-material-first": "Por favor selecciona un material"
       },
       "budget-verification": {
         "title": "Verificación Presupuestaria",
@@ -179,6 +183,10 @@
         "close": "Cerrar"
       },
       "validation": {
+        "category-required": "La categoría es obligatoria.",
+        "material-required": "El material es obligatorio.",
+        "supplier-required": "El proveedor es obligatorio.",
+        "budget-line-required": "La partida presupuestal es obligatoria.",
         "quantity-required": "La cantidad es obligatoria.",
         "quantity-min": "La cantidad debe ser mayor a 0.",
         "priority-required": "La prioridad es obligatoria.",
@@ -194,7 +202,15 @@
     },
     "detail": {
       "title": "Detalle Completo de la Solicitud",
-      "btn-close": "Cerrar"
+      "btn-close": "Cerrar",
+      "remaining-days": "{{days}}d restantes",
+      "per-unit": "/ unidad",
+      "total-investment": "Total de Inversión",
+      "budget-validated": "Presupuesto Validado",
+      "section": {
+        "material-info": "Información del Material",
+        "logistics": "Logística y Asignación"
+      }
     }
   },
   "suppliers": {
@@ -203,7 +219,8 @@
     "search-ruc": "Buscar por RUC",
     "search-ruc-placeholder": "Ingrese el RUC del proveedor",
     "summary": {
-      "active": "Activo"
+      "active": "Activos",
+      "inactive": "Inactivos"
     },
     "card": {
       "ruc": "RUC",
@@ -216,7 +233,14 @@
       "payment-terms": "Condición de Pago Habitual",
       "actions": {
         "button-edit": "Editar datos",
-        "button-add": "Registros nuevo proveedor"
+        "button-add": "Registros nuevo proveedor",
+        "button-delete": "Eliminar proveedor"
+      },
+      "delete": {
+        "title": "Eliminar Proveedor",
+        "subtitle": "¿Estás seguro?",
+        "confirm": "Confirmar",
+        "cancel": "Cancelar"
       }
     },
     "create": {
@@ -319,8 +343,9 @@
       "assignment-detail-placeholder": "Describe la asignación del equipo...",
       "worker-label": "Asignar a Obrero (opcional)",
       "worker-none": "Ninguno",
-      "btn-save": "Guardar Equipo",
-      "btn-cancel": "Cancelar"
+        "assignment-detail-required": "La descripción de asignación es obligatoria.",
+        "btn-save": "Guardar Equipo",
+        "btn-cancel": "Cancelar"
     },
     "assign": {
       "title": "Asignar Operario",
@@ -336,8 +361,9 @@
       "physical-status-required": "El estado físico es obligatorio.",
       "hours-label": "Horas de Mantenimiento",
       "hours-placeholder": "Ej: 200",
-      "hours-required": "Las horas de mantenimiento son obligatorias.",
-      "btn-save": "Registrar Mantenimiento",
+        "hours-required": "Las horas de mantenimiento son obligatorias.",
+        "hours-min": "Las horas deben ser mayor a 0.",
+        "btn-save": "Registrar Mantenimiento",
       "btn-cancel": "Cancelar"
     },
     "history": {
@@ -381,6 +407,7 @@
         "material-required": "Debe seleccionar un material.",
         "quantity-label": "Cantidad",
         "quantity-required": "La cantidad es obligatoria.",
+        "quantity-min": "La cantidad debe ser mayor a 0.",
         "unit-label": "Unidad",
         "unit-placeholder": "Ej: kg, m, unidad",
         "unit-required": "La unidad es obligatoria.",

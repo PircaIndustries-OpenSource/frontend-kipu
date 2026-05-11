@@ -23,10 +23,7 @@
         <p class="text-xs text-neutral-border font-medium">{{ 'machinery.card.fields.equipment' | translate }}</p>
         <p class="font-bold text-lg text-primary">{{ item().name }}</p>
       </div>
-      <div class="flex flex-col gap-1">
-        <p class="text-xs text-neutral-border font-medium">{{ 'machinery.card.fields.physical-status' | translate }}</p>
-        <p class="text-base font-medium text-primary">{{ item().physicalStatus }}</p>
-      </div>
+
       <div class="flex flex-col gap-1">
         <p class="text-xs text-neutral-border font-medium">{{ 'machinery.card.fields.assigned' | translate }}</p>
         <p class="text-base font-medium text-primary">{{ item().assignedTo || '-' }}</p>

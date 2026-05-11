@@ -30,7 +30,7 @@
         <p class="text-xs text-neutral-border font-medium">
           {{ 'request.card.fields.material' | translate }}
         </p>
-        <p class="font-bold text-lg text-primary">
+        <p class="font-bold text-lg text-primary w-40">
           {{ request().items[0].materialName }}
         </p>
       </div>
@@ -42,7 +42,6 @@
         <p class="text-base font-medium text-primary">
           {{ request().requestedBy }}
         </p>
-        <p class="text-sm text-primary">Lorem ipsum</p>
       </div>
 
       <div class="flex flex-col gap-1">
@@ -50,7 +49,7 @@
           {{ 'request.card.fields.budget-line' | translate }}
         </p>
         <p class="text-base font-medium text-primary">
-          {{ request().activity }}
+          {{ request().budgetLineId }}
         </p>
       </div>
 
@@ -61,7 +60,7 @@
         <p class="font-bold text-base text-primary">{{ request().deadline | date: 'yyyy-MM-dd' }}</p>
         <p class="text-xs text-neutral-border flex items-center gap-1 font-medium mt-1">
           @if (remainingDays() <= 0) {
-            Tiempo excedido
+            {{ 'request.card.fields.time-exceeded' | translate }}
           }
           @else {
             {{

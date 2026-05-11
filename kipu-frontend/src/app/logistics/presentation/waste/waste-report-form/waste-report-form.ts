@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,6 +9,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LogisticsStore } from '../../../application/logistics.store';
+import { AuthStore } from '../../../../identity/application/auth.store';
+import { AutocompleteFilterList } from '../../../../shared/presentation/autocomplete-filter-list/autocomplete-filter-list';
 
 @Component({
   selector: 'app-waste-report-form',
@@ -23,39 +25,49 @@ import { LogisticsStore } from '../../../application/logistics.store';
     MatSelectModule,
     MatDatepickerModule,
     TranslatePipe,
+    AutocompleteFilterList,
   ],
   templateUrl: './waste-report-form.html',
 })
 export class WasteReportForm implements OnInit {
+  authStore = inject(AuthStore);
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<WasteReportForm>);
   logisticsStore = inject(LogisticsStore);
 
-  materials = this.logisticsStore.filteredMaterials;
-
+  materials = this.logisticsStore.inventoryView;
+  nameMaterials = computed<string[]>(() =>
+    this.materials().map((material) => material.materialName),
+  );
   ngOnInit() {
+    this.logisticsStore.loadInventoryMaterials();
     this.logisticsStore.loadMaterials();
   }
-
+  selectedInventoryMaterial = computed(() => {
+    return this.logisticsStore.getInventoryMaterialSelected();
+  });
+  selectedUnit = computed(() => this.selectedInventoryMaterial()?.materialUnit);
+  onInventoryMaterialSelect(materialName: string) {
+    this.logisticsStore.setInventorySelectedMaterial(materialName);
+    const material = this.selectedInventoryMaterial();
+    this.wasteForm.get('materialId')?.setValue(material?.materialId ?? '');
+  }
   wasteForm: FormGroup = this.fb.group({
     materialId: ['', Validators.required],
-    quantity: [0, [Validators.required, Validators.min(0.01)]],
-    unit: ['', Validators.required],
-    classificationType: ['', Validators.required],
+    quantity: [null, [Validators.required, Validators.min(1)]],
     date: [new Date().toISOString().split('T')[0], Validators.required],
     description: ['', Validators.required],
-    reportedBy: ['', Validators.required],
   });
-
   onSave() {
     if (this.wasteForm.invalid) {
       this.wasteForm.markAllAsTouched();
       return;
     }
-    this.dialogRef.close(this.wasteForm.value);
-  }
-
-  onCancel() {
-    this.dialogRef.close();
+    const formValue = this.wasteForm;
+    this.dialogRef.close({
+      ...formValue.value,
+      unit: this.selectedUnit() ?? '',
+      reportedBy: this.authStore.userName(),
+    });
   }
 }

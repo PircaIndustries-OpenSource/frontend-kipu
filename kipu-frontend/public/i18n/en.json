@@ -1,6 +1,7 @@
 {
   "general": {
-    "summary": "Summary"
+    "summary": "Summary",
+    "cancel": "Cancel"
   },
   "inventory": {
     "tab-inventory": "Inventory",
@@ -68,7 +69,8 @@
         "requester": "Requester",
         "budget-line": "Budget Line",
         "required-date": "Required Date",
-        "in-days": "In {{days}} days"
+        "in-days": "In {{days}} days",
+        "time-exceeded": "Time exceeded"
       },
       "purpose": {
         "title": "Purpose/Use"
@@ -128,7 +130,9 @@
         "additional-notes": "Technical specs, preferred brand, etc...",
         "dropzone": "Drag files here or click to select",
         "dropzone-hint": "PDF, DOC, XLS, images (Max. 10MB)",
-        "unit-empty": "Select a material first"
+        "unit-empty": "Select a material first",
+        "select-category-first": "Please select a category first",
+        "select-material-first": "Please select a material first"
       },
       "budget-verification": {
         "title": "Budget Verification",
@@ -150,6 +154,10 @@
         "close": "Close"
       },
       "validation": {
+        "category-required": "Category is required.",
+        "material-required": "Material is required.",
+        "supplier-required": "Supplier is required.",
+        "budget-line-required": "Budget line is required.",
         "quantity-required": "Quantity is required.",
         "quantity-min": "Quantity must be greater than 0.",
         "priority-required": "Priority is required.",
@@ -165,7 +173,15 @@
     },
     "detail": {
       "title": "Full Request Detail",
-      "btn-close": "Close"
+      "btn-close": "Close",
+      "remaining-days": "{{days}}d remaining",
+      "per-unit": "/ unit",
+      "total-investment": "Total Investment",
+      "budget-validated": "Validated Budget",
+      "section": {
+        "material-info": "Material Information",
+        "logistics": "Logistics & Assignment"
+      }
     }
   },
   "suppliers": {
@@ -174,7 +190,8 @@
     "search-ruc": "Search by RUC",
     "search-ruc-placeholder": "Enter supplier RUC",
     "summary": {
-      "active": "Active"
+      "active": "Active",
+      "inactive": "Inactive"
     },
     "card": {
       "ruc": "RUC",
@@ -187,7 +204,14 @@
       "payment-terms": "Standard Payment Terms",
       "actions": {
         "button-edit": "Edit supplier",
-        "button-add": "Add new supplier"
+        "button-add": "Add new supplier",
+        "button-delete": "Delete supplier"
+      },
+      "delete": {
+        "title": "Delete Supplier",
+        "subtitle": "Are you sure?",
+        "confirm": "Confirm",
+        "cancel": "Cancel"
       }
     },
     "create": {
@@ -290,8 +314,9 @@
       "assignment-detail-placeholder": "Describe the equipment assignment...",
       "worker-label": "Assign to Worker (optional)",
       "worker-none": "None",
-      "btn-save": "Save Equipment",
-      "btn-cancel": "Cancel"
+        "assignment-detail-required": "Assignment detail is required.",
+        "btn-save": "Save Equipment",
+        "btn-cancel": "Cancel"
     },
     "assign": {
       "title": "Assign Operator",
@@ -307,8 +332,9 @@
       "physical-status-required": "Physical status is required.",
       "hours-label": "Maintenance Hours",
       "hours-placeholder": "e.g., 200",
-      "hours-required": "Maintenance hours are required.",
-      "btn-save": "Register Maintenance",
+        "hours-required": "Maintenance hours are required.",
+        "hours-min": "Hours must be greater than 0.",
+        "btn-save": "Register Maintenance",
       "btn-cancel": "Cancel"
     },
     "history": {
@@ -398,6 +424,7 @@
         "material-required": "You must select a material.",
         "quantity-label": "Quantity",
         "quantity-required": "Quantity is required.",
+        "quantity-min": "Quantity must be greater than 0.",
         "unit-label": "Unit",
         "unit-placeholder": "e.g., kg, m, unit",
         "unit-required": "Unit is required.",

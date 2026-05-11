@@ -119,4 +119,8 @@ export class LogisticsApi {
       .patch<SupplierResource>(`${this.apiBaseUrl}${this.suppliersEndpoint}/${id}`, updates)
       .pipe(map((response) => SupplierAssembler.toEntityFromResource(response)));
   }
+  //DELETE
+  deleteSupplier(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiBaseUrl}${this.suppliersEndpoint}/${id}`);
+  }
 }

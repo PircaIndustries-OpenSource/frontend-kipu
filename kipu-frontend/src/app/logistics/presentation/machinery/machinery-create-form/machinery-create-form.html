@@ -34,16 +34,15 @@
         <textarea matInput formControlName="assignmentDetail" rows="3"
                   [placeholder]="'machinery.create.assignment-detail-placeholder' | translate"></textarea>
         @if (machineryForm.get('assignmentDetail')?.hasError('required') && machineryForm.get('assignmentDetail')?.touched) {
-          <mat-error class="text-(--color-danger)!">"Texto requerido"</mat-error>
+          <mat-error class="text-(--color-danger)!">{{ 'machinery.create.assignment-detail-required' | translate }}</mat-error>
         }
       </mat-form-field>
     </div>
 
   </mat-dialog-content>
-
   <mat-dialog-actions align="end" class="!px-8 !py-8 !m-0 !gap-4 bg-(--color-neutral-bg)! border-t border-(--color-neutral-border)!">
-    <button mat-button (click)="onCancel()" class="!rounded-xl !px-8 !py-6 !font-bold text-(--color-neutral-border)! hover:bg-white! transition-all" type="button">
-      {{ 'machinery.create.btn-cancel' | translate }}
+    <button mat-stroked-button mat-dialog-close class="!rounded-xl !px-8 !py-6 !font-bold text-(--color-neutral-border)! hover:bg-white! transition-all" type="button">
+      {{ 'request.modify.btn-cancel' | translate }}
     </button>
     <button
       mat-flat-button
@@ -54,4 +53,5 @@
       {{ 'machinery.create.btn-save' | translate }}
     </button>
   </mat-dialog-actions>
+
 </div>

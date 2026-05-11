@@ -15,7 +15,17 @@ import { SupplierEntity } from '../../../domain/supplier.entity';
 
 @Component({
   selector: 'app-suppliers-page',
-  imports: [SummaryCard, TranslatePipe, SupplierList, MatIcon, MatRipple, MatDialogModule, MatFormFieldModule, MatInputModule, FormsModule],
+  imports: [
+    SummaryCard,
+    TranslatePipe,
+    SupplierList,
+    MatIcon,
+    MatRipple,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+  ],
   templateUrl: './suppliers-page.html',
   styleUrl: './suppliers-page.css',
 })
@@ -23,15 +33,12 @@ export class SuppliersPage implements OnInit {
   logisticsStore = inject(LogisticsStore);
   private dialog = inject(MatDialog);
 
-  suppliers = this.logisticsStore.suppliers;
-  suppliersActive = this.logisticsStore.numberSuppliersActive();
-  searchRuc = signal('');
-
-  filteredSuppliers = computed(() => {
-    const ruc = this.searchRuc().trim();
-    const all = this.suppliers();
-    if (!ruc) return all;
-    return all.filter((s) => s.ruc.includes(ruc));
+  suppliers = this.logisticsStore.filteredSuppliers;
+  suppliersActive = computed(() => {
+    return this.logisticsStore.numberSuppliersActive();
+  });
+  supplierInactive = computed(() => {
+    return this.logisticsStore.numberSuppliersInactive();
   });
 
   ngOnInit() {
@@ -52,5 +59,17 @@ export class SuppliersPage implements OnInit {
         this.logisticsStore.addSupplier(supplier);
       }
     });
+  }
+  readonly searchRuc = this.logisticsStore.searchRuc;
+  onSearchRucChange(value: string) {
+    this.searchRuc.set(value);
+  }
+  readonly activeSupplierFilter = this.logisticsStore.activeSupplierFilter;
+  readonly inactiveSupplierFilter = this.logisticsStore.inactiveSupplierFilter;
+  toggleActiveSupplierFilter() {
+    this.logisticsStore.toggleActiveSupplierFilter();
+  }
+  toggleInactiveSupplierFilter() {
+    this.logisticsStore.toggleInactiveSupplierFilter();
   }
 }

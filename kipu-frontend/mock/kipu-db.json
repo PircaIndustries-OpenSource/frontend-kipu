@@ -6,6 +6,13 @@
       "password": "kipu12345",
       "role": "Gestor Operativo",
       "id": "vkgT3Nh"
+    },
+    {
+      "name": "Paula Montoya",
+      "email": "pau@gmail.com",
+      "password": "paupau707",
+      "role": "Logística y Administración",
+      "id": "egiZUjv"
     }
   ],
   "projects": [
@@ -41,6 +48,96 @@
       "createdAt": "2025-02-15",
       "createdBy": "P-n4XLk",
       "imageUrl": "project-image3.png"
+    },
+    {
+      "id": "pyXfjIq",
+      "name": "a",
+      "description": "a",
+      "status": "IN_PROGRESS",
+      "startDate": "2026-05-13T05:00:00.000Z",
+      "endDate": "2026-05-26T05:00:00.000Z",
+      "estimatedBudget": 212121,
+      "location": "xd",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image3.png"
+    },
+    {
+      "id": "vEXQoL6",
+      "name": "aaaaa",
+      "description": "asd",
+      "status": "PLANNED",
+      "startDate": "2026-05-12T05:00:00.000Z",
+      "endDate": "2026-05-20T05:00:00.000Z",
+      "estimatedBudget": 1231,
+      "location": "asdasd",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image1.png"
+    },
+    {
+      "id": "whceCRF",
+      "name": "aasdasdasd",
+      "description": "asdasd",
+      "status": "IN_PROGRESS",
+      "startDate": "2026-05-12T05:00:00.000Z",
+      "endDate": "2026-05-12T05:00:00.000Z",
+      "estimatedBudget": 123123,
+      "location": "asdasd",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image3.png"
+    },
+    {
+      "id": "8IZsgo_",
+      "name": "aaaaaaaaaaaaaaaaaa",
+      "description": "aaaaaaaaaaaaaaaaaa",
+      "status": "PLANNED",
+      "startDate": "2026-05-20T05:00:00.000Z",
+      "endDate": "2026-05-31T05:00:00.000Z",
+      "estimatedBudget": 123123,
+      "location": "aaaaaaaaaaaaaaaaaaa",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image4.jpg"
+    },
+    {
+      "id": "lluhwVv",
+      "name": "xdd....",
+      "description": ".....",
+      "status": "PLANNED",
+      "startDate": "2026-05-21T05:00:00.000Z",
+      "endDate": "2026-05-31T05:00:00.000Z",
+      "estimatedBudget": 123123,
+      "location": "....",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image1.png"
+    },
+    {
+      "id": "YgMohp6",
+      "name": "aaaa21",
+      "description": "a",
+      "status": "PLANNED",
+      "startDate": "2026-05-27T05:00:00.000Z",
+      "endDate": "2026-05-25T05:00:00.000Z",
+      "estimatedBudget": 121,
+      "location": "as",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image2.png"
+    },
+    {
+      "id": "bINNav6",
+      "name": "asdasd",
+      "description": "a",
+      "status": "PLANNED",
+      "startDate": "2026-05-14T05:00:00.000Z",
+      "endDate": "2026-05-19T05:00:00.000Z",
+      "location": "sdasd",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image5.png"
     }
   ],
   "documents": [
@@ -75,51 +172,6 @@
         {
           "id": "us-03",
           "fullName": "Juan Pérez"
-        }
-      ]
-    },
-    {
-      "id": "doc-003",
-      "type": "RNC - Fisura en losa de cimentación",
-      "isSigned": true,
-      "digitalSignatureToken": "483729",
-      "deadLine": "2024-11-30T23:59:59.000Z",
-      "projectId": "proj-001",
-      "assignedTo": [
-        {
-          "id": "us-01",
-          "fullName": "Admin Demo",
-          "signedAt": "2024-11-20T10:30:00.000Z"
-        },
-        {
-          "id": "us-02",
-          "fullName": "Ana Torres",
-          "signedAt": "2024-11-21T14:45:00.000Z"
-        }
-      ]
-    },
-    {
-      "id": "doc-004",
-      "type": "Liquidación de Obra - Proyecto Los Olivos",
-      "isSigned": false,
-      "digitalSignatureToken": null,
-      "deadLine": "2025-02-28T23:59:59.000Z",
-      "projectId": "proj-002",
-      "assignedTo": [
-        {
-          "id": "us-01",
-          "fullName": "Admin Demo",
-          "signedAt": null
-        },
-        {
-          "id": "us-03",
-          "fullName": "Juan Pérez",
-          "signedAt": null
-        },
-        {
-          "id": "us-07",
-          "fullName": "Laurel Pallo",
-          "signedAt": null
         }
       ]
     }
@@ -456,22 +508,10 @@
   ],
   "materialsSuppliers": [
     {
-      "id": "sup-001",
-      "ruc": "22222311110",
-      "onboarded": "2024-01-15",
-      "socialReason": "Aceros Arequipa S.A222",
-      "contact": "Ventas Corporativas2",
-      "phone": "01-555-01922",
-      "email": "ventas@acerosarequipa.2",
-      "categories": "Metales y Acero2",
-      "paymentTerms": "NET 60",
-      "status": "active"
-    },
-    {
       "id": "sup-002",
-      "ruc": "20457896321",
+      "ruc": "20457896324",
       "onboarded": "2024-02-20",
-      "socialReason": "Cementos Pacasmayo S.A.A.",
+      "socialReason": "Cementos Pacasmayo S.A.",
       "contact": "Atención al Cliente",
       "phone": "01-614-0400",
       "email": "atencioncliente@cementospacasmayo.pe",
@@ -489,7 +529,7 @@
       "email": "ventas@ladrillerasantarosa.pe",
       "categories": "Estructuras y Albañilería",
       "paymentTerms": "NET 30",
-      "status": "INACTIVE"
+      "status": "ACTIVE"
     },
     {
       "id": "sup-004",
@@ -513,7 +553,7 @@
       "email": "ventas@ferreteriaindustrial.pe",
       "categories": "Consumibles y Varios, Equipos de Protección Personal (EPP)",
       "paymentTerms": "NET 15",
-      "status": "ACTIVE"
+      "status": "INACTIVE"
     },
     {
       "id": "sup-006",
@@ -525,19 +565,7 @@
       "email": "ventas@agregadossur.pe",
       "categories": "Agregados",
       "paymentTerms": "NET 30",
-      "status": "active"
-    },
-    {
-      "id": "HzrU-ec",
-      "ruc": "12332432423",
-      "onboarded": "",
-      "socialReason": "Esotilin S.A.C",
-      "contact": "Bailador",
-      "phone": "123456789",
-      "email": "esotilin@gmail.com",
-      "categories": "",
-      "paymentTerms": "",
-      "status": "active"
+      "status": "ACTIVE"
     }
   ],
   "materialsRequests": [
@@ -726,292 +754,6 @@
           "quantity": 500
         }
       ]
-    },
-    {
-      "id": "lriqNjv",
-      "projectId": "",
-      "requestDate": "2026-05-10",
-      "deadline": "2026-05-11T05:00:00.000Z",
-      "status": "PENDING",
-      "priority": "LOW",
-      "deliveryLocation": "Mi casa",
-      "budgetLineId": "",
-      "purpose": "Ninguno",
-      "additionalNotes": "Ninguno",
-      "suggestedSupplierId": "sup-001",
-      "attachments": [],
-      "items": [
-        {
-          "supplierOfferId": "soff-001",
-          "quantity": 4
-        }
-      ],
-      "requestedBy": "",
-      "activity": ""
-    },
-    {
-      "id": "mkX4fMo",
-      "projectId": "",
-      "requestDate": "2026-05-10",
-      "deadline": "2026-05-16T05:00:00.000Z",
-      "status": "PENDING",
-      "priority": "LOW",
-      "deliveryLocation": "aaaa",
-      "budgetLineId": "",
-      "purpose": "asdasd",
-      "additionalNotes": "asdasd",
-      "suggestedSupplierId": "sup-001",
-      "attachments": [],
-      "items": [
-        {
-          "supplierOfferId": "soff-001",
-          "quantity": 5
-        }
-      ],
-      "requestedBy": "",
-      "activity": ""
-    },
-    {
-      "id": "Y5vaEKP",
-      "projectId": "",
-      "requestDate": "2026-05-10",
-      "deadline": "2026-05-13T05:00:00.000Z",
-      "status": "PENDING",
-      "priority": "LOW",
-      "deliveryLocation": "aaaa",
-      "budgetLineId": "",
-      "purpose": "aasdasd",
-      "additionalNotes": "asdasdsadasd",
-      "suggestedSupplierId": "sup-002",
-      "attachments": [],
-      "items": [
-        {
-          "supplierOfferId": "soff-003",
-          "quantity": 1
-        }
-      ],
-      "requestedBy": "",
-      "activity": ""
-    },
-    {
-      "id": "AQqeedg",
-      "projectId": "",
-      "requestDate": "2026-05-10",
-      "deadline": "2026-05-15T05:00:00.000Z",
-      "status": "PENDING",
-      "priority": "LOW",
-      "deliveryLocation": "sdasdasd",
-      "budgetLineId": "",
-      "purpose": "asdasda",
-      "additionalNotes": "asdasdasdasdasdasd",
-      "suggestedSupplierId": "sup-005",
-      "attachments": [],
-      "items": [
-        {
-          "supplierOfferId": "soff-009",
-          "quantity": 1
-        }
-      ],
-      "requestedBy": "",
-      "activity": ""
-    },
-    {
-      "id": "C4RkOAI",
-      "projectId": "",
-      "requestDate": "2026-05-10",
-      "deadline": "2026-05-15T05:00:00.000Z",
-      "status": "PENDING",
-      "priority": "LOW",
-      "deliveryLocation": "aasd",
-      "budgetLineId": "",
-      "purpose": "asdaaaaaaaaa",
-      "additionalNotes": "aaaaaaaa",
-      "suggestedSupplierId": "sup-003",
-      "attachments": [],
-      "items": [
-        {
-          "supplierOfferId": "soff-005",
-          "quantity": 1
-        }
-      ],
-      "requestedBy": "",
-      "activity": ""
-    },
-    {
-      "id": "3CYg0k6",
-      "projectId": "",
-      "requestDate": "2026-05-10",
-      "deadline": "2026-05-15T05:00:00.000Z",
-      "status": "PENDING",
-      "priority": "LOW",
-      "deliveryLocation": "asda",
-      "budgetLineId": "",
-      "purpose": "sdasdasd",
-      "additionalNotes": "asdasdas",
-      "suggestedSupplierId": "sup-003",
-      "attachments": [],
-      "items": [
-        {
-          "supplierOfferId": "soff-005",
-          "quantity": 1
-        }
-      ],
-      "requestedBy": "",
-      "activity": ""
-    },
-    {
-      "id": "YZuFaTQ",
-      "projectId": "",
-      "requestDate": "2026-05-10",
-      "deadline": "2026-05-08T05:00:00.000Z",
-      "status": "PENDING",
-      "priority": "LOW",
-      "deliveryLocation": "aaaa",
-      "budgetLineId": "",
-      "purpose": "aasdasd",
-      "additionalNotes": "sdasd",
-      "suggestedSupplierId": "sup-003",
-      "attachments": [],
-      "items": [
-        {
-          "supplierOfferId": "soff-005",
-          "quantity": 20
-        }
-      ],
-      "requestedBy": "",
-      "activity": ""
-    },
-    {
-      "id": "-rjg_PF",
-      "projectId": "",
-      "requestDate": "2026-05-10",
-      "deadline": "",
-      "status": "PENDING",
-      "priority": "LOW",
-      "deliveryLocation": "",
-      "budgetLineId": "",
-      "purpose": "",
-      "additionalNotes": "",
-      "suggestedSupplierId": "sup-003",
-      "attachments": [],
-      "items": [
-        {
-          "supplierOfferId": "soff-005",
-          "quantity": 1
-        }
-      ],
-      "requestedBy": "",
-      "activity": ""
-    },
-    {
-      "id": "oCh1ony",
-      "projectId": "",
-      "requestDate": "2026-05-10",
-      "deadline": "",
-      "status": "PENDING",
-      "priority": "LOW",
-      "deliveryLocation": "",
-      "budgetLineId": "",
-      "purpose": "",
-      "additionalNotes": "",
-      "suggestedSupplierId": "",
-      "attachments": [],
-      "items": [
-        {
-          "supplierOfferId": "",
-          "quantity": 1
-        }
-      ],
-      "requestedBy": "",
-      "activity": ""
-    },
-    {
-      "id": "AjFUDol",
-      "projectId": "",
-      "requestDate": "2026-05-10",
-      "deadline": "2026-05-30T05:00:00.000Z",
-      "status": "PENDING",
-      "priority": "LOW",
-      "deliveryLocation": "asdaaaaaaaaaaeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "budgetLineId": "",
-      "purpose": "asdaaaaaaaaaaeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "additionalNotes": "asdaaaaaaaaaaeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "suggestedSupplierId": "sup-003",
-      "attachments": [],
-      "items": [
-        {
-          "supplierOfferId": "soff-005",
-          "quantity": 1
-        }
-      ],
-      "requestedBy": "",
-      "activity": ""
-    },
-    {
-      "id": "5K4rU2a",
-      "projectId": "",
-      "requestDate": "2026-05-10",
-      "deadline": "",
-      "status": "PENDING",
-      "priority": "LOW",
-      "deliveryLocation": "",
-      "budgetLineId": "",
-      "purpose": "",
-      "additionalNotes": "",
-      "suggestedSupplierId": "",
-      "attachments": [],
-      "items": [
-        {
-          "supplierOfferId": "",
-          "quantity": 1
-        }
-      ],
-      "requestedBy": "",
-      "activity": ""
-    },
-    {
-      "id": "setKZoP",
-      "projectId": "",
-      "requestDate": "2026-05-10",
-      "deadline": "",
-      "status": "PENDING",
-      "priority": "LOW",
-      "deliveryLocation": "",
-      "budgetLineId": "",
-      "purpose": "",
-      "additionalNotes": "",
-      "suggestedSupplierId": "",
-      "attachments": [],
-      "items": [
-        {
-          "supplierOfferId": "",
-          "quantity": 1
-        }
-      ],
-      "requestedBy": "",
-      "activity": ""
-    },
-    {
-      "id": "iFWsbi8",
-      "projectId": "",
-      "requestDate": "2026-05-10",
-      "deadline": "2026-05-08T05:00:00.000Z",
-      "status": "PENDING",
-      "priority": "LOW",
-      "deliveryLocation": "aadsa",
-      "budgetLineId": "",
-      "purpose": "sdasd",
-      "additionalNotes": "asdasd",
-      "suggestedSupplierId": "",
-      "attachments": [],
-      "items": [
-        {
-          "supplierOfferId": "",
-          "quantity": 1
-        }
-      ],
-      "requestedBy": "",
-      "activity": ""
     }
   ],
   "materialsWaste": [
@@ -1098,6 +840,42 @@
       "description": "Piedra chancada contaminada con tierra durante traslado.",
       "reportedBy": "70123456",
       "photoUrl": ""
+    },
+    {
+      "id": "_nzMhLw",
+      "projectId": "",
+      "materialId": "",
+      "quantity": 1,
+      "unit": "und",
+      "classificationType": "",
+      "date": "2026-05-11",
+      "description": "asdasd",
+      "reportedBy": "Paula Montoya",
+      "photoUrl": "",
+      "material": "Bloque de Concreto 20x20x40"
+    },
+    {
+      "id": "D3nMH9D",
+      "projectId": "",
+      "materialId": "mat-004",
+      "quantity": 6,
+      "unit": "varilla",
+      "classificationType": "",
+      "date": "2026-05-11",
+      "description": "asdasd",
+      "reportedBy": "Paula Montoya",
+      "photoUrl": ""
+    },
+    {
+      "id": "kByssF_",
+      "projectId": "",
+      "materialId": "mat-002",
+      "quantity": 2,
+      "date": "2026-05-11",
+      "description": "asdas",
+      "reportedBy": "Paula Montoya",
+      "photoUrl": "",
+      "unit": "bolsa"
     }
   ],
   "materialsTools": [
@@ -1106,9 +884,9 @@
       "name": "Amoladora Angular 9\"",
       "status": "URGENT_MAINTENANCE",
       "physicalStatus": "a",
-      "assignedTo": "Miguel Estrada",
+      "assignedTo": "",
       "registrationDate": "2026-04-15",
-      "maintenanceHours": "200",
+      "maintenanceHours": 1,
       "assignmentDetail": "Entregado a Carlos Mendoza para trabajos de corte de acero en Sótano 2."
     },
     {
@@ -1210,6 +988,16 @@
       "registrationDate": "",
       "maintenanceHours": "",
       "assignmentDetail": "uwu"
+    },
+    {
+      "id": "WDgas0d",
+      "name": "esoMaquinin",
+      "status": "AVAILABLE",
+      "physicalStatus": "",
+      "assignedTo": "54343234 - Pedro Castro",
+      "registrationDate": "",
+      "maintenanceHours": "",
+      "assignmentDetail": "a"
     }
   ],
   "iot-telemetry": [],
@@ -1314,26 +1102,5 @@
       "id": "us-1778218020628"
     }
   ],
-  "progress": [
-    {
-      "id": 1,
-      "projectId": 101,
-      "projectName": "Residencial Los Olivos",
-      "location": "Lima, Perú",
-      "status": "Active",
-      "imageUrl": "https://images.unsplash.com/photo-1541888946425-d81bb19480c5",
-      "currentPercentage": 75,
-      "lastUpdate": "2024-05-09T10:00:00Z"
-    },
-    {
-      "id": 2,
-      "projectId": 102,
-      "projectName": "Torre Empresarial",
-      "location": "Cusco, Perú",
-      "status": "Progress",
-      "imageUrl": "https://images.unsplash.com/photo-1503387762-592dea58ef21",
-      "currentPercentage": 40,
-      "lastUpdate": "2024-05-08T15:30:00Z"
-    }
-  ]
+  "progress": []
 }

@@ -1,70 +1,81 @@
-<div [formGroup]="supplierForm" class="p-2">
-  <h2 mat-dialog-title class="!text-2xl !font-bold text-slate-800 !mb-4">
+<div [formGroup]="supplierForm" class="flex flex-col border-(--color-neutral-border)! bg-white!">
+
+  <h2 mat-dialog-title class="!m-0 !p-8 !text-2xl !font-black text-(--color-primary)! border-b border-(--color-neutral-border)! bg-(--color-neutral-bg)! rounded-t-xl!">
     {{ 'suppliers.create.title' | translate }}
   </h2>
 
-  <mat-dialog-content class="!flex !flex-col !gap-2 overflow-y-auto" style="max-height: 65vh;">
-    <div class="min-h-[80px]">
-      <mat-form-field appearance="outline" class="w-full pt-3!" subscriptSizing="dynamic">
-        <mat-label>{{ 'suppliers.create.ruc-label' | translate }}</mat-label>
+  <mat-dialog-content class="!flex !flex-col !gap-8 !p-10 !m-0 overflow-y-auto max-h-[65vh]">
+
+    <div class="flex flex-col w-full">
+      <mat-form-field appearance="outline" class="w-full!" subscriptSizing="dynamic">
+        <mat-label class="text-(--color-text-main)!">{{ 'suppliers.create.ruc-label' | translate }}</mat-label>
         <input matInput formControlName="ruc" maxlength="11"
                [placeholder]="'suppliers.create.ruc-placeholder' | translate">
         @if (supplierForm.get('ruc')?.hasError('required') && supplierForm.get('ruc')?.touched) {
-          <mat-error>{{ 'suppliers.create.ruc-required' | translate }}</mat-error>
+          <mat-error class="text-(--color-danger)!">{{ 'suppliers.create.ruc-required' | translate }}</mat-error>
         }
         @if (supplierForm.get('ruc')?.hasError('pattern') && supplierForm.get('ruc')?.touched) {
-          <mat-error>{{ 'suppliers.create.ruc-invalid' | translate }}</mat-error>
+          <mat-error class="text-(--color-danger)!">{{ 'suppliers.create.ruc-invalid' | translate }}</mat-error>
         }
       </mat-form-field>
     </div>
-    <div class="min-h-[80px]">
-      <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-        <mat-label>{{ 'suppliers.create.social-reason-label' | translate }}</mat-label>
+
+    <div class="flex flex-col w-full">
+      <mat-form-field appearance="outline" class="w-full!" subscriptSizing="dynamic">
+        <mat-label class="text-(--color-text-main)!">{{ 'suppliers.create.social-reason-label' | translate }}</mat-label>
         <input matInput formControlName="socialReason"
                [placeholder]="'suppliers.create.social-reason-placeholder' | translate">
         @if (supplierForm.get('socialReason')?.hasError('required') && supplierForm.get('socialReason')?.touched) {
-          <mat-error>{{ 'suppliers.create.social-reason-required' | translate }}</mat-error>
+          <mat-error class="text-(--color-danger)!">{{ 'suppliers.create.social-reason-required' | translate }}</mat-error>
         }
       </mat-form-field>
     </div>
-    <div class="flex flex-row gap-4 min-h-[80px]">
-      <div class="flex-1">
-        <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-          <mat-label>{{ 'suppliers.create.contact-label' | translate }}</mat-label>
+
+    <div class="flex flex-row gap-4">
+      <div class="flex flex-col flex-1">
+        <mat-form-field appearance="outline" class="w-full!" subscriptSizing="dynamic">
+          <mat-label class="text-(--color-text-main)!">{{ 'suppliers.create.contact-label' | translate }}</mat-label>
           <input matInput formControlName="contact"
                  [placeholder]="'suppliers.create.contact-placeholder' | translate">
           @if (supplierForm.get('contact')?.hasError('required') && supplierForm.get('contact')?.touched) {
-            <mat-error>{{ 'suppliers.create.contact-required' | translate }}</mat-error>
+            <mat-error class="text-(--color-danger)!">{{ 'suppliers.create.contact-required' | translate }}</mat-error>
           }
         </mat-form-field>
       </div>
-      <div class="flex-1">
-        <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-          <mat-label>{{ 'suppliers.create.phone-label' | translate }}</mat-label>
+      <div class="flex flex-col flex-1">
+        <mat-form-field appearance="outline" class="w-full!" subscriptSizing="dynamic">
+          <mat-label class="text-(--color-text-main)!">{{ 'suppliers.create.phone-label' | translate }}</mat-label>
           <input matInput formControlName="phone"
                  [placeholder]="'suppliers.create.phone-placeholder' | translate">
           @if (supplierForm.get('phone')?.hasError('required') && supplierForm.get('phone')?.touched) {
-            <mat-error>{{ 'suppliers.create.phone-required' | translate }}</mat-error>
+            <mat-error class="text-(--color-danger)!">{{ 'suppliers.create.phone-required' | translate }}</mat-error>
           }
         </mat-form-field>
       </div>
     </div>
-    <div class="min-h-20">
-      <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" type="email" />
-        @if (supplierForm.get('email')?.hasError('required') || supplierForm.get('email')?.hasError('email') && supplierForm.get('email')?.touched) {
-          <mat-error>{{ 'suppliers.create.email-required' | translate }}</mat-error>
+
+    <div class="flex flex-col w-full">
+      <mat-form-field appearance="outline" class="w-full!" subscriptSizing="dynamic">
+        <mat-label class="text-(--color-text-main)!">{{ 'suppliers.create.email-label' | translate }}</mat-label>
+        <input matInput formControlName="email" type="email">
+        @if (supplierForm.get('email')?.hasError('required') && supplierForm.get('email')?.touched) {
+          <mat-error class="text-(--color-danger)!">{{ 'suppliers.create.email-required' | translate }}</mat-error>
+        }
+        @if (supplierForm.get('email')?.hasError('email') && supplierForm.get('email')?.touched) {
+          <mat-error class="text-(--color-danger)!">{{ 'suppliers.create.email-invalid' | translate }}</mat-error>
         }
       </mat-form-field>
     </div>
+
   </mat-dialog-content>
 
-  <mat-dialog-actions align="end" class="!gap-3 !p-6 !mt-4">
-    <button mat-stroked-button mat-dialog-close>{{ 'request.modify.btn-cancel' | translate }}</button>
+  <mat-dialog-actions align="end" class="!px-8 !py-8 !m-0 !gap-4 bg-(--color-neutral-bg)! border-t border-(--color-neutral-border)!">
+    <button mat-stroked-button mat-dialog-close class="!rounded-xl !px-8 !py-6 !font-bold text-(--color-neutral-border)! hover:bg-white! transition-all" type="button">
+      {{ 'request.modify.btn-cancel' | translate }}
+    </button>
     <button
       mat-flat-button
-      class="bg-accent! !text-white! !rounded-xl! !px-10! !py-6! !font-bold! !text-base! cursor-pointer transition-all hover:brightness-110 active:scale-95 shadow-md shadow-(--color-accent)/20"
+      class="bg-(--color-accent)! text-white! py-6! px-10! rounded-xl! font-bold! text-base! cursor-pointer! transition-all hover:brightness-110! active:scale-95! shadow-md shadow-(--color-accent)/20"
       (click)="onSave()"
       type="button"
     >
