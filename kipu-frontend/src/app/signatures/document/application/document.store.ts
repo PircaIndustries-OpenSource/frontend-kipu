@@ -7,7 +7,6 @@ import { catchError, map, Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class DocumentsStore {
-
   private documents = signal<DocumentEntity[]>([]);
   private currentToken = signal<string | null>(null); // Token actual (solo en memoria)
   private currentDocumentId = signal<string | null>(null); // Documento que se está firmando
@@ -27,7 +26,6 @@ export class DocumentsStore {
       },
     });
   }
-
 
   getSignedDocuments(): DocumentEntity[] {
     return this.documents().filter((doc) => doc.isSigned);
@@ -104,6 +102,34 @@ export class DocumentsStore {
         });
       }),
     );
+  }
+
+  updateLocalDocument(updatedDocument: DocumentEntity): void {
+    const currentDocs = this.documents();
+    const index = currentDocs.findIndex((d) => d.id === updatedDocument.id);
+
+    if (index !== -1) {
+      const newDocs = [...currentDocs];
+      newDocs[index] = updatedDocument;
+      this.documents.set(newDocs);
+    }
+  }
+
+  // application/document.store.ts
+  addLocalDocument(document: DocumentEntity): void {
+    // ✅ Guardar en la API primero
+    this.documentApi.postDocument(document).subscribe({
+      next: (savedDocument) => {
+        // Después de guardar en la API, añadir al signal
+        this.documents.update((currentDocs) => [...currentDocs, savedDocument]);
+        console.log('📄 Documento guardado en API y añadido localmente:', savedDocument);
+      },
+      error: (err) => {
+        console.error('Error al guardar documento en API:', err);
+        // Fallback: solo añadir localmente
+        this.documents.update((currentDocs) => [...currentDocs, document]);
+      },
+    });
   }
 
   cancelSignature(): void {
