@@ -407,22 +407,63 @@
   },
   "progress": {
     "title": "Construction Progress",
+    "subtitle": "History of daily logs and execution statuses.",
     "actions": {
-      "viewAll": "View all"
+      "new": "New Daily Progress",
+      "save": "Save Progress",
+      "cancel": "Cancel",
+      "export": "Export Report",
+      "upload": "Upload Photos"
+    },
+    "tabs": {
+      "log": "Progress Log (PPC)",
+      "photos": "Photo Log"
+    },
+    "filters": {
+      "activity": "Search activity...",
+      "specialty": "Filter by: Specialty",
+      "start_date": "Start date",
+      "end_date": "End date"
     },
     "table": {
-      "id": "ID",
-      "name": "Project Name",
-      "location": "Location",
-      "progress": "Progress",
-      "status": "Status",
-      "actions": "Actions"
+      "date": "Date",
+      "activity": "Performed Activity",
+      "specialty": "Specialty",
+      "advance": "Advance (%)",
+      "status": "Status"
+    },
+    "form": {
+      "title": "New Daily Progress",
+      "date": "Progress Date",
+      "specialty": "Specialty",
+      "activity": "Performed Activity",
+      "activity_placeholder": "E.g. Concrete pouring second level",
+      "location": "Location/Sector",
+      "location_placeholder": "E.g. Level 2 - Axis A-B",
+      "percentage": "Advance Percentage",
+      "description": "Detailed Description",
+      "description_placeholder": "Describe work performed, methods used, conditions...",
+      "responsible": "Responsible",
+      "workers": "Crew Personnel",
+      "weather": {
+        "label": "Weather Conditions",
+        "sunny": "Sunny",
+        "cloudy": "Cloudy",
+        "rainy": "Rainy",
+        "storm": "Storm"
+      }
     },
     "status": {
-      "active": "Active",
-      "planned": "Planned",
-      "completed": "Completed",
-      "unknown": "Unknown"
+      "finished": "Completed",
+      "active": "In Progress",
+      "delayed": "Delayed"
+    },
+    "dialog": {
+      "title": "Save changes?",
+      "question": "Do you want to save changes?",
+      "warning": "If you don't, they will be lost.",
+      "discard": "No, discard changes",
+      "save": "Save changes"
     }
   }
 }

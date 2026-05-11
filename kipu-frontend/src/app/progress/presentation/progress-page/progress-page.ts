@@ -1,104 +1,133 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { TranslatePipe } from '@ngx-translate/core';
+import { ProgressStore } from '../../application/progress.store';
+import { AutocompleteFilterList } from '../../../shared/presentation/autocomplete-filter-list/autocomplete-filter-list';
 import { ProjectProgress } from '../../domain/progress.entity';
-import { ProgressApi } from '../../infrastructure/progress.api';
 
 @Component({
   selector: 'app-progress-page',
   standalone: true,
-  // Removed MatCheckboxModule to match the new progress tracking design
-  imports: [CommonModule, MatButtonModule, MatIconModule, TranslatePipe],
-  templateUrl: './progress-page.html'
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTabsModule,
+    MatDialogModule,
+    TranslatePipe,
+    AutocompleteFilterList,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
+  providers: [provideNativeDateAdapter()],
+  templateUrl: './progress-page.html',
 })
 export class ProgressPage implements OnInit {
-  // Infrastructure API service
-  private readonly progressApi = inject(ProgressApi);
+  readonly store = inject(ProgressStore);
+  readonly dialog = inject(MatDialog);
+  private readonly fb = inject(FormBuilder);
 
-  // Signal to manage the list of progress entries
-  projects = signal<ProjectProgress[]>([]);
+  readonly currentView = signal<'list' | 'create'>('list');
+  readonly selectedWeather = signal<string>('sunny');
+  progressForm: FormGroup;
 
-  ngOnInit(): void {
-    /** * STATIC MODE (Hardcoded data)
-     * This is used to test the UI design and progress bars without the API.
-     */
-    this.projects.set([
-      {
-        id: 1,
-        projectId: 101,
-        projectName: 'Edificio Corporativo Los Olivos',
-        location: 'Lima, Perú',
-        status: 'Active',
-        imageUrl: '',
-        currentPercentage: 75,
-        lastUpdate: new Date('2026-01-10T10:00:00Z')
-      },
-      {
-        id: 2,
-        projectId: 102,
-        projectName: 'Residencial San Miguel',
-        location: 'Lima, Perú',
-        status: 'Progress',
-        imageUrl: '',
-        currentPercentage: 40,
-        lastUpdate: new Date('2026-07-01T15:30:00Z')
-      },
-      {
-        id: 3,
-        projectId: 103,
-        projectName: 'Colegio Particular San José',
-        location: 'Cusco, Perú',
-        status: 'Finished',
-        imageUrl: '',
-        currentPercentage: 100,
-        lastUpdate: new Date('2025-03-01T08:00:00Z')
-      }
-    ]);
+  readonly specialtiesOptions = ['Estructuras', 'Instalaciones', 'Arquitectura'];
+  readonly activityOptions = ['Vaciado de Losa N3', 'Instalación Eléctrica', 'Acabado de Muros'];
 
-    /**
-     * DYNAMIC MODE (API Connection)
-     * UNCOMMENT the line below to fetch data dynamically from the json-server.
-     */
-    // this.loadProgressFromApi();
-  }
+  @ViewChild('confirmDialogTemplate') confirmDialogTemplate!: TemplateRef<unknown>;
 
-  /**
-   * Fetches data from the Fake API and updates the signal
-   * Fully commented to avoid runtime errors until API is completely ready.
-   */
-  /*
-  private loadProgressFromApi(): void {
-    this.progressApi.getAllProgress().subscribe({
-      next: (data) => this.projects.set(data),
-      error: (err) => console.error('Error fetching progress from API:', err)
+  constructor() {
+    this.progressForm = this.fb.group({
+      date: ['', Validators.required],
+      specialty: ['', Validators.required],
+      activityName: ['', Validators.required],
+      location: [''],
+      percentage: [0, [Validators.min(0), Validators.max(100)]],
+      description: [''],
+      responsible: [''],
+      workers: [0],
+      weather: ['sunny'],
     });
   }
-  */
 
-  /**
-   * Returns Tailwind CSS classes for status badges based on design reference
-   */
-  getStatusBadgeClass(status: string): string {
-    const base = 'px-3 py-1 rounded-full text-xs font-semibold';
-    switch (status) {
-      case 'Active': return `${base} bg-green-100 text-green-800`;
-      case 'Progress': return `${base} bg-blue-100 text-blue-800`;
-      case 'Finished': return `${base} bg-gray-100 text-gray-800`;
-      default: return `${base} bg-gray-100 text-gray-600`;
+  ngOnInit(): void {
+    this.store.loadProgress();
+  }
+
+  openCreateForm(): void {
+    this.progressForm.reset({ percentage: 0, weather: 'sunny' });
+    this.selectedWeather.set('sunny');
+    this.currentView.set('create');
+  }
+
+  setWeather(type: string): void {
+    this.selectedWeather.set(type);
+    this.progressForm.patchValue({ weather: type });
+  }
+
+  onDateRangeChange(start: Date | null, end: Date | null): void {
+    this.store.setDateRange(start, end);
+  }
+
+  saveProgress(): void {
+    if (this.progressForm.valid) {
+      const val = this.progressForm.value;
+      const newEntry: ProjectProgress = {
+        id: Math.floor(Math.random() * 10000),
+        projectId: 101,
+        projectName: 'Torre Empresarial Centro',
+        activityName: val.activityName,
+        details: val.location || '',
+        specialty: val.specialty,
+        status: val.percentage === 100 ? 'Finished' : 'Active',
+        currentPercentage: val.percentage,
+        startDate: new Date(),
+        endDate: new Date(),
+        lastUpdate: new Date(val.date),
+        responsible: val.responsible,
+        workers: val.workers,
+        weather: val.weather,
+      };
+      this.store.addProgress(newEntry);
+      this.currentView.set('list');
     }
   }
 
-  /**
-   * Maps domain status to i18n translation keys
-   */
-  getStatusKey(status: string): string {
-    switch (status) {
-      case 'Active': return 'progress.status.active';
-      case 'Progress': return 'progress.status.planned';
-      case 'Finished': return 'progress.status.completed';
-      default: return 'progress.status.unknown';
+  cancelCreation(): void {
+    if (this.progressForm.dirty) {
+      this.dialog
+        .open(this.confirmDialogTemplate)
+        .afterClosed()
+        .subscribe((res) => {
+          if (res === 'discard') this.currentView.set('list');
+        });
+    } else {
+      this.currentView.set('list');
     }
+  }
+
+  onSpecialtySelected(v: string): void {
+    this.store.setSpecialtyFilter(v);
+  }
+  onSearchChange(v: string): void {
+    this.store.setSearchFilter(v);
+  }
+
+  getStatusBadgeClass(s: string): string {
+    const b = 'px-3 py-1 rounded-md text-xs font-bold uppercase';
+    return s === 'Finished'
+      ? `${b} bg-green-100 text-emerald-600`
+      : `${b} bg-blue-100 text-blue-500`;
   }
 }
