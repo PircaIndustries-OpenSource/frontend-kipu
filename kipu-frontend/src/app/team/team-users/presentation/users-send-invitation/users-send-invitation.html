@@ -36,7 +36,7 @@
 
   <mat-dialog-actions align="end" class="!pb-6 !px-6">
     <button mat-button mat-dialog-close class="!rounded-md">{{'team.users.send-invitation.btn-cancel' | translate}}</button>
-    <button mat-flat-button color="primary" (click)="onConfirm()" class="!bg-blue-600 !rounded-md">
+    <button mat-flat-button color="primary" (click)="onConfirm()" class="!bg-accent !rounded-md disabled: bg-black" [disabled]="inviteForm.invalid">
       {{'team.users.send-invitation.btn-invite' | translate}}
     </button>
   </mat-dialog-actions>
