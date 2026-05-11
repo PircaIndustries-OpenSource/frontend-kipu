@@ -10,9 +10,6 @@ import { DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-// Si tienes un componente separado para AÑADIR FIRMANTES, impórtalo también
-// import { AddSignatureComponent, AddSignatureData } from '../add-signature/add-signature';
-
 @Component({
   selector: 'app-document-page',
   imports: [MatIcon, TranslatePipe, DatePipe, MatButtonModule, MatTooltipModule],
