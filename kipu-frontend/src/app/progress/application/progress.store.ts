@@ -8,49 +8,98 @@ import { ProjectProgress } from '../domain/progress.entity';
 export class ProgressStore {
   private readonly progressApi = inject(ProgressApi);
 
+  // State signals
   private readonly _progressList = signal<ProjectProgress[]>([]);
   private readonly _loading = signal<boolean>(false);
+  private readonly _specialtyFilter = signal<string>('');
+  private readonly _searchFilter = signal<string>('');
+  private readonly _dateRange = signal<{ start: Date | null; end: Date | null }>({
+    start: null,
+    end: null,
+  });
 
-  readonly progressList = computed(() => this._progressList());
+  // Selectors
+  readonly progressList = computed(() => {
+    let list = this._progressList();
+    const specialty = this._specialtyFilter();
+    const searchTerm = this._searchFilter().toLowerCase();
+    const { start, end } = this._dateRange();
+
+    if (specialty) list = list.filter((item) => item.specialty === specialty);
+    if (searchTerm)
+      list = list.filter((item) => item.activityName.toLowerCase().includes(searchTerm));
+    if (start && end) {
+      list = list.filter((item) => {
+        const itemDate = new Date(item.lastUpdate);
+        return itemDate >= start && itemDate <= end;
+      });
+    }
+    return list;
+  });
+
   readonly isLoading = computed(() => this._loading());
 
+  /**
+   * Adds new entry to the signal for immediate UI update.
+   */
+  addProgress(newEntry: ProjectProgress): void {
+    this._progressList.update((list) => [newEntry, ...list]);
+  }
+
+  setSpecialtyFilter(v: string): void {
+    this._specialtyFilter.set(v);
+  }
+  setSearchFilter(v: string): void {
+    this._searchFilter.set(v);
+  }
+  setDateRange(start: Date | null, end: Date | null): void {
+    this._dateRange.set({ start, end });
+  }
+
+  /**
+   * Loads initial data with API structure preserved.
+   */
   loadProgress(): void {
     this._loading.set(true);
-
-    // --- STATIC MODE (Currently active for UI testing) ---
     const mockData: ProjectProgress[] = [
       {
         id: 1,
         projectId: 101,
-        projectName: 'Edificio Los Alisos',
+        projectName: 'Torre Empresarial Centro',
         activityName: 'Vaciado de Losa N3',
         details: 'Nivel 3 - Eje A-F',
         specialty: 'Estructuras',
         status: 'Finished',
         currentPercentage: 100,
-        lastUpdate: new Date('2026-04-16'),
+        startDate: new Date(),
+        endDate: new Date(),
+        lastUpdate: new Date('2026-04-15'),
       },
       {
         id: 2,
         projectId: 101,
-        projectName: 'Edificio Los Alisos',
+        projectName: 'Torre Empresarial Centro',
         activityName: 'Instalación Eléctrica',
         details: 'Nivel 2 - Oficinas',
         specialty: 'Instalaciones',
         status: 'Active',
         currentPercentage: 65,
-        lastUpdate: new Date('2026-04-15'),
+        startDate: new Date(),
+        endDate: new Date(),
+        lastUpdate: new Date('2026-04-14'),
       },
       {
         id: 3,
-        projectId: 102,
-        projectName: 'Torre Empresarial',
+        projectId: 101,
+        projectName: 'Torre Empresarial Centro',
         activityName: 'Acabado de Muros',
         details: 'Fachada Posterior',
         specialty: 'Arquitectura',
         status: 'Delayed',
         currentPercentage: 30,
-        lastUpdate: new Date('2026-04-14'),
+        startDate: new Date(),
+        endDate: new Date(),
+        lastUpdate: new Date('2026-04-13'),
       },
     ];
 
@@ -59,17 +108,10 @@ export class ProgressStore {
       this._loading.set(false);
     }, 500);
 
-    // --- API MODE (Uncomment below and remove static block above when json-server is ready) ---
-    /*
+    /* // API CONNECTION READY FOR DB.JSON
     this.progressApi.getAllProgress().subscribe({
-      next: (data) => {
-        this._progressList.set(data);
-        this._loading.set(false);
-      },
-      error: (err) => {
-        console.error('Error fetching progress:', err);
-        this._loading.set(false);
-      }
+      next: (data) => { this._progressList.set(data); this._loading.set(false); },
+      error: () => this._loading.set(false)
     });
     */
   }

@@ -439,25 +439,61 @@
     "title": "Control de Avances",
     "subtitle": "Historial de registros diarios y estados de ejecución.",
     "actions": {
-      "new": "Nuevo Avance Diario"
+      "new": "Nuevo Avance Diario",
+      "save": "Guardar Avance",
+      "cancel": "Cancelar",
+      "export": "Exportar Reporte",
+      "upload": "Subir Fotos"
+    },
+    "tabs": {
+      "log": "Registro de Avance (PPC)",
+      "photos": "Bitácora Fotográfica"
     },
     "filters": {
-      "project": "Filtrar por: Proyecto",
+      "activity": "Buscar actividad...",
       "specialty": "Filtrar por: Especialidad",
-      "date": "Seleccionar rango de fechas"
+      "start_date": "Fecha inicio",
+      "end_date": "Fecha fin"
     },
     "table": {
       "date": "Fecha",
       "activity": "Actividad Realizada",
       "specialty": "Especialidad",
       "advance": "Avance (%)",
-      "project": "Proyecto",
       "status": "Estado"
     },
+    "form": {
+      "title": "Nuevo Avance Diario",
+      "date": "Fecha del Avance",
+      "specialty": "Especialidad",
+      "activity": "Actividad Realizada",
+      "activity_placeholder": "Ej: Vaciado de losa del segundo nivel",
+      "location": "Ubicación/Sector",
+      "location_placeholder": "Ej: Nivel 2 - Eje A-B",
+      "percentage": "Porcentaje de Avance",
+      "description": "Descripción Detallada",
+      "description_placeholder": "Describe el trabajo realizado, métodos utilizados, condiciones...",
+      "responsible": "Responsable",
+      "workers": "Personal en Cuadrilla",
+      "weather": {
+        "label": "Condiciones Climáticas",
+        "sunny": "Soleado",
+        "cloudy": "Nublado",
+        "rainy": "Lluvia",
+        "storm": "Tormenta"
+      }
+    },
     "status": {
-      "finished": "Completado",
+      "finished": "Terminado",
       "active": "En Curso",
       "delayed": "Demorado"
+    },
+    "dialog": {
+      "title": "¿Guardar cambios?",
+      "question": "¿Deseas guardar los cambios?",
+      "warning": "De no hacerlo, serán borrados.",
+      "discard": "No, descartar cambios",
+      "save": "Guardar cambios"
     }
   }
 }

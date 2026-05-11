@@ -1,5 +1,6 @@
 /**
- * Domain entity representing a specific construction activity progress.
+ * Complete domain entity for progress records.
+ * Includes scheduling, execution, and weather metrics.
  */
 export interface ProjectProgress {
   id: number;
@@ -10,10 +11,13 @@ export interface ProjectProgress {
   specialty: string;
   status: ProgressStatus;
   currentPercentage: number;
+  startDate: Date;
+  endDate: Date;
   lastUpdate: Date;
+  // New fields from mockup
+  responsible?: string;
+  workers?: number;
+  weather?: string;
 }
 
-/**
- * Allowed statuses for an activity.
- */
 export type ProgressStatus = 'Active' | 'Finished' | 'Delayed';
