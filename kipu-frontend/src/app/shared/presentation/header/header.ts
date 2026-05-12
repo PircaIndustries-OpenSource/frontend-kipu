@@ -3,10 +3,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { LogisticsStore } from '../../../logistics/application/logistics.store';
 import { RouterModule } from '@angular/router';
+import { LanguageSwitcher } from '../language-switcher/language-switcher';
 
 @Component({
   selector: 'app-header',
-  imports: [MatIconModule, MatBadgeModule, RouterModule],
+  imports: [MatIconModule, MatBadgeModule, RouterModule, LanguageSwitcher],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
