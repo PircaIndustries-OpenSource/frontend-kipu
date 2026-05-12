@@ -1,19 +1,26 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { BudgetItemEntity } from '../domain/budget-item.entity';
+import { ProjectsStore } from '../../projects/application/projects.store';
+import { BudgetApi } from '../infrastructure/budget-api';
+import { BudgetAssembler } from '../infrastructure/budget-assembler';
+import { ProgressStore } from '../../progress/application/progress.store';
+import { ProjectProgress } from '../../progress/domain/progress.entity';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BudgetStore {
-  // Persistence key
-  private readonly STORAGE_KEY = 'kipu_budget_data';
+  // Dependencies
+  private readonly budgetApi = inject(BudgetApi);
+  private readonly projectsStore = inject(ProjectsStore);
+  private readonly progressStore = inject(ProgressStore);
 
   // State signals
   private readonly budgetItemsSignal = signal<BudgetItemEntity[]>([]);
   private readonly searchQuery = signal<string>('');
   readonly selectedItem = signal<BudgetItemEntity | null>(null);
 
-  // Authorized personnel list for dropdowns
+  // Authorized personnel list
   readonly authorizedPersonnel = signal<string[]>([
     'Juan Pérez - Gestor Operativo',
     'Asuna Yuuki - Residente de Obra',
@@ -21,25 +28,74 @@ export class BudgetStore {
     'Carlos Ruiz - Operario Maestro',
   ]);
 
-  // Reactive filtered list
+  /**
+   * Reactive list that merges real budget items with progress entries.
+   */
   readonly budgetItems = computed(() => {
+    const currentId = this.projectsStore.currentProjectId();
     const query = this.searchQuery().toLowerCase();
-    return this.budgetItemsSignal().filter(
-      (item) => item.name.toLowerCase().includes(query) || item.code.toLowerCase().includes(query),
+    const realBudgets = this.budgetItemsSignal();
+    const allProgress = this.progressStore.progressList();
+
+    const combinedList = [...realBudgets];
+
+    allProgress.forEach((progress: ProjectProgress) => {
+      const hasBudget = realBudgets.some((b) => b.progressId === progress.id);
+      if (!hasBudget) {
+        combinedList.push({
+          id: Math.floor(Math.random() * 100000),
+          projectId: progress.projectId,
+          progressId: progress.id,
+          code: 'NEW',
+          name: progress.activityName,
+          description: progress.details || 'Pending budget assignment',
+          budgeted: 0,
+          executed: 0,
+          available: 0,
+          progress: 0,
+          status: 'risk',
+          alert: 'Needs budget assignment',
+          expenseHistory: [],
+        });
+      }
+    });
+
+    return combinedList.filter(
+      (item) =>
+        item.projectId === currentId &&
+        (item.name.toLowerCase().includes(query) || item.code.toLowerCase().includes(query)),
     );
   });
 
-  // Reactive totals using computed
+  // Reactive totals
   readonly totalBudgeted = computed(() =>
-    this.budgetItemsSignal().reduce((sum, item) => sum + item.budgeted, 0),
+    this.budgetItems().reduce((sum, item) => sum + item.budgeted, 0),
   );
   readonly totalExecuted = computed(() =>
-    this.budgetItemsSignal().reduce((sum, item) => sum + item.executed, 0),
+    this.budgetItems().reduce((sum, item) => sum + item.executed, 0),
   );
   readonly totalAvailable = computed(() => this.totalBudgeted() - this.totalExecuted());
   readonly executionPercentage = computed(() =>
-    this.totalBudgeted() > 0 ? (this.totalExecuted() / this.totalBudgeted()) * 100 : 0,
+    this.projectLimit() > 0 ? (this.totalExecuted() / this.projectLimit()) * 100 : 0,
   );
+
+  /**
+   * NEW: Project Global Budget Limit
+   * Retrieves the limit defined in the Project's master file (totalBudget)
+   */
+  readonly projectLimit = computed(() => this.projectsStore.currentProject()?.totalBudget || 0);
+
+  /**
+   * NEW: Unallocated project funds
+   * Difference between the project's global limit and what has been assigned to advances.
+   */
+  readonly unallocatedBudget = computed(() => this.projectLimit() - this.totalBudgeted());
+
+  /**
+   * NEW: Over-allocation flag
+   * True if the sum of all activities exceeds the project's global budget.
+   */
+  readonly isProjectOverAllocated = computed(() => this.totalBudgeted() > this.projectLimit());
 
   updateSearch(query: string) {
     this.searchQuery.set(query);
@@ -50,99 +106,98 @@ export class BudgetStore {
   }
 
   /**
-   * Adds an expense, updates history and persists to local storage.
+   * Adds an expense and persists it to the backend.
    */
-  addExpense(itemId: string, expenseData: any): boolean {
+  addExpense(itemId: number, expenseData: any): boolean {
     const items = this.budgetItemsSignal();
-    const target = items.find((i) => i.id === itemId);
+    const target = items.find((i) => i.progressId === Number(itemId));
 
     if (!target || target.available < expenseData.amount) return false;
 
-    const updatedList = items.map((item) => {
-      if (item.id === itemId) {
-        const newExecuted = item.executed + expenseData.amount;
-        const currentHistory = item.expenseHistory || [];
-        return {
-          ...item,
-          executed: newExecuted,
-          available: item.budgeted - newExecuted,
-          progress: Math.round((newExecuted / item.budgeted) * 100),
-          expenseHistory: [...currentHistory, { ...expenseData, date: new Date() }],
-        };
-      }
-      return item;
-    });
+    const realBudgetItemId = target.id;
+    const newExecuted = Number(target.executed) + Number(expenseData.amount);
 
-    this.budgetItemsSignal.set(updatedList);
-    this.saveToStorage(updatedList);
+    const updatedItem: BudgetItemEntity = {
+      ...target,
+      executed: newExecuted,
+      available: target.budgeted - newExecuted,
+      progress: Math.round((newExecuted / target.budgeted) * 100),
+      expenseHistory: [...(target.expenseHistory || []), { ...expenseData, date: new Date() }],
+    };
+
+    this.budgetItemsSignal.update((list) =>
+      list.map((item) => (item.id === realBudgetItemId ? updatedItem : item)),
+    );
+
+    this.budgetApi.updateBudget(String(realBudgetItemId), updatedItem).subscribe();
+
     return true;
   }
 
-  addExtension(itemId: string, amount: number) {
-    const updatedList = this.budgetItemsSignal().map((item) => {
-      if (item.id === itemId) {
-        const newBudgeted = item.budgeted + amount;
-        return {
-          ...item,
-          budgeted: newBudgeted,
-          available: newBudgeted - item.executed,
-          progress: Math.round((item.executed / newBudgeted) * 100),
-        };
-      }
-      return item;
-    });
-    this.budgetItemsSignal.set(updatedList);
-    this.saveToStorage(updatedList);
-  }
+  /**
+   * Handles budget extensions with safe mathematical summation (1k + 18k = 19k).
+   */
+  addExtension(progressId: number, amount: any) {
+    const realItems = this.budgetItemsSignal();
+    const target = realItems.find((i) => i.progressId === progressId);
 
-  private saveToStorage(data: BudgetItemEntity[]) {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
-  }
+    // Force numeric conversion to avoid string concatenation
+    const extensionAmount = Number(amount);
 
-  loadBudgetItems() {
-    const savedData = localStorage.getItem(this.STORAGE_KEY);
-    if (savedData) {
-      this.budgetItemsSignal.set(JSON.parse(savedData));
+    if (target) {
+      // Logic for existing item: SUM the values
+      const newBudgeted = Number(target.budgeted) + extensionAmount;
+
+      const updatedItem = {
+        ...target,
+        budgeted: newBudgeted,
+        available: newBudgeted - target.executed,
+        progress: Math.round((target.executed / newBudgeted) * 100),
+      };
+
+      this.budgetApi
+        .updateBudget(String(target.id), updatedItem)
+        .subscribe(() => this.loadBudgetItems());
     } else {
-      // Default Mock Data
-      const mockData: BudgetItemEntity[] = [
-        {
-          id: '1',
-          progressId: 101,
-          code: '01.01',
-          name: 'Cimentación',
-          description: 'Trabajos preliminares y cimentación',
-          budgeted: 80000,
-          executed: 65000,
-          available: 15000,
-          progress: 81,
-          status: 'normal',
-          alert: null,
-          expenseHistory: [],
-        },
-        {
-          id: '2',
-          progressId: 102,
-          code: '01.02',
-          name: 'Estructura',
-          description: 'Columnas, vigas y losas',
-          budgeted: 50000,
-          executed: 38000,
-          available: 12000,
-          progress: 76,
-          status: 'risk',
-          alert: 'SM-045 excede presupuesto',
-          expenseHistory: [],
-        },
-      ];
-      this.budgetItemsSignal.set(mockData);
-    }
+      // New Record Creation (POST)
+      const progress = this.progressStore
+        .progressList()
+        .find((p: ProjectProgress) => p.id === progressId);
+      if (!progress) return;
 
-    /* // --- API CONNECTION READY ---
-    // this.budgetApi.getAllBudgets().subscribe(data => {
-    //   this.budgetItemsSignal.set(data);
-    //   this.saveToStorage(data);
-    // });
-    */
+      const newItem: BudgetItemEntity = {
+        id: Math.floor(Math.random() * 100000),
+        projectId: progress.projectId,
+        progressId: progress.id,
+        code: '01.XX',
+        name: progress.activityName,
+        description: progress.details,
+        budgeted: extensionAmount,
+        executed: 0,
+        available: extensionAmount,
+        progress: 0,
+        status: 'normal',
+        alert: null,
+        expenseHistory: [],
+      };
+
+      this.budgetApi.createBudget(newItem).subscribe(() => this.loadBudgetItems());
+    }
+  }
+
+  /**
+   * Loads budget items from the server.
+   */
+  loadBudgetItems() {
+    this.budgetApi.getAllBudgets().subscribe({
+      next: (responses) => {
+        const entities = BudgetAssembler.toEntityList(responses);
+        this.budgetItemsSignal.set(entities);
+      },
+      error: (err) => {
+        console.error('Error fetching budgets from db.json', err);
+        this.budgetItemsSignal.set([]);
+      },
+    });
   }
 }

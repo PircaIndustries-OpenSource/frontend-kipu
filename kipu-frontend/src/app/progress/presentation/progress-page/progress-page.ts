@@ -13,6 +13,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { ProgressStore } from '../../application/progress.store';
 import { AutocompleteFilterList } from '../../../shared/presentation/autocomplete-filter-list/autocomplete-filter-list';
 import { ProjectProgress } from '../../domain/progress.entity';
+import { ProjectsStore } from '../../../projects/application/projects.store';
 
 @Component({
   selector: 'app-progress-page',
@@ -35,6 +36,7 @@ import { ProjectProgress } from '../../domain/progress.entity';
 })
 export class ProgressPage implements OnInit {
   readonly store = inject(ProgressStore);
+  private readonly projectsStore = inject(ProjectsStore);
   readonly dialog = inject(MatDialog);
   private readonly fb = inject(FormBuilder);
 
@@ -44,6 +46,11 @@ export class ProgressPage implements OnInit {
 
   readonly specialtiesOptions = ['Estructuras', 'Instalaciones', 'Arquitectura'];
   readonly activityOptions = ['Vaciado de Losa N3', 'Instalación Eléctrica', 'Acabado de Muros'];
+  protected readonly mockPhotos = [
+    { title: 'Excavaciones', date: '11/05/2026', url: 'https://loremflickr.com/600/400/excavator,construction?lock=1' },
+    { title: 'Cimentación', date: '12/05/2026', url: 'https://loremflickr.com/600/400/foundation,construction?lock=2' },
+    { title: 'Armado de Columnas', date: '13/05/2026', url: 'https://loremflickr.com/600/400/rebar,construction?lock=3' }
+  ];
 
   @ViewChild('confirmDialogTemplate') confirmDialogTemplate!: TemplateRef<unknown>;
 
@@ -83,10 +90,15 @@ export class ProgressPage implements OnInit {
   saveProgress(): void {
     if (this.progressForm.valid) {
       const val = this.progressForm.value;
+
+      // Get current project context from store
+      const currentId = this.projectsStore.currentProjectId() || 'unknown';
+      const projectName = this.projectsStore.currentProject()?.name || 'Unknown Project';
+
       const newEntry: ProjectProgress = {
-        id: Math.floor(Math.random() * 10000),
-        projectId: 101,
-        projectName: 'Torre Empresarial Centro',
+        id: Math.floor(Math.random() * 10000), // json-server will generate a permanent ID, but we send a temporary one
+        projectId: currentId, // Dynamic project assignment
+        projectName: projectName,
         activityName: val.activityName,
         details: val.location || '',
         specialty: val.specialty,
@@ -99,6 +111,7 @@ export class ProgressPage implements OnInit {
         workers: val.workers,
         weather: val.weather,
       };
+
       this.store.addProgress(newEntry);
       this.currentView.set('list');
     }

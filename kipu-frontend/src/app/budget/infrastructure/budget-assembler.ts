@@ -10,7 +10,8 @@ export class BudgetAssembler {
    */
   static toEntity(response: BudgetResponse): BudgetItemEntity {
     return {
-      id: response.id,
+      id: Number(response.id),
+      projectId: response.projectId, // Cast string ID to number
       progressId: response.progressId,
       code: response.code,
       name: response.name,
