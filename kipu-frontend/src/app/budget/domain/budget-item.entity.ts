@@ -3,7 +3,8 @@
  * Includes the foreign key (progressId) to link it to a specific project progress.
  */
 export interface BudgetItemEntity {
-  id: string;
+  id: number;
+  projectId: string;
   progressId: number;
   code: string;
   name: string;

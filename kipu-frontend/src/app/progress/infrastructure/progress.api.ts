@@ -26,5 +26,9 @@ export class ProgressApi {
     return this.http.get<ProgressResponse[]>(this.basePath).pipe(
       map((responses) => ProgressAssembler.toEntityList(responses))
     );
-  }
+  };
+
+  createProgress(data: ProjectProgress): Observable<ProjectProgress> {
+    return this.http.post<ProjectProgress>('http://localhost:3000/api/v1/progress', data);
+  };
 }

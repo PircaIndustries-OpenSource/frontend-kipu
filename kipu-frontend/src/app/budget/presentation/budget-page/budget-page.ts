@@ -5,6 +5,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BudgetStore } from '../../application/budget-store';
 import { BudgetItemEntity } from '../../domain/budget-item.entity';
+import { ProgressStore } from '../../../progress/application/progress.store';
 
 @Component({
   selector: 'app-budget-page',
@@ -22,6 +23,7 @@ import { BudgetItemEntity } from '../../domain/budget-item.entity';
 })
 export class BudgetPage implements OnInit {
   protected readonly store = inject(BudgetStore);
+  protected readonly progressStore = inject(ProgressStore); // Injecting ProgressStore
   private readonly fb = inject(FormBuilder);
   protected readonly dialog = inject(MatDialog);
 
@@ -40,7 +42,7 @@ export class BudgetPage implements OnInit {
       itemId: ['', Validators.required],
       concept: ['', Validators.required],
       amount: [0, [Validators.required, Validators.min(1)]],
-      responsible: ['', Validators.required], // Now linked to the dropdown
+      responsible: ['', Validators.required],
       description: [''],
     });
 
@@ -54,6 +56,7 @@ export class BudgetPage implements OnInit {
 
   ngOnInit() {
     this.store.loadBudgetItems();
+    this.progressStore.loadProgress(); // Load progress entries to populate dropdowns
   }
 
   openExpense() {
@@ -105,13 +108,20 @@ export class BudgetPage implements OnInit {
 
   onSaveExtension() {
     if (this.extensionForm.valid) {
-      this.store.addExtension(this.extensionForm.value.itemId, this.extensionForm.value.amount);
+      // Sending itemId (which is now the Progress ID) to the store
+      this.store.addExtension(
+        Number(this.extensionForm.value.itemId),
+        this.extensionForm.value.amount,
+      );
       this.dialog.closeAll();
       this.extensionForm.reset();
     }
   }
 
-  scrollToItem(id: string) {
-    document.getElementById('item-' + id)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  scrollToItem(itemId: number) {
+    const element = document.getElementById(`item-${itemId}`);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 }

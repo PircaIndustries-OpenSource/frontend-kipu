@@ -20,6 +20,13 @@
       "password": "kipu12345",
       "role": "Gestor Operativo",
       "id": "w25vbLd"
+    },
+    {
+      "name": "Jhony Manuel Francia Torres",
+      "email": "manuelft@gmail.com",
+      "password": "12345678",
+      "role": "Gestor Operativo",
+      "id": "aXT7GBg"
     }
   ],
   "projects": [
@@ -32,7 +39,8 @@
       "location": "Av. Principal 123, Los Olivos, Lima",
       "createdAt": "2026-01-10",
       "createdBy": "SIVyLM6",
-      "imageUrl": "project-image1.png"
+      "imageUrl": "project-image1.png",
+      "totalBudget": 850000
     },
     {
       "id": "proj-02",
@@ -43,7 +51,8 @@
       "location": "Calle Las Flores 456, San Miguel, Lima",
       "createdAt": "2026-05-01",
       "createdBy": "SIVyLM6",
-      "imageUrl": "project-image4.png"
+      "imageUrl": "project-image4.png",
+      "totalBudget": 850000
     },
     {
       "id": "proj-03",
@@ -54,7 +63,8 @@
       "location": "Av. La Cultura 789, Cusco",
       "createdAt": "2025-02-15",
       "createdBy": "P-n4XLk",
-      "imageUrl": "project-image3.png"
+      "imageUrl": "project-image3.png",
+      "totalBudget": 850000
     },
     {
       "id": "pyXfjIq",
@@ -63,11 +73,11 @@
       "status": "IN_PROGRESS",
       "startDate": "2026-05-13T05:00:00.000Z",
       "endDate": "2026-05-26T05:00:00.000Z",
-      "estimatedBudget": 212121,
       "location": "xd",
       "createdAt": "2026-05-11",
       "createdBy": "current-user",
-      "imageUrl": "project-image3.png"
+      "imageUrl": "project-image3.png",
+      "totalBudget": 850000
     },
     {
       "id": "vEXQoL6",
@@ -76,11 +86,11 @@
       "status": "PLANNED",
       "startDate": "2026-05-12T05:00:00.000Z",
       "endDate": "2026-05-20T05:00:00.000Z",
-      "estimatedBudget": 1231,
       "location": "asdasd",
       "createdAt": "2026-05-11",
       "createdBy": "current-user",
-      "imageUrl": "project-image1.png"
+      "imageUrl": "project-image1.png",
+      "totalBudget": 850000
     },
     {
       "id": "whceCRF",
@@ -89,11 +99,11 @@
       "status": "IN_PROGRESS",
       "startDate": "2026-05-12T05:00:00.000Z",
       "endDate": "2026-05-12T05:00:00.000Z",
-      "estimatedBudget": 123123,
       "location": "asdasd",
       "createdAt": "2026-05-11",
       "createdBy": "current-user",
-      "imageUrl": "project-image3.png"
+      "imageUrl": "project-image3.png",
+      "totalBudget": 850000
     },
     {
       "id": "8IZsgo_",
@@ -102,11 +112,11 @@
       "status": "PLANNED",
       "startDate": "2026-05-20T05:00:00.000Z",
       "endDate": "2026-05-31T05:00:00.000Z",
-      "estimatedBudget": 123123,
       "location": "aaaaaaaaaaaaaaaaaaa",
       "createdAt": "2026-05-11",
       "createdBy": "current-user",
-      "imageUrl": "project-image4.jpg"
+      "imageUrl": "project-image4.jpg",
+      "totalBudget": 850000
     },
     {
       "id": "lluhwVv",
@@ -115,11 +125,11 @@
       "status": "PLANNED",
       "startDate": "2026-05-21T05:00:00.000Z",
       "endDate": "2026-05-31T05:00:00.000Z",
-      "estimatedBudget": 123123,
       "location": "....",
       "createdAt": "2026-05-11",
       "createdBy": "current-user",
-      "imageUrl": "project-image1.png"
+      "imageUrl": "project-image1.png",
+      "totalBudget": 850000
     },
     {
       "id": "YgMohp6",
@@ -128,11 +138,11 @@
       "status": "PLANNED",
       "startDate": "2026-05-27T05:00:00.000Z",
       "endDate": "2026-05-25T05:00:00.000Z",
-      "estimatedBudget": 121,
       "location": "as",
       "createdAt": "2026-05-11",
       "createdBy": "current-user",
-      "imageUrl": "project-image2.png"
+      "imageUrl": "project-image2.png",
+      "totalBudget": 850000
     },
     {
       "id": "bINNav6",
@@ -144,7 +154,8 @@
       "location": "sdasd",
       "createdAt": "2026-05-11",
       "createdBy": "current-user",
-      "imageUrl": "project-image5.png"
+      "imageUrl": "project-image5.png",
+      "totalBudget": 850000
     }
   ],
   "documents": [
@@ -1128,7 +1139,9 @@
       "fullName": "Pedro Castro",
       "role": "Manejador",
       "status": "inactivo",
-      "assignedTools": ["Escuela"]
+      "assignedTools": [
+        "Escuela"
+      ]
     },
     {
       "id": "w-3",
@@ -1143,7 +1156,10 @@
       "fullName": "Neo Ramos",
       "role": "Capataz",
       "status": "activo",
-      "assignedTools": ["Tolva", "Marañón"],
+      "assignedTools": [
+        "Tolva",
+        "Marañón"
+      ],
       "id": "w-1778261706149"
     }
   ],
@@ -1216,5 +1232,48 @@
       "id": "us-1778218020628"
     }
   ],
-  "progress": []
+  "progress": [
+    {
+      "id": 1895,
+      "projectId": "proj-02",
+      "projectName": "Residencial San Miguel",
+      "activityName": "Techado",
+      "details": "Piso 1",
+      "specialty": "Estructuras",
+      "status": "Active",
+      "currentPercentage": 67,
+      "startDate": "2026-05-12T20:59:04.837Z",
+      "endDate": "2026-05-12T20:59:04.837Z",
+      "lastUpdate": "2026-05-12T00:00:00.000Z",
+      "responsible": "Manuel Francia",
+      "workers": 67,
+      "weather": "sunny"
+    }
+  ],
+  "budgets": [
+    {
+      "id": 27466,
+      "projectId": "proj-02",
+      "progressId": 1895,
+      "code": "01.XX",
+      "name": "Techado",
+      "description": "Piso 1",
+      "budgeted": 100000,
+      "executed": 1000,
+      "available": 99000,
+      "progress": 1,
+      "status": "normal",
+      "alert": null,
+      "expenseHistory": [
+        {
+          "itemId": "1895",
+          "concept": "Ladrillos",
+          "amount": 1000,
+          "responsible": "Asuna Yuuki - Residente de Obra",
+          "description": null,
+          "date": "2026-05-12T20:59:59.631Z"
+        }
+      ]
+    }
+  ]
 }
