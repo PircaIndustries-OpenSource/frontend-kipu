@@ -678,5 +678,72 @@
       "discard": "No, discard changes",
       "save": "Save changes"
     }
+  },
+  "identity": {
+    "banner_system_desc": "Construction Management System",
+    "banner_control_title": "Total Control",
+    "banner_control_desc": "Manage projects, budgets and timelines from a single dashboard",
+    "banner_platform_title": "Centralized Platform",
+    "banner_platform_desc": "All project documentation and communication in one place",
+    "banner_tracking_title": "Real-time Tracking",
+    "banner_tracking_desc": "Monitor progress, RNCs and material requests instantly",
+
+    "login_title": "Welcome back",
+    "login_description": "Enter your credentials to access the platform",
+    "email": "Email",
+    "email_placeholder": "your@email.com",
+    "password": "Password",
+    "password_placeholder": "Enter your password",
+    "remember_me": "Remember me",
+    "forgot_password": "Forgot your password?",
+    "continue": "or continue with",
+    "no_account": "Don't have an account?",
+    "register_link": "Sign up",
+    "login_button": "Sign in",
+
+    "register_title": "Create account",
+    "register_description": "Fill in the information to register",
+    "name": "Full name",
+    "name_placeholder": "Juan Perez",
+    "role": "Role",
+    "role_manager": "Operations Manager",
+    "role_logistics": "Logistics & Administration",
+    "register_button": "Sign up",
+    "has_account": "Already have an account?",
+    "login_link": "Sign in",
+
+    "reset_title": "Reset password",
+    "reset_desc": "Enter your new password",
+    "reset_button": "Reset password",
+    "new_password": "New password",
+    "confirm_password": "Confirm password",
+
+    "forgot_title": "Forgot password?",
+    "forgot_desc": "Enter your email to receive a verification code",
+    "continue_button": "Continue",
+    "back_to_login": "Back to login",
+
+    "verification_title": "Verify your account",
+    "verification_desc": "We have sent a verification code to your email",
+    "verification_code_title": "Verification code",
+    "verification_code_desc": "Enter the verification code we sent to",
+    "verify_button": "Verify account",
+    "resend_code": "Resend code",
+    "resend_code_wait": "Resend code in ",
+
+    "back_to_home_1": "Return to ",
+    "back_to_home_link": "login",
+    "back_to_home_2": "",
+
+    "err_name_required": "Name is required",
+    "err_email_required": "Email is required",
+    "err_email_invalid": "Please enter a valid email",
+    "err_email_taken": "This email is already registered",
+    "err_password_required": "Password is required",
+    "err_password_min": "Password must be at least 6 characters",
+    "err_role_required": "Role is required",
+    "err_password_mismatch": "Passwords do not match",
+
+    "hint_checking_email": "Checking email availability..."
   }
 }

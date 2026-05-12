@@ -678,5 +678,72 @@
       "discard": "No, descartar cambios",
       "save": "Guardar cambios"
     }
+  },
+  "identity": {
+    "banner_system_desc": "Sistema de Gestión de Construcción",
+    "banner_control_title": "Control Total",
+    "banner_control_desc": "Gestiona proyectos, presupuestos y cronogramas desde un solo panel",
+    "banner_platform_title": "Plataforma Centralizada",
+    "banner_platform_desc": "Toda la documentación y comunicación del proyecto en un solo lugar",
+    "banner_tracking_title": "Seguimiento en Tiempo Real",
+    "banner_tracking_desc": "Monitorea avances, RNCs y solicitudes de material al instante",
+
+    "login_title": "Bienvenido de nuevo",
+    "login_description": "Ingresa tus credenciales para acceder a la plataforma",
+    "email": "Correo electrónico",
+    "email_placeholder": "tu@email.com",
+    "password": "Contraseña",
+    "password_placeholder": "Ingresa tu contraseña",
+    "remember_me": "Recordarme",
+    "forgot_password": "¿Olvidaste tu contraseña?",
+    "continue": "o continúa con",
+    "no_account": "¿No tienes una cuenta?",
+    "register_link": "Regístrate",
+    "login_button": "Iniciar sesión",
+
+    "register_title": "Crear cuenta",
+    "register_description": "Completa la información para registrarte",
+    "name": "Nombre completo",
+    "name_placeholder": "Juan Pérez",
+    "role": "Rol",
+    "role_manager": "Gestor Operativo",
+    "role_logistics": "Logística y Administración",
+    "register_button": "Registrarse",
+    "has_account": "¿Ya tienes una cuenta?",
+    "login_link": "Iniciar sesión",
+
+    "reset_title": "Restablecer contraseña",
+    "reset_desc": "Ingresa tu nueva contraseña",
+    "reset_button": "Restablecer contraseña",
+    "new_password": "Nueva contraseña",
+    "confirm_password": "Confirmar contraseña",
+
+    "forgot_title": "¿Olvidaste tu contraseña?",
+    "forgot_desc": "Ingresa tu correo para recibir un código de verificación",
+    "continue_button": "Continuar",
+    "back_to_login": "Volver al inicio de sesión",
+
+    "verification_title": "Verifica tu cuenta",
+    "verification_desc": "Hemos enviado un código de verificación a tu correo",
+    "verification_code_title": "Código de verificación",
+    "verification_code_desc": "Ingresa el código de verificación que enviamos a",
+    "verify_button": "Verificar cuenta",
+    "resend_code": "Reenviar código",
+    "resend_code_wait": "Reenviar código en ",
+
+    "back_to_home_1": "Volver al ",
+    "back_to_home_link": "inicio de sesión",
+    "back_to_home_2": "",
+
+    "err_name_required": "El nombre es requerido",
+    "err_email_required": "El correo electrónico es requerido",
+    "err_email_invalid": "Ingresa un correo electrónico válido",
+    "err_email_taken": "Este correo ya está registrado",
+    "err_password_required": "La contraseña es requerida",
+    "err_password_min": "La contraseña debe tener al menos 6 caracteres",
+    "err_role_required": "El rol es requerido",
+    "err_password_mismatch": "Las contraseñas no coinciden",
+
+    "hint_checking_email": "Verificando disponibilidad del correo..."
   }
 }
