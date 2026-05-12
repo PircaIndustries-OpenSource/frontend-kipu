@@ -101,3 +101,19 @@
 }
 .filter-btn.active { background-color: #344356; color: white; border: none; }
 .filter-btn.outline { background-color: white; color: #344356; border: 0.0625rem solid #e2e8f0; }
+
+.delete-btn {
+  border-radius: 1.25rem !important; /* Borde suave pill */
+  padding: 0.25rem 1rem !important;
+  font-size: 0.75rem !important;
+}
+
+.create-btn {
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 1.25rem !important; /* Estilo pill suave */
+  height: 3rem; /* 48px */
+  font-weight: bold;
+  letter-spacing: 0.0625rem;
+}

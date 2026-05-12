@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>Add New Seismic Sensor</h2>
+
+<mat-dialog-content class="sensor-form">
+  <p class="form-instruction">Enter the details for the new monitoring point.</p>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Sensor ID</mat-label>
+    <input matInput [(ngModel)]="newSensor.id" placeholder="Ex: S-102">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Sensor Name</mat-label>
+    <input matInput [(ngModel)]="newSensor.name" placeholder="Ex: North Sector Alpha">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Initial Status</mat-label>
+    <mat-select [(ngModel)]="newSensor.state">
+      <mat-option value="normal">Normal</mat-option>
+      <mat-option value="peligro">Peligro</mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="form-actions">
+  <button mat-button mat-dialog-close>CANCEL</button>
+  <button mat-flat-button color="primary" class="save-btn" [mat-dialog-close]="newSensor">
+    ADD SENSOR
+  </button>
+</mat-dialog-actions>

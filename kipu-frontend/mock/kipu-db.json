@@ -910,42 +910,6 @@
       "description": "Piedra chancada contaminada con tierra durante traslado.",
       "reportedBy": "70123456",
       "photoUrl": ""
-    },
-    {
-      "id": "_nzMhLw",
-      "projectId": "",
-      "materialId": "",
-      "quantity": 1,
-      "unit": "und",
-      "classificationType": "",
-      "date": "2026-05-11",
-      "description": "asdasd",
-      "reportedBy": "Paula Montoya",
-      "photoUrl": "",
-      "material": "Bloque de Concreto 20x20x40"
-    },
-    {
-      "id": "D3nMH9D",
-      "projectId": "",
-      "materialId": "mat-004",
-      "quantity": 6,
-      "unit": "varilla",
-      "classificationType": "",
-      "date": "2026-05-11",
-      "description": "asdasd",
-      "reportedBy": "Paula Montoya",
-      "photoUrl": ""
-    },
-    {
-      "id": "kByssF_",
-      "projectId": "",
-      "materialId": "mat-002",
-      "quantity": 2,
-      "date": "2026-05-11",
-      "description": "asdas",
-      "reportedBy": "Paula Montoya",
-      "photoUrl": "",
-      "unit": "bolsa"
     }
   ],
   "materialsTools": [
@@ -1073,6 +1037,7 @@
   "concrete-curing": [
     {
       "id": "1",
+      "projectId": "",
       "name": "S-TMP-02",
       "state": 1,
       "location": "Floor Level 3",
@@ -1083,6 +1048,7 @@
     },
     {
       "id": "2",
+      "projectId": "",
       "name": "S-TMP-01",
       "state": 1,
       "location": "Columns B Sec.",

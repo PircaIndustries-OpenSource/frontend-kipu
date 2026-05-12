@@ -47,6 +47,15 @@
           </div>
         }
 
+        <div class="card-footer">
+          <span class="timestamp">{{ sensor.timeLecture }}</span>
+          <div class="actions">
+            <button mat-stroked-button color="warn" class="delete-btn" (click)="onDelete(sensor)">
+              <mat-icon>delete</mat-icon> DELETE
+            </button>
+          </div>
+        </div>
+
       </mat-card>
     }
   </div>
@@ -54,6 +63,10 @@
   <aside class="summary-panel">
     <mat-card class="summary-card">
       <h3>MODULE'S RESUME</h3>
+
+      <button mat-flat-button color="primary" class="create-btn" (click)="openAddDialog()">
+        <mat-icon>add</mat-icon> NEW SEISMOGRAPH
+      </button>
 
       <div class="stat-block">
         <span class="stat-number dark">{{ getZones() }}</span>
