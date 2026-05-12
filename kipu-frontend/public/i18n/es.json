@@ -30,34 +30,41 @@
       }
     }
   },
-  "projects": {
-    "title": "Proyectos",
-    "create-title": "Nuevo Proyecto de Obra",
-    "create-subtitle": "Registra un nuevo proyecto en el sistema",
-    "form": {
-      "name": "Nombre del Proyecto",
-      "name-placeholder": "Ej: Edificio Corporativo Los Olivos",
-      "name-required": "El nombre es obligatorio.",
-      "name-duplicated": "Ya existe un proyecto con este nombre.",
-      "name-verifying": "Verificando disponibilidad...",
-      "description": "Descripción",
-      "description-placeholder": "Describe el alcance del proyecto",
-      "description-required": "La descripción es obligatoria.",
-      "location": "Ubicación",
-      "location-placeholder": "Ej: Av. Principal 123, Lima",
-      "location-required": "La ubicación es obligatoria.",
-      "status": "Estado",
-      "start-date": "Fecha de Inicio",
-      "start-date-required": "La fecha de inicio es obligatoria.",
-      "cancel": "Cancelar",
-      "submit": "Crear Proyecto"
-    },
-    "status": {
-      "planned": "Planificado",
-      "in_progress": "En Progreso",
-      "completed": "Completado",
-      "on_hold": "En Pausa"
-    }
+  "projects_dashboard": {
+    "title": "Dashboard de Proyectos",
+    "active": "Activos",
+    "active_projects": "Proyectos Activos",
+    "in_progress": "En Progreso",
+    "average_advance": "Avance Promedio",
+    "pending": "Pendientes",
+    "open_rncs": "RNC Abiertos",
+    "total": "Total",
+    "collaborators": "Colaboradores",
+    "search_placeholder": "Buscar proyecto...",
+    "progress": "Avance",
+    "card_start": "Inicio",
+    "card_end": "Fin",
+    "card_undefined": "No definido",
+    "card_members": "miembros",
+    "card_rnc": "RNC",
+    "card_pending": "pendientes",
+    "create_title": "Crear Nuevo Proyecto",
+    "create_name": "Nombre del Proyecto",
+    "create_name_placeholder": "Ej: Edificio Corporativo Los Olivos",
+    "create_err_name_req": "El nombre del proyecto es requerido",
+    "create_desc": "Descripción",
+    "create_desc_placeholder": "Describe el alcance del proyecto",
+    "create_loc": "Ubicación",
+    "create_loc_placeholder": "Ej: Av. Principal 123, Lima",
+    "create_status": "Estado",
+    "create_status_planned": "Planificado",
+    "create_budget": "Presupuesto Estimado",
+    "create_budget_placeholder": "0.00",
+    "create_start_date": "Fecha de Inicio",
+    "create_end_date": "Fecha de Fin",
+    "new_project": "Crear Nuevo Proyecto",
+    "create_cancel": "Cancelar",
+    "create_submit": "Crear Proyecto"
   },
   "request": {
     "title": "Solicitudes de Material",
@@ -745,5 +752,10 @@
     "err_password_mismatch": "Las contraseñas no coinciden",
 
     "hint_checking_email": "Verificando disponibilidad del correo..."
+  },
+  "logout": {
+    "title": "¿Cerrar sesión?",
+    "description": "Perderás cualquier cambio no guardado",
+    "continue": "Cerrar sesión"
   }
 }

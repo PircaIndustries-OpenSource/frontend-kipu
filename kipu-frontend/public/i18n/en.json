@@ -30,34 +30,41 @@
       }
     }
   },
-  "projects": {
-    "title": "Projects",
-    "create-title": "New Construction Project",
-    "create-subtitle": "Register a new project in the system",
-    "form": {
-      "name": "Project Name",
-      "name-placeholder": "e.g., Los Olivos Corporate Building",
-      "name-required": "Name is required.",
-      "name-duplicated": "A project with this name already exists.",
-      "name-verifying": "Checking availability...",
-      "description": "Description",
-      "description-placeholder": "Describe the project scope",
-      "description-required": "Description is required.",
-      "location": "Location",
-      "location-placeholder": "e.g., Av. Principal 123, Lima",
-      "location-required": "Location is required.",
-      "status": "Status",
-      "start-date": "Start Date",
-      "start-date-required": "Start date is required.",
-      "cancel": "Cancel",
-      "submit": "Create Project"
-    },
-    "status": {
-      "planned": "Planned",
-      "in_progress": "In Progress",
-      "completed": "Completed",
-      "on_hold": "On Hold"
-    }
+  "projects_dashboard": {
+    "title": "Project Dashboard",
+    "active": "Active",
+    "active_projects": "Active Projects",
+    "in_progress": "In Progress",
+    "average_advance": "Average Advance",
+    "pending": "Pending",
+    "open_rncs": "Open RNCs",
+    "total": "Total",
+    "collaborators": "Collaborators",
+    "search_placeholder": "Search project...",
+    "progress": "Progress",
+    "card_start": "Start",
+    "card_end": "End",
+    "card_undefined": "Not defined",
+    "card_members": "members",
+    "card_rnc": "RNCs",
+    "card_pending": "pending",
+    "create_title": "Create New Project",
+    "create_name": "Project Name",
+    "create_name_placeholder": "e.g., Los Olivos Corporate Building",
+    "create_err_name_req": "Project name is required",
+    "create_desc": "Description",
+    "create_desc_placeholder": "Describe the project scope",
+    "create_loc": "Location",
+    "create_loc_placeholder": "e.g., Av. Principal 123, Lima",
+    "create_status": "Status",
+    "create_status_planned": "Planned",
+    "create_budget": "Estimated Budget",
+    "create_budget_placeholder": "0.00",
+    "create_start_date": "Start Date",
+    "create_end_date": "End Date",
+    "new_project": "Create New Project",
+    "create_cancel": "Cancel",
+    "create_submit": "Create Project"
   },
   "request": {
     "title": "Material Requests",
@@ -745,5 +752,10 @@
     "err_password_mismatch": "Passwords do not match",
 
     "hint_checking_email": "Checking email availability..."
+  },
+  "logout": {
+    "title": "Sign out?",
+    "description": "You will lose any unsaved changes",
+    "continue": "Sign out"
   }
 }
