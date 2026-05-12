@@ -314,9 +314,9 @@
       "assignment-detail-placeholder": "Describe the equipment assignment...",
       "worker-label": "Assign to Worker (optional)",
       "worker-none": "None",
-        "assignment-detail-required": "Assignment detail is required.",
-        "btn-save": "Save Equipment",
-        "btn-cancel": "Cancel"
+      "assignment-detail-required": "Assignment detail is required.",
+      "btn-save": "Save Equipment",
+      "btn-cancel": "Cancel"
     },
     "assign": {
       "title": "Assign Operator",
@@ -332,9 +332,9 @@
       "physical-status-required": "Physical status is required.",
       "hours-label": "Maintenance Hours",
       "hours-placeholder": "e.g., 200",
-        "hours-required": "Maintenance hours are required.",
-        "hours-min": "Hours must be greater than 0.",
-        "btn-save": "Register Maintenance",
+      "hours-required": "Maintenance hours are required.",
+      "hours-min": "Hours must be greater than 0.",
+      "btn-save": "Register Maintenance",
       "btn-cancel": "Cancel"
     },
     "history": {
@@ -346,49 +346,55 @@
     }
   },
   "budget": {
-    "title": "Kipu - Torre Empresarial Centro",
+    "title": "Budget Management",
     "summary": {
-      "total-budget": "Total Project Budget",
-      "total-amount": "Total Budget",
-      "executed": "Executed",
-      "available": "available",
-      "this-month": "This Month",
-      "spent": "Spent",
-      "budgeted": "Budgeted",
-      "alerts": "Alerts",
-      "risk-item": "1 item at risk",
+      "total-budget": "TOTAL PROJECT BUDGET",
+      "total-amount": "TOTAL BUDGET",
+      "executed": "EXECUTED",
+      "available": "S/ {{value}} AVAILABLE",
       "executed-lower": "executed"
+    },
+    "actions": {
+      "new-expense": "New Expense",
+      "request-extension": "Request Extension",
+      "view-detail": "View Detail",
+      "view-expenses": "View Expenses",
+      "export": "Export",
+      "save": "Save",
+      "cancel": "Cancel"
     },
     "table": {
       "title": "Budget by Items",
-      "search": "Search item...",
+      "search": "Search item by code or name...",
       "budgeted": "BUDGETED",
-      "executed": "EXECUTED",
-      "available": "AVAILABLE",
       "status": "STATUS"
+    },
+    "forms": {
+      "new-expense-title": "Formal Expense Record",
+      "request-extension-title": "Budget Extension Request",
+      "item": "ITEM / PROGRESS",
+      "concept": "EXPENSE CONCEPT",
+      "amount": "AMOUNT (S/)",
+      "authorized_person": "AUTHORIZED PERSON",
+      "select_person": "-- Select Responsible --",
+      "extension_reason": "BUDGET EXTENSION REASON",
+      "description": "DETAILED DESCRIPTION",
+      "responsible": "AUTHORIZED PERSON"
+    },
+    "details": {
+      "list-title": "Expense History",
+      "no-expenses": "No expenses recorded for this item.",
+      "view-expenses-title": "View Expenses"
     },
     "status": {
       "normal": "Normal",
-      "risk": "At risk"
-    },
-    "actions": {
-      "add": "Add Item",
-      "view-detail": "View Detail",
-      "view-expenses": "View Expenses",
-      "export": "Export Excel",
-      "check-alerts": "Check Alerts",
-      "request-extension": "Request Extension"
+      "risk": "Risk"
     },
     "sidebar": {
-      "actions": "Actions",
-      "general-report": "General Report",
-      "projection": "Projection",
-      "export-excel": "Export Excel",
-      "recent-movements": "Recent Movements",
-      "hours-ago": "2 hours ago",
-      "hours-ago-3": "3 hours ago",
-      "days-ago-1": "1 day ago",
-      "blocked": "Blocked"
+      "recent-movements": "RECENT MOVEMENTS"
+    },
+    "errors": {
+      "insufficient-funds": "Expense blocked: Amount exceeds available budget."
     }
   },
   "waste": {

@@ -142,7 +142,7 @@ export const routes: Routes = [
       {
         path: 'budget',
         loadComponent: () =>
-          import('./logistics/presentation/budget/budget-page/budget-page').then(
+          import('./budget/presentation/budget-page/budget-page').then(
             (m) => m.BudgetPage,
           ),
       },

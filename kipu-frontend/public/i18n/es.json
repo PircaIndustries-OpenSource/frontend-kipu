@@ -343,9 +343,9 @@
       "assignment-detail-placeholder": "Describe la asignación del equipo...",
       "worker-label": "Asignar a Obrero (opcional)",
       "worker-none": "Ninguno",
-        "assignment-detail-required": "La descripción de asignación es obligatoria.",
-        "btn-save": "Guardar Equipo",
-        "btn-cancel": "Cancelar"
+      "assignment-detail-required": "La descripción de asignación es obligatoria.",
+      "btn-save": "Guardar Equipo",
+      "btn-cancel": "Cancelar"
     },
     "assign": {
       "title": "Asignar Operario",
@@ -361,9 +361,9 @@
       "physical-status-required": "El estado físico es obligatorio.",
       "hours-label": "Horas de Mantenimiento",
       "hours-placeholder": "Ej: 200",
-        "hours-required": "Las horas de mantenimiento son obligatorias.",
-        "hours-min": "Las horas deben ser mayor a 0.",
-        "btn-save": "Registrar Mantenimiento",
+      "hours-required": "Las horas de mantenimiento son obligatorias.",
+      "hours-min": "Las horas deben ser mayor a 0.",
+      "btn-save": "Registrar Mantenimiento",
       "btn-cancel": "Cancelar"
     },
     "history": {
@@ -428,49 +428,55 @@
     }
   },
   "budget": {
-    "title": "Kipu - Torre Empresarial Centro",
+    "title": "Gestión de Presupuesto",
     "summary": {
-      "total-budget": "Presupuesto Total del Proyecto",
-      "total-amount": "Presupuesto Total",
-      "executed": "Ejecutado",
-      "available": "disponibles",
-      "this-month": "Este Mes",
-      "spent": "Gastado",
-      "budgeted": "Presupuestado",
-      "alerts": "Alertas",
-      "risk-item": "1 partida en riesgo",
+      "total-budget": "PRESUPUESTO TOTAL DEL PROYECTO",
+      "total-amount": "PRESUPUESTO TOTAL",
+      "executed": "EJECUTADO",
+      "available": "S/ {{value}} DISPONIBLES",
       "executed-lower": "ejecutado"
+    },
+    "actions": {
+      "new-expense": "Nuevo Gasto",
+      "request-extension": "Solicitar Ampliación",
+      "view-detail": "Ver Detalle",
+      "view-expenses": "Ver Gastos",
+      "export": "Exportar",
+      "save": "Guardar",
+      "cancel": "Cancelar"
     },
     "table": {
       "title": "Presupuesto por Partidas",
-      "search": "Buscar partida...",
+      "search": "Buscar partida por código o nombre...",
       "budgeted": "PRESUPUESTADO",
-      "executed": "EJECUTADO",
-      "available": "DISPONIBLE",
       "status": "ESTADO"
+    },
+    "forms": {
+      "new-expense-title": "Registro Formal de Gasto",
+      "request-extension-title": "Solicitud de Ampliación de Presupuesto",
+      "item": "PARTIDA / AVANCE",
+      "concept": "CONCEPTO / NOMBRE",
+      "amount": "MONTO (S/)",
+      "authorized_person": "PERSONA AUTORIZADA",
+      "select_person": "-- Seleccionar Responsable --",
+      "extension_reason": "JUSTIFICACIÓN TÉCNICA DE AMPLIACIÓN",
+      "description": "DESCRIPCIÓN DETALLADA",
+      "responsible": "RESPONSABLE"
+    },
+    "details": {
+      "list-title": "Historial de Gastos",
+      "no-expenses": "No hay gastos registrados para este ítem.",
+      "view-expenses-title": "Ver Gastos"
     },
     "status": {
       "normal": "Normal",
-      "risk": "En riesgo"
-    },
-    "actions": {
-      "add": "Añadir Partida",
-      "view-detail": "Ver Detalle",
-      "view-expenses": "Ver Gastos",
-      "export": "Exportar Excel",
-      "check-alerts": "Revisar Alertas",
-      "request-extension": "Solicitar Ampliación"
+      "risk": "Riesgo"
     },
     "sidebar": {
-      "actions": "Acciones",
-      "general-report": "Reporte General",
-      "projection": "Proyección",
-      "export-excel": "Exportar Excel",
-      "recent-movements": "Movimientos Recientes",
-      "hours-ago": "Hace 2 horas",
-      "hours-ago-3": "Hace 3 horas",
-      "days-ago-1": "Hace 1 día",
-      "blocked": "Bloqueado"
+      "recent-movements": "MOVIMIENTOS RECIENTES"
+    },
+    "errors": {
+      "insufficient-funds": "Gasto bloqueado: El monto excede el presupuesto disponible."
     }
   },
   "team": {
