@@ -1,33 +1,45 @@
 <div class="sensor-grid">
   @for (sensor of concreteSensors(); track sensor.id) {
     <mat-card class="curing-card" [ngClass]="getSensorStatusClass(sensor.temperature, sensor.limit)">
-      <mat-card-header>
-        <span class="sensor-name">{{ sensor.name }}</span>
-        <span class="sensor-state">{{ sensor.state }}</span>
+
+      <mat-card-header class="card-header">
+        <div class="badges">
+          <span class="badge sensor-name">{{ sensor.name }}</span>
+          <span class="badge sensor-state">{{ sensor.state }}</span>
+        </div>
         <span class="sensor-location">{{ sensor.location }}</span>
       </mat-card-header>
-      <mat-card-content>
-        <span class="temperature">
+
+      <mat-card-content class="card-content">
+        <div class="metric">
           <span class="value" [ngClass]="getSensorStatusClass(sensor.temperature, sensor.limit)">
-            {{ sensor.temperature }}
-            {{ sensor.unit }}
+            {{ sensor.temperature }}{{ sensor.unit }}
           </span>
-          TEMPERATURE
-        </span>
-        <span class="humidity">
-          {{ sensor.humidity }}%
-          HUMIDITY
-        </span>
+          <span class="label">TEMPERATURE</span>
+        </div>
+
+        <div class="vertical-divider"></div>
+
+        <div class="metric">
+          <span class="value">
+            {{ sensor.humidity }}%
+          </span>
+          <span class="label">HUMIDITY</span>
+        </div>
       </mat-card-content>
-      <mat-card-footer>
-        <span>
-          WARNING BREAKPOINT
-          {{ sensor.limit }}
-        </span>
-        <button mat-flat-button color="primary">
+
+      <hr class="horizontal-divider">
+
+      <mat-card-footer class="card-footer">
+        <div class="alert-info">
+          <span class="alert-label">WARNING BREAKPOINT</span>
+          <span class="alert-value">{{ sensor.limit }}{{ sensor.unit }}</span>
+        </div>
+        <button mat-flat-button class="config-btn">
           CONFIGURE
         </button>
       </mat-card-footer>
+
     </mat-card>
   }
 </div>

@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterModule, Router } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { LogoutDialogComponent } from './logout-dialog.component';
+import { LogoutDialogComponent } from '../logout-dialog/logout-dialog.component';
 import { AuthStore } from '../../../identity/application/auth.store';
 
 @Component({

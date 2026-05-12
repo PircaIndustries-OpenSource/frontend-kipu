@@ -5,6 +5,7 @@ import { LogisticsPage } from './logistics/presentation/logistics-page/logistics
 import { LoginComponent } from './identity/presentation/components/login/login.component';
 import { TeamPage } from './team/presentation/team-page/team-page';
 import { IotMonitoringDashboard } from './iot-monitoring/presentation/dashboard/iot-monitoring-dashboard/iot-monitoring-dashboard';
+import { projectSelectedGuard } from './projects/application/guards/project-selected.guard';
 
 export const routes: Routes = [
   {
@@ -55,6 +56,7 @@ export const routes: Routes = [
       {
         path: 'logistics',
         component: LogisticsPage,
+        canActivate: [projectSelectedGuard],
         children: [
           {
             path: '',
@@ -100,6 +102,7 @@ export const routes: Routes = [
       },
       {
         path: 'dashboard',
+        canActivate: [projectSelectedGuard],
         loadComponent: () =>
           import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
             (m) => m.InventoryPage,
@@ -107,6 +110,7 @@ export const routes: Routes = [
       },
       {
         path: 'machinery',
+        canActivate: [projectSelectedGuard],
         loadComponent: () =>
           import('./logistics/presentation/machinery/machinery-page/machinery-page').then(
             (m) => m.MachineryPage,
@@ -115,11 +119,13 @@ export const routes: Routes = [
       /*'./progress/presentation/progress-page/progress-page.component'*/
       {
         path: 'advances',
+        canActivate: [projectSelectedGuard],
         loadComponent: () =>
           import('./progress/presentation/progress-page/progress-page').then((m) => m.ProgressPage),
       },
       {
         path: 'rnc',
+        canActivate: [projectSelectedGuard],
         loadComponent: () =>
           import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
             (m) => m.InventoryPage,
@@ -127,6 +133,7 @@ export const routes: Routes = [
       },
       {
         path: 'blueprints',
+        canActivate: [projectSelectedGuard],
         loadComponent: () =>
           import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
             (m) => m.InventoryPage,
@@ -134,6 +141,7 @@ export const routes: Routes = [
       },
       {
         path: 'signatures',
+        canActivate: [projectSelectedGuard],
         loadComponent: () =>
           import('./signatures/document/presentation/document-page/document-page').then(
             (m) => m.DocumentPage,
@@ -141,6 +149,7 @@ export const routes: Routes = [
       },
       {
         path: 'budget',
+        canActivate: [projectSelectedGuard],
         loadComponent: () =>
           import('./budget/presentation/budget-page/budget-page').then(
             (m) => m.BudgetPage,
@@ -149,6 +158,7 @@ export const routes: Routes = [
       {
         path: 'team',
         component: TeamPage,
+        canActivate: [projectSelectedGuard],
         children: [
           {
             path: 'users',
@@ -174,6 +184,7 @@ export const routes: Routes = [
       {
         path: 'iot-monitoring',
         component: IotMonitoringDashboard,
+        canActivate: [projectSelectedGuard],
         children: [
           {
             path: '',

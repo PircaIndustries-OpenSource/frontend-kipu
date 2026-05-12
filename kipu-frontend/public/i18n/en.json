@@ -30,6 +30,35 @@
       }
     }
   },
+  "projects": {
+    "title": "Projects",
+    "create-title": "New Construction Project",
+    "create-subtitle": "Register a new project in the system",
+    "form": {
+      "name": "Project Name",
+      "name-placeholder": "e.g., Los Olivos Corporate Building",
+      "name-required": "Name is required.",
+      "name-duplicated": "A project with this name already exists.",
+      "name-verifying": "Checking availability...",
+      "description": "Description",
+      "description-placeholder": "Describe the project scope",
+      "description-required": "Description is required.",
+      "location": "Location",
+      "location-placeholder": "e.g., Av. Principal 123, Lima",
+      "location-required": "Location is required.",
+      "status": "Status",
+      "start-date": "Start Date",
+      "start-date-required": "Start date is required.",
+      "cancel": "Cancel",
+      "submit": "Create Project"
+    },
+    "status": {
+      "planned": "Planned",
+      "in_progress": "In Progress",
+      "completed": "Completed",
+      "on_hold": "On Hold"
+    }
+  },
   "request": {
     "title": "Material Requests",
     "button-create": "Create Request",
@@ -453,11 +482,12 @@
   "team": {
     "users": {
       "tab-users": "System Users",
-      "title": "User Managing",
+      "tab-workers": "Worker Directory",
+      "title": "User Management",
       "stats": {
         "active": "ACTIVE USERS",
-        "managers": "MANAGERS / RESIDENTS",
-        "logistics": "LOGISTIC TEAM",
+        "managers": "MANAGERS",
+        "logistics": "LOGISTICS TEAM",
         "clients": "CLIENTS / INVESTORS"
       },
       "assigned-roles": {
@@ -498,7 +528,7 @@
         "name-placeholder": "e.g., 'Juan'",
         "lastname": "Lastname",
         "lastname-placeholder": "e.g., 'Perez'",
-        "rol": "Rol to assign",
+        "rol": "Role to assign",
         "btn-cancel": "Cancel",
         "btn-invite": "Send Invitation"
       }
@@ -542,13 +572,28 @@
   },
   "signatures": {
     "dialog": {
-      "title": "Sign Document",
-      "description": "Enter the verification code you received by email.",
-      "token-sent": "A 6-digit code has been sent to your email.",
-      "token-label": "Verification code",
-      "token-hint": "Enter the 6 digits",
+      "add-document-title": "Create New Document",
+      "document-type": "DOCUMENT TYPE",
+      "type-placeholder": "Select document type",
+      "deadline": "DEADLINE",
+      "deadline-placeholder": "Select date",
+      "assign-users": "ASSIGN TO USERS",
+      "users-placeholder": "Search or select users",
+      "attach-document": "ATTACH DOCUMENT",
+      "dropzone": "Drag or click to upload the document",
+      "dropzone-hint": "PDF, DOC, DOCX, JPG, PNG (max. 10MB)",
+      "selected-count": "Selected users",
+      "btn-create": "Create Document",
       "btn-cancel": "Cancel",
-      "btn-confirm": "Confirm Signature"
+      "validation": {
+        "type-required": "Document type is required",
+        "deadline-required": "Deadline is required",
+        "users-required": "You must select at least one user"
+      },
+      "title": "Enter verification Token",
+      "description": "A verification code has been sent to your email",
+      "token-sent": "Enter the 6-digit code",
+      "btn-confirm": "Confirm"
     },
     "page": {
       "title": "Documents",
@@ -569,7 +614,8 @@
       "howto-step1": "Review the complete document",
       "howto-step2": "Click on 'Sign Document'",
       "howto-step3": "Enter the verification code",
-      "howto-step4": "The signature is automatically recorded"
+      "howto-step4": "The signature is automatically recorded",
+      "btn-create": "Create Document"
     }
   },
   "progress": {

@@ -7,10 +7,12 @@ import { MatInputModule } from '@angular/material/input';
 import { IdentityService } from '../../../infrastructure/identity.service';
 import { AuthBannerComponent } from '../../../../shared/presentation/components/auth-banner/auth-banner.component';
 
+import { TranslateModule } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, MatButtonModule, MatFormFieldModule, MatInputModule, AuthBannerComponent],
+  imports: [ReactiveFormsModule, RouterLink, MatButtonModule, MatFormFieldModule, MatInputModule, AuthBannerComponent, TranslateModule],
   templateUrl: './forgot-password.component.html',
 })
 export class ForgotPasswordComponent {

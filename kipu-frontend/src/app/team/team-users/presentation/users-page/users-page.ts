@@ -35,6 +35,7 @@ export class UsersPage implements OnInit {
   protected teamStore = inject(TeamUsersStore);
   private translate = inject(TranslateService);
   private dialog = inject(MatDialog);
+  currentUser = this.teamStore.currentUser;
   searchControl = new FormControl('');
   ngOnInit() {
     this.teamStore.loadUsers();
@@ -55,6 +56,7 @@ export class UsersPage implements OnInit {
     const roleMap: Record<string, string> = {
       Administrador: 'bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm',
       Gestor: 'bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm',
+      "Gestor Operativo": 'bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm',
       Logistica: 'bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm',
       Cliente: 'bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm',
     };
@@ -65,6 +67,7 @@ export class UsersPage implements OnInit {
     const translationMap: Record<string, string> = {
       Administrador: this.translate.instant('team.users.role-dictionary.administrator'),
       Gestor: this.translate.instant('team.users.role-dictionary.manager'),
+      "Gestor Operativo": this.translate.instant('team.users.role-dictionary.manager'),
       Logistica: this.translate.instant('team.users.role-dictionary.logistics'),
       Cliente: this.translate.instant('team.users.role-dictionary.client'),
       Ingeniero: this.translate.instant('team.users.role-dictionary.engineer'),
@@ -76,14 +79,26 @@ export class UsersPage implements OnInit {
     console.log('Deshabilitar usuario:', user);
     user.isActive = !user.isActive;
   }
-  getInitials(fullName: string) {
-    return fullName[0] + fullName[fullName.trim().indexOf(' ') + 1];
+  getInitials(fullName: string | undefined | null): string {
+    if (!fullName || fullName.trim() === '') {
+      return '?'; // O '??', 'NA', etc.
+    }
+
+    const trimmed = fullName.trim();
+    const spaceIndex = trimmed.indexOf(' ');
+
+    if (spaceIndex === -1) {
+      // Solo un nombre
+      return trimmed[0].toUpperCase();
+    }
+
+    // Primer letra del primer nombre + primer letra del apellido
+    return (trimmed[0] + trimmed[spaceIndex + 1]).toUpperCase();
   }
 
   isCurrentUser(user: TeamUsersEntity) {
     return user.role == 'Administrador';
   }
-
 
   openInviteDialog() {
     const dialogRef = this.dialog.open(UsersSendInvitation, { width: '550px' });
@@ -95,7 +110,6 @@ export class UsersPage implements OnInit {
         this.teamStore.inviteUser(result);
         // Aquí podrías llamar a tu servicio para guardarlo:
         // this.teamApi.inviteUser(result).subscribe(...);
-
       }
     });
   }

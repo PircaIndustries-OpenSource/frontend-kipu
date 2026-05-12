@@ -3,35 +3,37 @@
     <app-auth-banner></app-auth-banner>
 
     <section class="md:w-1/2 p-12 bg-gray-50 flex flex-col justify-center">
-      <h2 class="text-3xl font-bold text-gray-800 ">Iniciar sesión</h2>
-      <p class="text-gray-500 mb-8 text-sm">Ingresa tus credenciales para continuar</p>
+      <h2 class="text-3xl font-bold text-gray-800 ">{{ 'identity.login_title' | translate }}</h2>
+      <p class="text-gray-500 mb-8 text-sm">{{ 'identity.login_description' | translate }}</p>
 
       <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="flex flex-col gap-4">
         <mat-form-field appearance="outline">
-          <mat-label>Correo electrónico</mat-label>
-          <input matInput formControlName="email" type="email">
+          <mat-label>{{ 'identity.email' | translate }}</mat-label>
+          <input matInput formControlName="email" type="email" [placeholder]="'identity.email_placeholder' | translate">
           @if (loginForm.get('email')?.hasError('email')) {
-            <mat-error>Formato de correo no válido</mat-error>
+          <mat-error>{{ 'identity.err_email_invalid' | translate }}</mat-error>
           }
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Contraseña</mat-label>
-          <input matInput formControlName="password" type="password">
+          <mat-label>{{ 'identity.password' | translate }}</mat-label>
+          <input matInput formControlName="password" type="password"
+            [placeholder]="'identity.password_placeholder' | translate">
         </mat-form-field>
 
         <div class="flex items-center justify-between mb-4">
-          <mat-checkbox color="primary" class="text-sm">Recordarme</mat-checkbox>
-          <a routerLink="/forgot-password" class="text-sm text-blue-500 hover:underline">¿Olvidaste tu contraseña?</a>
+          <mat-checkbox color="primary" class="text-sm">{{ 'identity.remember_me' | translate }}</mat-checkbox>
+          <a routerLink="/forgot-password" class="text-sm text-blue-500 hover:underline">{{ 'identity.forgot_password' |
+            translate }}</a>
         </div>
 
         <button mat-flat-button color="primary" type="submit" class="!py-6" [disabled]="loginForm.invalid">
-          Ingresar
+          {{ 'identity.login_button' | translate }}
         </button>
 
         <div class="flex items-center gap-4 my-6">
           <mat-divider class="flex-grow"></mat-divider>
-          <span class="text-xs text-gray-400">o continúa con</span>
+          <span class="text-xs text-gray-400">{{ 'identity.continue' | translate }}</span>
           <mat-divider class="flex-grow"></mat-divider>
         </div>
 
@@ -45,7 +47,8 @@
         </div>
 
         <p class="text-center text-xs text-gray-500 mt-6">
-          ¿No tienes una cuenta? <a routerLink="/register" class="text-blue-500 hover:underline">Regístrate aquí</a>
+          {{ 'identity.no_account' | translate }} <a routerLink="/register" class="text-blue-500 hover:underline">{{
+            'identity.register_link' | translate }}</a>
         </p>
       </form>
     </section>

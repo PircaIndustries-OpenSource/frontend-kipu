@@ -3,10 +3,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { ProjectsStore } from '../../../application/projects.store';
 
+import { TranslateModule } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-select-project-dialog',
   standalone: true,
-  imports: [MatButtonModule, MatDialogModule],
+  imports: [MatButtonModule, MatDialogModule, TranslateModule],
   templateUrl: './select-project-dialog.component.html',
 })
 export class SelectProjectDialogComponent {

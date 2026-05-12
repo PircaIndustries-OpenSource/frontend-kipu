@@ -1,4 +1,5 @@
 export class GeolocalizationEntity {
+  #numberId: number;
   #id: string;
   #name: string;
   #projectId: string;
@@ -7,12 +8,21 @@ export class GeolocalizationEntity {
   #state: string;
 
   constructor() {
+    this.#numberId = 0;
     this.#id = '';
     this.#name = '';
     this.#projectId = '';
     this.#longitude = 0;
     this.#latitude = 0;
     this.#state = '';
+  }
+
+  get numberId(): number {
+    return this.#numberId;
+  }
+
+  set numberId(value: number) {
+    this.#numberId = value;
   }
 
   get id(): string {

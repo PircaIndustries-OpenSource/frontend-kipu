@@ -1,5 +1,6 @@
 export type GeolocalizationResponse = GeolocalizationResource[];
 export interface GeolocalizationResource {
+  numberId: number;
   id: string;
   name: string;
   projectId: string;

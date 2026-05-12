@@ -169,7 +169,7 @@
         "executed": "Ejecutado",
         "available": "Disponible",
         "status-ok": "Esta solicitud está dentro del presupuesto disponible",
-        "status-out-badge": "Esta solicitud está fuera del presupuesto disponble"
+        "status-out-badge": "Esta solicitud está fuera del presupuesto disponible"
       },
       "actions": {
         "generate": "Generar Ticket",
@@ -233,7 +233,7 @@
       "payment-terms": "Condición de Pago Habitual",
       "actions": {
         "button-edit": "Editar datos",
-        "button-add": "Registros nuevo proveedor",
+        "button-add": "Registrar nuevo proveedor",
         "button-delete": "Eliminar proveedor"
       },
       "delete": {
@@ -494,7 +494,7 @@
         "title": "Asignación de Roles",
         "user-tab": "Usuario",
         "email-tab": "Correo Electrónico",
-        "assigend-role-tab": "Rol Asignado",
+        "assigned-role-tab": "Rol Asignado",
         "action-tab": "Acción",
         "user-profile-you": "Tú",
         "btn-action": "Deshabilitar",
@@ -502,12 +502,12 @@
         "input-placeholder": "Nombre, correo o rol...",
         "search-user": "Buscar usuario",
         "user-count": "usuarios",
-        "no-user-found": "No se encontraron usuarios con "
+        "no-user-found": "No se encontraron usuarios con"
       },
       "btn-invite": "Enviar Invitación",
       "role-dictionary": {
         "title": "Diccionario de Roles",
-        "administrator": "Administrator",
+        "administrator": "Administrador",
         "administrator-description": "Acceso total al sistema. Puede gestionar obras, presupuestos base y accesos.",
         "manager": "Gestor Operativo",
         "manager-description": "Enfocado en campo. Registra avances, RNCs y solicita materiales. Visualiza planos.",
@@ -530,7 +530,7 @@
         "lastname-placeholder": "Ejm. 'Perez'",
         "rol": "Rol a asignar",
         "btn-cancel": "Cancelar",
-        "btn-invite": "Mandar Invitación"
+        "btn-invite": "Enviar Invitación"
       }
     },
     "workers": {
@@ -572,13 +572,28 @@
   },
   "signatures": {
     "dialog": {
-      "title": "Firmar Documento",
-      "description": "Ingresa el código de verificación que recibiste por correo electrónico.",
-      "token-sent": "Se ha enviado un código de 6 dígitos a tu correo electrónico.",
-      "token-label": "Código de verificación",
-      "token-hint": "Ingresa los 6 dígitos",
+      "add-document-title": "Crear Nuevo Documento",
+      "document-type": "TIPO DE DOCUMENTO",
+      "type-placeholder": "Seleccionar tipo de documento",
+      "deadline": "FECHA LÍMITE",
+      "deadline-placeholder": "Seleccionar fecha",
+      "assign-users": "ASIGNAR A USUARIOS",
+      "users-placeholder": "Buscar o seleccionar usuarios",
+      "attach-document": "ADJUNTAR DOCUMENTO",
+      "dropzone": "Arrastra o haz clic para subir el documento",
+      "dropzone-hint": "PDF, DOC, DOCX, JPG, PNG (máx. 10MB)",
+      "selected-count": "Usuarios seleccionados",
+      "btn-create": "Crear Documento",
       "btn-cancel": "Cancelar",
-      "btn-confirm": "Confirmar Firma"
+      "validation": {
+        "type-required": "El tipo de documento es requerido",
+        "deadline-required": "La fecha límite es requerida",
+        "users-required": "Debes seleccionar al menos un usuario"
+      },
+      "title": "Ingresa el Token de verificación",
+      "description": "Un código de verificación ha sido enviado a tu correo",
+      "token-sent": "Ingresa el código de 6 dígitos",
+      "btn-confirm": "Confirmar"
     },
     "page": {
       "title": "Documentos",
@@ -599,7 +614,8 @@
       "howto-step1": "Revisa el documento completo",
       "howto-step2": "Haz clic en 'Firmar Documento'",
       "howto-step3": "Ingresa el código de verificación",
-      "howto-step4": "La firma se registra automáticamente"
+      "howto-step4": "La firma se registra automáticamente",
+      "btn-create": "Crear Documento"
     }
   },
   "progress": {

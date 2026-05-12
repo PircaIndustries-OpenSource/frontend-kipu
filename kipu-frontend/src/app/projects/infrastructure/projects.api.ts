@@ -44,4 +44,8 @@ export class ProjectsApi {
       .patch<ProjectResource>(`${this.apiBaseUrl}${this.projectsEndpoint}/${id}`, partialData)
       .pipe(map((response) => ProjectAssembler.toEntityFromResource(response)));
   }
+
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiBaseUrl}${this.projectsEndpoint}/${id}`);
+  }
 }

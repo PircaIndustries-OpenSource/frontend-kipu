@@ -12,7 +12,7 @@
         <polygon points="20,30 65,30 65,85 20,70" class="geofence-polygon" />
       </svg>
 
-      @for (equip of geolocalizationPoints(); track equip.id) {
+      @for (equip of geolocalizationPoints(); track equip.numberId) {
         <div class="map-marker" [style.left.%]="equip.longitude" [style.top.%]="equip.latitude">
           <div class="marker-tooltip" [ngClass]="equip.state">
             @if (equip.state === 'OUTSIDE OF LIMIT') { <mat-icon class="alert-icon">warning</mat-icon> }
