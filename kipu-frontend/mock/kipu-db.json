@@ -652,7 +652,7 @@
   "materialsRequests": [
     {
       "id": "req-001",
-      "projectId": "proj-01",
+      "projectId": 1,
       "requestDate": "2026-05-01",
       "deadline": "2026-05-10",
       "status": "PENDING",
@@ -680,7 +680,7 @@
     },
     {
       "id": "req-002",
-      "projectId": "proj-01",
+      "projectId": 1,
       "requestDate": "2026-05-02",
       "deadline": "2026-05-08",
       "status": "REFUSED",
@@ -703,7 +703,7 @@
     },
     {
       "id": "req-003",
-      "projectId": "proj-01",
+      "projectId": 1,
       "requestDate": "2026-05-03",
       "deadline": "2026-05-15",
       "status": "APPROVED",
@@ -729,7 +729,7 @@
     },
     {
       "id": "req-004",
-      "projectId": "proj-01",
+      "projectId": 1,
       "requestDate": "2026-05-04",
       "deadline": "2026-05-05",
       "status": "APPROVED",
@@ -755,7 +755,7 @@
     },
     {
       "id": "req-005",
-      "projectId": "proj-01",
+      "projectId": 1,
       "requestDate": "2026-05-05",
       "deadline": "2026-05-20",
       "status": "APPROVED",
@@ -785,7 +785,7 @@
     },
     {
       "id": "req-006",
-      "projectId": "proj-01",
+      "projectId": 1,
       "requestDate": "2026-05-06",
       "deadline": "2026-05-07",
       "status": "PENDING",
@@ -812,7 +812,7 @@
     },
     {
       "id": "req-007",
-      "projectId": "proj-01",
+      "projectId": 1,
       "requestDate": "2026-05-06",
       "deadline": "2026-05-18",
       "status": "PENDING",
@@ -840,7 +840,7 @@
   "materialsWaste": [
     {
       "id": "rmt-001",
-      "projectId": "proj-01",
+      "projectId": 1,
       "materialId": "mat-001",
       "quantity": 50,
       "unit": "und",
@@ -852,7 +852,7 @@
     },
     {
       "id": "rmt-002",
-      "projectId": "proj-01",
+      "projectId": 1,
       "materialId": "mat-002",
       "quantity": 5,
       "unit": "bolsa",
@@ -864,7 +864,7 @@
     },
     {
       "id": "rmt-003",
-      "projectId": "proj-01",
+      "projectId": 1,
       "materialId": "mat-004",
       "quantity": 3,
       "unit": "varilla",
@@ -876,7 +876,7 @@
     },
     {
       "id": "rmt-004",
-      "projectId": "proj-01",
+      "projectId": 1,
       "materialId": "mat-005",
       "quantity": 2,
       "unit": "plancha",
@@ -888,7 +888,7 @@
     },
     {
       "id": "rmt-005",
-      "projectId": "proj-01",
+      "projectId": 1,
       "materialId": "mat-013",
       "quantity": 10,
       "unit": "und",
@@ -900,7 +900,7 @@
     },
     {
       "id": "rmt-006",
-      "projectId": "proj-01",
+      "projectId": 1,
       "materialId": "mat-007",
       "quantity": 3,
       "unit": "und",
@@ -912,7 +912,7 @@
     },
     {
       "id": "rmt-007",
-      "projectId": "proj-01",
+      "projectId": 1,
       "materialId": "mat-009",
       "quantity": 2,
       "unit": "m3",
@@ -1090,7 +1090,7 @@
   "hopper-watch": [
     {
       "id": "SM-088",
-      "projectId": "",
+      "projectId": 1,
       "unit": "%",
       "state": 2,
       "lastLecture": 12,
@@ -1099,7 +1099,7 @@
     },
     {
       "id": "SM-082",
-      "projectId": "",
+      "projectId": 1,
       "unit": "%",
       "state": 1,
       "lastLecture": 80,
@@ -1110,7 +1110,7 @@
   "seismic-control": [
     {
       "id": "S-VIB-02",
-      "projectId": "",
+      "projectId": 1,
       "unit": "mm/s",
       "name": "S-VIB-02",
       "location": "South Wall",
@@ -1121,7 +1121,7 @@
     },
     {
       "id": "S-VIB-01",
-      "projectId": "",
+      "projectId": 1,
       "unit": "mm/s",
       "name": "S-VIB-01",
       "location": "North Excavation",
