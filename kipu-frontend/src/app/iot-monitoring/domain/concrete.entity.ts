@@ -1,5 +1,6 @@
 export class ConcreteEntity {
   #id: string;
+  #projectId: string;
   #name: string;
   #state: string;
   #location: string;
@@ -10,6 +11,7 @@ export class ConcreteEntity {
 
   constructor() {
     this.#id = '';
+    this.#projectId = '';
     this.#name = '';
     this.#state = '';
     this.#location = '';
@@ -25,6 +27,14 @@ export class ConcreteEntity {
 
   set id(value: string) {
     this.#id = value;
+  }
+
+  get projectId(): string {
+    return this.#projectId;
+  }
+
+  set projectId(value: string) {
+    this.#projectId = value;
   }
 
   get name(): string {

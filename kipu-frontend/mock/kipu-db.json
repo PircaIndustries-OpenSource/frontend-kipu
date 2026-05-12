@@ -3,7 +3,7 @@
     {
       "name": "Juan Perez",
       "email": "kipu3@hotmail.com",
-      "password": "kipu1234",
+      "password": "kipu12345",
       "role": "Gestor Operativo",
       "id": "vkgT3Nh"
     },
@@ -15,53 +15,147 @@
       "id": "egiZUjv"
     },
     {
-      "name": "John Doe",
-      "email": "john@hotmail.com",
-      "password": "kipu1234",
-      "role": "Logística y Administración",
-      "id": "syKqGWI"
+      "name": "Juan Perez",
+      "email": "kipu3@hotmail.com",
+      "password": "kipu12345",
+      "role": "Gestor Operativo",
+      "id": "w25vbLd"
+    },
+    {
+      "name": "Jhony Manuel Francia Torres",
+      "email": "manuelft@gmail.com",
+      "password": "12345678",
+      "role": "Gestor Operativo",
+      "id": "aXT7GBg"
     }
   ],
   "projects": [
     {
-      "id": 1,
+      "id": "proj-01",
       "name": "Edificio Corporativo Los Olivos",
       "description": "Construcción de edificio corporativo de 12 pisos con 3 sótanos de estacionamiento",
       "status": "IN_PROGRESS",
-      "startDate": "2026-05-11T05:00:00.000Z",
-      "endDate": "2026-05-16T05:00:00.000Z",
-      "estimatedBudget": 500000,
+      "startDate": "2026-01-15",
       "location": "Av. Principal 123, Los Olivos, Lima",
-      "createdAt": "2026-05-11",
-      "createdBy": "current-user",
-      "imageUrl": "project-image1.png"
+      "createdAt": "2026-01-10",
+      "createdBy": "SIVyLM6",
+      "imageUrl": "project-image1.png",
+      "totalBudget": 850000
     },
     {
-      "id": 2,
+      "id": "proj-02",
       "name": "Residencial San Miguel",
       "description": "Complejo residencial de 80 departamentos con áreas comunes",
       "status": "PLANNED",
-      "startDate": "2026-05-09T05:00:00.000Z",
-      "endDate": "2026-05-25T05:00:00.000Z",
-      "estimatedBudget": 450000,
+      "startDate": "2026-07-01",
       "location": "Calle Las Flores 456, San Miguel, Lima",
-      "createdAt": "2026-05-11",
-      "createdBy": "current-user",
-      "imageUrl": "project-image4.png"
+      "createdAt": "2026-05-01",
+      "createdBy": "SIVyLM6",
+      "imageUrl": "project-image4.png",
+      "totalBudget": 850000
     },
     {
-      "id": 3,
+      "id": "proj-03",
       "name": "Colegio Particular San José",
       "description": "Construcción de nueva infraestructura educativa con 30 aulas y laboratorios",
-      "status": "ON_HOLD",
-      "startDate": "2026-05-12T05:00:00.000Z",
-      "endDate": "2026-05-24T05:00:00.000Z",
-      "estimatedBudget": 750000,
+      "status": "COMPLETED",
+      "startDate": "2025-03-01",
       "location": "Av. La Cultura 789, Cusco",
+      "createdAt": "2025-02-15",
+      "createdBy": "P-n4XLk",
+      "imageUrl": "project-image3.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "pyXfjIq",
+      "name": "a",
+      "description": "a",
+      "status": "IN_PROGRESS",
+      "startDate": "2026-05-13T05:00:00.000Z",
+      "endDate": "2026-05-26T05:00:00.000Z",
+      "location": "xd",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image3.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "vEXQoL6",
+      "name": "aaaaa",
+      "description": "asd",
+      "status": "PLANNED",
+      "startDate": "2026-05-12T05:00:00.000Z",
+      "endDate": "2026-05-20T05:00:00.000Z",
+      "location": "asdasd",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image1.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "whceCRF",
+      "name": "aasdasdasd",
+      "description": "asdasd",
+      "status": "IN_PROGRESS",
+      "startDate": "2026-05-12T05:00:00.000Z",
+      "endDate": "2026-05-12T05:00:00.000Z",
+      "location": "asdasd",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image3.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "8IZsgo_",
+      "name": "aaaaaaaaaaaaaaaaaa",
+      "description": "aaaaaaaaaaaaaaaaaa",
+      "status": "PLANNED",
+      "startDate": "2026-05-20T05:00:00.000Z",
+      "endDate": "2026-05-31T05:00:00.000Z",
+      "location": "aaaaaaaaaaaaaaaaaaa",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image4.jpg",
+      "totalBudget": 850000
+    },
+    {
+      "id": "lluhwVv",
+      "name": "xdd....",
+      "description": ".....",
+      "status": "PLANNED",
+      "startDate": "2026-05-21T05:00:00.000Z",
+      "endDate": "2026-05-31T05:00:00.000Z",
+      "location": "....",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image1.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "YgMohp6",
+      "name": "aaaa21",
+      "description": "a",
+      "status": "PLANNED",
+      "startDate": "2026-05-27T05:00:00.000Z",
+      "endDate": "2026-05-25T05:00:00.000Z",
+      "location": "as",
       "createdAt": "2026-05-11",
       "createdBy": "current-user",
       "imageUrl": "project-image2.png",
-      "statusJustification": "sin presupuesto"
+      "totalBudget": 850000
+    },
+    {
+      "id": "bINNav6",
+      "name": "asdasd",
+      "description": "a",
+      "status": "PLANNED",
+      "startDate": "2026-05-14T05:00:00.000Z",
+      "endDate": "2026-05-19T05:00:00.000Z",
+      "location": "sdasd",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image5.png",
+      "totalBudget": 850000
     }
   ],
   "documents": [
@@ -827,42 +921,6 @@
       "description": "Piedra chancada contaminada con tierra durante traslado.",
       "reportedBy": "70123456",
       "photoUrl": ""
-    },
-    {
-      "id": "_nzMhLw",
-      "projectId": 1,
-      "materialId": "",
-      "quantity": 1,
-      "unit": "und",
-      "classificationType": "",
-      "date": "2026-05-11",
-      "description": "asdasd",
-      "reportedBy": "Paula Montoya",
-      "photoUrl": "",
-      "material": "Bloque de Concreto 20x20x40"
-    },
-    {
-      "id": "D3nMH9D",
-      "projectId": 1,
-      "materialId": "mat-004",
-      "quantity": 6,
-      "unit": "varilla",
-      "classificationType": "",
-      "date": "2026-05-11",
-      "description": "asdasd",
-      "reportedBy": "Paula Montoya",
-      "photoUrl": ""
-    },
-    {
-      "id": "kByssF_",
-      "projectId": 1,
-      "materialId": "mat-002",
-      "quantity": 2,
-      "date": "2026-05-11",
-      "description": "asdas",
-      "reportedBy": "Paula Montoya",
-      "photoUrl": "",
-      "unit": "bolsa"
     }
   ],
   "materialsTools": [
@@ -990,6 +1048,7 @@
   "concrete-curing": [
     {
       "id": "1",
+      "projectId": "",
       "name": "S-TMP-02",
       "state": 1,
       "location": "Floor Level 3",
@@ -1000,6 +1059,7 @@
     },
     {
       "id": "2",
+      "projectId": "",
       "name": "S-TMP-01",
       "state": 1,
       "location": "Columns B Sec.",
@@ -1172,5 +1232,48 @@
       "id": "us-1778218020628"
     }
   ],
-  "progress": []
+  "progress": [
+    {
+      "id": 1895,
+      "projectId": "proj-02",
+      "projectName": "Residencial San Miguel",
+      "activityName": "Techado",
+      "details": "Piso 1",
+      "specialty": "Estructuras",
+      "status": "Active",
+      "currentPercentage": 67,
+      "startDate": "2026-05-12T20:59:04.837Z",
+      "endDate": "2026-05-12T20:59:04.837Z",
+      "lastUpdate": "2026-05-12T00:00:00.000Z",
+      "responsible": "Manuel Francia",
+      "workers": 67,
+      "weather": "sunny"
+    }
+  ],
+  "budgets": [
+    {
+      "id": 27466,
+      "projectId": "proj-02",
+      "progressId": 1895,
+      "code": "01.XX",
+      "name": "Techado",
+      "description": "Piso 1",
+      "budgeted": 100000,
+      "executed": 1000,
+      "available": 99000,
+      "progress": 1,
+      "status": "normal",
+      "alert": null,
+      "expenseHistory": [
+        {
+          "itemId": "1895",
+          "concept": "Ladrillos",
+          "amount": 1000,
+          "responsible": "Asuna Yuuki - Residente de Obra",
+          "description": null,
+          "date": "2026-05-12T20:59:59.631Z"
+        }
+      ]
+    }
+  ]
 }

@@ -51,7 +51,6 @@
                 <th class="px-6 py-4">{{ 'progress.table.specialty' | translate }}</th>
                 <th class="px-6 py-4">{{ 'progress.table.advance' | translate }}</th>
                 <th class="px-6 py-4">{{ 'progress.table.status' | translate }}</th>
-                <th class="px-6 py-4"></th>
               </tr>
               </thead>
               <tbody class="divide-y divide-gray-100">
@@ -65,11 +64,10 @@
                     <td class="px-6 py-4 text-gray-500">{{ item.specialty }}</td>
                     <td class="px-6 py-4 font-bold">{{ item.currentPercentage }}%</td>
                     <td class="px-6 py-4">
-                      <span [class]="getStatusBadgeClass(item.status)">
-                        {{ 'progress.status.' + item.status.toLowerCase() | translate }}
-                      </span>
+            <span [class]="getStatusBadgeClass(item.status)">
+              {{ 'progress.status.' + item.status.toLowerCase() | translate }}
+            </span>
                     </td>
-                    <td class="px-6 py-4 text-right"><mat-icon class="text-gray-300">chevron_right</mat-icon></td>
                   </tr>
                 }
               </tbody>
@@ -86,14 +84,26 @@
               <button mat-stroked-button class="!rounded-md !text-blue-500 !border-blue-500">Cimentación</button>
             </div>
             <div class="flex gap-2">
-              <button mat-button class="text-gray-500"><mat-icon>download</mat-icon> {{ 'progress.actions.export' | translate }}</button>
-              <button mat-flat-button class="!bg-gray-800 !text-white !rounded-md"><mat-icon>add</mat-icon> {{ 'progress.actions.upload' | translate }}</button>
+              <button mat-button class="text-gray-500">
+                <mat-icon>download</mat-icon> {{ 'progress.actions.export' | translate }}
+              </button>
+              <button mat-flat-button class="!bg-gray-800 !text-white !rounded-md">
+                <mat-icon>add</mat-icon> {{ 'progress.actions.upload' | translate }}
+              </button>
             </div>
           </div>
+
           <div class="grid grid-cols-3 gap-4">
-            <div class="h-48 bg-gray-200 rounded-xl relative overflow-hidden bg-cover bg-center" style="background-image: url('https://placehold.co/600x400')"></div>
-            <div class="h-48 bg-gray-200 rounded-xl relative overflow-hidden bg-cover bg-center" style="background-image: url('https://placehold.co/600x400')"></div>
-            <div class="h-48 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center text-gray-400 cursor-pointer"><mat-icon>add</mat-icon></div>
+            @for (photo of mockPhotos; track photo.url) {
+              <div class="h-48 bg-gray-200 rounded-xl relative overflow-hidden bg-cover bg-center shadow-sm hover:scale-[1.02] transition-transform cursor-pointer"
+                   [style.background-image]="'url(' + photo.url + ')'">
+                <div class="absolute inset-0 bg-black/10 hover:bg-transparent transition-colors"></div>
+              </div>
+            }
+
+            <div class="h-48 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center text-gray-400 cursor-pointer hover:bg-gray-50 hover:border-[#3498DB] hover:text-[#3498DB] transition-all">
+              <mat-icon class="scale-150">add</mat-icon>
+            </div>
           </div>
         </div>
       </mat-tab>

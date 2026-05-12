@@ -3,8 +3,9 @@
  * Includes the foreign key (progressId) to link it to a specific project progress.
  */
 export interface BudgetItemEntity {
-  id: string;
-  progressId: number; // The bridge to the Progress module!
+  id: number;
+  projectId: string;
+  progressId: number;
   code: string;
   name: string;
   description: string;
@@ -14,4 +15,5 @@ export interface BudgetItemEntity {
   progress: number;
   status: string;
   alert: string | null;
+  expenseHistory?: any[]; // History of expenses for this specific item
 }

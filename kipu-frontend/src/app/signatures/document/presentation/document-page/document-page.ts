@@ -33,6 +33,9 @@ export class DocumentPage implements OnInit {
       this.signedDocuments = docs.filter((d) => d.isSigned);
       this.pendingCount = this.pendingDocuments.length;
       this.signedCount = this.signedDocuments.length;
+
+      this.cdr.detectChanges();
+
     });
   }
 
@@ -68,13 +71,7 @@ export class DocumentPage implements OnInit {
       if (result?.success) {
         this.documentsStore.loadAllDocuments();
 
-        setTimeout(() => {
-          const docs = this.documentsStore.documents$();
-          this.pendingDocuments = docs.filter((d) => !d.isSigned);
-          this.signedDocuments = docs.filter((d) => d.isSigned);
-          this.pendingCount = this.pendingDocuments.length;
-          this.signedCount = this.signedDocuments.length;
-        }, 50);
+
       }
 
     });

@@ -21,4 +21,19 @@ export class SeismicAssembler {
   static toEntitiesFromResponse(seismicResponse: SeismicResponse): SeismicEntity[] {
     return seismicResponse.map((resource) => this.toEntityFromResource(resource));
   }
+
+  static toResourceFromEntity(entity: SeismicEntity): SeismicResource {
+    const states: Record<string, number> = { NORMAL: 1, RISK: 2 };
+
+    return {
+      id: entity.id,
+      projectId: entity.projectId,
+      unit: entity.unit,
+      lastLecture: entity.lastLecture,
+      limit: entity.limit,
+      location: entity.location,
+      timeLecture: entity.timeLecture,
+      state: states[entity.state] || 0, // Valor por defecto si es UNKNOWN
+    } as SeismicResource;
+  }
 }

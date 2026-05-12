@@ -158,35 +158,6 @@
       }
     }
   },
-  "projects": {
-    "title": "Proyectos",
-    "create-title": "Nuevo Proyecto de Obra",
-    "create-subtitle": "Registra un nuevo proyecto en el sistema",
-    "form": {
-      "name": "Nombre del Proyecto",
-      "name-placeholder": "Ej: Edificio Corporativo Los Olivos",
-      "name-required": "El nombre es obligatorio.",
-      "name-duplicated": "Ya existe un proyecto con este nombre.",
-      "name-verifying": "Verificando disponibilidad...",
-      "description": "Descripción",
-      "description-placeholder": "Describe el alcance del proyecto",
-      "description-required": "La descripción es obligatoria.",
-      "location": "Ubicación",
-      "location-placeholder": "Ej: Av. Principal 123, Lima",
-      "location-required": "La ubicación es obligatoria.",
-      "status": "Estado",
-      "start-date": "Fecha de Inicio",
-      "start-date-required": "La fecha de inicio es obligatoria.",
-      "cancel": "Cancelar",
-      "submit": "Crear Proyecto"
-    },
-    "status": {
-      "planned": "Planificado",
-      "in_progress": "En Progreso",
-      "completed": "Completado",
-      "on_hold": "En Pausa"
-    }
-  },
   "request": {
     "title": "Solicitudes de Material",
     "button-create": "Crear Solicitud",
@@ -297,7 +268,7 @@
         "executed": "Ejecutado",
         "available": "Disponible",
         "status-ok": "Esta solicitud está dentro del presupuesto disponible",
-        "status-out-badge": "Esta solicitud está fuera del presupuesto disponble"
+        "status-out-badge": "Esta solicitud está fuera del presupuesto disponible"
       },
       "actions": {
         "generate": "Generar Ticket",
@@ -361,7 +332,7 @@
       "payment-terms": "Condición de Pago Habitual",
       "actions": {
         "button-edit": "Editar datos",
-        "button-add": "Registros nuevo proveedor",
+        "button-add": "Registrar nuevo proveedor",
         "button-delete": "Eliminar proveedor"
       },
       "delete": {
@@ -556,49 +527,55 @@
     }
   },
   "budget": {
-    "title": "Kipu - Torre Empresarial Centro",
+    "title": "Gestión de Presupuesto",
     "summary": {
-      "total-budget": "Presupuesto Total del Proyecto",
-      "total-amount": "Presupuesto Total",
-      "executed": "Ejecutado",
-      "available": "disponibles",
-      "this-month": "Este Mes",
-      "spent": "Gastado",
-      "budgeted": "Presupuestado",
-      "alerts": "Alertas",
-      "risk-item": "1 partida en riesgo",
+      "total-budget": "PRESUPUESTO TOTAL DEL PROYECTO",
+      "total-amount": "PRESUPUESTO TOTAL",
+      "executed": "EJECUTADO",
+      "available": "S/ {{value}} DISPONIBLES",
       "executed-lower": "ejecutado"
+    },
+    "actions": {
+      "new-expense": "Nuevo Gasto",
+      "request-extension": "Solicitar Ampliación",
+      "view-detail": "Ver Detalle",
+      "view-expenses": "Ver Gastos",
+      "export": "Exportar",
+      "save": "Guardar",
+      "cancel": "Cancelar"
     },
     "table": {
       "title": "Presupuesto por Partidas",
-      "search": "Buscar partida...",
+      "search": "Buscar partida por código o nombre...",
       "budgeted": "PRESUPUESTADO",
-      "executed": "EJECUTADO",
-      "available": "DISPONIBLE",
       "status": "ESTADO"
+    },
+    "forms": {
+      "new-expense-title": "Registro Formal de Gasto",
+      "request-extension-title": "Solicitud de Ampliación de Presupuesto",
+      "item": "PARTIDA / AVANCE",
+      "concept": "CONCEPTO / NOMBRE",
+      "amount": "MONTO (S/)",
+      "authorized_person": "PERSONA AUTORIZADA",
+      "select_person": "-- Seleccionar Responsable --",
+      "extension_reason": "JUSTIFICACIÓN TÉCNICA DE AMPLIACIÓN",
+      "description": "DESCRIPCIÓN DETALLADA",
+      "responsible": "RESPONSABLE"
+    },
+    "details": {
+      "list-title": "Historial de Gastos",
+      "no-expenses": "No hay gastos registrados para este ítem.",
+      "view-expenses-title": "Ver Gastos"
     },
     "status": {
       "normal": "Normal",
-      "risk": "En riesgo"
-    },
-    "actions": {
-      "add": "Añadir Partida",
-      "view-detail": "Ver Detalle",
-      "view-expenses": "Ver Gastos",
-      "export": "Exportar Excel",
-      "check-alerts": "Revisar Alertas",
-      "request-extension": "Solicitar Ampliación"
+      "risk": "Riesgo"
     },
     "sidebar": {
-      "actions": "Acciones",
-      "general-report": "Reporte General",
-      "projection": "Proyección",
-      "export-excel": "Exportar Excel",
-      "recent-movements": "Movimientos Recientes",
-      "hours-ago": "Hace 2 horas",
-      "hours-ago-3": "Hace 3 horas",
-      "days-ago-1": "Hace 1 día",
-      "blocked": "Bloqueado"
+      "recent-movements": "MOVIMIENTOS RECIENTES"
+    },
+    "errors": {
+      "insufficient-funds": "Gasto bloqueado: El monto excede el presupuesto disponible."
     }
   },
   "team": {
@@ -616,7 +593,7 @@
         "title": "Asignación de Roles",
         "user-tab": "Usuario",
         "email-tab": "Correo Electrónico",
-        "assigend-role-tab": "Rol Asignado",
+        "assigned-role-tab": "Rol Asignado",
         "action-tab": "Acción",
         "user-profile-you": "Tú",
         "btn-action": "Deshabilitar",
@@ -624,12 +601,12 @@
         "input-placeholder": "Nombre, correo o rol...",
         "search-user": "Buscar usuario",
         "user-count": "usuarios",
-        "no-user-found": "No se encontraron usuarios con "
+        "no-user-found": "No se encontraron usuarios con"
       },
       "btn-invite": "Enviar Invitación",
       "role-dictionary": {
         "title": "Diccionario de Roles",
-        "administrator": "Administrator",
+        "administrator": "Administrador",
         "administrator-description": "Acceso total al sistema. Puede gestionar obras, presupuestos base y accesos.",
         "manager": "Gestor Operativo",
         "manager-description": "Enfocado en campo. Registra avances, RNCs y solicita materiales. Visualiza planos.",
@@ -652,7 +629,7 @@
         "lastname-placeholder": "Ejm. 'Perez'",
         "rol": "Rol a asignar",
         "btn-cancel": "Cancelar",
-        "btn-invite": "Mandar Invitación"
+        "btn-invite": "Enviar Invitación"
       }
     },
     "workers": {
@@ -715,95 +692,90 @@
       "title": "Ingresa el Token de verificación",
       "description": "Un código de verificación ha sido enviado a tu correo",
       "token-sent": "Ingresa el código de 6 dígitos",
-      "btn-confirm": "Confirmar",
-      "page": {
-        "title": "Documentos",
-        "pending-title": "Documentos Pendientes de Tu Firma",
-        "signed-title": "Documentos Firmados",
-        "deadline": "Vence",
-        "signers": "Firmantes",
-        "btn-sign": "Firmar Documento",
-        "empty-pending": "No hay documentos pendientes",
-        "empty-signed": "No hay documentos firmados",
-        "signed-at": "Firmado el",
-        "summary-title": "Resumen",
-        "summary-pending": "Pendientes",
-        "summary-signed": "Firmados",
-        "security-title": "Firma Digital Segura",
-        "security-description": "Todas las firmas son encriptadas y tienen validez legal según normativa vigente.",
-        "howto-title": "¿Cómo firmar?",
-        "howto-step1": "Revisa el documento completo",
-        "howto-step2": "Haz clic en 'Firmar Documento'",
-        "howto-step3": "Ingresa el código de verificación",
-        "howto-step4": "La firma se registra automáticamente",
-        "btn-create": "Crear documento"
+      "btn-confirm": "Confirmar"
+    },
+    "page": {
+      "title": "Documentos",
+      "pending-title": "Documentos Pendientes de Tu Firma",
+      "signed-title": "Documentos Firmados",
+      "deadline": "Vence",
+      "signers": "Firmantes",
+      "btn-sign": "Firmar Documento",
+      "empty-pending": "No hay documentos pendientes",
+      "empty-signed": "No hay documentos firmados",
+      "signed-at": "Firmado el",
+      "summary-title": "Resumen",
+      "summary-pending": "Pendientes",
+      "summary-signed": "Firmados",
+      "security-title": "Firma Digital Segura",
+      "security-description": "Todas las firmas son encriptadas y tienen validez legal según normativa vigente.",
+      "howto-title": "¿Cómo firmar?",
+      "howto-step1": "Revisa el documento completo",
+      "howto-step2": "Haz clic en 'Firmar Documento'",
+      "howto-step3": "Ingresa el código de verificación",
+      "howto-step4": "La firma se registra automáticamente",
+      "btn-create": "Crear Documento"
+    }
+  },
+  "progress": {
+    "title": "Control de Avances",
+    "subtitle": "Historial de registros diarios y estados de ejecución.",
+    "actions": {
+      "new": "Nuevo Avance Diario",
+      "save": "Guardar Avance",
+      "cancel": "Cancelar",
+      "export": "Exportar Reporte",
+      "upload": "Subir Fotos"
+    },
+    "tabs": {
+      "log": "Registro de Avance (PPC)",
+      "photos": "Bitácora Fotográfica"
+    },
+    "filters": {
+      "activity": "Buscar actividad...",
+      "specialty": "Filtrar por: Especialidad",
+      "start_date": "Fecha inicio",
+      "end_date": "Fecha fin"
+    },
+    "table": {
+      "date": "Fecha",
+      "activity": "Actividad Realizada",
+      "specialty": "Especialidad",
+      "advance": "Avance (%)",
+      "status": "Estado"
+    },
+    "form": {
+      "title": "Nuevo Avance Diario",
+      "date": "Fecha del Avance",
+      "specialty": "Especialidad",
+      "activity": "Actividad Realizada",
+      "activity_placeholder": "Ej: Vaciado de losa del segundo nivel",
+      "location": "Ubicación/Sector",
+      "location_placeholder": "Ej: Nivel 2 - Eje A-B",
+      "percentage": "Porcentaje de Avance",
+      "description": "Descripción Detallada",
+      "description_placeholder": "Describe el trabajo realizado, métodos utilizados, condiciones...",
+      "responsible": "Responsable",
+      "workers": "Personal en Cuadrilla",
+      "weather": {
+        "label": "Condiciones Climáticas",
+        "sunny": "Soleado",
+        "cloudy": "Nublado",
+        "rainy": "Lluvia",
+        "storm": "Tormenta"
       }
     },
-    "progress": {
-      "title": "Control de Avances",
-      "subtitle": "Historial de registros diarios y estados de ejecución.",
-      "actions": {
-        "new": "Nuevo Avance Diario",
-        "save": "Guardar Avance",
-        "cancel": "Cancelar",
-        "export": "Exportar Reporte",
-        "upload": "Subir Fotos"
-      },
-      "tabs": {
-        "log": "Registro de Avance (PPC)",
-        "photos": "Bitácora Fotográfica"
-      },
-      "filters": {
-        "activity": "Buscar actividad...",
-        "specialty": "Filtrar por: Especialidad",
-        "start_date": "Fecha inicio",
-        "end_date": "Fecha fin"
-      },
-      "table": {
-        "date": "Fecha",
-        "activity": "Actividad Realizada",
-        "specialty": "Especialidad",
-        "advance": "Avance (%)",
-        "status": "Estado"
-      },
-      "form": {
-        "title": "Nuevo Avance Diario",
-        "date": "Fecha del Avance",
-        "specialty": "Especialidad",
-        "activity": "Actividad Realizada",
-        "activity_placeholder": "Ej: Vaciado de losa del segundo nivel",
-        "location": "Ubicación/Sector",
-        "location_placeholder": "Ej: Nivel 2 - Eje A-B",
-        "percentage": "Porcentaje de Avance",
-        "description": "Descripción Detallada",
-        "description_placeholder": "Describe el trabajo realizado, métodos utilizados, condiciones...",
-        "responsible": "Responsable",
-        "workers": "Personal en Cuadrilla",
-        "weather": {
-          "label": "Condiciones Climáticas",
-          "sunny": "Soleado",
-          "cloudy": "Nublado",
-          "rainy": "Lluvia",
-          "storm": "Tormenta"
-        }
-      },
-      "status": {
-        "finished": "Terminado",
-        "active": "En Curso",
-        "delayed": "Demorado"
-      },
-      "dialog": {
-        "title": "¿Guardar cambios?",
-        "question": "¿Deseas guardar los cambios?",
-        "warning": "De no hacerlo, serán borrados.",
-        "discard": "No, descartar cambios",
-        "save": "Guardar cambios"
-      }
+    "status": {
+      "finished": "Terminado",
+      "active": "En Curso",
+      "delayed": "Demorado"
     },
-    "logout": {
-      "title": "Sesión cerrada",
-      "description": "Se ha cerrado la sesión correctamente.",
-      "continue": "Continuar"
+    "dialog": {
+      "title": "¿Guardar cambios?",
+      "question": "¿Deseas guardar los cambios?",
+      "warning": "De no hacerlo, serán borrados.",
+      "discard": "No, descartar cambios",
+      "save": "Guardar cambios"
     }
   }
 }

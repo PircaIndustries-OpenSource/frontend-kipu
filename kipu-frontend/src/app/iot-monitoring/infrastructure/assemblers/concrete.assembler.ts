@@ -1,12 +1,13 @@
-import { ConcreteResource, ConcreteResponse, } from '../models/concrete.response';
-import {ConcreteEntity} from '../../domain/concrete.entity';
+import { ConcreteResource, ConcreteResponse } from '../models/concrete.response';
+import { ConcreteEntity } from '../../domain/concrete.entity';
 
 export class ConcreteAssembler {
   static toEntityFromResource(concreteResource: ConcreteResource): ConcreteEntity {
-    const concreteSensor = new ConcreteEntity()
+    const concreteSensor = new ConcreteEntity();
 
     if (concreteResource.id && concreteResource.id.trim().length > 0)
       concreteSensor.id = concreteResource.id;
+    concreteSensor.projectId = concreteResource.projectId;
     if (concreteResource.name && concreteResource.name.trim().length > 0)
       concreteSensor.name = concreteResource.name;
     if (concreteResource.location && concreteResource.location.trim().length > 0)
@@ -24,5 +25,21 @@ export class ConcreteAssembler {
 
   static toEntitiesFromResponse(concreteResponse: ConcreteResponse): ConcreteEntity[] {
     return concreteResponse.map((resource) => this.toEntityFromResource(resource));
+  }
+
+  static toResourceFromEntity(entity: ConcreteEntity): ConcreteResource {
+    const states: Record<string, number> = { ONLINE: 1, OFFLINE: 2 };
+
+    return {
+      id: entity.id,
+      projectId: entity.projectId,
+      name: entity.name,
+      unit: entity.unit,
+      limit: entity.limit,
+      location: entity.location,
+      temperature: entity.temperature,
+      humidity: entity.humidity,
+      state: states[entity.state] || 0, // Valor por defecto si es UNKNOWN
+    } as ConcreteResource;
   }
 }

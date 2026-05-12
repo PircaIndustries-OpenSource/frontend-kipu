@@ -173,52 +173,39 @@
 
     <div class="grid grid-cols-3 gap-l">
       <div class="flex flex-col items-center p-m bg-neutral-bg rounded-s border border-neutral-border/20">
-        <span class="text-xs text-neutral-border uppercase font-bold tracking-wider">
+        <span class="text-[10px] text-neutral-border uppercase font-bold tracking-wider">
           {{ 'request.create.budget-verification.item-budget' | translate }}
         </span>
-        <span class="text-xl font-bold text-primary">S/ {{ budgetedAmount()}}</span>
+        <span class="text-xl font-bold text-primary">S/ {{ assignedBudget() | number:'1.2-2' }}</span>
       </div>
       <div class="flex flex-col items-center p-m bg-neutral-bg rounded-s border border-neutral-border/20">
-        <span class="text-xs text-neutral-border uppercase font-bold tracking-wider">
+        <span class="text-[10px] text-neutral-border uppercase font-bold tracking-wider">
           {{ 'request.create.budget-verification.executed' | translate }}
         </span>
-        <span class="text-xl font-bold text-warning">S/ {{ executedAmount() | number }}</span>
+        <span class="text-xl font-bold text-warning">S/ {{ executedAmount() | number:'1.2-2' }}</span>
       </div>
       <div class="flex flex-col items-center p-m bg-neutral-bg rounded-s border border-neutral-border/20">
-        <span class="text-xs text-neutral-border uppercase font-bold tracking-wider">
+        <span class="text-[10px] text-neutral-border uppercase font-bold tracking-wider">
           {{ 'request.create.budget-verification.available' | translate }}
         </span>
-        <span class="text-xl font-bold text-success">S/ {{ availableAmount() | number }}</span>
+        <span class="text-xl font-bold text-success">S/ {{ availableAmount() | number:'1.2-2' }}</span>
       </div>
     </div>
 
-    <div class="flex flex-col gap-s">
-      <!--
-      <mat-progress-bar
-        class="thick-progress-bar"
-        mode="determinate"
-        [value]="budgetProgress()"
-      ></mat-progress-bar>
-      -->
+    <div class="flex flex-col gap-s pt-4 border-t border-neutral-border/10">
       <div class="flex justify-between items-center">
-
-        <!--
-        <span class="text-xs text-neutral-border">{{ budgetProgress() }}% utilizado</span>
-
-        @if (budgetProgress() <= 80) {
-          <span class="text-xs font-bold text-success flex items-center gap-1">
-            <mat-icon class="text-sm! w-4! h-4!">check_circle</mat-icon>
-            {{ 'request.create.budget-verification.status-ok' | translate }}
-          </span>
-        } @else {
-          <span class="text-xs font-bold text-danger flex items-center gap-1">
-            <mat-icon class="text-sm! w-4! h-4!">warning</mat-icon>
-            {{ 'request.create.budget-verification.status-out-badge' | translate }}
-          </span>
-        }
-        -->
-
+        <span class="text-xs font-bold text-neutral-border uppercase">Request Estimated Cost:</span>
+        <span class="text-lg font-black" [class.text-danger]="isOverBudget()">
+          S/ {{ requestCost() | number:'1.2-2' }}
+        </span>
       </div>
+
+      @if (isOverBudget() && selectedBudgetItem()) {
+        <div class="flex items-center gap-2 px-3 py-1 bg-red-50 text-danger rounded-full animate-pulse">
+          <mat-icon class="text-sm! w-4! h-4!">warning</mat-icon>
+          <span class="text-[10px] font-bold uppercase">Budget Alert: Cost exceeds available funds</span>
+        </div>
+      }
     </div>
   </div>
 

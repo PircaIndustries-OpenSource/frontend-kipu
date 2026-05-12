@@ -3,6 +3,7 @@
  */
 export interface BudgetResponse {
   id: string;
+  projectId: string;
   progressId: number;
   code: string;
   name: string;

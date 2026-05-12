@@ -1,45 +1,77 @@
-<div class="sensor-grid">
-  @for (sensor of concreteSensors(); track sensor.id) {
-    <mat-card class="curing-card" [ngClass]="getSensorStatusClass(sensor.temperature, sensor.limit)">
+<div class="concrete-dashboard">
 
-      <mat-card-header class="card-header">
-        <div class="badges">
-          <span class="badge sensor-name">{{ sensor.name }}</span>
-          <span class="badge sensor-state">{{ sensor.state }}</span>
-        </div>
-        <span class="sensor-location">{{ sensor.location }}</span>
-      </mat-card-header>
+  <div class="sensor-grid">
+    @for (sensor of concreteSensors(); track sensor.id) {
+      <mat-card class="curing-card" [ngClass]="getSensorStatusClass(sensor.temperature, sensor.limit)">
 
-      <mat-card-content class="card-content">
-        <div class="metric">
+        <mat-card-header class="card-header">
+          <div class="badges">
+            <span class="badge sensor-name">{{ sensor.name }}</span>
+            <span class="badge sensor-state">{{ sensor.state }}</span>
+          </div>
+          <span class="sensor-location">{{ sensor.location }}</span>
+        </mat-card-header>
+
+        <mat-card-content class="card-content">
+          <div class="metric">
           <span class="value" [ngClass]="getSensorStatusClass(sensor.temperature, sensor.limit)">
             {{ sensor.temperature }}{{ sensor.unit }}
           </span>
-          <span class="label">TEMPERATURE</span>
-        </div>
+            <span class="label">TEMPERATURE</span>
+          </div>
 
-        <div class="vertical-divider"></div>
+          <div class="vertical-divider"></div>
 
-        <div class="metric">
+          <div class="metric">
           <span class="value">
             {{ sensor.humidity }}%
           </span>
-          <span class="label">HUMIDITY</span>
-        </div>
-      </mat-card-content>
+            <span class="label">HUMIDITY</span>
+          </div>
+        </mat-card-content>
 
-      <hr class="horizontal-divider">
+        <hr class="horizontal-divider">
 
-      <mat-card-footer class="card-footer">
-        <div class="alert-info">
-          <span class="alert-label">WARNING BREAKPOINT</span>
-          <span class="alert-value">{{ sensor.limit }}{{ sensor.unit }}</span>
-        </div>
-        <button mat-flat-button class="config-btn">
-          CONFIGURE
-        </button>
-      </mat-card-footer>
+        <mat-card-footer class="card-footer">
+          <div class="alert-info">
+            <span class="alert-label">WARNING BREAKPOINT</span>
+            <span class="alert-value">{{ sensor.limit }}{{ sensor.unit }}</span>
+          </div>
+          <button mat-flat-button class="config-btn">
+            CONFIGURE
+          </button>
+          <div class="actions">
+            <button mat-stroked-button color="warn" class="delete-btn" (click)="onDelete(sensor)">
+              <mat-icon>delete</mat-icon> DELETE
+            </button>
+          </div>
+        </mat-card-footer>
 
+      </mat-card>
+    }
+  </div>
+
+  <aside class="summary-panel">
+    <mat-card class="summary-card">
+      <h3>MODULE'S RESUME</h3>
+
+      <button mat-flat-button color="primary" class="create-btn" (click)="openAddDialog()">
+        <mat-icon>add</mat-icon> NEW CONCRETE SENSOR
+      </button>
+
+      <div class="stat-block">
+        <span class="stat-number dark">{{ getOnlineZones() }}</span>
+        <span class="stat-label">ACTIVE SENSORS</span>
+      </div>
+
+      <hr class="divider">
+
+      <div class="filters">
+        <p class="filters-title">QUICK FILTERS</p>
+        <button class="filter-btn active">ALL THE SENSORS</button>
+        <button class="filter-btn outline">JUST IN WARNING STATE</button>
+      </div>
     </mat-card>
-  }
+  </aside>
+
 </div>

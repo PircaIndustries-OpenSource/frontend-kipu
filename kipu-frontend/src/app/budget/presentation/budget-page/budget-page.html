@@ -1,0 +1,264 @@
+<div class="p-8 bg-[#F8F9FA] min-h-screen font-inter flex flex-col gap-8">
+
+  <div class="flex flex-col lg:flex-row gap-8">
+    <div class="flex-grow bg-white rounded-2xl p-10 shadow-sm border border-[#B0BEC5]/30">
+      <h3 class="font-bold text-[#2C3E50] mb-6 uppercase text-xs tracking-widest">{{ 'budget.summary.total-budget' | translate }}</h3>
+      <div class="flex justify-between items-baseline mb-4">
+        <div>
+          <p class="text-[10px] text-[#B0BEC5] font-bold uppercase mb-1">{{ 'budget.summary.total-amount' | translate }}</p>
+          <p class="text-5xl font-black text-[#212529]">{{ store.projectLimit() | currency:'S/ ' }}</p>
+        </div>
+        <div class="text-right">
+          <p class="text-[10px] text-[#B0BEC5] font-bold uppercase mb-1">{{ 'budget.summary.executed' | translate }}</p>
+          <p class="text-5xl font-black text-emerald-600">{{ store.totalExecuted() | currency:'S/ ' }}</p>
+        </div>
+      </div>
+      <div class="w-full bg-[#B0BEC5]/20 rounded-full h-5 mb-4">
+        <div class="bg-emerald-500 h-5 rounded-full transition-all duration-700" [style.width.%]="store.executionPercentage()"></div>
+      </div>
+      <div class="flex justify-between text-sm font-black uppercase">
+        <span class="text-[#B0BEC5]">{{ store.executionPercentage() | number:'1.0-0' }}% {{ 'budget.summary.executed-lower' | translate }}</span>
+        <span class="text-[#3498DB]">{{ 'budget.summary.available' | translate:{ value: (store.totalAvailable() | number:'1.2-2') } }}</span>
+      </div>
+    </div>
+
+    <div class="w-full lg:w-80 flex flex-col gap-4">
+      <button (click)="openExpense()" class="w-full py-5 bg-[#3498DB] text-white rounded-xl font-bold shadow-lg hover:brightness-110 transition-all">
+        {{ 'budget.actions.new-expense' | translate }}
+      </button>
+      <button (click)="openExtension()" class="w-full py-5 bg-white border-2 border-[#B0BEC5] text-[#2C3E50] rounded-xl font-bold hover:bg-[#F8F9FA] transition-all">
+        {{ 'budget.actions.request-extension' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="w-full lg:pr-[352px]">
+    <div class="relative">
+      <input type="text" (input)="store.updateSearch($any($event.target).value)"
+             [placeholder]="'budget.table.search' | translate"
+             class="w-full px-8 py-5 bg-white border border-[#B0BEC5] rounded-2xl shadow-sm outline-none focus:ring-4 focus:ring-[#3498DB]/10 focus:border-[#3498DB] transition-all">
+    </div>
+  </div>
+
+  <div class="flex flex-col lg:flex-row gap-8">
+    <div class="flex-grow flex flex-col gap-6">
+      <h2 class="font-black text-2xl text-[#212529] px-2">{{ 'budget.table.title' | translate }}</h2>
+      @for (item of store.budgetItems(); track item.id) {
+        <div [id]="'item-' + item.id" class="bg-white rounded-2xl p-8 shadow-sm border border-[#B0BEC5]/30">
+          <div class="flex justify-between items-start mb-6">
+            <div>
+              <h3 class="text-xl font-black text-[#212529]">{{item.code}} - {{item.name}}</h3>
+              <p class="text-[#B0BEC5] text-sm font-medium">{{item.description}}</p>
+            </div>
+            <span class="px-4 py-1.5 rounded-full text-xs font-black uppercase" [ngClass]="item.status === 'risk' ? 'bg-orange-100 text-orange-600':'bg-emerald-100 text-emerald-600'">
+              {{item.progress}}% {{ 'budget.summary.executed-lower' | translate }}
+            </span>
+          </div>
+          <div class="flex gap-3">
+            <button (click)="viewDetails(item)" class="px-6 py-2.5 bg-[#212529] text-white rounded-xl font-bold text-xs hover:bg-[#2C3E50] transition-all">
+              {{ 'budget.actions.view-detail' | translate }}
+            </button>
+            <button (click)="viewExpenses(item)" class="px-6 py-2.5 border border-[#B0BEC5] text-[#2C3E50] rounded-xl font-bold text-xs hover:bg-[#F8F9FA] transition-all">
+              {{ 'budget.actions.view-expenses' | translate }}
+            </button>
+            <button class="px-6 py-2.5 border border-[#B0BEC5] text-[#B0BEC5] rounded-xl font-bold text-xs">
+              {{ 'budget.actions.export' | translate }}
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="w-full lg:w-80 flex flex-col gap-6">
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-[#B0BEC5]/30">
+        <h3 class="font-bold text-[#2C3E50] mb-6 uppercase text-[10px] tracking-widest">{{ 'budget.sidebar.recent-movements' | translate }}</h3>
+        <div class="flex flex-col gap-4">
+          @for (item of store.budgetItems(); track item.id) {
+            <button (click)="scrollToItem(item.id)" class="w-full text-left p-4 rounded-xl hover:bg-[#F8F9FA] transition-all border border-transparent hover:border-[#B0BEC5]/50 group">
+              <div class="flex items-center gap-3">
+                <div class="w-2 h-2 rounded-full" [ngClass]="item.status === 'risk' ? 'bg-red-500':'bg-emerald-500'"></div>
+                <p class="font-bold text-xs text-[#212529]">{{item.name}}</p>
+              </div>
+              <p class="text-[10px] text-[#B0BEC5] ml-5 font-bold">{{item.executed | currency:'S/ '}}</p>
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #expenseTpl>
+    <div class="p-10 bg-white">
+      <h2 class="text-2xl font-black mb-2 text-[#212529]">{{ 'budget.forms.new-expense-title' | translate }}</h2>
+      <p class="text-[#B0BEC5] mb-8 text-sm">Registra un gasto directo asociado a un avance de obra.</p>
+
+      @if (errorMessage) {
+        <div class="mb-6 p-4 bg-red-50 text-red-600 rounded-xl border border-red-100 text-xs font-bold flex items-center gap-2">
+          <span>🚫</span> {{ errorMessage | translate }}
+        </div>
+      }
+
+      <form [formGroup]="expenseForm" (ngSubmit)="onSaveExpense()" class="grid grid-cols-2 gap-4">
+        <div class="col-span-2 flex flex-col gap-1">
+          <label class="text-[10px] font-bold text-[#B0BEC5] uppercase">{{ 'budget.forms.item' | translate }}</label>
+          <select formControlName="itemId" class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl outline-none focus:border-[#3498DB]">
+            <option value="">-- Seleccionar Avance --</option>
+            @for (progress of progressStore.progressList(); track progress.id) {
+              <option [value]="progress.id">
+                {{ progress.activityName }} ({{ progress.currentPercentage }}%)
+              </option>
+            }
+          </select>
+        </div>
+        <div class="col-span-1 flex flex-col gap-1">
+          <label class="text-[10px] font-bold text-[#B0BEC5] uppercase">{{ 'budget.forms.concept' | translate }}</label>
+          <input type="text" formControlName="concept" class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl outline-none focus:border-[#3498DB]">
+        </div>
+        <div class="col-span-1 flex flex-col gap-1">
+          <label class="text-[10px] font-bold text-[#B0BEC5] uppercase">{{ 'budget.forms.amount' | translate }}</label>
+          <input type="number" formControlName="amount" class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl outline-none focus:border-[#3498DB]">
+        </div>
+        <div class="col-span-2 flex flex-col gap-1">
+          <label class="text-[10px] font-bold text-[#B0BEC5] uppercase">{{ 'budget.forms.responsible' | translate }}</label>
+          <select formControlName="responsible" class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl outline-none focus:border-[#3498DB]">
+            <option value="">{{ 'budget.forms.select_person' | translate }}</option>
+            @for (person of store.authorizedPersonnel(); track person) { <option [value]="person">{{person}}</option> }
+          </select>
+        </div>
+
+        <div class="col-span-2 mt-8 flex gap-4">
+          <button type="submit" class="flex-1 py-5 bg-[#212529] text-white rounded-xl font-bold hover:bg-[#2C3E50]">{{ 'budget.actions.save' | translate }}</button>
+          <button type="button" (click)="closeForm(expenseForm)" class="flex-1 py-5 bg-[#F8F9FA] text-[#2C3E50] rounded-xl font-bold border border-[#B0BEC5]">{{ 'budget.actions.cancel' | translate }}</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+
+  <ng-template #expensesListTpl>
+    <div class="p-10">
+      @if (store.selectedItem(); as item) {
+        <h2 class="text-2xl font-black mb-6 text-[#212529]">{{ 'budget.actions.view-expenses' | translate }}: {{item.name}}</h2>
+        <div class="flex flex-col gap-3 max-h-[400px] overflow-y-auto">
+          @for (exp of item.expenseHistory; track exp) {
+            <div class="p-4 bg-[#F8F9FA] rounded-xl border border-[#B0BEC5]/30 flex justify-between items-center">
+              <div>
+                <p class="font-bold text-[#212529]">{{exp.concept}}</p>
+                <p class="text-[10px] text-[#B0BEC5] font-bold uppercase">{{exp.responsible}} • {{exp.date | date:'shortDate'}}</p>
+              </div>
+              <p class="font-black text-emerald-600">{{exp.amount | currency:'S/ '}}</p>
+            </div>
+          } @empty { <p class="text-center py-10 text-[#B0BEC5] italic">{{ 'budget.details.no-expenses' | translate }}</p> }
+        </div>
+      }
+    </div>
+  </ng-template>
+
+  <ng-template #extensionTpl>
+    <div class="p-10">
+      <h2 class="text-2xl font-black mb-6 text-[#3498DB]">{{ 'budget.forms.request-extension-title' | translate }}</h2>
+      <form [formGroup]="extensionForm" (ngSubmit)="onSaveExtension()" class="flex flex-col gap-4">
+
+        <div class="flex flex-col gap-1">
+          <label class="text-[10px] font-bold text-[#B0BEC5] uppercase">{{ 'budget.forms.item' | translate }}</label>
+          <select formControlName="itemId" class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl outline-none">
+            <option value="">-- Select Progress Advance --</option>
+            @for (progress of progressStore.progressList(); track progress.id) {
+              <option [value]="progress.id">
+                {{ progress.activityName }}
+              </option>
+            }
+          </select>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="text-[10px] font-bold text-[#B0BEC5] uppercase">{{ 'budget.forms.amount' | translate }}</label>
+          <input type="number" formControlName="amount" class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl outline-none">
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="text-[10px] font-bold text-[#B0BEC5] uppercase">{{ 'budget.forms.authorized_person' | translate }}</label>
+          <select formControlName="responsible" class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl outline-none">
+            <option value="">-- Select Authorized Person --</option>
+            @for (person of store.authorizedPersonnel(); track person) {
+              <option [value]="person">{{person}}</option>
+            }
+          </select>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="text-[10px] font-bold text-[#B0BEC5] uppercase">{{ 'budget.forms.extension_reason' | translate }}</label>
+          <textarea formControlName="reason" rows="4" class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl outline-none resize-none"></textarea>
+        </div>
+
+        <div class="mt-8 flex gap-4">
+          <button type="submit" class="flex-1 py-5 bg-[#3498DB] text-white rounded-xl font-bold hover:brightness-110 transition-all">
+            {{ 'budget.actions.save' | translate }}
+          </button>
+          <button type="button" (click)="closeForm(extensionForm)" class="flex-1 py-5 bg-[#F8F9FA] text-[#2C3E50] rounded-xl font-bold border border-[#B0BEC5]">
+            {{ 'budget.actions.cancel' | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+
+  <ng-template #detailTpl>
+    <div class="p-10">
+      @if (store.selectedItem(); as item) {
+        <div class="flex justify-between items-start mb-8">
+          <div>
+            <h2 class="text-3xl font-black text-[#212529]">{{item.code}}</h2>
+            <p class="text-[#B0BEC5] font-bold uppercase text-xs">{{item.name}}</p>
+          </div>
+          <span class="px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full font-black text-xs">{{item.progress}}% {{ 'budget.summary.executed-lower' | translate }}</span>
+        </div>
+
+        <div class="grid grid-cols-3 gap-6 mb-10">
+          <div class="bg-[#F8F9FA] p-4 rounded-xl border border-[#B0BEC5]/30">
+            <p class="text-[10px] font-bold text-[#B0BEC5] uppercase">Presupuestado</p>
+            <p class="text-xl font-black text-[#212529]">{{item.budgeted | currency:'S/ '}}</p>
+          </div>
+          <div class="bg-[#F8F9FA] p-4 rounded-xl border border-[#B0BEC5]/30">
+            <p class="text-[10px] font-bold text-[#B0BEC5] uppercase">Ejecutado</p>
+            <p class="text-xl font-black text-emerald-600">{{item.executed | currency:'S/ '}}</p>
+          </div>
+          <div class="bg-[#F8F9FA] p-4 rounded-xl border border-[#B0BEC5]/30">
+            <p class="text-[10px] font-bold text-[#B0BEC5] uppercase">Disponible</p>
+            <p class="text-xl font-black" [ngClass]="item.available < 0 ? 'text-red-600':'text-[#3498DB]'">{{item.available | currency:'S/ '}}</p>
+          </div>
+        </div>
+
+        <div class="border-t border-[#B0BEC5]/30 pt-8">
+          <h4 class="font-black text-lg mb-4 text-[#2C3E50]">{{ 'budget.details.list-title' | translate }}</h4>
+          <div class="flex flex-col gap-3 max-h-[300px] overflow-y-auto">
+            @for (exp of item.expenseHistory; track exp) {
+              <div class="p-4 bg-[#F8F9FA] rounded-xl border border-[#B0BEC5]/30 flex justify-between items-center">
+                <div>
+                  <p class="font-bold text-[#212529]">{{exp.concept}}</p>
+                  <p class="text-[10px] text-[#B0BEC5] font-bold uppercase">{{exp.responsible}}</p>
+                </div>
+                <p class="font-black text-emerald-600">{{exp.amount | currency:'S/ '}}</p>
+              </div>
+            } @empty {
+              <div class="bg-[#F8F9FA] rounded-xl p-8 text-center border-2 border-dashed border-[#B0BEC5]/50">
+                <p class="text-[#B0BEC5] text-sm font-medium">{{ 'budget.details.no-expenses' | translate }}</p>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </ng-template>
+
+  <ng-template #confirmTpl>
+    <div class="p-10 text-center">
+      <h2 class="text-2xl font-black mb-4 text-[#212529]">¿Descartar cambios?</h2>
+      <p class="text-[#B0BEC5] mb-8 font-medium">Hay información en el formulario que no ha sido guardada. ¿Deseas salir de todas formas?</p>
+      <div class="flex gap-4">
+        <button [mat-dialog-close]="true" class="flex-1 py-5 bg-red-600 text-white rounded-xl font-bold">Sí, descartar</button>
+        <button [mat-dialog-close]="false" class="flex-1 py-5 bg-[#F8F9FA] text-[#2C3E50] rounded-xl font-bold border border-[#B0BEC5]">Continuar editando</button>
+      </div>
+    </div>
+  </ng-template>
+
+</div>
