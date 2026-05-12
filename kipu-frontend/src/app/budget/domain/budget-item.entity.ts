@@ -4,7 +4,7 @@
  */
 export interface BudgetItemEntity {
   id: string;
-  progressId: number; // The bridge to the Progress module!
+  progressId: number;
   code: string;
   name: string;
   description: string;
@@ -14,4 +14,5 @@ export interface BudgetItemEntity {
   progress: number;
   status: string;
   alert: string | null;
+  expenseHistory?: any[]; // History of expenses for this specific item
 }
