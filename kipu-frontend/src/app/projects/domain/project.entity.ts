@@ -5,7 +5,7 @@ export class ProjectEntity {
   status: string;
   startDate: string;
   endDate?: string;
-  estimatedBudget?: number;
+  totalBudget?: number;
   location: string;
   createdAt: string;
   createdBy: string;

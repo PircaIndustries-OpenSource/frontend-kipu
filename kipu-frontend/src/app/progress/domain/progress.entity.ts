@@ -4,7 +4,7 @@
  */
 export interface ProjectProgress {
   id: number;
-  projectId: number;
+  projectId: string;
   projectName: string;
   activityName: string;
   details: string;

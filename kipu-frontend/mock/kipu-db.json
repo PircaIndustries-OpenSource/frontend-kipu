@@ -20,9 +20,144 @@
       "password": "kipu12345",
       "role": "Gestor Operativo",
       "id": "w25vbLd"
+    },
+    {
+      "name": "Jhony Manuel Francia Torres",
+      "email": "manuelft@gmail.com",
+      "password": "12345678",
+      "role": "Gestor Operativo",
+      "id": "aXT7GBg"
     }
   ],
-
+  "projects": [
+    {
+      "id": "proj-01",
+      "name": "Edificio Corporativo Los Olivos",
+      "description": "Construcción de edificio corporativo de 12 pisos con 3 sótanos de estacionamiento",
+      "status": "IN_PROGRESS",
+      "startDate": "2026-01-15",
+      "location": "Av. Principal 123, Los Olivos, Lima",
+      "createdAt": "2026-01-10",
+      "createdBy": "SIVyLM6",
+      "imageUrl": "project-image1.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "proj-02",
+      "name": "Residencial San Miguel",
+      "description": "Complejo residencial de 80 departamentos con áreas comunes",
+      "status": "PLANNED",
+      "startDate": "2026-07-01",
+      "location": "Calle Las Flores 456, San Miguel, Lima",
+      "createdAt": "2026-05-01",
+      "createdBy": "SIVyLM6",
+      "imageUrl": "project-image4.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "proj-03",
+      "name": "Colegio Particular San José",
+      "description": "Construcción de nueva infraestructura educativa con 30 aulas y laboratorios",
+      "status": "COMPLETED",
+      "startDate": "2025-03-01",
+      "location": "Av. La Cultura 789, Cusco",
+      "createdAt": "2025-02-15",
+      "createdBy": "P-n4XLk",
+      "imageUrl": "project-image3.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "pyXfjIq",
+      "name": "a",
+      "description": "a",
+      "status": "IN_PROGRESS",
+      "startDate": "2026-05-13T05:00:00.000Z",
+      "endDate": "2026-05-26T05:00:00.000Z",
+      "location": "xd",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image3.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "vEXQoL6",
+      "name": "aaaaa",
+      "description": "asd",
+      "status": "PLANNED",
+      "startDate": "2026-05-12T05:00:00.000Z",
+      "endDate": "2026-05-20T05:00:00.000Z",
+      "location": "asdasd",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image1.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "whceCRF",
+      "name": "aasdasdasd",
+      "description": "asdasd",
+      "status": "IN_PROGRESS",
+      "startDate": "2026-05-12T05:00:00.000Z",
+      "endDate": "2026-05-12T05:00:00.000Z",
+      "location": "asdasd",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image3.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "8IZsgo_",
+      "name": "aaaaaaaaaaaaaaaaaa",
+      "description": "aaaaaaaaaaaaaaaaaa",
+      "status": "PLANNED",
+      "startDate": "2026-05-20T05:00:00.000Z",
+      "endDate": "2026-05-31T05:00:00.000Z",
+      "location": "aaaaaaaaaaaaaaaaaaa",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image4.jpg",
+      "totalBudget": 850000
+    },
+    {
+      "id": "lluhwVv",
+      "name": "xdd....",
+      "description": ".....",
+      "status": "PLANNED",
+      "startDate": "2026-05-21T05:00:00.000Z",
+      "endDate": "2026-05-31T05:00:00.000Z",
+      "location": "....",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image1.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "YgMohp6",
+      "name": "aaaa21",
+      "description": "a",
+      "status": "PLANNED",
+      "startDate": "2026-05-27T05:00:00.000Z",
+      "endDate": "2026-05-25T05:00:00.000Z",
+      "location": "as",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image2.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "bINNav6",
+      "name": "asdasd",
+      "description": "a",
+      "status": "PLANNED",
+      "startDate": "2026-05-14T05:00:00.000Z",
+      "endDate": "2026-05-19T05:00:00.000Z",
+      "location": "sdasd",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image5.png",
+      "totalBudget": 850000
+    }
+  ],
   "documents": [
     {
       "id": "doc-001",
@@ -517,7 +652,7 @@
   "materialsRequests": [
     {
       "id": "req-001",
-      "projectId": "proj-01",
+      "projectId": 1,
       "requestDate": "2026-05-01",
       "deadline": "2026-05-10",
       "status": "PENDING",
@@ -545,7 +680,7 @@
     },
     {
       "id": "req-002",
-      "projectId": "proj-01",
+      "projectId": 1,
       "requestDate": "2026-05-02",
       "deadline": "2026-05-08",
       "status": "REFUSED",
@@ -568,7 +703,7 @@
     },
     {
       "id": "req-003",
-      "projectId": "proj-01",
+      "projectId": 1,
       "requestDate": "2026-05-03",
       "deadline": "2026-05-15",
       "status": "APPROVED",
@@ -594,7 +729,7 @@
     },
     {
       "id": "req-004",
-      "projectId": "proj-01",
+      "projectId": 1,
       "requestDate": "2026-05-04",
       "deadline": "2026-05-05",
       "status": "APPROVED",
@@ -620,7 +755,7 @@
     },
     {
       "id": "req-005",
-      "projectId": "proj-01",
+      "projectId": 1,
       "requestDate": "2026-05-05",
       "deadline": "2026-05-20",
       "status": "APPROVED",
@@ -650,7 +785,7 @@
     },
     {
       "id": "req-006",
-      "projectId": "proj-01",
+      "projectId": 1,
       "requestDate": "2026-05-06",
       "deadline": "2026-05-07",
       "status": "PENDING",
@@ -677,7 +812,7 @@
     },
     {
       "id": "req-007",
-      "projectId": "proj-01",
+      "projectId": 1,
       "requestDate": "2026-05-06",
       "deadline": "2026-05-18",
       "status": "PENDING",
@@ -705,7 +840,7 @@
   "materialsWaste": [
     {
       "id": "rmt-001",
-      "projectId": "proj-01",
+      "projectId": 1,
       "materialId": "mat-001",
       "quantity": 50,
       "unit": "und",
@@ -717,7 +852,7 @@
     },
     {
       "id": "rmt-002",
-      "projectId": "proj-01",
+      "projectId": 1,
       "materialId": "mat-002",
       "quantity": 5,
       "unit": "bolsa",
@@ -729,7 +864,7 @@
     },
     {
       "id": "rmt-003",
-      "projectId": "proj-01",
+      "projectId": 1,
       "materialId": "mat-004",
       "quantity": 3,
       "unit": "varilla",
@@ -741,7 +876,7 @@
     },
     {
       "id": "rmt-004",
-      "projectId": "proj-01",
+      "projectId": 1,
       "materialId": "mat-005",
       "quantity": 2,
       "unit": "plancha",
@@ -753,7 +888,7 @@
     },
     {
       "id": "rmt-005",
-      "projectId": "proj-01",
+      "projectId": 1,
       "materialId": "mat-013",
       "quantity": 10,
       "unit": "und",
@@ -765,7 +900,7 @@
     },
     {
       "id": "rmt-006",
-      "projectId": "proj-01",
+      "projectId": 1,
       "materialId": "mat-007",
       "quantity": 3,
       "unit": "und",
@@ -777,7 +912,7 @@
     },
     {
       "id": "rmt-007",
-      "projectId": "proj-01",
+      "projectId": 1,
       "materialId": "mat-009",
       "quantity": 2,
       "unit": "m3",
@@ -1008,7 +1143,9 @@
       "fullName": "Pedro Castro",
       "role": "Manejador",
       "status": "inactivo",
-      "assignedTools": ["Escuela"]
+      "assignedTools": [
+        "Escuela"
+      ]
     },
     {
       "id": "w-3",
@@ -1023,7 +1160,10 @@
       "fullName": "Neo Ramos",
       "role": "Capataz",
       "status": "activo",
-      "assignedTools": ["Tolva", "Marañón"],
+      "assignedTools": [
+        "Tolva",
+        "Marañón"
+      ],
       "id": "w-1778261706149"
     }
   ],
@@ -1096,5 +1236,48 @@
       "id": "us-1778218020628"
     }
   ],
-  "progress": []
+  "progress": [
+    {
+      "id": 1895,
+      "projectId": "proj-02",
+      "projectName": "Residencial San Miguel",
+      "activityName": "Techado",
+      "details": "Piso 1",
+      "specialty": "Estructuras",
+      "status": "Active",
+      "currentPercentage": 67,
+      "startDate": "2026-05-12T20:59:04.837Z",
+      "endDate": "2026-05-12T20:59:04.837Z",
+      "lastUpdate": "2026-05-12T00:00:00.000Z",
+      "responsible": "Manuel Francia",
+      "workers": 67,
+      "weather": "sunny"
+    }
+  ],
+  "budgets": [
+    {
+      "id": 27466,
+      "projectId": "proj-02",
+      "progressId": 1895,
+      "code": "01.XX",
+      "name": "Techado",
+      "description": "Piso 1",
+      "budgeted": 100000,
+      "executed": 1000,
+      "available": 99000,
+      "progress": 1,
+      "status": "normal",
+      "alert": null,
+      "expenseHistory": [
+        {
+          "itemId": "1895",
+          "concept": "Ladrillos",
+          "amount": 1000,
+          "responsible": "Asuna Yuuki - Residente de Obra",
+          "description": null,
+          "date": "2026-05-12T20:59:59.631Z"
+        }
+      ]
+    }
+  ]
 }

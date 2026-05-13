@@ -5,7 +5,7 @@ export class ProgressAssembler {
   static toEntity(response: ProgressResponse): ProjectProgress {
     return {
       id: response.id,
-      projectId: response.projectId,
+      projectId: String(response.projectId),
       projectName: response.projectName,
       activityName: response.activityName,
       details: response.details,

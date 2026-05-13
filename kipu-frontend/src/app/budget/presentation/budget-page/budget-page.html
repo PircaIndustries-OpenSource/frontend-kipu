@@ -6,7 +6,7 @@
       <div class="flex justify-between items-baseline mb-4">
         <div>
           <p class="text-[10px] text-[#B0BEC5] font-bold uppercase mb-1">{{ 'budget.summary.total-amount' | translate }}</p>
-          <p class="text-5xl font-black text-[#212529]">{{ store.totalBudgeted() | currency:'S/ ' }}</p>
+          <p class="text-5xl font-black text-[#212529]">{{ store.projectLimit() | currency:'S/ ' }}</p>
         </div>
         <div class="text-right">
           <p class="text-[10px] text-[#B0BEC5] font-bold uppercase mb-1">{{ 'budget.summary.executed' | translate }}</p>
@@ -102,8 +102,12 @@
         <div class="col-span-2 flex flex-col gap-1">
           <label class="text-[10px] font-bold text-[#B0BEC5] uppercase">{{ 'budget.forms.item' | translate }}</label>
           <select formControlName="itemId" class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl outline-none focus:border-[#3498DB]">
-            <option value="">-- Seleccionar --</option>
-            @for (item of store.budgetItems(); track item.id) { <option [value]="item.id">{{item.code}} - {{item.name}}</option> }
+            <option value="">-- Seleccionar Avance --</option>
+            @for (progress of progressStore.progressList(); track progress.id) {
+              <option [value]="progress.id">
+                {{ progress.activityName }} ({{ progress.currentPercentage }}%)
+              </option>
+            }
           </select>
         </div>
         <div class="col-span-1 flex flex-col gap-1">
@@ -153,29 +157,46 @@
     <div class="p-10">
       <h2 class="text-2xl font-black mb-6 text-[#3498DB]">{{ 'budget.forms.request-extension-title' | translate }}</h2>
       <form [formGroup]="extensionForm" (ngSubmit)="onSaveExtension()" class="flex flex-col gap-4">
+
         <div class="flex flex-col gap-1">
           <label class="text-[10px] font-bold text-[#B0BEC5] uppercase">{{ 'budget.forms.item' | translate }}</label>
           <select formControlName="itemId" class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl outline-none">
-            @for (item of store.budgetItems(); track item.id) { <option [value]="item.id">{{item.code}} - {{item.name}}</option> }
+            <option value="">-- Select Progress Advance --</option>
+            @for (progress of progressStore.progressList(); track progress.id) {
+              <option [value]="progress.id">
+                {{ progress.activityName }}
+              </option>
+            }
           </select>
         </div>
+
         <div class="flex flex-col gap-1">
           <label class="text-[10px] font-bold text-[#B0BEC5] uppercase">{{ 'budget.forms.amount' | translate }}</label>
           <input type="number" formControlName="amount" class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl outline-none">
         </div>
+
         <div class="flex flex-col gap-1">
           <label class="text-[10px] font-bold text-[#B0BEC5] uppercase">{{ 'budget.forms.authorized_person' | translate }}</label>
           <select formControlName="responsible" class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl outline-none">
-            @for (person of store.authorizedPersonnel(); track person) { <option [value]="person">{{person}}</option> }
+            <option value="">-- Select Authorized Person --</option>
+            @for (person of store.authorizedPersonnel(); track person) {
+              <option [value]="person">{{person}}</option>
+            }
           </select>
         </div>
+
         <div class="flex flex-col gap-1">
           <label class="text-[10px] font-bold text-[#B0BEC5] uppercase">{{ 'budget.forms.extension_reason' | translate }}</label>
           <textarea formControlName="reason" rows="4" class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl outline-none resize-none"></textarea>
         </div>
+
         <div class="mt-8 flex gap-4">
-          <button type="submit" class="flex-1 py-5 bg-[#3498DB] text-white rounded-xl font-bold">{{ 'budget.actions.save' | translate }}</button>
-          <button type="button" (click)="closeForm(extensionForm)" class="flex-1 py-5 bg-[#F8F9FA] text-[#2C3E50] rounded-xl font-bold border border-[#B0BEC5]">{{ 'budget.actions.cancel' | translate }}</button>
+          <button type="submit" class="flex-1 py-5 bg-[#3498DB] text-white rounded-xl font-bold hover:brightness-110 transition-all">
+            {{ 'budget.actions.save' | translate }}
+          </button>
+          <button type="button" (click)="closeForm(extensionForm)" class="flex-1 py-5 bg-[#F8F9FA] text-[#2C3E50] rounded-xl font-bold border border-[#B0BEC5]">
+            {{ 'budget.actions.cancel' | translate }}
+          </button>
         </div>
       </form>
     </div>
