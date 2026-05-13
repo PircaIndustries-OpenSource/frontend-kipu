@@ -4,21 +4,24 @@ import { map, Observable } from 'rxjs';
 import { HopperEntity } from '../../domain/hopper.entity';
 import { HopperResource, HopperResponse } from '../models/hopper.response';
 import { HopperAssembler } from '../assemblers/hopper.assembler';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class HopperApiService {
   private httpClient = inject(HttpClient);
 
+  private apiUrl = environment.kipuApiBaseUrl + '/hopperWatch';
+
   createHopperSensor(sensor: HopperEntity): Observable<HopperEntity> {
     const body = HopperAssembler.toResourceFromEntity(sensor);
     return this.httpClient
-      .post<HopperResource>(`http://localhost:3000/hopperWatch`, body)
+      .post<HopperResource>(`${this.apiUrl}`, body)
       .pipe(map((response) => HopperAssembler.toEntityFromResource(response)));
   }
 
   getAllHopperSensors(): Observable<HopperEntity[]> {
     return this.httpClient
-      .get<HopperResponse>(`http://localhost:3000/hopperWatch`)
+      .get<HopperResponse>(`${this.apiUrl}`)
       .pipe(map((response) => HopperAssembler.toEntitiesFromResponse(response)));
   }
 
@@ -26,11 +29,11 @@ export class HopperApiService {
     const body = HopperAssembler.toResourceFromEntity(sensor);
 
     return this.httpClient
-      .put<HopperResource>(`http://localhost:3000/hopperWatch/${sensor.id}`, body)
+      .put<HopperResource>(`${this.apiUrl}/${sensor.id}`, body)
       .pipe(map((response) => HopperAssembler.toEntityFromResource(response)));
   }
 
   deleteHopperSensor(id: string): Observable<void> {
-    return this.httpClient.delete<void>(`http://localhost:3000/hopperWatch/${id}`);
+    return this.httpClient.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
