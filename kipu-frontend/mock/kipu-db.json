@@ -1055,7 +1055,7 @@
   "concreteCuring": [
     {
       "id": "1",
-      "projectId": "",
+      "projectId": "proj-01",
       "sensorId": "S-TMP-01",
       "state": 1,
       "location": "Floor Level 3",
@@ -1066,7 +1066,7 @@
     },
     {
       "id": "2",
-      "projectId": "",
+      "projectId": "proj-01",
       "sensorId": "S-TMP-02",
       "state": 1,
       "location": "Columns B Sec.",
@@ -1079,7 +1079,7 @@
   "geolocalization": [
     {
       "id": "1",
-      "projectId": "",
+      "projectId": "proj-01",
       "sensorId": "S-GEO-01",
       "name": "Full Station #1",
       "state": 0,
@@ -1088,7 +1088,7 @@
     },
     {
       "id": "2",
-      "projectId": "",
+      "projectId": "proj-01",
       "sensorId": "S-GEO-02",
       "name": "Concrete Vibrator #2",
       "state": 1,
@@ -1099,7 +1099,7 @@
   "hopperWatch": [
     {
       "id": "1",
-      "projectId": "",
+      "projectId": "proj-01",
       "sensorId": "SM-088",
       "name": "Fine Sand",
       "unit": "%",
@@ -1109,7 +1109,7 @@
     },
     {
       "id": 2,
-      "projectId": "",
+      "projectId": "proj-01",
       "sensorId": "SM-082",
       "name": "Crushed Stone",
       "unit": "%",
@@ -1121,7 +1121,7 @@
   "seismicControl": [
     {
       "id": "1",
-      "projectId": "",
+      "projectId": "proj-01",
       "sensorId": "S-VIB-02",
       "location": "South Wall",
       "unit": "mm/s",
@@ -1132,7 +1132,7 @@
     },
     {
       "id": "2",
-      "projectId": "",
+      "projectId": "proj-01",
       "sensorId": "S-VIB-01",
       "location": "North Excavation",
       "unit": "mm/s",
@@ -1150,9 +1150,7 @@
       "fullName": "Pedro Castro",
       "role": "Manejador",
       "status": "inactivo",
-      "assignedTools": [
-        "Escuela"
-      ]
+      "assignedTools": ["Escuela"]
     },
     {
       "id": "w-3",
@@ -1167,10 +1165,7 @@
       "fullName": "Neo Ramos",
       "role": "Capataz",
       "status": "activo",
-      "assignedTools": [
-        "Tolva",
-        "Marañón"
-      ],
+      "assignedTools": ["Tolva", "Marañón"],
       "id": "w-1778261706149"
     }
   ],
