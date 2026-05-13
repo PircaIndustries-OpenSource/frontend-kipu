@@ -6,6 +6,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BudgetStore } from '../../application/budget-store';
 import { BudgetItemEntity } from '../../domain/budget-item.entity';
 import { ProgressStore } from '../../../progress/application/progress.store';
+import { TeamUsersStore } from '../../../team/team-users/application/team-users.store';
 
 @Component({
   selector: 'app-budget-page',
@@ -24,6 +25,7 @@ import { ProgressStore } from '../../../progress/application/progress.store';
 export class BudgetPage implements OnInit {
   protected readonly store = inject(BudgetStore);
   protected readonly progressStore = inject(ProgressStore); // Injecting ProgressStore
+  private readonly teamUsersStore = inject(TeamUsersStore);
   private readonly fb = inject(FormBuilder);
   protected readonly dialog = inject(MatDialog);
 
@@ -56,6 +58,7 @@ export class BudgetPage implements OnInit {
 
   ngOnInit() {
     this.store.loadBudgetItems();
+    this.teamUsersStore.loadUsers();
     this.progressStore.loadProgress(); // Load progress entries to populate dropdowns
   }
 

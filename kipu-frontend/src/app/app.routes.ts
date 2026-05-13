@@ -104,8 +104,8 @@ export const routes: Routes = [
         path: 'dashboard',
         canActivate: [projectSelectedGuard],
         loadComponent: () =>
-          import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
-            (m) => m.InventoryPage,
+          import('./projects/presentation/projects-dashboard/projects-dashboard.component').then(
+            (m) => m.ProjectsDashboardComponent,
           ),
       },
       {
@@ -151,9 +151,7 @@ export const routes: Routes = [
         path: 'budget',
         canActivate: [projectSelectedGuard],
         loadComponent: () =>
-          import('./budget/presentation/budget-page/budget-page').then(
-            (m) => m.BudgetPage,
-          ),
+          import('./budget/presentation/budget-page/budget-page').then((m) => m.BudgetPage),
       },
       {
         path: 'team',
@@ -230,7 +228,7 @@ export const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'inventory',
+        redirectTo: 'projects',
         pathMatch: 'full',
       },
     ],
