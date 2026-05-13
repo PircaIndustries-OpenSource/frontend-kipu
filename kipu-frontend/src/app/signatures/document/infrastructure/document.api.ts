@@ -1,7 +1,7 @@
 // infrastructure/api/document.api.ts
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 import { catchError, map, Observable, tap } from 'rxjs';
 import { DocumentEntity } from '../domain/model/document.entity';
 import { DocumentResource, DocumentResponse } from './document.response';

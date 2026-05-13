@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "mock": "json-server --config mock/json-server.json mock/kipu-db.json",
-    "start:dev": "ng serve"
+    "start:dev": "ng serve",
+    "deploy": "npm run build && npx firebase deploy"
   },
   "private": true,
   "packageManager": "npm@11.12.1",

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { ProjectEntity } from '../domain/project.entity';
 import { ProjectResource, ProjectsResponse } from './project.response';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { ProjectAssembler } from './project.assembler';
 
 @Injectable({

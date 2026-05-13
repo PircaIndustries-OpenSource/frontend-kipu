@@ -5,7 +5,7 @@ import { TeamUsersResponse } from './team-users.response';
 import { TeamUsersAssembler } from './team-users.assembler';
 import { TeamUsersResource } from './team-users.response';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 import { MaterialEntity } from '../../../logistics/domain/material.entity';
 import { TeamWorkersEntity } from '../../team-workers/domain/model/team-workers.entity';
 import { TeamWorkersResponse } from '../../team-workers/infrastructure/team-workers.response';

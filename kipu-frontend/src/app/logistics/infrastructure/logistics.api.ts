@@ -3,7 +3,7 @@ import { map, Observable } from 'rxjs';
 import { InventoryMaterialEntity } from '../domain/inventoryMaterial.entity';
 import { HttpClient } from '@angular/common/http';
 import { InventoryMaterialsResponse } from './inventory/inventoryMaterials.response';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { InventoryMaterialAssembler } from './inventory/inventoryMaterial.assembler';
 import { RequestEntity } from '../domain/request.entity';
 import { RequestResponse, RequestResource } from './request/request.response';
