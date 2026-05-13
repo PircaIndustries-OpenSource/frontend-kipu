@@ -30,6 +30,11 @@
             } @else {
               <span class="ok-text">ADEQUATE LEVELS</span>
             }
+            <div class="actions">
+              <button mat-stroked-button color="warn" class="delete-btn" (click)="onDelete(sensor)">
+                <mat-icon>delete</mat-icon> DELETE
+              </button>
+            </div>
           </mat-card-footer>
         </mat-card>
       }
@@ -40,11 +45,15 @@
     <mat-card class="tickets-container-card">
       <h3>Replenishment Tickets</h3>
 
+      <button mat-flat-button color="primary" class="create-btn" (click)="openAddDialog()">
+        <mat-icon>add</mat-icon> NEW HOPPER
+      </button>
+
       <div class="tickets-list">
         @for (ticket of hopperSensors(); track ticket.id) {
           <div class="ticket-item" [ngClass]="getTicketStatusBySensor(ticket.lastLecture, ticket.limit)">
             <div class="ticket-info">
-              <span class="ticket-id">{{ ticket.id }}</span>
+              <span class="ticket-id">{{ ticket.sensorId }}</span>
               <span class="ticket-material">{{ ticket.name }}</span>
             </div>
             <span class="status-badge" [ngClass]="getTicketStatusBySensor(ticket.lastLecture, ticket.limit)">

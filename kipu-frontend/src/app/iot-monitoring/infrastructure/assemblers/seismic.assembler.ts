@@ -6,6 +6,7 @@ export class SeismicAssembler {
     const seismicEntity = new SeismicEntity();
     seismicEntity.id = seismicResource.id;
     seismicEntity.projectId = seismicResource.projectId;
+    seismicEntity.sensorId = seismicResource.sensorId;
     seismicEntity.unit = seismicResource.unit;
     seismicEntity.lastLecture = seismicResource.lastLecture;
     seismicEntity.limit = seismicResource.limit;
@@ -28,6 +29,7 @@ export class SeismicAssembler {
     return {
       id: entity.id,
       projectId: entity.projectId,
+      sensorId: entity.sensorId,
       unit: entity.unit,
       lastLecture: entity.lastLecture,
       limit: entity.limit,

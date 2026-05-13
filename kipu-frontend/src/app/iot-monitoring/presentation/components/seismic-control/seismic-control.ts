@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { MatCard } from '@angular/material/card';
 import { NgClass } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
@@ -17,12 +17,21 @@ import { SeismicStore } from '../../../application/seismic.store';
 })
 export class SeismicControl implements OnInit {
   //seismicSensors = input.required<SeismicEntity[]>();
-
   constructor(private dialog: MatDialog) {}
 
   private store = inject(SeismicStore);
-
   seismicSensors = this.store.seismicSensors;
+
+  filterState = signal<'ALL' | 'RISK'>('ALL');
+
+  filteredSeismicSensors = computed(() => {
+    const sensors = this.seismicSensors();
+    const filter = this.filterState();
+
+    if (filter === 'ALL') return sensors;
+
+    return sensors.filter((sensor) => sensor.state === 'RISK');
+  });
 
   ngOnInit(): void {
     if (this.seismicSensors().length === 0) {
@@ -30,19 +39,24 @@ export class SeismicControl implements OnInit {
     }
   }
 
+  setFilter(mode: 'ALL' | 'RISK'): void {
+    this.filterState.set(mode);
+  }
+
   openAddDialog() {
     const dialogRef = this.dialog.open(AddSeismicSensorDialogComponent);
 
     dialogRef.afterClosed().subscribe((result) => {
+      console.log('Resultado del diálogo:', result); // Revisa esto en la consola (F12)
       if (result) {
-        this.store.addSeismicSensor({ ...result, timestamp: new Date().toISOString() });
+        this.store.addSeismicSensor(result);
       }
     });
   }
 
   onDelete(sensor: SeismicEntity): void {
     if (confirm('Eliminar?')) {
-      this.store.deleteSeismicSensor(sensor.id);
+      this.store.eraseSeismicSensor(sensor.id);
     }
   }
 
@@ -51,12 +65,6 @@ export class SeismicControl implements OnInit {
   }
 
   getBlockedZones() {
-    let blocked = 0;
-    for (let i = 0; i < this.seismicSensors().length; i++) {
-      if (this.seismicSensors()[i].state === 'RISK') {
-        blocked++;
-      }
-    }
-    return blocked;
+    return this.seismicSensors().filter((sensor) => sensor.state === 'RISK').length;
   }
 }

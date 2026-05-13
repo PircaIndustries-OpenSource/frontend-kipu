@@ -8,8 +8,8 @@ export class ConcreteAssembler {
     if (concreteResource.id && concreteResource.id.trim().length > 0)
       concreteSensor.id = concreteResource.id;
     concreteSensor.projectId = concreteResource.projectId;
-    if (concreteResource.name && concreteResource.name.trim().length > 0)
-      concreteSensor.name = concreteResource.name;
+    if (concreteResource.sensorId && concreteResource.sensorId.trim().length > 0)
+      concreteSensor.sensorId = concreteResource.sensorId;
     if (concreteResource.location && concreteResource.location.trim().length > 0)
       concreteSensor.location = concreteResource.location;
     concreteSensor.unit = concreteResource.unit;
@@ -33,12 +33,12 @@ export class ConcreteAssembler {
     return {
       id: entity.id,
       projectId: entity.projectId,
-      name: entity.name,
-      unit: entity.unit,
-      limit: entity.limit,
+      sensorId: entity.sensorId,
       location: entity.location,
+      unit: entity.unit,
       temperature: entity.temperature,
       humidity: entity.humidity,
+      limit: entity.limit,
       state: states[entity.state] || 0, // Valor por defecto si es UNKNOWN
     } as ConcreteResource;
   }

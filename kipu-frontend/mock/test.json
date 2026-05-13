@@ -1,28 +1,33 @@
 {
+  "items": [
+    {
+      "id": "1",
+      "name": "test1"
+    }
+  ],
   "identity": [
     {
+      "id": "vkgT3Nh",
       "name": "Juan Perez",
       "email": "kipu3@hotmail.com",
       "password": "kipu12345",
-      "role": "Gestor Operativo",
-      "id": "vkgT3Nh"
+      "role": "Gestor Operativo"
     },
     {
+      "id": "egiZUjv",
       "name": "Paula Montoya",
       "email": "pau@gmail.com",
       "password": "paupau707",
-      "role": "Logística y Administración",
-      "id": "egiZUjv"
+      "role": "Logística y Administración"
     },
     {
-      "name": "Juan Perez",
-      "email": "kipu3@hotmail.com",
-      "password": "kipu12345",
-      "role": "Gestor Operativo",
-      "id": "w25vbLd"
+      "id": "w25vbLd",
+      "name": "Kurogumo Shirakumo",
+      "email": "krgmshrkm@hotmail.com",
+      "password": "krgmshrkm",
+      "role": "Gestor Operativo"
     }
   ],
-
   "documents": [
     {
       "id": "doc-001",
@@ -796,7 +801,7 @@
       "physicalStatus": "a",
       "assignedTo": "Miguel Estrada",
       "registrationDate": "2026-04-15",
-      "maintenanceHours": 1,
+      "maintenanceHours": "1",
       "assignmentDetail": "Entregado a Carlos Mendoza para trabajos de corte de acero en Sótano 2."
     },
     {
@@ -818,96 +823,6 @@
       "registrationDate": "2026-02-20",
       "maintenanceHours": "80",
       "assignmentDetail": "Devuelto a almacén después de mantenimiento preventivo."
-    },
-    {
-      "id": "tool-004",
-      "name": "Compactadora tipo Plancha",
-      "status": "AVAILABLE",
-      "physicalStatus": "Operativo",
-      "assignedTo": "",
-      "registrationDate": "2025-11-10",
-      "maintenanceHours": "400",
-      "assignmentDetail": "Equipo en almacén listo para asignación."
-    },
-    {
-      "id": "tool-005",
-      "name": "Vibrador de Concreto 2",
-      "status": "URGENT_MAINTENANCE",
-      "physicalStatus": "Requiere reparación",
-      "assignedTo": "",
-      "registrationDate": "2025-08-15",
-      "maintenanceHours": "600",
-      "assignmentDetail": "Motor quemado. Pendiente de envio a servicio técnico."
-    },
-    {
-      "id": "tool-006",
-      "name": "Soldadora Eléctrica 250A",
-      "status": "IN_USE",
-      "physicalStatus": "Operativo",
-      "assignedTo": "70123456",
-      "registrationDate": "2026-01-05",
-      "maintenanceHours": "180",
-      "assignmentDetail": "En uso para habilitación de acero en taller de Piso 1."
-    },
-    {
-      "id": "tool-007",
-      "name": "Nivel Láser Rotativo",
-      "status": "AVAILABLE",
-      "physicalStatus": "Operativo",
-      "assignedTo": "",
-      "registrationDate": "2026-04-01",
-      "maintenanceHours": "30",
-      "assignmentDetail": "Calibrado y listo para topografía en Piso 4."
-    },
-    {
-      "id": "d0rrFHf",
-      "name": "a",
-      "status": "URGENT_MAINTENANCE",
-      "physicalStatus": "a",
-      "assignedTo": "",
-      "registrationDate": "",
-      "maintenanceHours": "aaaaaaa",
-      "assignmentDetail": "aaaa esotilin"
-    },
-    {
-      "id": "f6kZVqO",
-      "name": "a",
-      "status": "AVAILABLE",
-      "physicalStatus": "",
-      "assignedTo": "54343234 - Pedro Castro",
-      "registrationDate": "",
-      "maintenanceHours": "",
-      "assignmentDetail": ""
-    },
-    {
-      "id": "o64cimr",
-      "name": "a",
-      "status": "AVAILABLE",
-      "physicalStatus": "",
-      "assignedTo": "12345678 - Miguel Estrada",
-      "registrationDate": "",
-      "maintenanceHours": "",
-      "assignmentDetail": "a"
-    },
-    {
-      "id": "PxmhJO_",
-      "name": "aaaaaa",
-      "status": "AVAILABLE",
-      "physicalStatus": "",
-      "assignedTo": "54343234 - Pedro Castro",
-      "registrationDate": "",
-      "maintenanceHours": "",
-      "assignmentDetail": "uwu"
-    },
-    {
-      "id": "WDgas0d",
-      "name": "esoMaquinin",
-      "status": "AVAILABLE",
-      "physicalStatus": "",
-      "assignedTo": "54343234 - Pedro Castro",
-      "registrationDate": "",
-      "maintenanceHours": "",
-      "assignmentDetail": "a"
     }
   ],
   "concreteCuring": [
@@ -966,7 +881,7 @@
       "limit": 15
     },
     {
-      "id": 2,
+      "id": "2",
       "projectId": "",
       "sensorId": "SM-082",
       "name": "Crushed Stone",
@@ -986,7 +901,7 @@
       "state": 2,
       "lastLecture": 7.2,
       "limit": 5,
-      "timeLecture": "16/04/2026 10:30"
+      "timeLecture": "16-04-2026 10:30"
     },
     {
       "id": "2",
@@ -997,7 +912,18 @@
       "state": 1,
       "lastLecture": 2.4,
       "limit": 5,
-      "timeLecture": "16/04/2026 10:30"
+      "timeLecture": "16-04-2026 10:30"
+    },
+    {
+      "id": "33beo3f",
+      "projectId": "",
+      "sensorId": "S-VIB-03",
+      "unit": "mm/s",
+      "lastLecture": 9,
+      "limit": 6,
+      "location": "House",
+      "timeLecture": "12/5/2026, 5:51:05 p. m.",
+      "state": 2
     }
   ],
   "field": [],
@@ -1008,7 +934,9 @@
       "fullName": "Pedro Castro",
       "role": "Manejador",
       "status": "inactivo",
-      "assignedTools": ["Escuela"]
+      "assignedTools": [
+        "Escuela"
+      ]
     },
     {
       "id": "w-3",
@@ -1023,7 +951,10 @@
       "fullName": "Neo Ramos",
       "role": "Capataz",
       "status": "activo",
-      "assignedTools": ["Tolva", "Marañón"],
+      "assignedTools": [
+        "Tolva",
+        "Marañón"
+      ],
       "id": "w-1778261706149"
     }
   ],

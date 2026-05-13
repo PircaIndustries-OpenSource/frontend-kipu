@@ -1,0 +1,26 @@
+{
+  "concreteCuring": [
+    {
+      "id": 1,
+      "projectId": "",
+      "sensorId": "S-TMP-01",
+      "state": 1,
+      "location": "Floor Level 3",
+      "temperature": 34.5,
+      "humidity": 58,
+      "limit": 35,
+      "unit": "C"
+    },
+    {
+      "id": 2,
+      "projectId": "",
+      "sensorId": "S-TMP-02",
+      "state": 1,
+      "location": "Columns B Sec.",
+      "temperature": 28,
+      "humidity": 65,
+      "limit": 35,
+      "unit": "C"
+    }
+  ]
+}

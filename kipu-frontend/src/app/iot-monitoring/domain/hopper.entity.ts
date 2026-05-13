@@ -1,6 +1,7 @@
 export class HopperEntity {
   #id: string;
   #projectId: string;
+  #sensorId: string;
   #unit: string;
   #state: string;
   #lastLecture: number;
@@ -10,6 +11,7 @@ export class HopperEntity {
   constructor() {
     this.#id = '';
     this.#projectId = '';
+    this.#sensorId = '';
     this.#unit = '';
     this.#state = '';
     this.#limit = 0;
@@ -31,6 +33,14 @@ export class HopperEntity {
 
   set projectId(value: string) {
     this.#projectId = value;
+  }
+
+  get sensorId(): string {
+    return this.#sensorId;
+  }
+
+  set sensorId(value: string) {
+    this.#sensorId = value;
   }
 
   get unit(): string {

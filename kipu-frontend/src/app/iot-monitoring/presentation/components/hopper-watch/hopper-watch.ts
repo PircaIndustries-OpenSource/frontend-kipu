@@ -1,24 +1,46 @@
 import { Component, inject, input, OnInit } from '@angular/core';
-import { HopperEntity } from '../../../domain/hopper.entity';
 import { MatCard, MatCardContent, MatCardFooter, MatCardHeader } from '@angular/material/card';
 import { NgClass } from '@angular/common';
-import { IoTMonitoringStore } from '../../../application/iot-monitoring.store';
+import { HopperStore } from '../../../application/hopper.store';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { AddHopperWatchDialogComponent } from '../../forms/hopper-watch/add-hopper-watch-dialog-component/add-hopper-watch-dialog-component';
+import { HopperEntity } from '../../../domain/hopper.entity';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-hopper-watch',
-  imports: [MatCard, NgClass, MatCardHeader, MatCardContent, MatCardFooter],
+  imports: [MatCard, NgClass, MatCardHeader, MatCardContent, MatCardFooter, MatButton, MatIcon],
   templateUrl: './hopper-watch.html',
   styleUrl: './hopper-watch.css',
 })
 export class HopperWatch implements OnInit {
-  private store = inject(IoTMonitoringStore);
+  constructor(private dialog: MatDialog) {}
+
+  private store = inject(HopperStore);
   //input.required<HopperEntity[]>();
   hopperSensors = this.store.hopperSensors;
 
   ngOnInit(): void {
     if (this.hopperSensors().length === 0) {
       this.store.loadHopperSensors();
+    }
+  }
 
+  openAddDialog() {
+    const dialogRef = this.dialog.open(AddHopperWatchDialogComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('Resultado del diálogo:', result); // Revisa esto en la consola (F12)
+      if (result) {
+        this.store.addHopperSensor(result);
+      }
+    });
+  }
+
+  onDelete(sensor: HopperEntity): void {
+    if (confirm('Eliminar?')) {
+      this.store.eraseHopperSensor(sensor.id);
     }
   }
 

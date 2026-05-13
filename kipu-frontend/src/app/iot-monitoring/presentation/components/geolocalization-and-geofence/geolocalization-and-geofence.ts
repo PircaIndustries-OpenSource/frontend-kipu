@@ -4,7 +4,7 @@ import { MatButton } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
 import { NgClass } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
-import { IoTMonitoringStore } from '../../../application/iot-monitoring.store';
+import { GeolocalizationStore } from '../../../application/geolocalization.store';
 
 @Component({
   selector: 'app-geolocalization-and-geofence',
@@ -15,7 +15,7 @@ import { IoTMonitoringStore } from '../../../application/iot-monitoring.store';
 export class GeolocalizationAndGeofence {
   //readonly geolocalizationPoints = input.required<GeolocalizationEntity[]>();
 
-  private store = inject(IoTMonitoringStore);
+  private store = inject(GeolocalizationStore);
 
   geolocalizationPoints = this.store.geolocalizationPoints;
 

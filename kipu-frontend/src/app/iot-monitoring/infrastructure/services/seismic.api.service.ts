@@ -12,7 +12,7 @@ export class SeismicApiService {
   createSeismicSensor(sensor: SeismicEntity): Observable<SeismicEntity> {
     const body = SeismicAssembler.toResourceFromEntity(sensor);
     return this.httpClient
-      .post<SeismicResource>(`http://localhost:3000/seismic-control`, body)
+      .post<SeismicResource>(`http://localhost:3000/seismicControl`, body)
       .pipe(map((response) => SeismicAssembler.toEntityFromResource(response)));
   }
 
@@ -20,17 +20,17 @@ export class SeismicApiService {
     const body = SeismicAssembler.toResourceFromEntity(sensor);
 
     return this.httpClient
-      .put<SeismicResource>(`http://localhost:3000/seismic-control/${sensor.id}`, body)
+      .put<SeismicResource>(`http://localhost:3000/seismicControl/${sensor.id}`, body)
       .pipe(map((response) => SeismicAssembler.toEntityFromResource(response)));
   }
 
   deleteSeismicSensor(id: string): Observable<void> {
-    return this.httpClient.delete<void>(`http://localhost:3000/seismic-control/${id}`);
+    return this.httpClient.delete<void>(`http://localhost:3000/seismicControl/${id}`);
   }
 
   getAllSeismicSensors(): Observable<SeismicEntity[]> {
     return this.httpClient
-      .get<SeismicResponse>(`http://localhost:3000/seismic-control`)
+      .get<SeismicResponse>(`http://localhost:3000/seismicControl`)
       .pipe(map((response) => SeismicAssembler.toEntitiesFromResponse(response)));
   }
 }

@@ -16,9 +16,9 @@ import { MatIcon } from '@angular/material/icon';
 })
 export class ConcreteCuring implements OnInit {
   //concreteSensors = input.required<ConcreteEntity[]>();
-  private store = inject(ConcreteStore);
-
   constructor(private dialog: MatDialog) {}
+
+  private store = inject(ConcreteStore);
   //input.required<HopperEntity[]>();
   concreteSensors = this.store.concreteSensors;
 
@@ -33,14 +33,14 @@ export class ConcreteCuring implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.store.addConcreteSensor({ ...result, timestamp: new Date().toISOString() });
+        this.store.addConcreteSensor({ ...result });
       }
     });
   }
 
-  onDelete(sensor: ConcreteEntity): void {
+  onDelete(id: string): void {
     if (confirm('Eliminar?')) {
-      this.store.deleteConcreteSensor(sensor.id);
+      this.store.deleteConcreteSensor(id);
     }
   }
 
@@ -54,7 +54,7 @@ export class ConcreteCuring implements OnInit {
     }
   }
 
-  getOnlineZones(){
+  getOnlineZones() {
     let online = 0;
     for (let i = 0; i < this.concreteSensors().length; i++) {
       if (this.concreteSensors()[i].state === 'ONLINE') {

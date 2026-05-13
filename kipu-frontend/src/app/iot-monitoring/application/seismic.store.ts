@@ -7,11 +7,10 @@ export class SeismicStore {
   private seismicApiService = inject(SeismicApiService);
 
   private seismicSensorsSignal = signal<SeismicEntity[]>([]);
+  public seismicSensors = this.seismicSensorsSignal.asReadonly();
 
   private loadingSignal = signal<boolean>(false);
   private errorSignal = signal<string | null>(null);
-
-  public seismicSensors = this.seismicSensorsSignal.asReadonly();
 
   loadSeismicSensors() {
     this.loadingSignal.set(true);
@@ -27,7 +26,7 @@ export class SeismicStore {
     });
   }
 
-  deleteSeismicSensor(id: string) {
+  eraseSeismicSensor(id: string) {
     this.seismicApiService.deleteSeismicSensor(id).subscribe({
       next: () => {
         this.seismicSensorsSignal.update((sensors) => sensors.filter((s) => s.id !== id));
@@ -40,9 +39,7 @@ export class SeismicStore {
   }
 
   addSeismicSensor(newSensor: SeismicEntity) {
-    const cleanSensor = new SeismicEntity();
-
-    this.seismicApiService.createSeismicSensor(cleanSensor).subscribe({
+    this.seismicApiService.createSeismicSensor(newSensor).subscribe({
       next: (addedSensor) => {
         this.seismicSensorsSignal.update((prev) => [...prev, addedSensor]);
         console.log('✅ Nuevo sensor guardado y añadido a la lista');

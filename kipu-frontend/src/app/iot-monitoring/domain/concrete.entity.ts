@@ -1,7 +1,7 @@
 export class ConcreteEntity {
   #id: string;
   #projectId: string;
-  #name: string;
+  #sensorId: string;
   #state: string;
   #location: string;
   #temperature: number;
@@ -12,7 +12,7 @@ export class ConcreteEntity {
   constructor() {
     this.#id = '';
     this.#projectId = '';
-    this.#name = '';
+    this.#sensorId = '';
     this.#state = '';
     this.#location = '';
     this.#temperature = 0;
@@ -37,12 +37,12 @@ export class ConcreteEntity {
     this.#projectId = value;
   }
 
-  get name(): string {
-    return this.#name;
+  get sensorId(): string {
+    return this.#sensorId;
   }
 
-  set name(value: string) {
-    this.#name = value;
+  set sensorId(value: string) {
+    this.#sensorId = value;
   }
 
   get state(): string {

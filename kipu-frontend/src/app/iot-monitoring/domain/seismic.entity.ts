@@ -1,6 +1,7 @@
 export class SeismicEntity {
   #id: string;
   #projectId: string;
+  #sensorId: string;
   #unit: string;
   #name: string;
   #location: string;
@@ -12,6 +13,7 @@ export class SeismicEntity {
   constructor() {
     this.#id = '';
     this.#projectId = '';
+    this.#sensorId = '';
     this.#name = '';
     this.#unit = '';
     this.#location = '';
@@ -35,6 +37,14 @@ export class SeismicEntity {
 
   set projectId(value: string) {
     this.#projectId = value;
+  }
+
+  get sensorId(): string {
+    return this.#sensorId;
+  }
+
+  set sensorId(value: string) {
+    this.#sensorId = value;
   }
 
   get unit(): string {

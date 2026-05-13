@@ -6,7 +6,7 @@
 
         <mat-card-header class="card-header">
           <div class="badges">
-            <span class="badge sensor-name">{{ sensor.name }}</span>
+            <span class="badge sensor-name">{{ sensor.sensorId }}</span>
             <span class="badge sensor-state">{{ sensor.state }}</span>
           </div>
           <span class="sensor-location">{{ sensor.location }}</span>
@@ -41,7 +41,7 @@
             CONFIGURE
           </button>
           <div class="actions">
-            <button mat-stroked-button color="warn" class="delete-btn" (click)="onDelete(sensor)">
+            <button mat-stroked-button color="warn" class="delete-btn" (click)="onDelete(sensor.id)">
               <mat-icon>delete</mat-icon> DELETE
             </button>
           </div>

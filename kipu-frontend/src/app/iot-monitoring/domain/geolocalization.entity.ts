@@ -1,6 +1,6 @@
 export class GeolocalizationEntity {
-  #numberId: number;
   #id: string;
+  #numberId: number;
   #name: string;
   #projectId: string;
   #longitude: number;
