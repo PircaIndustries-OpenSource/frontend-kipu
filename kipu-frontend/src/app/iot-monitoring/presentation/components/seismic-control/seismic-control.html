@@ -18,30 +18,30 @@
         @if (sensor.state === 'RISK') {
           <div class="alert-box">
             <mat-icon color="warn">error_outline</mat-icon>
-            <h4>BLOCK OPERATIONS</h4>
-            <p>The vibrations exceed the safe threshold ({{ sensor.lastLecture }} {{ sensor.unit }} > {{ sensor.limit }} {{ sensor.unit }})</p>
+            <h4>{{ 'iot-monitoring.blockoperations' | translate }}</h4>
+            <p>{{ 'iot-monitoring.vibrationsexceeded' | translate }} ({{ sensor.lastLecture }} {{ sensor.unit }} > {{ sensor.limit }} {{ sensor.unit }})</p>
           </div>
 
           <div class="auth-section">
-            <p class="auth-text">Sector: {{ sensor.location }}. Resident authorization is required for release.</p>
+            <p class="auth-text">Sector: {{ sensor.location }}. {{ 'iot-monitoring.residentauthorization' | translate }}</p>
             <input type="password" placeholder="Authorization password" class="auth-input">
             <button mat-flat-button color="primary" class="unlock-btn">
-              Take care of the risk and unlock.
+              {{ 'iot-monitoring.takecare' | translate }}
             </button>
           </div>
         }
         @else {
           <div class="normal-data-grid">
             <div class="data-column">
-              <span class="data-label">Location</span>
+              <span class="data-label">{{ 'iot-monitoring.location' | translate }}</span>
               <span class="data-value">{{ sensor.location }}</span>
             </div>
             <div class="data-column">
-              <span class="data-label">Actual Lecture</span>
+              <span class="data-label">{{ 'iot-monitoring.actuallecture' | translate }}</span>
               <span class="data-value">{{ sensor.lastLecture }} {{ sensor.unit }}</span>
             </div>
             <div class="data-column">
-              <span class="data-label">Secure Limit</span>
+              <span class="data-label">{{ 'iot-monitoring.securelimit' | translate }}</span>
               <span class="data-value">{{ sensor.limit }} {{ sensor.unit }}</span>
             </div>
           </div>
@@ -51,7 +51,7 @@
           <span class="timestamp">{{ sensor.timeLecture }}</span>
           <div class="actions">
             <button mat-stroked-button color="warn" class="delete-btn" (click)="onDelete(sensor)">
-              <mat-icon>delete</mat-icon> DELETE
+              <mat-icon>delete</mat-icon> {{ 'iot-monitoring.delete' | translate }}
             </button>
           </div>
         </div>
@@ -62,36 +62,36 @@
 
   <aside class="summary-panel">
     <mat-card class="summary-card">
-      <h3>MODULE'S RESUME</h3>
+      <h3>{{ 'iot-monitoring.moduleresume' | translate }}</h3>
 
       <button mat-flat-button color="primary" class="create-btn" (click)="openAddDialog()">
-        <mat-icon>add</mat-icon> NEW SEISMOGRAPH
+        <mat-icon>add</mat-icon> {{ 'iot-monitoring.newseismograph' | translate }}
       </button>
 
       <div class="stat-block">
         <span class="stat-number dark">{{ getZones() }}</span>
-        <span class="stat-label">INSTALLED SEISMOGRAPHS</span>
+        <span class="stat-label">{{ 'iot-monitoring.installedseismographs' | translate }}</span>
       </div>
 
       <hr class="divider">
 
       <div class="stat-block">
         <span class="stat-number danger">{{ getBlockedZones() }}</span>
-        <span class="stat-label">BLOCKED ZONES</span>
+        <span class="stat-label">{{ 'iot-monitoring.blockedzones' | translate }}</span>
       </div>
 
       <hr class="divider">
 
       <div class="filters">
-        <p class="filters-title">QUICK FILTERS</p>
+        <p class="filters-title">{{ 'iot-monitoring.quickfilters' | translate }}</p>
         <button class="filter-btn"
                 [class.active]="filterState() === 'ALL'"
                 [class.outline]="filterState() !== 'ALL'"
-                (click)="setFilter('ALL')">ALL THE SENSORS</button>
+                (click)="setFilter('ALL')">{{ 'iot-monitoring.allthesensors' | translate }}</button>
         <button class="filter-btn"
                 [class.active]="filterState() === 'RISK'"
                 [class.outline]="filterState() !== 'RISK'"
-                (click)="setFilter('RISK')">JUST IN WARNING STATE</button>
+                (click)="setFilter('RISK')">{{ 'iot-monitoring.warningstate' | translate }}</button>
       </div>
     </mat-card>
   </aside>

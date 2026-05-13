@@ -1,6 +1,4 @@
 <div class="geo-header">
-  <h2>Geolocalization y Geofence</h2>
-  <button mat-flat-button color="primary" class="edit-btn">Editar Límite Obra</button>
 </div>
 
 <div class="geo-dashboard">
@@ -23,10 +21,10 @@
       }
 
       <mat-card class="map-legend">
-        <span class="legend-title">Legend</span>
+        <span class="legend-title">{{ 'iot-monitoring.legend' | translate }}</span>
         <div class="legend-item">
           <div class="dashed-line"></div>
-          <span>Work Limit</span>
+          <span>{{ 'iot-monitoring.worklimit' | translate }}</span>
         </div>
       </mat-card>
 
@@ -35,7 +33,7 @@
 
   <aside class="equipment-panel">
     <mat-card class="equipment-card">
-      <h3 class="panel-title">Tracked Teams</h3>
+      <h3 class="panel-title">{{ 'iot-monitoring.trackedteams' | translate }}</h3>
 
       <div class="equipment-list">
         @for (equip of geolocalizationPoints(); track equip.id) {
@@ -43,7 +41,7 @@
             <div class="eq-info">
               <span class="eq-name">{{ equip.name }}</span>
               <span class="eq-status-text" [ngClass]="equip.state">
-                State: {{ equip.state }}
+                {{ 'iot-monitoring.state' | translate }} {{ equip.state }}
               </span>
             </div>
             <div class="status-dot" [ngClass]="equip.state"></div>

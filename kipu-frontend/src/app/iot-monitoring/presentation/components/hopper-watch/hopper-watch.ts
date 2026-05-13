@@ -7,10 +7,20 @@ import { MatIcon } from '@angular/material/icon';
 import { AddHopperWatchDialogComponent } from '../../forms/hopper-watch/add-hopper-watch-dialog-component/add-hopper-watch-dialog-component';
 import { HopperEntity } from '../../../domain/hopper.entity';
 import { MatDialog } from '@angular/material/dialog';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-hopper-watch',
-  imports: [MatCard, NgClass, MatCardHeader, MatCardContent, MatCardFooter, MatButton, MatIcon],
+  imports: [
+    MatCard,
+    NgClass,
+    MatCardHeader,
+    MatCardContent,
+    MatCardFooter,
+    MatButton,
+    MatIcon,
+    TranslatePipe,
+  ],
   templateUrl: './hopper-watch.html',
   styleUrl: './hopper-watch.css',
 })

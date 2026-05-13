@@ -7,10 +7,20 @@ import { ConcreteStore } from '../../../application/concrete.store';
 import { MatDialog } from '@angular/material/dialog';
 import { AddConcreteCuringDialogComponent } from '../../forms/concrete-curing/add-concrete-curing-dialog-component/add-concrete-curing-dialog-component';
 import { MatIcon } from '@angular/material/icon';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-concrete-curing',
-  imports: [MatCard, MatCardHeader, MatCardContent, MatCardFooter, MatButton, NgClass, MatIcon],
+  imports: [
+    MatCard,
+    MatCardHeader,
+    MatCardContent,
+    MatCardFooter,
+    MatButton,
+    NgClass,
+    MatIcon,
+    TranslatePipe,
+  ],
   templateUrl: './concrete-curing.html',
   styleUrl: './concrete-curing.css',
 })

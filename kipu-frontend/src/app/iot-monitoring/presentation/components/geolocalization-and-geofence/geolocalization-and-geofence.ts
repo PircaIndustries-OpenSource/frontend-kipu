@@ -5,10 +5,11 @@ import { MatCard } from '@angular/material/card';
 import { NgClass } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { GeolocalizationStore } from '../../../application/geolocalization.store';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-geolocalization-and-geofence',
-  imports: [MatButton, MatCard, NgClass, MatIcon],
+  imports: [MatButton, MatCard, NgClass, MatIcon, TranslatePipe],
   templateUrl: './geolocalization-and-geofence.html',
   styleUrl: './geolocalization-and-geofence.css',
 })

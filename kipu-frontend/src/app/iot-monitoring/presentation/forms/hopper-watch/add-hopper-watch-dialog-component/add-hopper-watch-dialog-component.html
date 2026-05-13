@@ -1,37 +1,37 @@
-<h2 mat-dialog-title>Add New Seismic Sensor</h2>
+<h2 mat-dialog-title>{{ 'iot-monitoring.addnewhw' | translate }}</h2>
 
 <mat-dialog-content class="sensor-form">
-  <p class="form-instruction">Enter the details for the new monitoring point.</p>
+  <p class="form-instruction">{{ 'iot-monitoring.enterdetails' | translate }}</p>
 
   <mat-form-field appearance="outline">
-    <mat-label>Sensor Name</mat-label>
+    <mat-label>{{ 'iot-monitoring.name' | translate }}</mat-label>
     <input matInput [(ngModel)]="sensorForm.sensorId" placeholder="Ex: SM-088">
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Function</mat-label>
+    <mat-label>{{ 'iot-monitoring.function' | translate }}</mat-label>
     <input matInput [(ngModel)]="sensorForm.name" placeholder="Ex: Fine Sand">
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Unit</mat-label>
+    <mat-label>{{ 'iot-monitoring.unit' | translate }}</mat-label>
     <input matInput [(ngModel)]="sensorForm.unit" placeholder="Ex: mm/s">
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Limit</mat-label>
+    <mat-label>{{ 'iot-monitoring.limit' | translate }}</mat-label>
     <input matInput type="number" [(ngModel)]="sensorForm.limit" placeholder="Ex: 7">
   </mat-form-field>
 
   <mat-form-field appearance="outline">
-    <mat-label>Last Lecture</mat-label>
+    <mat-label>{{ 'iot-monitoring.lastlecture' | translate }}</mat-label>
     <input matInput type="number" [(ngModel)]="sensorForm.lastLecture" placeholder="Ex: 7.2">
   </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end" class="form-actions">
-  <button mat-button (click)="onCancel()">CANCEL</button>
+  <button mat-button (click)="onCancel()">{{ 'iot-monitoring.cancel' | translate }}</button>
   <button mat-flat-button color="primary" class="save-btn" (click)="onSave()">
-    ADD SENSOR
+    {{ 'iot-monitoring.addsensor' | translate }}
   </button>
 </mat-dialog-actions>

@@ -9,6 +9,7 @@ import {
 } from '@angular/material/dialog';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { HopperEntity } from '../../../../domain/hopper.entity';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-hopper-watch-dialog-component',
@@ -21,6 +22,7 @@ import { HopperEntity } from '../../../../domain/hopper.entity';
     MatFormField,
     MatInput,
     MatLabel,
+    TranslatePipe,
   ],
   templateUrl: './add-hopper-watch-dialog-component.html',
   styleUrl: './add-hopper-watch-dialog-component.css',

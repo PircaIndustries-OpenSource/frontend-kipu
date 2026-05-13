@@ -8,10 +8,11 @@ import { FormsModule } from '@angular/forms';
 import { AddSeismicSensorDialogComponent } from '../../forms/seismic-control/add-seismic-sensor-dialog-component/add-seismic-sensor-dialog-component';
 import { SeismicEntity } from '../../../domain/seismic.entity';
 import { SeismicStore } from '../../../application/seismic.store';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-seismic-control',
-  imports: [MatCard, NgClass, MatIcon, MatButton, FormsModule],
+  imports: [MatCard, NgClass, MatIcon, MatButton, FormsModule, TranslatePipe],
   templateUrl: './seismic-control.html',
   styleUrl: './seismic-control.css',
 })

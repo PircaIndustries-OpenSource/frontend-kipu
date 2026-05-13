@@ -1,31 +1,161 @@
 {
-  "items": [
-    {
-      "id": "1",
-      "name": "test1"
-    }
-  ],
   "identity": [
     {
-      "id": "vkgT3Nh",
       "name": "Juan Perez",
       "email": "kipu3@hotmail.com",
       "password": "kipu12345",
-      "role": "Gestor Operativo"
+      "role": "Gestor Operativo",
+      "id": "vkgT3Nh"
     },
     {
-      "id": "egiZUjv",
       "name": "Paula Montoya",
       "email": "pau@gmail.com",
       "password": "paupau707",
-      "role": "Logística y Administración"
+      "role": "Logística y Administración",
+      "id": "egiZUjv"
     },
     {
-      "id": "w25vbLd",
-      "name": "Kurogumo Shirakumo",
-      "email": "krgmshrkm@hotmail.com",
-      "password": "krgmshrkm",
-      "role": "Gestor Operativo"
+      "name": "Juan Perez",
+      "email": "kipu3@hotmail.com",
+      "password": "kipu12345",
+      "role": "Gestor Operativo",
+      "id": "w25vbLd"
+    },
+    {
+      "name": "Jhony Manuel Francia Torres",
+      "email": "manuelft@gmail.com",
+      "password": "12345678",
+      "role": "Gestor Operativo",
+      "id": "aXT7GBg"
+    }
+  ],
+  "projects": [
+    {
+      "id": "proj-01",
+      "name": "Edificio Corporativo Los Olivos",
+      "description": "Construcción de edificio corporativo de 12 pisos con 3 sótanos de estacionamiento",
+      "status": "IN_PROGRESS",
+      "startDate": "2026-01-15",
+      "location": "Av. Principal 123, Los Olivos, Lima",
+      "createdAt": "2026-01-10",
+      "createdBy": "SIVyLM6",
+      "imageUrl": "project-image1.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "proj-02",
+      "name": "Residencial San Miguel",
+      "description": "Complejo residencial de 80 departamentos con áreas comunes",
+      "status": "PLANNED",
+      "startDate": "2026-07-01",
+      "location": "Calle Las Flores 456, San Miguel, Lima",
+      "createdAt": "2026-05-01",
+      "createdBy": "SIVyLM6",
+      "imageUrl": "project-image4.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "proj-03",
+      "name": "Colegio Particular San José",
+      "description": "Construcción de nueva infraestructura educativa con 30 aulas y laboratorios",
+      "status": "COMPLETED",
+      "startDate": "2025-03-01",
+      "location": "Av. La Cultura 789, Cusco",
+      "createdAt": "2025-02-15",
+      "createdBy": "P-n4XLk",
+      "imageUrl": "project-image3.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "pyXfjIq",
+      "name": "a",
+      "description": "a",
+      "status": "IN_PROGRESS",
+      "startDate": "2026-05-13T05:00:00.000Z",
+      "endDate": "2026-05-26T05:00:00.000Z",
+      "location": "xd",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image3.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "vEXQoL6",
+      "name": "aaaaa",
+      "description": "asd",
+      "status": "PLANNED",
+      "startDate": "2026-05-12T05:00:00.000Z",
+      "endDate": "2026-05-20T05:00:00.000Z",
+      "location": "asdasd",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image1.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "whceCRF",
+      "name": "aasdasdasd",
+      "description": "asdasd",
+      "status": "IN_PROGRESS",
+      "startDate": "2026-05-12T05:00:00.000Z",
+      "endDate": "2026-05-12T05:00:00.000Z",
+      "location": "asdasd",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image3.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "8IZsgo_",
+      "name": "aaaaaaaaaaaaaaaaaa",
+      "description": "aaaaaaaaaaaaaaaaaa",
+      "status": "PLANNED",
+      "startDate": "2026-05-20T05:00:00.000Z",
+      "endDate": "2026-05-31T05:00:00.000Z",
+      "location": "aaaaaaaaaaaaaaaaaaa",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image4.jpg",
+      "totalBudget": 850000
+    },
+    {
+      "id": "lluhwVv",
+      "name": "xdd....",
+      "description": ".....",
+      "status": "PLANNED",
+      "startDate": "2026-05-21T05:00:00.000Z",
+      "endDate": "2026-05-31T05:00:00.000Z",
+      "location": "....",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image1.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "YgMohp6",
+      "name": "aaaa21",
+      "description": "a",
+      "status": "PLANNED",
+      "startDate": "2026-05-27T05:00:00.000Z",
+      "endDate": "2026-05-25T05:00:00.000Z",
+      "location": "as",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image2.png",
+      "totalBudget": 850000
+    },
+    {
+      "id": "bINNav6",
+      "name": "asdasd",
+      "description": "a",
+      "status": "PLANNED",
+      "startDate": "2026-05-14T05:00:00.000Z",
+      "endDate": "2026-05-19T05:00:00.000Z",
+      "location": "sdasd",
+      "createdAt": "2026-05-11",
+      "createdBy": "current-user",
+      "imageUrl": "project-image5.png",
+      "totalBudget": 850000
     }
   ],
   "documents": [
@@ -801,7 +931,7 @@
       "physicalStatus": "a",
       "assignedTo": "Miguel Estrada",
       "registrationDate": "2026-04-15",
-      "maintenanceHours": "1",
+      "maintenanceHours": 1,
       "assignmentDetail": "Entregado a Carlos Mendoza para trabajos de corte de acero en Sótano 2."
     },
     {
@@ -823,23 +953,102 @@
       "registrationDate": "2026-02-20",
       "maintenanceHours": "80",
       "assignmentDetail": "Devuelto a almacén después de mantenimiento preventivo."
+    },
+    {
+      "id": "tool-004",
+      "name": "Compactadora tipo Plancha",
+      "status": "AVAILABLE",
+      "physicalStatus": "Operativo",
+      "assignedTo": "",
+      "registrationDate": "2025-11-10",
+      "maintenanceHours": "400",
+      "assignmentDetail": "Equipo en almacén listo para asignación."
+    },
+    {
+      "id": "tool-005",
+      "name": "Vibrador de Concreto 2",
+      "status": "URGENT_MAINTENANCE",
+      "physicalStatus": "Requiere reparación",
+      "assignedTo": "",
+      "registrationDate": "2025-08-15",
+      "maintenanceHours": "600",
+      "assignmentDetail": "Motor quemado. Pendiente de envio a servicio técnico."
+    },
+    {
+      "id": "tool-006",
+      "name": "Soldadora Eléctrica 250A",
+      "status": "IN_USE",
+      "physicalStatus": "Operativo",
+      "assignedTo": "70123456",
+      "registrationDate": "2026-01-05",
+      "maintenanceHours": "180",
+      "assignmentDetail": "En uso para habilitación de acero en taller de Piso 1."
+    },
+    {
+      "id": "tool-007",
+      "name": "Nivel Láser Rotativo",
+      "status": "AVAILABLE",
+      "physicalStatus": "Operativo",
+      "assignedTo": "",
+      "registrationDate": "2026-04-01",
+      "maintenanceHours": "30",
+      "assignmentDetail": "Calibrado y listo para topografía en Piso 4."
+    },
+    {
+      "id": "d0rrFHf",
+      "name": "a",
+      "status": "URGENT_MAINTENANCE",
+      "physicalStatus": "a",
+      "assignedTo": "",
+      "registrationDate": "",
+      "maintenanceHours": "aaaaaaa",
+      "assignmentDetail": "aaaa esotilin"
+    },
+    {
+      "id": "f6kZVqO",
+      "name": "a",
+      "status": "AVAILABLE",
+      "physicalStatus": "",
+      "assignedTo": "54343234 - Pedro Castro",
+      "registrationDate": "",
+      "maintenanceHours": "",
+      "assignmentDetail": ""
+    },
+    {
+      "id": "o64cimr",
+      "name": "a",
+      "status": "AVAILABLE",
+      "physicalStatus": "",
+      "assignedTo": "12345678 - Miguel Estrada",
+      "registrationDate": "",
+      "maintenanceHours": "",
+      "assignmentDetail": "a"
+    },
+    {
+      "id": "PxmhJO_",
+      "name": "aaaaaa",
+      "status": "AVAILABLE",
+      "physicalStatus": "",
+      "assignedTo": "54343234 - Pedro Castro",
+      "registrationDate": "",
+      "maintenanceHours": "",
+      "assignmentDetail": "uwu"
+    },
+    {
+      "id": "WDgas0d",
+      "name": "esoMaquinin",
+      "status": "AVAILABLE",
+      "physicalStatus": "",
+      "assignedTo": "54343234 - Pedro Castro",
+      "registrationDate": "",
+      "maintenanceHours": "",
+      "assignmentDetail": "a"
     }
   ],
   "concreteCuring": [
     {
-      "id": "1",
-      "projectId": "",
-      "sensorId": "S-TMP-01",
-      "state": 1,
-      "location": "Floor Level 3",
-      "temperature": 34.5,
-      "humidity": 58,
-      "limit": 35,
-      "unit": "C"
-    },
-    {
       "id": "2",
-      "projectId": "",
+      "projectId": "proj-01",
       "sensorId": "S-TMP-02",
       "state": 1,
       "location": "Columns B Sec.",
@@ -852,7 +1061,7 @@
   "geolocalization": [
     {
       "id": "1",
-      "projectId": "",
+      "projectId": "proj-01",
       "sensorId": "S-GEO-01",
       "name": "Full Station #1",
       "state": 0,
@@ -861,7 +1070,7 @@
     },
     {
       "id": "2",
-      "projectId": "",
+      "projectId": "proj-01",
       "sensorId": "S-GEO-02",
       "name": "Concrete Vibrator #2",
       "state": 1,
@@ -872,7 +1081,7 @@
   "hopperWatch": [
     {
       "id": "1",
-      "projectId": "",
+      "projectId": "proj-01",
       "sensorId": "SM-088",
       "name": "Fine Sand",
       "unit": "%",
@@ -881,8 +1090,8 @@
       "limit": 15
     },
     {
-      "id": "2",
-      "projectId": "",
+      "id": 2,
+      "projectId": "proj-01",
       "sensorId": "SM-082",
       "name": "Crushed Stone",
       "unit": "%",
@@ -894,36 +1103,25 @@
   "seismicControl": [
     {
       "id": "1",
-      "projectId": "",
+      "projectId": "proj-01",
       "sensorId": "S-VIB-02",
       "location": "South Wall",
       "unit": "mm/s",
       "state": 2,
       "lastLecture": 7.2,
       "limit": 5,
-      "timeLecture": "16-04-2026 10:30"
+      "timeLecture": "16/04/2026 10:30"
     },
     {
       "id": "2",
-      "projectId": "",
+      "projectId": "proj-01",
       "sensorId": "S-VIB-01",
       "location": "North Excavation",
       "unit": "mm/s",
       "state": 1,
       "lastLecture": 2.4,
       "limit": 5,
-      "timeLecture": "16-04-2026 10:30"
-    },
-    {
-      "id": "33beo3f",
-      "projectId": "",
-      "sensorId": "S-VIB-03",
-      "unit": "mm/s",
-      "lastLecture": 9,
-      "limit": 6,
-      "location": "House",
-      "timeLecture": "12/5/2026, 5:51:05 p. m.",
-      "state": 2
+      "timeLecture": "16/04/2026 10:30"
     }
   ],
   "field": [],
@@ -1027,5 +1225,48 @@
       "id": "us-1778218020628"
     }
   ],
-  "progress": []
+  "progress": [
+    {
+      "id": 1895,
+      "projectId": "proj-02",
+      "projectName": "Residencial San Miguel",
+      "activityName": "Techado",
+      "details": "Piso 1",
+      "specialty": "Estructuras",
+      "status": "Active",
+      "currentPercentage": 67,
+      "startDate": "2026-05-12T20:59:04.837Z",
+      "endDate": "2026-05-12T20:59:04.837Z",
+      "lastUpdate": "2026-05-12T00:00:00.000Z",
+      "responsible": "Manuel Francia",
+      "workers": 67,
+      "weather": "sunny"
+    }
+  ],
+  "budgets": [
+    {
+      "id": 27466,
+      "projectId": "proj-02",
+      "progressId": 1895,
+      "code": "01.XX",
+      "name": "Techado",
+      "description": "Piso 1",
+      "budgeted": 100000,
+      "executed": 1000,
+      "available": 99000,
+      "progress": 1,
+      "status": "normal",
+      "alert": null,
+      "expenseHistory": [
+        {
+          "itemId": "1895",
+          "concept": "Ladrillos",
+          "amount": 1000,
+          "responsible": "Asuna Yuuki - Residente de Obra",
+          "description": null,
+          "date": "2026-05-12T20:59:59.631Z"
+        }
+      ]
+    }
+  ]
 }

@@ -17,7 +17,7 @@
           <span class="value" [ngClass]="getSensorStatusClass(sensor.temperature, sensor.limit)">
             {{ sensor.temperature }}{{ sensor.unit }}
           </span>
-            <span class="label">TEMPERATURE</span>
+            <span class="label">{{ 'iot-monitoring.temperature' | translate }}</span>
           </div>
 
           <div class="vertical-divider"></div>
@@ -26,7 +26,7 @@
           <span class="value">
             {{ sensor.humidity }}%
           </span>
-            <span class="label">HUMIDITY</span>
+            <span class="label">{{ 'iot-monitoring.humidity' | translate }}</span>
           </div>
         </mat-card-content>
 
@@ -34,15 +34,15 @@
 
         <mat-card-footer class="card-footer">
           <div class="alert-info">
-            <span class="alert-label">WARNING BREAKPOINT</span>
+            <span class="alert-label">{{ 'iot-monitoring.warningbreakpoint' | translate }}</span>
             <span class="alert-value">{{ sensor.limit }}{{ sensor.unit }}</span>
           </div>
           <button mat-flat-button class="config-btn">
-            CONFIGURE
+            {{ 'iot-monitoring.configure' | translate }}
           </button>
           <div class="actions">
             <button mat-stroked-button color="warn" class="delete-btn" (click)="onDelete(sensor.id)">
-              <mat-icon>delete</mat-icon> DELETE
+              <mat-icon>delete</mat-icon> {{ 'iot-monitoring.delete' | translate }}
             </button>
           </div>
         </mat-card-footer>
@@ -53,23 +53,23 @@
 
   <aside class="summary-panel">
     <mat-card class="summary-card">
-      <h3>MODULE'S RESUME</h3>
+      <h3>{{ 'iot-monitoring.moduleresume' | translate }}</h3>
 
       <button mat-flat-button color="primary" class="create-btn" (click)="openAddDialog()">
-        <mat-icon>add</mat-icon> NEW CONCRETE SENSOR
+        <mat-icon>add</mat-icon> {{ 'iot-monitoring.newconcretesensor' | translate }}
       </button>
 
       <div class="stat-block">
         <span class="stat-number dark">{{ getOnlineZones() }}</span>
-        <span class="stat-label">ACTIVE SENSORS</span>
+        <span class="stat-label">{{ 'iot-monitoring.activesensors' | translate }}</span>
       </div>
 
       <hr class="divider">
 
       <div class="filters">
-        <p class="filters-title">QUICK FILTERS</p>
-        <button class="filter-btn active">ALL THE SENSORS</button>
-        <button class="filter-btn outline">JUST IN WARNING STATE</button>
+        <p class="filters-title">{{ 'iot-monitoring.quickfilters' | translate }}</p>
+        <button class="filter-btn active">{{ 'iot-monitoring.allthesensors' | translate }}</button>
+        <button class="filter-btn outline">{{ 'iot-monitoring.justinofflinestate' | translate }}</button>
       </div>
     </mat-card>
   </aside>

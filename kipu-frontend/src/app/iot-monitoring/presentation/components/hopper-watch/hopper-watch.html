@@ -5,7 +5,7 @@
       @for (sensor of hopperSensors(); track sensor.id) {
         <mat-card class="hopper-card" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
           <mat-card-header>
-            <span class="sensor-name">HOPPER: {{ sensor.name }}</span>
+            <span class="sensor-name">{{ 'iot-monitoring.hopper' | translate }} {{ sensor.name }}</span>
             <span class="sensor-state" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
               {{ sensor.state }}
         </span>
@@ -23,16 +23,16 @@
           </mat-card-content>
           <mat-card-footer [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
             @if (getSensorStatusClass(sensor.lastLecture, sensor.limit) === 'status-danger') {
-              <strong>TICKET #{{ sensor.id }} GENERATED</strong>
-              <span class="subtext">The system sent a request for dropping below {{sensor.limit}}%.</span>
+              <strong>{{ 'iot-monitoring.ticket' | translate }} #{{ sensor.id }} {{ 'iot-monitoring.generated' | translate }}</strong>
+              <span class="subtext">{{ 'iot-monitoring.systemdropped' | translate }} {{sensor.limit}}%.</span>
             } @else if (getSensorStatusClass(sensor.lastLecture, sensor.limit) === 'status-warning') {
-              <span class="subtext">The system suggest sending a request for dropping near {{sensor.limit}}%.</span>
+              <span class="subtext">{{ 'iot-monitoring.systemsend' | translate }} {{sensor.limit}}%.</span>
             } @else {
-              <span class="ok-text">ADEQUATE LEVELS</span>
+              <span class="ok-text">{{ 'iot-monitoring.adequatelevels' | translate }}</span>
             }
             <div class="actions">
               <button mat-stroked-button color="warn" class="delete-btn" (click)="onDelete(sensor)">
-                <mat-icon>delete</mat-icon> DELETE
+                <mat-icon>delete</mat-icon> {{ 'iot-monitoring.delete' | translate }}
               </button>
             </div>
           </mat-card-footer>
@@ -43,10 +43,10 @@
 
   <aside class="tickets-panel">
     <mat-card class="tickets-container-card">
-      <h3>Replenishment Tickets</h3>
+      <h3>{{ 'iot-monitoring.replenishmenttickets' | translate }}</h3>
 
       <button mat-flat-button color="primary" class="create-btn" (click)="openAddDialog()">
-        <mat-icon>add</mat-icon> NEW HOPPER
+        <mat-icon>add</mat-icon> {{ 'iot-monitoring.newhopper' | translate }}
       </button>
 
       <div class="tickets-list">

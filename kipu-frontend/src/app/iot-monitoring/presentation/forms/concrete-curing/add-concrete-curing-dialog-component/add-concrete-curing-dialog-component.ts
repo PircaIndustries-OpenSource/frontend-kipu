@@ -12,6 +12,7 @@ import {
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-add-concrete-curing-dialog-component',
@@ -27,6 +28,7 @@ import { MatSelect } from '@angular/material/select';
     MatLabel,
     MatOption,
     MatSelect,
+    TranslatePipe,
   ],
   templateUrl: './add-concrete-curing-dialog-component.html',
   styleUrl: './add-concrete-curing-dialog-component.css',
