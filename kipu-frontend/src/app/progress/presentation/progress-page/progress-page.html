@@ -145,7 +145,16 @@
           </div>
           <div class="flex flex-col gap-1">
             <label class="text-xs font-bold text-gray-400 uppercase">{{ 'progress.form.responsible' | translate }}</label>
-            <input type="text" formControlName="responsible" class="bg-gray-50 border border-gray-200 p-3 rounded-lg outline-none">
+
+            <select
+              formControlName="responsible"
+              class="bg-gray-50 border border-gray-200 p-3 rounded-lg outline-none"
+            >
+              <option value="" disabled selected>Seleccione un Gestor</option>
+              @for (name of gestoresOptions(); track name) {
+                <option [value]="name">{{ name }}</option>
+              }
+            </select>
           </div>
           <div class="flex flex-col gap-1">
             <label class="text-xs font-bold text-gray-400 uppercase">{{ 'progress.form.workers' | translate }}</label>

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, signal, TemplateRef, ViewChild, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,6 +14,8 @@ import { ProgressStore } from '../../application/progress.store';
 import { AutocompleteFilterList } from '../../../shared/presentation/autocomplete-filter-list/autocomplete-filter-list';
 import { ProjectProgress } from '../../domain/progress.entity';
 import { ProjectsStore } from '../../../projects/application/projects.store';
+import { TeamUsersStore } from '../../../team/team-users/application/team-users.store'; //
+import { TeamUsersEntity } from '../../../team/team-users/domain/model/team-users.entity'; //
 
 @Component({
   selector: 'app-progress-page',
@@ -37,6 +39,7 @@ import { ProjectsStore } from '../../../projects/application/projects.store';
 export class ProgressPage implements OnInit {
   readonly store = inject(ProgressStore);
   private readonly projectsStore = inject(ProjectsStore);
+  private readonly teamUsersStore = inject(TeamUsersStore);
   readonly dialog = inject(MatDialog);
   private readonly fb = inject(FormBuilder);
 
@@ -44,12 +47,30 @@ export class ProgressPage implements OnInit {
   readonly selectedWeather = signal<string>('sunny');
   progressForm: FormGroup;
 
+  readonly gestoresOptions = computed(() =>
+    this.teamUsersStore
+      .teamUsers()
+      .filter((user: TeamUsersEntity) => user.role === 'Gestor' || user.role === 'Gestor Operativo')
+      .map((user: TeamUsersEntity) => user.fullName),
+  );
   readonly specialtiesOptions = ['Estructuras', 'Instalaciones', 'Arquitectura'];
   readonly activityOptions = ['Vaciado de Losa N3', 'Instalación Eléctrica', 'Acabado de Muros'];
   protected readonly mockPhotos = [
-    { title: 'Excavaciones', date: '11/05/2026', url: 'https://loremflickr.com/600/400/excavator,construction?lock=1' },
-    { title: 'Cimentación', date: '12/05/2026', url: 'https://loremflickr.com/600/400/foundation,construction?lock=2' },
-    { title: 'Armado de Columnas', date: '13/05/2026', url: 'https://loremflickr.com/600/400/rebar,construction?lock=3' }
+    {
+      title: 'Excavaciones',
+      date: '11/05/2026',
+      url: 'https://loremflickr.com/600/400/excavator,construction?lock=1',
+    },
+    {
+      title: 'Cimentación',
+      date: '12/05/2026',
+      url: 'https://loremflickr.com/600/400/foundation,construction?lock=2',
+    },
+    {
+      title: 'Armado de Columnas',
+      date: '13/05/2026',
+      url: 'https://loremflickr.com/600/400/rebar,construction?lock=3',
+    },
   ];
 
   @ViewChild('confirmDialogTemplate') confirmDialogTemplate!: TemplateRef<unknown>;
@@ -69,6 +90,7 @@ export class ProgressPage implements OnInit {
   }
 
   ngOnInit(): void {
+    this.teamUsersStore.loadUsers();
     this.store.loadProgress();
   }
 

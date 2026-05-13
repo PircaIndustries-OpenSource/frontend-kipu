@@ -27,6 +27,13 @@
       "password": "12345678",
       "role": "Gestor Operativo",
       "id": "aXT7GBg"
+    },
+    {
+      "name": "123123123123",
+      "email": "12312312312312@gmail.com",
+      "password": "123124124312",
+      "role": "Gestor Operativo",
+      "id": "ljoK96D"
     }
   ],
   "projects": [

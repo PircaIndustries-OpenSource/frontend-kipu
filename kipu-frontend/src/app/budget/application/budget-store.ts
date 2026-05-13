@@ -5,6 +5,8 @@ import { BudgetApi } from '../infrastructure/budget-api';
 import { BudgetAssembler } from '../infrastructure/budget-assembler';
 import { ProgressStore } from '../../progress/application/progress.store';
 import { ProjectProgress } from '../../progress/domain/progress.entity';
+import { TeamUsersStore } from '../../team/team-users/application/team-users.store';
+import { TeamUsersEntity } from '../../team/team-users/domain/model/team-users.entity';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +16,7 @@ export class BudgetStore {
   private readonly budgetApi = inject(BudgetApi);
   private readonly projectsStore = inject(ProjectsStore);
   private readonly progressStore = inject(ProgressStore);
+  private readonly teamUsersStore = inject(TeamUsersStore);
 
   // State signals
   private readonly budgetItemsSignal = signal<BudgetItemEntity[]>([]);
@@ -21,12 +24,12 @@ export class BudgetStore {
   readonly selectedItem = signal<BudgetItemEntity | null>(null);
 
   // Authorized personnel list
-  readonly authorizedPersonnel = signal<string[]>([
-    'Juan Pérez - Gestor Operativo',
-    'Asuna Yuuki - Residente de Obra',
-    'Kirito G. - Jefe de Cuadrilla',
-    'Carlos Ruiz - Operario Maestro',
-  ]);
+  readonly authorizedPersonnel = computed(() =>
+    this.teamUsersStore
+      .teamUsers()
+      .filter((user: TeamUsersEntity) => user.role === 'Logistica')
+      .map((user: TeamUsersEntity) => `${user.fullName} - ${user.role}`),
+  );
 
   /**
    * Reactive list that merges real budget items with progress entries.
