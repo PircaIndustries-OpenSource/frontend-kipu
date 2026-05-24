@@ -8,11 +8,13 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "mock": "json-server --config mock/json-server.json mock/kipu-db.json",
-    "start:dev": "ng serve"
+    "start:dev": "ng serve",
+    "deploy": "npm run build && npx firebase deploy"
   },
   "private": true,
   "packageManager": "npm@11.12.1",
   "dependencies": {
+    "@abacritt/angularx-social-login": "^2.6.0",
     "@angular/cdk": "^21.2.9",
     "@angular/common": "^21.2.0",
     "@angular/compiler": "^21.2.0",
@@ -21,6 +23,8 @@
     "@angular/material": "^21.2.9",
     "@angular/platform-browser": "^21.2.0",
     "@angular/router": "^21.2.11",
+    "@azure/msal-angular": "^5.2.5",
+    "@azure/msal-browser": "^5.11.0",
     "@ngx-translate/core": "^17.0.0",
     "@ngx-translate/http-loader": "^17.0.0",
     "i18n": "^0.15.3",

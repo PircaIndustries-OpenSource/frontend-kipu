@@ -67,7 +67,11 @@
     "err_password_min": "Must be at least 8 characters.",
     "err_role_required": "You must select a role.",
     "err_password_mismatch": "Passwords do not match.",
-    "hint_checking_email": "Verifying availability..."
+    "hint_checking_email": "Verifying availability...",
+    "microsoft_sign_in": "Sign in with Microsoft",
+    "complete_register": "Complete your Registration",
+    "complete_register_desc_part1": "You are one step away from accessing with your ",
+    "complete_register_desc_part2": " account"
   },
   "iot-monitoring": {
     "ConcreteCuring": "Concrete Curing",

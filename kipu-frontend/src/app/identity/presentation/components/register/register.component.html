@@ -1,11 +1,22 @@
 <div class="min-h-screen bg-slate-800 flex items-center justify-center p-4">
   <div class="bg-white rounded-xl shadow-2xl flex flex-col md:flex-row w-full max-w-5xl overflow-hidden">
 
-    <app-auth-banner></app-auth-banner>
+    <app-auth-banner class="md:w-1/2 w-full flex flex-col"></app-auth-banner>
 
     <div class="md:w-1/2 p-12 bg-gray-50 flex flex-col justify-center">
+      @if (isOAuthRegister) {
+      <h2 class="text-3xl font-bold text-gray-800 mb-1">{{ 'identity.complete_register' | translate }}</h2>
+      <p class="text-gray-500 mb-8 text-sm">
+        {{ 'identity.complete_register_desc_part1' | translate }}
+        <span class="font-semibold">
+          {{ oauthUserMetadata?.provider | titlecase }}
+        </span>
+        {{ 'identity.complete_register_desc_part2' | translate }}
+      </p>
+      } @else {
       <h2 class="text-3xl font-bold text-gray-800 mb-1">{{ 'identity.register_title' | translate }}</h2>
       <p class="text-gray-500 mb-8 text-sm">{{ 'identity.register_description' | translate }}</p>
+      }
 
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-2">
 
@@ -35,6 +46,7 @@
           }
         </mat-form-field>
 
+        @if (!isOAuthRegister) {
         <mat-form-field appearance="outline" class="w-full">
           <mat-label>{{ 'identity.password' | translate }}</mat-label>
           <input matInput formControlName="password" type="password"
@@ -47,6 +59,7 @@
           <mat-error>{{ 'identity.err_password_min' | translate }}</mat-error>
           }
         </mat-form-field>
+        }
 
         <mat-form-field appearance="outline" class="w-full">
           <mat-label>{{ 'identity.role' | translate }}</mat-label>
@@ -68,20 +81,35 @@
           {{ 'identity.register_button' | translate }}
         </button>
 
+        @if (!isOAuthRegister) {
         <div class="flex items-center gap-4 my-6">
           <mat-divider class="flex-grow"></mat-divider>
           <span class="text-xs text-gray-400">{{ 'identity.continue' | translate }}</span>
           <mat-divider class="flex-grow"></mat-divider>
         </div>
 
-        <div class="flex gap-4">
-          <button mat-stroked-button type="button" class="w-1/2 !py-5">
-            <span class="font-bold mr-2 text-gray-700">G</span> Google
-          </button>
-          <button mat-stroked-button type="button" class="w-1/2 !py-5">
-            <span class="font-bold mr-2 text-gray-700">M</span> Microsoft
-          </button>
+        <div class="flex gap-4 items-center justify-center">
+          <div class="w-1/2 flex justify-end">
+            @if (currentLang === 'en') {
+            <asl-google-signin-button type="standard" size="large" locale="en"></asl-google-signin-button>
+            } @else {
+            <asl-google-signin-button type="standard" size="large" locale="es"></asl-google-signin-button>
+            }
+          </div>
+          <div class="w-1/2 flex justify-start">
+            <button type="button" (click)="onMicrosoftLogin()"
+              class="flex items-center justify-center gap-3 h-[40px] px-4 min-w-[220px] bg-white border border-[#dadce0] rounded-[4px] text-[14px] font-medium text-[#3c4043] hover:bg-gray-50 transition-colors shadow-sm cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 21 21">
+                <path fill="#f25022" d="M1 1h9v9H1z" />
+                <path fill="#00a4ef" d="M1 11h9v9H1z" />
+                <path fill="#7fba00" d="M11 1h9v9h-9z" />
+                <path fill="#ffb900" d="M11 11h9v9h-9z" />
+              </svg>
+              <span>{{ 'identity.microsoft_sign_in' | translate }}</span>
+            </button>
+          </div>
         </div>
+        }
 
         <p class="text-center text-xs text-gray-500 mt-6">
           {{ 'identity.has_account' | translate }} <a href="/login" class="text-blue-500 hover:underline">{{

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 import { map, Observable } from 'rxjs';
 import { TeamWorkersEntity } from '../domain/model/team-workers.entity';
 import { TeamWorkersResponse } from './team-workers.response';
