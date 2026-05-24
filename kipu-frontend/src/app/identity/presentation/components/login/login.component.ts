@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -11,6 +11,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { AuthBannerComponent } from '../../../../shared/presentation/components/auth-banner/auth-banner.component';
 import { AuthStore } from '../../../application/auth.store';
+import { OAuthService } from '../../../infrastructure/oauth.service';
+import { GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +28,8 @@ import { AuthStore } from '../../../application/auth.store';
     MatCheckboxModule,
     MatDividerModule,
     AuthBannerComponent,
-    TranslateModule
+    TranslateModule,
+    GoogleSigninButtonModule
   ],
   templateUrl: './login.component.html',
 })
@@ -35,8 +39,19 @@ export class LoginComponent {
   private fb = inject(FormBuilder);
   private identityService = inject(IdentityService);
   private router = inject(Router);
+  private oauthService = inject(OAuthService);
+  private translate = inject(TranslateService);
+  private cdr = inject(ChangeDetectorRef);
+
+  get currentLang(): string {
+    return this.translate.currentLang || this.translate.defaultLang || 'es';
+  }
 
   constructor() {
+    this.translate.onLangChange.subscribe(() => {
+      this.cdr.detectChanges();
+    });
+
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -57,5 +72,13 @@ export class LoginComponent {
         },
       });
     }
+  }
+
+  onGoogleLogin() {
+    this.oauthService.loginWithGoogle();
+  }
+
+  onMicrosoftLogin() {
+    this.oauthService.loginWithMicrosoft();
   }
 }

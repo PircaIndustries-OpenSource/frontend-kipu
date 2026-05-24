@@ -6,6 +6,7 @@ import { LoginComponent } from './identity/presentation/components/login/login.c
 import { TeamPage } from './team/presentation/team-page/team-page';
 import { IotMonitoringDashboard } from './iot-monitoring/presentation/dashboard/iot-monitoring-dashboard/iot-monitoring-dashboard';
 import { projectSelectedGuard } from './projects/application/guards/project-selected.guard';
+import { authGuard } from './identity/application/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -45,6 +46,7 @@ export const routes: Routes = [
   {
     path: '',
     component: Layout,
+    canActivate: [authGuard],
     children: [
       {
         path: 'projects',

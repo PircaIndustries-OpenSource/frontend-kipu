@@ -20,6 +20,15 @@ export class IdentityService {
   }
 
   /**
+   * Fetch an existing user by email.
+   */
+  getIdentityByEmail(email: string): Observable<Identity | null> {
+    return this.http
+      .get<Identity[]>(`${this.apiUrl}?email=${email}`)
+      .pipe(map((users) => (users.length > 0 ? users[0] : null)));
+  }
+
+  /**
    * Register a new user.
    */
   registerData(data: Identity): Observable<Identity> {
