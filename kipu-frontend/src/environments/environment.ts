@@ -1,5 +1,7 @@
 export const environment = {
   production: true,
+  googleClientId: '120661807938-2evmi1g6q6n0i5ssfe23tbl8dd00mhau.apps.googleusercontent.com',
+  microsoftClientId: '5a443317-5785-48ef-827d-012ab62f8319',
   kipuApiHost: 'https://kipu-mock-api.onrender.com',
   kipuApiBaseUrl: 'https://kipu-mock-api.onrender.com/api/v1',
   kipuApiInventoryMaterialsEndpointPath: '/materials/inventory',

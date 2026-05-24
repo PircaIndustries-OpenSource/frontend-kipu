@@ -1,28 +1,44 @@
-<section class="bg-slate-700 md:w-1/2 p-12 flex flex-col justify-center text-white">
-  <h1 class="text-4xl font-bold mb-2">Kipu</h1>
-  <p class="text-slate-300 mb-10 text-lg">Sistema de Gestión de Obras</p>
+<div class="bg-slate-700 h-full p-12 flex flex-col justify-center text-white relative">
+  <div class="absolute top-6 right-6 flex gap-3 items-center bg-slate-800/50 rounded-full px-4 py-2 backdrop-blur-sm">
+    <button (click)="changeLang('es')" [class.text-white]="currentLang === 'es'"
+      [class.font-bold]="currentLang === 'es'"
+      class="text-xs text-slate-400 hover:text-white transition-colors uppercase tracking-wider">
+      ES
+    </button>
+    <span class="text-slate-500 text-xs select-none">|</span>
+    <button (click)="changeLang('en')" [class.text-white]="currentLang === 'en'"
+      [class.font-bold]="currentLang === 'en'"
+      class="text-xs text-slate-400 hover:text-white transition-colors uppercase tracking-wider">
+      EN
+    </button>
+  </div>
 
-  <div class="space-y-6">
-    <div class="flex items-start gap-4">
-      <div class="text-2xl">📊</div>
-      <div>
-        <h3 class="font-semibold text-white">Control Total</h3>
-        <p class="text-slate-300 text-sm">Gestiona tus proyectos de construcción desde cualquier lugar</p>
+  <div class="mt-8">
+    <h1 class="text-4xl font-bold mb-2">Kipu</h1>
+    <p class="text-slate-300 mb-10 text-lg">{{ 'identity.banner_system_desc' | translate }}</p>
+
+    <div class="space-y-6">
+      <div class="flex items-start gap-4">
+        <div class="text-2xl">📊</div>
+        <div>
+          <h3 class="font-semibold text-white">{{ 'identity.banner_control_title' | translate }}</h3>
+          <p class="text-slate-300 text-sm">{{ 'identity.banner_control_desc' | translate }}</p>
+        </div>
       </div>
-    </div>
-    <div class="flex items-start gap-4">
-      <div class="text-2xl">📱</div>
-      <div>
-        <h3 class="font-semibold text-white">Multiplataforma</h3>
-        <p class="text-slate-300 text-sm">Accede desde web o móvil, sincronizado en tiempo real</p>
+      <div class="flex items-start gap-4">
+        <div class="text-2xl">📱</div>
+        <div>
+          <h3 class="font-semibold text-white">{{ 'identity.banner_platform_title' | translate }}</h3>
+          <p class="text-slate-300 text-sm">{{ 'identity.banner_platform_desc' | translate }}</p>
+        </div>
       </div>
-    </div>
-    <div class="flex items-start gap-4">
-      <div class="text-2xl">✅</div>
-      <div>
-        <h3 class="font-semibold text-white">Seguimiento Continuo</h3>
-        <p class="text-slate-300 text-sm">Registra avances, materiales, RNC y más</p>
+      <div class="flex items-start gap-4">
+        <div class="text-2xl">✅</div>
+        <div>
+          <h3 class="font-semibold text-white">{{ 'identity.banner_tracking_title' | translate }}</h3>
+          <p class="text-slate-300 text-sm">{{ 'identity.banner_tracking_desc' | translate }}</p>
+        </div>
       </div>
     </div>
   </div>
-</section>
+</div>

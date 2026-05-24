@@ -67,7 +67,11 @@
     "err_password_min": "Debe tener al menos 8 caracteres.",
     "err_role_required": "Debes seleccionar un rol.",
     "err_password_mismatch": "Las contraseñas no coinciden.",
-    "hint_checking_email": "Verificando disponibilidad..."
+    "hint_checking_email": "Verificando disponibilidad...",
+    "microsoft_sign_in": "Inicia sesión con Microsoft",
+    "complete_register": "Completa tu registro",
+    "complete_register_desc_part1": "Estás a un paso de acceder con tu cuenta de ",
+    "complete_register_desc_part2": ""
   },
   "iot-monitoring": {
     "ConcreteCuring": "Curado de Concreto",

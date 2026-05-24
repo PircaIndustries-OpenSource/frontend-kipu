@@ -1,5 +1,7 @@
 export const environment = {
   production: false,
+  googleClientId: '120661807938-2evmi1g6q6n0i5ssfe23tbl8dd00mhau.apps.googleusercontent.com',
+  microsoftClientId: '5a443317-5785-48ef-827d-012ab62f8319',
   kipuApiBaseUrl: '/api/v1',
   kipuApiHost: 'http://localhost:3000',
   kipuApiInventoryMaterialsEndpointPath: '/materials/inventory',
