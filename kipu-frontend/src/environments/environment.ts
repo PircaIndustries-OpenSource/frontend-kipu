@@ -17,9 +17,9 @@ export const environment = {
   kipuApiDocumentsEndpointPath: '/documents',
   kipuApiIoTMonitoringEndpointPath: '/iot-monitoring',
   kipuApiSupplierOfferEndPath: '/materials/supplierOffer',
-  kipuApiConcreteCuringEndpointPath: '/concrete-curing',
+  kipuApiConcreteCuringEndpointPath: '/concreteCuring',
   kipuApiGeolocalizationEndpointPath: '/geolocalization',
-  kipuApiHopperWatchEndpointPath: '/hopper-watch',
-  kipuApiSeismicControlEndpointPath: '/seismic-control',
+  kipuApiHopperWatchEndpointPath: '/hopperWatch',
+  kipuApiSeismicControlEndpointPath: '/seismicControl',
   kipuApiProjectsEndpointPath: '/projects',
 };
