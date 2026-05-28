@@ -26,6 +26,12 @@
   "/api/v1/concrete-curing": "/concreteCuring",
   "/api/v1/geolocalization": "/geolocalization",
   "/api/v1/seismic-control": "/seismicControl",
+  "/api/v1/iot-monitoring/hopperWatch": "/hopperWatch",
+  "/api/v1/iot-monitoring/concreteCuring": "/concreteCuring",
+  "/api/v1/iot-monitoring/seismicControl": "/seismicControl",
+  "/api/v1/hopperWatch": "/hopperWatch",
+  "/api/v1/concreteCuring": "/concreteCuring",
+  "/api/v1/seismicControl": "/seismicControl",
   "/api/v1/documents": "/documents",
   "/api/v1/*": "/$1"
 }
