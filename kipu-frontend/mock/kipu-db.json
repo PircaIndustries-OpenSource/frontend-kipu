@@ -34,6 +34,13 @@
       "password": "123124124312",
       "role": "Gestor Operativo",
       "id": "ljoK96D"
+    },
+    {
+      "name": "John Doe",
+      "email": "kipu3@hotmail.com",
+      "password": "kipu12345",
+      "role": "Gestor Operativo",
+      "id": "QV7q07J"
     }
   ],
   "projects": [
