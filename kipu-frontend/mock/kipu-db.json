@@ -34,6 +34,13 @@
       "password": "123124124312",
       "role": "Gestor Operativo",
       "id": "ljoK96D"
+    },
+    {
+      "name": "John Doe",
+      "email": "kipu3@hotmail.com",
+      "password": "kipu12345",
+      "role": "Gestor Operativo",
+      "id": "QV7q07J"
     }
   ],
   "projects": [
@@ -656,280 +663,8 @@
       "status": "ACTIVE"
     }
   ],
-  "materialsRequests": [
-    {
-      "id": "req-001",
-      "projectId": 1,
-      "requestDate": "2026-05-01",
-      "deadline": "2026-05-10",
-      "status": "PENDING",
-      "priority": "MEDIUM",
-      "deliveryLocation": "Sótano 2211xdd",
-      "budgetLineId": "PP-2026-05",
-      "purpose": "esotilin",
-      "additionalNotes": "aaasdasd",
-      "suggestedSupplierId": "sup-002",
-      "attachments": [],
-      "activity": "Muros y tabiques",
-      "requestedBy": "us-01",
-      "items": [
-        {
-          "supplierOfferId": "soff-003",
-          "quantity": 70,
-          "materialName": "Cemento Portland Tipo I",
-          "categoryName": "Aglomerantes",
-          "materialUnit": "bolsa",
-          "materialSubcategory": "Cementos",
-          "pricePerUnit": 28
-        }
-      ],
-      "quantity": 47
-    },
-    {
-      "id": "req-002",
-      "projectId": 1,
-      "requestDate": "2026-05-02",
-      "deadline": "2026-05-08",
-      "status": "REFUSED",
-      "priority": "LOW",
-      "deliveryLocation": "",
-      "budgetLineId": "PP-2026-05",
-      "purpose": "Reposición de stock crítico de acero para refuerzo de losas",
-      "additionalNotes": "Urgente, stock por debajo del mínimo.",
-      "suggestedSupplierId": "sup-001",
-      "attachments": [],
-      "activity": "Estructuras de concreto",
-      "requestedBy": "us-02",
-      "items": [
-        {
-          "supplierOfferId": "soff-001",
-          "quantity": 100
-        }
-      ],
-      "quantity": 100
-    },
-    {
-      "id": "req-003",
-      "projectId": 1,
-      "requestDate": "2026-05-03",
-      "deadline": "2026-05-15",
-      "status": "APPROVED",
-      "priority": "LOW",
-      "deliveryLocation": "Patio de Maderas",
-      "budgetLineId": "PP-2026-06",
-      "purpose": "Fabricación de encofrados para columnas y vigas del Piso 4",
-      "additionalNotes": "Se requiere triplay fenólico de 18mm en buen estado.",
-      "suggestedSupplierId": "sup-004",
-      "attachments": [],
-      "activity": "Encofrados",
-      "requestedBy": "us-03",
-      "items": [
-        {
-          "supplierOfferId": "soff-007",
-          "quantity": 30
-        },
-        {
-          "supplierOfferId": "soff-008",
-          "quantity": 80
-        }
-      ]
-    },
-    {
-      "id": "req-004",
-      "projectId": 1,
-      "requestDate": "2026-05-04",
-      "deadline": "2026-05-05",
-      "status": "APPROVED",
-      "priority": "LOW",
-      "deliveryLocation": "Piso 3 - Área de trabajo",
-      "budgetLineId": "PP-2026-05",
-      "purpose": "Compra urgente de EPP para nuevo personal ingresante",
-      "additionalNotes": "Se necesita antes del inicio de obra del lunes.",
-      "suggestedSupplierId": "sup-005",
-      "attachments": [],
-      "activity": "Seguridad y salud",
-      "requestedBy": "us-01",
-      "items": [
-        {
-          "supplierOfferId": "soff-010",
-          "quantity": 20
-        },
-        {
-          "supplierOfferId": "soff-011",
-          "quantity": 15
-        }
-      ]
-    },
-    {
-      "id": "req-005",
-      "projectId": 1,
-      "requestDate": "2026-05-05",
-      "deadline": "2026-05-20",
-      "status": "APPROVED",
-      "priority": "LOW",
-      "deliveryLocation": "Patio de Agregados",
-      "budgetLineId": "PP-2026-06",
-      "purpose": "Preparación de mezcla para vaciado de losa del Piso 5",
-      "additionalNotes": "Programar recepción con 24h de anticipación.",
-      "suggestedSupplierId": "sup-006",
-      "attachments": [],
-      "activity": "Vaciado de concreto",
-      "requestedBy": "us-02",
-      "items": [
-        {
-          "supplierOfferId": "soff-013",
-          "quantity": 20
-        },
-        {
-          "supplierOfferId": "soff-014",
-          "quantity": 35
-        },
-        {
-          "supplierOfferId": "soff-003",
-          "quantity": 80
-        }
-      ]
-    },
-    {
-      "id": "req-006",
-      "projectId": 1,
-      "requestDate": "2026-05-06",
-      "deadline": "2026-05-07",
-      "status": "PENDING",
-      "priority": "LOW",
-      "deliveryLocation": "Estante 4B",
-      "budgetLineId": "PP-2026-05",
-      "purpose": "Discos de corte para amoladora por desgaste severo",
-      "additionalNotes": "",
-      "suggestedSupplierId": "sup-005",
-      "attachments": [],
-      "activity": "Habilitación de acero",
-      "requestedBy": "us-03",
-      "items": [
-        {
-          "supplierOfferId": "soff-009",
-          "quantity": 25,
-          "materialName": "Disco de Corte 7",
-          "categoryName": "Consumibles y Varios",
-          "materialUnit": "und",
-          "materialSubcategory": "Abrasivos",
-          "pricePerUnit": 12.8
-        }
-      ]
-    },
-    {
-      "id": "req-007",
-      "projectId": 1,
-      "requestDate": "2026-05-06",
-      "deadline": "2026-05-18",
-      "status": "PENDING",
-      "priority": "LOW",
-      "deliveryLocation": "Almacén Principal",
-      "budgetLineId": "PP-2026-06",
-      "purpose": "Reposición de ladrillos y bloques para muros interiores",
-      "additionalNotes": "Solicitar muestra antes de entrega masiva.",
-      "suggestedSupplierId": "sup-003",
-      "attachments": [],
-      "activity": "Muros y tabiques",
-      "requestedBy": "us-01",
-      "items": [
-        {
-          "supplierOfferId": "soff-005",
-          "quantity": 2000
-        },
-        {
-          "supplierOfferId": "soff-006",
-          "quantity": 500
-        }
-      ]
-    }
-  ],
-  "materialsWaste": [
-    {
-      "id": "rmt-001",
-      "projectId": 1,
-      "materialId": "mat-001",
-      "quantity": 50,
-      "unit": "und",
-      "classificationType": "ROTURA",
-      "date": "2026-05-02",
-      "description": "Ladrillos rotos durante maniobra de descarga del camión en obra. Material inutilizable.",
-      "reportedBy": "40213390",
-      "photoUrl": ""
-    },
-    {
-      "id": "rmt-002",
-      "projectId": 1,
-      "materialId": "mat-002",
-      "quantity": 5,
-      "unit": "bolsa",
-      "classificationType": "VENCIMIENTO",
-      "date": "2026-05-03",
-      "description": "Cemento fraguado por humedad en almacén. Bolsas expuestas a filtraciones.",
-      "reportedBy": "40213390",
-      "photoUrl": ""
-    },
-    {
-      "id": "rmt-003",
-      "projectId": 1,
-      "materialId": "mat-004",
-      "quantity": 3,
-      "unit": "varilla",
-      "classificationType": "ROTURA",
-      "date": "2026-05-04",
-      "description": "Varillas de acero dobladas incorrectamente durante corte en taller.",
-      "reportedBy": "45678912",
-      "photoUrl": ""
-    },
-    {
-      "id": "rmt-004",
-      "projectId": 1,
-      "materialId": "mat-005",
-      "quantity": 2,
-      "unit": "plancha",
-      "classificationType": "DEFECTO",
-      "date": "2026-05-05",
-      "description": "Planchas de triplay con delaminación. No aptas para encofrado.",
-      "reportedBy": "45678912",
-      "photoUrl": ""
-    },
-    {
-      "id": "rmt-005",
-      "projectId": 1,
-      "materialId": "mat-013",
-      "quantity": 10,
-      "unit": "und",
-      "classificationType": "ROTURA",
-      "date": "2026-05-06",
-      "description": "Listones de madera partidos por sobrecarga en almacén temporal.",
-      "reportedBy": "70123456",
-      "photoUrl": ""
-    },
-    {
-      "id": "rmt-006",
-      "projectId": 1,
-      "materialId": "mat-007",
-      "quantity": 3,
-      "unit": "und",
-      "classificationType": "DEFECTO",
-      "date": "2026-05-07",
-      "description": "Cascos de seguridad con fisuras en la carcasa. Lote defectuoso.",
-      "reportedBy": "40213390",
-      "photoUrl": ""
-    },
-    {
-      "id": "rmt-007",
-      "projectId": 1,
-      "materialId": "mat-009",
-      "quantity": 2,
-      "unit": "m3",
-      "classificationType": "CONTAMINACION",
-      "date": "2026-05-07",
-      "description": "Piedra chancada contaminada con tierra durante traslado.",
-      "reportedBy": "70123456",
-      "photoUrl": ""
-    }
-  ],
+  "materialsRequests": [],
+  "materialsWaste": [],
   "materialsTools": [
     {
       "id": "tool-001",
@@ -1150,7 +885,9 @@
       "fullName": "Pedro Castro",
       "role": "Manejador",
       "status": "inactivo",
-      "assignedTools": ["Escuela"]
+      "assignedTools": [
+        "Escuela"
+      ]
     },
     {
       "id": "w-3",
@@ -1165,7 +902,10 @@
       "fullName": "Neo Ramos",
       "role": "Capataz",
       "status": "activo",
-      "assignedTools": ["Tolva", "Marañón"],
+      "assignedTools": [
+        "Tolva",
+        "Marañón"
+      ],
       "id": "w-1778261706149"
     }
   ],
