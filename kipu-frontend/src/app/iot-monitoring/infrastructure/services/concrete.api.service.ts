@@ -10,12 +10,14 @@ import { environment } from '../../../../environments/environment';
 export class ConcreteApiService {
   private httpClient = inject(HttpClient);
 
-  private apiUrl = environment.kipuApiBaseUrl + '/concreteCuring';
+  private apiUrl = environment.kipuApiBaseUrl;
+  private concreteEndpoint = environment.kipuApiConcreteCuringEndpointPath;
+  private concreteUrl = `${this.apiUrl}${this.concreteEndpoint}`;
 
   createConcreteSensor(sensor: ConcreteEntity): Observable<ConcreteEntity> {
     const body = ConcreteAssembler.toResourceFromEntity(sensor);
     return this.httpClient
-      .post<ConcreteResource>(`${this.apiUrl}`, body)
+      .post<ConcreteResource>(this.concreteUrl, body)
       .pipe(map((response) => ConcreteAssembler.toEntityFromResource(response)));
   }
 
@@ -23,17 +25,17 @@ export class ConcreteApiService {
     const body = ConcreteAssembler.toResourceFromEntity(sensor);
 
     return this.httpClient
-      .put<ConcreteResource>(`${this.apiUrl}/${sensor.id}`, body)
+      .put<ConcreteResource>(`${this.concreteUrl}/${sensor.id}`, body)
       .pipe(map((response) => ConcreteAssembler.toEntityFromResource(response)));
   }
 
   deleteConcreteSensor(id: string): Observable<void> {
-    return this.httpClient.delete<void>(`${this.apiUrl}/${id}`);
+    return this.httpClient.delete<void>(`${this.concreteUrl}/${id}`);
   }
 
   getAllConcreteSensors(): Observable<ConcreteEntity[]> {
     return this.httpClient
-      .get<ConcreteResponse>(`${this.apiUrl}`)
+      .get<ConcreteResponse>(this.concreteUrl)
       .pipe(map((response) => ConcreteAssembler.toEntitiesFromResponse(response)));
   }
 }
