@@ -18,10 +18,14 @@
   "/api/v1/team/workers": "/team-workers",
   "/api/v1/team": "/team",
   "/api/v1/iot-monitoring/*": "/$1",
-  "/api/v1/iot-monitoring/hopper-watch": "/hopper-watch",
-  "/api/v1/iot-monitoring/concrete-curing": "/concrete-curing",
+  "/api/v1/iot-monitoring/hopper-watch": "/hopperWatch",
+  "/api/v1/iot-monitoring/concrete-curing": "/concreteCuring",
   "/api/v1/iot-monitoring/geolocalization": "/geolocalization",
-  "/api/v1/iot-monitoring/seismic-control": "/seismic-control",
+  "/api/v1/iot-monitoring/seismic-control": "/seismicControl",
+  "/api/v1/hopper-watch": "/hopperWatch",
+  "/api/v1/concrete-curing": "/concreteCuring",
+  "/api/v1/geolocalization": "/geolocalization",
+  "/api/v1/seismic-control": "/seismicControl",
   "/api/v1/documents": "/documents",
   "/api/v1/*": "/$1"
 }
