@@ -10,11 +10,13 @@ import { environment } from '../../../../environments/environment';
 export class GeolocalizationApiService {
   private httpClient = inject(HttpClient);
 
-  private apiUrl = environment.kipuApiBaseUrl + '/geolocalization';
+  private apiUrl = environment.kipuApiBaseUrl;
+  private geoEndpoint = environment.kipuApiGeolocalizationEndpointPath;
+  private geoUrl = `${this.apiUrl}${this.geoEndpoint}`;
 
   getAllGeolocalizationPoints(): Observable<GeolocalizationEntity[]> {
     return this.httpClient
-      .get<GeolocalizationResponse>(`${this.apiUrl}`)
+      .get<GeolocalizationResponse>(this.geoUrl)
       .pipe(map((response) => GeolocalizationAssembler.toEntitiesFromResponse(response)));
   }
 }

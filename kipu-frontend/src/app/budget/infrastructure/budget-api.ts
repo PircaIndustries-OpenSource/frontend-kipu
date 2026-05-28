@@ -8,7 +8,7 @@ import { BudgetResponse } from './budget-response';
 })
 export class BudgetApi {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:3000/api/v1/budgets';
+  private readonly apiUrl = '/api/v1/budgets';
 
   /**
    * Fetches all budget items from the server

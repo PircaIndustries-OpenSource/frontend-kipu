@@ -29,6 +29,6 @@ export class ProgressApi {
   };
 
   createProgress(data: ProjectProgress): Observable<ProjectProgress> {
-    return this.http.post<ProjectProgress>('http://localhost:3000/api/v1/progress', data);
+    return this.http.post<ProjectProgress>(this.basePath, data);
   };
 }

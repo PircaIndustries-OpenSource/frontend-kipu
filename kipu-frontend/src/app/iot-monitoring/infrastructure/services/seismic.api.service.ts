@@ -10,12 +10,14 @@ import { environment } from '../../../../environments/environment';
 export class SeismicApiService {
   private httpClient = inject(HttpClient);
 
-  private apiUrl = environment.kipuApiBaseUrl + '/seismicControl';
+  private apiUrl = environment.kipuApiBaseUrl;
+  private seismicEndpoint = environment.kipuApiSeismicControlEndpointPath;
+  private seismicUrl = `${this.apiUrl}${this.seismicEndpoint}`;
 
   createSeismicSensor(sensor: SeismicEntity): Observable<SeismicEntity> {
     const body = SeismicAssembler.toResourceFromEntity(sensor);
     return this.httpClient
-      .post<SeismicResource>(`${this.apiUrl}`, body)
+      .post<SeismicResource>(this.seismicUrl, body)
       .pipe(map((response) => SeismicAssembler.toEntityFromResource(response)));
   }
 
@@ -23,17 +25,17 @@ export class SeismicApiService {
     const body = SeismicAssembler.toResourceFromEntity(sensor);
 
     return this.httpClient
-      .put<SeismicResource>(`${this.apiUrl}/${sensor.id}`, body)
+      .put<SeismicResource>(`${this.seismicUrl}/${sensor.id}`, body)
       .pipe(map((response) => SeismicAssembler.toEntityFromResource(response)));
   }
 
   deleteSeismicSensor(id: string): Observable<void> {
-    return this.httpClient.delete<void>(`${this.apiUrl}/${id}`);
+    return this.httpClient.delete<void>(`${this.seismicUrl}/${id}`);
   }
 
   getAllSeismicSensors(): Observable<SeismicEntity[]> {
     return this.httpClient
-      .get<SeismicResponse>(`${this.apiUrl}`)
+      .get<SeismicResponse>(this.seismicUrl)
       .pipe(map((response) => SeismicAssembler.toEntitiesFromResponse(response)));
   }
 }
