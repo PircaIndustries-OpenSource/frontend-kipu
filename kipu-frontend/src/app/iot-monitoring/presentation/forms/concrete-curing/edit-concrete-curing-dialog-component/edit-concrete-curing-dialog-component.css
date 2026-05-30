@@ -11,7 +11,7 @@
 }
 
 .title-icon {
-  color: #3182ce;
+  color: #805ad5; /* Violeta para diferenciar del "Agregar" azul */
   font-size: 1.75rem;
   width: 1.75rem;
   height: 1.75rem;
@@ -19,14 +19,45 @@
 
 .dialog-content {
   padding: 1.5rem !important;
-  min-width: 32rem; /* Permite doble columna cómoda */
+  min-width: 30rem;
   max-width: 100%;
 }
 
 .form-instruction {
   font-size: 0.875rem;
   color: #718096;
+  margin-bottom: 1rem;
+}
+
+/* Badge informativo del sensor en edición */
+.sensor-info-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+  border: 1px solid rgba(128, 90, 213, 0.2);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
   margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #553c9a;
+}
+
+.sensor-info-badge mat-icon {
+  font-size: 1.1rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  color: #805ad5;
+}
+
+.separator {
+  opacity: 0.4;
+}
+
+.location-text {
+  color: #805ad5;
+  font-weight: 500;
 }
 
 /* Grid del Formulario */
@@ -62,7 +93,7 @@
 
 ::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-text-field-wrapper {
   background-color: #ffffff !important;
-  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15) !important;
+  box-shadow: 0 0 0 3px rgba(128, 90, 213, 0.15) !important;
 }
 
 /* Acciones / Botones */
@@ -87,15 +118,18 @@
   border-radius: 1.25rem !important;
   padding: 0 1.75rem !important;
   font-weight: 600 !important;
-  background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%) !important;
+  background: linear-gradient(135deg, #805ad5 0%, #6b46c1 100%) !important;
   color: white !important;
-  box-shadow: 0 4px 12px rgba(49, 130, 206, 0.2) !important;
+  box-shadow: 0 4px 12px rgba(128, 90, 213, 0.25) !important;
   transition: all 0.2s ease !important;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 .save-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(49, 130, 206, 0.3) !important;
+  box-shadow: 0 6px 16px rgba(128, 90, 213, 0.35) !important;
 }
 
 .save-btn:active {

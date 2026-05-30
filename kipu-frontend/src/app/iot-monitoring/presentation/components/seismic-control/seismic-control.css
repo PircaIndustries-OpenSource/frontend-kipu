@@ -1,119 +1,288 @@
+/* =============================================
+   SEISMIC CONTROL - Layout y Componentes
+   ============================================= */
+
+/* Animación de pulso para estado peligro */
+@keyframes danger-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(255, 51, 51, 0.35),
+                0 4px 20px rgba(0,0,0,0.06);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(255, 51, 51, 0),
+                0 4px 20px rgba(0,0,0,0.06);
+  }
+}
+
 /* Layout Principal */
 .seismic-dashboard {
   display: flex;
-  gap: 1.5rem; /* 24px */
+  gap: 1.5rem;
   align-items: flex-start;
-  padding: 1.25rem; /* 20px */
+  padding: 1.25rem;
 }
 
 .sensors-list {
   flex: 3;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem; /* 20px */
+  gap: 1.25rem;
 }
 
 .summary-panel {
   flex: 1;
-  min-width: 18.75rem; /* 300px */
+  min-width: 18.75rem;
+  position: sticky;
+  top: 1.5rem;
 }
 
 /* Tarjetas de Sensores */
 .seismic-card {
-  border-left: 0.3125rem solid transparent; /* 5px */
-  padding: 1.25rem; /* 20px */
-  border-radius: 0.5rem; /* 8px */
+  border-left: 0.3125rem solid transparent;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-.seismic-card.peligro { border-left-color: #ff3333; }
-.seismic-card.normal { border-left-color: #2fb362; }
+
+.seismic-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
+}
+
+.seismic-card.normal {
+  border-left-color: #2fb362;
+}
+
+/* Estado peligro: borde rojo + animación de pulso */
+.seismic-card.peligro {
+  border-left-color: #ff3333;
+  animation: danger-pulse 2s ease-in-out infinite;
+}
 
 /* Cabecera común */
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.25rem; /* 20px */
+  margin-bottom: 1.25rem;
 }
 
 .badge {
-  padding: 0.25rem 0.625rem; /* 4px 10px */
-  border-radius: 1.25rem; /* 20px - Borde suave/píldora */
-  font-size: 0.75rem; /* 12px */
-  font-weight: bold;
+  padding: 0.25rem 0.625rem;
+  border-radius: 1.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
   color: white;
+  letter-spacing: 0.3px;
 }
 
-.sensor-id { background-color: #344356; margin-right: 0.5rem; /* 8px */ }
+.sensor-id { background-color: #344356; margin-right: 0.5rem; }
 .sensor-status.peligro { background-color: #ff3333; }
 .sensor-status.normal { background-color: #2fb362; }
-.timestamp { color: #a0aec0; font-size: 0.8125rem; /* 13px */ }
+.timestamp { color: #a0aec0; font-size: 0.8125rem; }
 
 /* --- BLOQUE DE PELIGRO --- */
 .alert-box {
-  background-color: #ffe5e5;
+  background: linear-gradient(135deg, #ffe5e5 0%, #fff0f0 100%);
   text-align: center;
-  padding: 1.5rem; /* 24px */
-  border-radius: 0.375rem; /* 6px */
-  margin-bottom: 1rem; /* 16px */
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+  border: 0.0625rem solid rgba(255, 51, 51, 0.2);
 }
-.alert-box h4 { margin: 0.5rem 0; color: #1a202c; font-size: 1rem; /* 16px */ }
-.alert-box p { margin: 0; color: #4a5568; font-size: 0.875rem; /* 14px */ }
+
+.alert-box h4 {
+  margin: 0.5rem 0;
+  color: #9b2c2c;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.alert-box p {
+  margin: 0;
+  color: #742a2a;
+  font-size: 0.875rem;
+}
 
 .auth-section {
-  border: 0.0625rem solid #e2e8f0; /* 1px */
-  padding: 1rem; /* 16px */
-  border-radius: 0.375rem; /* 6px */
+  border: 0.0625rem solid #e2e8f0;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: #fafafa;
 }
-.auth-text { font-size: 0.8125rem; /* 13px */ margin-bottom: 0.75rem; /* 12px */ }
+
+.auth-text {
+  font-size: 0.8125rem;
+  color: #4a5568;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
 .auth-input {
   width: 100%;
-  padding: 0.625rem; /* 10px */
-  border: 0.0625rem solid #cbd5e0; /* 1px */
-  border-radius: 0.25rem; /* 4px */
-  margin-bottom: 0.75rem; /* 12px */
+  padding: 0.625rem 0.875rem;
+  border: 0.0625rem solid #cbd5e0;
+  border-radius: 0.375rem;
+  margin-bottom: 0.75rem;
   box-sizing: border-box;
+  font-size: 0.875rem;
+  color: #2d3748;
+  background: white;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
 }
-.unlock-btn { width: 100%; background-color: #3182ce; }
+
+.auth-input:focus {
+  border-color: #3182ce;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+}
+
+.unlock-btn {
+  width: 100%;
+  background-color: #3182ce;
+  color: white;
+  border: none;
+  padding: 0.625rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.unlock-btn:hover {
+  background-color: #2b6cb0;
+  transform: translateY(-1px);
+}
+
+.unlock-btn:active {
+  transform: translateY(0);
+}
 
 /* --- BLOQUE NORMAL --- */
 .normal-data-grid {
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
 }
-.data-column { display: flex; flex-direction: column; gap: 0.25rem; /* 4px */ }
-.data-label { color: #a0aec0; font-size: 0.75rem; /* 12px */ }
-.data-value { color: #2d3748; font-size: 0.9375rem; /* 15px */ font-weight: 500; }
+
+.data-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.data-label { color: #a0aec0; font-size: 0.75rem; }
+.data-value { color: #2d3748; font-size: 0.9375rem; font-weight: 500; }
 
 /* --- PANEL DE RESUMEN --- */
-.summary-card { padding: 1.5rem; /* 24px */ border-radius: 0.75rem; /* 12px */ text-align: center; }
-.stat-block { margin: 1.25rem 0; /* 20px */ display: flex; flex-direction: column; }
-.stat-number { font-size: 3rem; /* 48px */ font-weight: 300; line-height: 1; }
+.summary-card {
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.stat-block { margin: 1.25rem 0; display: flex; flex-direction: column; }
+.stat-number { font-size: 3rem; font-weight: 300; line-height: 1; }
 .stat-number.dark { color: #2d3748; }
 .stat-number.danger { color: #ff3333; }
-.stat-label { color: #a0aec0; font-size: 0.8125rem; /* 13px */ margin-top: 0.5rem; /* 8px */ }
-.divider { border: 0; border-top: 0.0625rem solid #e2e8f0; margin: 1rem 0; /* 16px */ }
+.stat-label { color: #a0aec0; font-size: 0.8125rem; margin-top: 0.5rem; }
+.divider { border: 0; border-top: 0.0625rem solid #e2e8f0; margin: 1rem 0; }
 
 /* Botones de Filtro */
-.filters-title { text-align: left; font-weight: bold; font-size: 0.875rem; /* 14px */ margin-bottom: 0.75rem; /* 12px */ }
-.filter-btn {
-  width: 100%; padding: 0.625rem; /* 10px */ margin-bottom: 0.5rem; /* 8px */ border-radius: 0.25rem; /* 4px */
-  cursor: pointer; font-weight: bold; transition: all 0.2s;
+.filters-title {
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+  color: #4a5568;
 }
-.filter-btn.active { background-color: #344356; color: white; border: none; }
-.filter-btn.outline { background-color: white; color: #344356; border: 0.0625rem solid #e2e8f0; }
+
+.filter-btn {
+  width: 100%;
+  padding: 0.625rem;
+  margin-bottom: 0.5rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+}
+
+.filter-btn.active {
+  background-color: #344356;
+  color: white;
+  border: none;
+  box-shadow: 0 2px 10px rgba(52, 67, 86, 0.3);
+}
+
+.filter-btn.outline {
+  background-color: white;
+  color: #344356;
+  border: 0.0625rem solid #e2e8f0;
+}
+
+.filter-btn.outline:hover {
+  background-color: #f7fafc;
+}
 
 .delete-btn {
-  border-radius: 1.25rem !important; /* Borde suave pill */
+  border-radius: 1.25rem !important;
   padding: 0.25rem 1rem !important;
   font-size: 0.75rem !important;
+  font-weight: 600 !important;
 }
 
 .create-btn {
   width: 100%;
   margin-top: 1rem;
   margin-bottom: 1.5rem;
-  border-radius: 1.25rem !important; /* Estilo pill suave */
-  height: 3rem; /* 48px */
-  font-weight: bold;
-  letter-spacing: 0.0625rem;
+  border-radius: 1.25rem !important;
+  height: 3rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 14px rgba(49, 130, 206, 0.35);
+}
+
+/* =============================================
+   RESPONSIVE — TABLET (≤ 1024px)
+   ============================================= */
+@media (max-width: 1024px) {
+  .seismic-dashboard {
+    flex-wrap: wrap;
+  }
+
+  .sensors-list {
+    flex: 1 1 100%;
+  }
+
+  .summary-panel {
+    flex: 1 1 100%;
+    min-width: unset;
+    position: relative;
+    top: 0;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — MÓVIL (≤ 768px)
+   ============================================= */
+@media (max-width: 768px) {
+  .seismic-dashboard {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .normal-data-grid {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .data-column {
+    flex: 1 1 calc(50% - 0.5rem);
+  }
 }

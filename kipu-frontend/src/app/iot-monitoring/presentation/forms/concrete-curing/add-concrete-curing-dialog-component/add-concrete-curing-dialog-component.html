@@ -1,51 +1,62 @@
-<h2 mat-dialog-title>{{ 'iot-monitoring.addnewccs' | translate }}</h2>
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon class="title-icon">sensors</mat-icon>
+  {{ 'iot-monitoring.addnewccs' | translate }}
+</h2>
 
-
-<mat-dialog-content class="sensor-form">
+<mat-dialog-content class="dialog-content">
   <p class="form-instruction">{{ 'iot-monitoring.enterdetails' | translate }}</p>
 
-  <mat-form-field appearance="outline">
-    <mat-label>{{ 'iot-monitoring.name' | translate }}</mat-label>
-    <input matInput [(ngModel)]="sensorForm.sensorId" placeholder="Ex: S-TMP-03">
-  </mat-form-field>
+  <div class="form-grid">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'iot-monitoring.name' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">label</mat-icon>
+      <input matInput [(ngModel)]="sensorForm.sensorId" placeholder="Ex: S-TMP-03">
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>{{ 'iot-monitoring.location' | translate }}</mat-label>
-    <input matInput [(ngModel)]="sensorForm.location" placeholder="Ex: North Sector Alpha">
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'iot-monitoring.location' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">place</mat-icon>
+      <input matInput [(ngModel)]="sensorForm.location" placeholder="Ex: North Sector Alpha">
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>{{ 'iot-monitoring.limit' | translate }}</mat-label>
-    <input matInput [(ngModel)]="sensorForm.limit" placeholder="Ex: 9">
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'iot-monitoring.temperature' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">thermostat</mat-icon>
+      <input matInput type="number" [(ngModel)]="sensorForm.temperature" placeholder="Ex: 24">
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>{{ 'iot-monitoring.temperature' | translate }}</mat-label>
-    <input matInput type="number" [(ngModel)]="sensorForm.temperature" placeholder="Ex: 9">
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'iot-monitoring.humidity' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">water_drop</mat-icon>
+      <input matInput type="number" [(ngModel)]="sensorForm.humidity" placeholder="Ex: 65">
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>{{ 'iot-monitoring.humidity' | translate }}</mat-label>
-    <input matInput type="number" [(ngModel)]="sensorForm.humidity" placeholder="Ex: 9">
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'iot-monitoring.limit' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">speed</mat-icon>
+      <input matInput type="number" [(ngModel)]="sensorForm.limit" placeholder="Ex: 35">
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>{{ 'iot-monitoring.unit' | translate }}</mat-label>
-    <input matInput [(ngModel)]="sensorForm.unit" placeholder="Ex: C">
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'iot-monitoring.unit' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">device_thermostat</mat-icon>
+      <input matInput [(ngModel)]="sensorForm.unit" placeholder="Ex: °C">
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>{{ 'iot-monitoring.status' | translate }}</mat-label>
-    <mat-select [(ngModel)]="sensorForm.state">
-      <mat-option value="normal">ONLINE</mat-option>
-      <mat-option value="peligro">OFFLINE</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'iot-monitoring.status' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">power</mat-icon>
+      <mat-select [(ngModel)]="sensorForm.state">
+        <mat-option value="ONLINE">ONLINE</mat-option>
+        <mat-option value="OFFLINE">OFFLINE</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end" class="form-actions">
-  <button mat-button mat-dialog-close>{{ 'iot-monitoring.cancel' | translate }}</button>
-  <button mat-flat-button color="primary" class="save-btn" [mat-dialog-close]="sensorForm">
+  <button mat-button class="cancel-btn" (click)="onCancel()">{{ 'iot-monitoring.cancel' | translate }}</button>
+  <button mat-flat-button color="primary" class="save-btn" (click)="onSave()">
     {{ 'iot-monitoring.addsensor' | translate }}
   </button>
 </mat-dialog-actions>

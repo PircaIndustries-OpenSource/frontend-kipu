@@ -1,0 +1,45 @@
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon class="title-icon">tune</mat-icon>
+  {{ 'iot-monitoring.configuresensor' | translate }}
+</h2>
+
+<mat-dialog-content class="dialog-content">
+  <p class="form-instruction">{{ 'iot-monitoring.configuredetails' | translate }}</p>
+
+  <div class="sensor-info-badge">
+    <mat-icon>sensors</mat-icon>
+    <span>{{ data.sensorId }}</span>
+    <span class="separator">·</span>
+    <span class="location-text">{{ data.location }}</span>
+  </div>
+
+  <div class="form-grid">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'iot-monitoring.status' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">power</mat-icon>
+      <mat-select [(ngModel)]="editForm.state">
+        <mat-option value="ONLINE">ONLINE</mat-option>
+        <mat-option value="OFFLINE">OFFLINE</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'iot-monitoring.limit' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">speed</mat-icon>
+      <input matInput type="number" [(ngModel)]="editForm.limit" placeholder="Ex: 35">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'iot-monitoring.unit' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">device_thermostat</mat-icon>
+      <input matInput [(ngModel)]="editForm.unit" placeholder="Ex: °C">
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="form-actions">
+  <button mat-button class="cancel-btn" (click)="onCancel()">{{ 'iot-monitoring.cancel' | translate }}</button>
+  <button mat-flat-button color="primary" class="save-btn" (click)="onSave()">
+    <mat-icon>save</mat-icon> {{ 'iot-monitoring.savechanges' | translate }}
+  </button>
+</mat-dialog-actions>

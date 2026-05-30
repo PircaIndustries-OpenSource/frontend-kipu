@@ -1,5 +1,5 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { MatCard } from '@angular/material/card';
+import { MatCard, MatCardHeader, MatCardContent, MatCardFooter } from '@angular/material/card';
 import { NgClass } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton } from '@angular/material/button';
@@ -12,7 +12,17 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-seismic-control',
-  imports: [MatCard, NgClass, MatIcon, MatButton, FormsModule, TranslatePipe],
+  imports: [
+    MatCard,
+    MatCardHeader,
+    MatCardContent,
+    MatCardFooter,
+    NgClass,
+    MatIcon,
+    MatButton,
+    FormsModule,
+    TranslatePipe,
+  ],
   templateUrl: './seismic-control.html',
   styleUrl: './seismic-control.css',
 })

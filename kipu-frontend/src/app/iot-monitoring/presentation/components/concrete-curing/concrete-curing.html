@@ -1,55 +1,57 @@
-<div class="concrete-dashboard">
+<section class="concrete-dashboard">
 
-  <div class="sensor-grid">
+  <ul class="sensor-grid" role="list">
     @for (sensor of concreteSensors(); track sensor.id) {
-      <mat-card class="curing-card" [ngClass]="getSensorStatusClass(sensor.temperature, sensor.limit)">
+      <li class="sensor-card-item" role="listitem">
+        <mat-card class="curing-card" [ngClass]="getSensorStatusClass(sensor.temperature, sensor.limit)">
 
-        <mat-card-header class="card-header">
-          <div class="badges">
-            <span class="badge sensor-name">{{ sensor.sensorId }}</span>
-            <span class="badge sensor-state">{{ sensor.state }}</span>
-          </div>
-          <span class="sensor-location">{{ sensor.location }}</span>
-        </mat-card-header>
+          <mat-card-header class="card-header">
+            <div class="badges">
+              <span class="badge sensor-name">{{ sensor.sensorId }}</span>
+              <span class="badge sensor-state">{{ sensor.state }}</span>
+            </div>
+            <span class="sensor-location">{{ sensor.location }}</span>
+          </mat-card-header>
 
-        <mat-card-content class="card-content">
-          <div class="metric">
-          <span class="value" [ngClass]="getSensorStatusClass(sensor.temperature, sensor.limit)">
-            {{ sensor.temperature }}{{ sensor.unit }}
-          </span>
-            <span class="label">{{ 'iot-monitoring.temperature' | translate }}</span>
-          </div>
+          <mat-card-content class="card-content">
+            <div class="metric">
+              <span class="value" [ngClass]="getSensorStatusClass(sensor.temperature, sensor.limit)">
+                {{ sensor.temperature }}{{ sensor.unit }}
+              </span>
+              <span class="label">{{ 'iot-monitoring.temperature' | translate }}</span>
+            </div>
 
-          <div class="vertical-divider"></div>
+            <div class="vertical-divider"></div>
 
-          <div class="metric">
-          <span class="value">
-            {{ sensor.humidity }}%
-          </span>
-            <span class="label">{{ 'iot-monitoring.humidity' | translate }}</span>
-          </div>
-        </mat-card-content>
+            <div class="metric">
+              <span class="value">
+                {{ sensor.humidity }}%
+              </span>
+              <span class="label">{{ 'iot-monitoring.humidity' | translate }}</span>
+            </div>
+          </mat-card-content>
 
-        <hr class="horizontal-divider">
+          <hr class="horizontal-divider">
 
-        <mat-card-footer class="card-footer">
-          <div class="alert-info">
-            <span class="alert-label">{{ 'iot-monitoring.warningbreakpoint' | translate }}</span>
-            <span class="alert-value">{{ sensor.limit }}{{ sensor.unit }}</span>
-          </div>
-          <button mat-flat-button class="config-btn">
-            {{ 'iot-monitoring.configure' | translate }}
-          </button>
-          <div class="actions">
-            <button mat-stroked-button color="warn" class="delete-btn" (click)="onDelete(sensor.id)">
-              <mat-icon>delete</mat-icon> {{ 'iot-monitoring.delete' | translate }}
+          <mat-card-footer class="card-footer">
+            <div class="alert-info">
+              <span class="alert-label">{{ 'iot-monitoring.warningbreakpoint' | translate }}</span>
+              <span class="alert-value">{{ sensor.limit }}{{ sensor.unit }}</span>
+            </div>
+            <button mat-flat-button class="config-btn" (click)="openConfigureDialog(sensor)">
+              <mat-icon>tune</mat-icon> {{ 'iot-monitoring.configure' | translate }}
             </button>
-          </div>
-        </mat-card-footer>
+            <div class="actions">
+              <button mat-stroked-button color="warn" class="delete-btn" (click)="onDelete(sensor.id)">
+                <mat-icon>delete</mat-icon> {{ 'iot-monitoring.delete' | translate }}
+              </button>
+            </div>
+          </mat-card-footer>
 
-      </mat-card>
+        </mat-card>
+      </li>
     }
-  </div>
+  </ul>
 
   <aside class="summary-panel">
     <mat-card class="summary-card">
@@ -66,12 +68,12 @@
 
       <hr class="divider">
 
-      <div class="filters">
+      <nav class="filters" aria-label="Filtros rápidos de sensores" role="group">
         <p class="filters-title">{{ 'iot-monitoring.quickfilters' | translate }}</p>
         <button class="filter-btn active">{{ 'iot-monitoring.allthesensors' | translate }}</button>
         <button class="filter-btn outline">{{ 'iot-monitoring.justinofflinestate' | translate }}</button>
-      </div>
+      </nav>
     </mat-card>
   </aside>
 
-</div>
+</section>

@@ -1075,12 +1075,12 @@
       "id": "2",
       "projectId": "proj-01",
       "sensorId": "S-TMP-02",
-      "state": 1,
       "location": "Columns B Sec.",
+      "unit": "C",
       "temperature": 28,
       "humidity": 65,
       "limit": 35,
-      "unit": "C"
+      "state": 1
     }
   ],
   "geolocalization": [
@@ -1157,7 +1157,9 @@
       "fullName": "Pedro Castro",
       "role": "Manejador",
       "status": "inactivo",
-      "assignedTools": ["Escuela"]
+      "assignedTools": [
+        "Escuela"
+      ]
     },
     {
       "id": "w-3",
@@ -1172,7 +1174,10 @@
       "fullName": "Neo Ramos",
       "role": "Capataz",
       "status": "activo",
-      "assignedTools": ["Tolva", "Marañón"],
+      "assignedTools": [
+        "Tolva",
+        "Marañón"
+      ],
       "id": "w-1778261706149"
     }
   ],

@@ -6,6 +6,7 @@ import { NgClass } from '@angular/common';
 import { ConcreteStore } from '../../../application/concrete.store';
 import { MatDialog } from '@angular/material/dialog';
 import { AddConcreteCuringDialogComponent } from '../../forms/concrete-curing/add-concrete-curing-dialog-component/add-concrete-curing-dialog-component';
+import { EditConcreteCuringDialogComponent } from '../../forms/concrete-curing/edit-concrete-curing-dialog-component/edit-concrete-curing-dialog-component';
 import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -48,6 +49,18 @@ export class ConcreteCuring implements OnInit {
     });
   }
 
+  openConfigureDialog(sensor: ConcreteEntity) {
+    const dialogRef = this.dialog.open(EditConcreteCuringDialogComponent, {
+      data: sensor,
+    });
+
+    dialogRef.afterClosed().subscribe((result: ConcreteEntity) => {
+      if (result) {
+        this.store.updateConcreteSensor(result);
+      }
+    });
+  }
+
   onDelete(id: string): void {
     if (confirm('Eliminar?')) {
       this.store.deleteConcreteSensor(id);
@@ -74,3 +87,4 @@ export class ConcreteCuring implements OnInit {
     return online;
   }
 }
+

@@ -1,45 +1,51 @@
-<div class="monitoring-container">
+<section class="monitoring-container">
 
-  <div class="hoppers-section">
-    <div class="hopper-grid">
+  <section class="hoppers-section">
+    <ul class="hopper-grid" role="list">
       @for (sensor of hopperSensors(); track sensor.id) {
-        <mat-card class="hopper-card" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
-          <mat-card-header>
-            <span class="sensor-name">{{ 'iot-monitoring.hopper' | translate }} {{ sensor.name }}</span>
-            <span class="sensor-state" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
-              {{ sensor.state }}
-        </span>
-          </mat-card-header>
-          <mat-card-content class="card-content-center">
-            <div class="visual-bar-container" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
-              <div class="visual-bar-fill"
-                   [style.height.%]="sensor.lastLecture"
-                   [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
+        <li class="hopper-card-item" role="listitem">
+          <mat-card class="hopper-card" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
+            
+            <mat-card-header>
+              <div mat-card-title class="sensor-name">{{ 'iot-monitoring.hopper' | translate }} {{ sensor.name }}</div>
+              <div mat-card-subtitle class="sensor-state" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
+                {{ sensor.state }}
               </div>
-              <span class="bar-text" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
-            {{ sensor.lastLecture }}%
-          </span>
-            </div>
-          </mat-card-content>
-          <mat-card-footer [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
-            @if (getSensorStatusClass(sensor.lastLecture, sensor.limit) === 'status-danger') {
-              <strong>{{ 'iot-monitoring.ticket' | translate }} #{{ sensor.id }} {{ 'iot-monitoring.generated' | translate }}</strong>
-              <span class="subtext">{{ 'iot-monitoring.systemdropped' | translate }} {{sensor.limit}}%.</span>
-            } @else if (getSensorStatusClass(sensor.lastLecture, sensor.limit) === 'status-warning') {
-              <span class="subtext">{{ 'iot-monitoring.systemsend' | translate }} {{sensor.limit}}%.</span>
-            } @else {
-              <span class="ok-text">{{ 'iot-monitoring.adequatelevels' | translate }}</span>
-            }
-            <div class="actions">
-              <button mat-stroked-button color="warn" class="delete-btn" (click)="onDelete(sensor)">
-                <mat-icon>delete</mat-icon> {{ 'iot-monitoring.delete' | translate }}
-              </button>
-            </div>
-          </mat-card-footer>
-        </mat-card>
+            </mat-card-header>
+
+            <mat-card-content class="card-content-center">
+              <div class="visual-bar-container" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
+                <div class="visual-bar-fill"
+                     [style.height.%]="sensor.lastLecture"
+                     [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
+                </div>
+                <span class="bar-text" [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
+                  {{ sensor.lastLecture }}%
+                </span>
+              </div>
+            </mat-card-content>
+
+            <mat-card-footer [ngClass]="getSensorStatusClass(sensor.lastLecture, sensor.limit)">
+              @if (getSensorStatusClass(sensor.lastLecture, sensor.limit) === 'status-danger') {
+                <strong>{{ 'iot-monitoring.ticket' | translate }} #{{ sensor.id }} {{ 'iot-monitoring.generated' | translate }}</strong>
+                <span class="subtext">{{ 'iot-monitoring.systemdropped' | translate }} {{sensor.limit}}%.</span>
+              } @else if (getSensorStatusClass(sensor.lastLecture, sensor.limit) === 'status-warning') {
+                <span class="subtext">{{ 'iot-monitoring.systemsend' | translate }} {{sensor.limit}}%.</span>
+              } @else {
+                <span class="ok-text">{{ 'iot-monitoring.adequatelevels' | translate }}</span>
+              }
+              <div class="actions">
+                <button mat-stroked-button color="warn" class="delete-btn" (click)="onDelete(sensor)">
+                  <mat-icon>delete</mat-icon> {{ 'iot-monitoring.delete' | translate }}
+                </button>
+              </div>
+            </mat-card-footer>
+
+          </mat-card>
+        </li>
       }
-    </div>
-  </div>
+    </ul>
+  </section>
 
   <aside class="tickets-panel">
     <mat-card class="tickets-container-card">
@@ -49,20 +55,20 @@
         <mat-icon>add</mat-icon> {{ 'iot-monitoring.newhopper' | translate }}
       </button>
 
-      <div class="tickets-list">
+      <ul class="tickets-list">
         @for (ticket of hopperSensors(); track ticket.id) {
-          <div class="ticket-item" [ngClass]="getTicketStatusBySensor(ticket.lastLecture, ticket.limit)">
+          <li class="ticket-item" [ngClass]="getTicketStatusBySensor(ticket.lastLecture, ticket.limit)">
             <div class="ticket-info">
               <span class="ticket-id">{{ ticket.sensorId }}</span>
               <span class="ticket-material">{{ ticket.name }}</span>
             </div>
             <span class="status-badge" [ngClass]="getTicketStatusBySensor(ticket.lastLecture, ticket.limit)">
-              {{ getTicketStatusBySensor(ticket.lastLecture, ticket.limit).toUpperCase() }}
+               {{ getTicketStatusBySensor(ticket.lastLecture, ticket.limit).toUpperCase() }}
             </span>
-          </div>
+          </li>
         }
-      </div>
+      </ul>
     </mat-card>
   </aside>
 
-</div>
+</section>

@@ -39,6 +39,20 @@ export class ConcreteStore {
     });
   }
 
+  updateConcreteSensor(updatedSensor: ConcreteEntity) {
+    this.concreteApiService.updateConcreteSensor(updatedSensor).subscribe({
+      next: (savedSensor) => {
+        this.concreteSensorsSignal.update((sensors) =>
+          sensors.map((s) => (s.id === savedSensor.id ? savedSensor : s))
+        );
+        console.log('✅ Sensor actualizado correctamente');
+      },
+      error: (err) => {
+        console.error('❌ Error al actualizar el sensor. Revisa json-server.', err);
+      },
+    });
+  }
+
   addConcreteSensor(newSensor: ConcreteEntity) {
     this.concreteApiService.createConcreteSensor(newSensor).subscribe({
       next: (addedSensor) => {

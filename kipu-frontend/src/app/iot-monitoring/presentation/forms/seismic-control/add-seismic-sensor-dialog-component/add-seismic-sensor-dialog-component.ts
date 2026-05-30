@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { SeismicEntity } from '../../../../domain/seismic.entity';
 import { TranslatePipe } from '@ngx-translate/core';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-add-seismic-sensor-dialog-component',
@@ -24,6 +25,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     MatButton,
     MatInput,
     TranslatePipe,
+    MatIcon,
   ],
   templateUrl: './add-seismic-sensor-dialog-component.html',
   styleUrl: './add-seismic-sensor-dialog-component.css',

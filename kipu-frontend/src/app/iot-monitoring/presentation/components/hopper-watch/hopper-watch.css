@@ -1,48 +1,89 @@
+
+/* =============================================
+   HOPPER WATCH - Layout y Componentes
+   ============================================= */
+
+/* Layout Principal */
+.monitoring-container {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  padding: 1.25rem;
+}
+
+/* Sección de hoppers: contenedor flexible */
+.hoppers-section {
+  flex: 3;
+  min-width: 0; /* Evita overflow en flex */
+}
+
+/* Grid de tolvas: fila horizontal con wrap */
+.hopper-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+/* Panel lateral de tickets */
+.tickets-panel {
+  flex: 1;
+  min-width: 18rem;
+  position: sticky;
+  top: 1.5rem;
+}
+
+/* =============================================
+   TARJETAS DE HOPPER
+   ============================================= */
+
 .hopper-card {
   display: flex;
-  border-left: 5px solid transparent;
-  width: 320px;
-  padding: 16px;
-  border-radius: 8px;
+  flex-direction: column;
+  border-left: 0.3125rem solid transparent;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
   text-align: center;
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.hoppers-section {
-  display: flex;
-}
-
-.hopper-grid {
-  display: grid;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
+.hopper-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
 }
 
 .sensor-name {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #212529;
-  font-size: 16px;
+  color: #2d3748;
+  font-size: 1rem;
+  font-weight: 600;
+  gap: 0.5rem;
 }
 
 .card-content-center {
   display: flex;
   justify-content: center;
-  margin: 24px 0;
+  margin: 1.5rem 0;
 }
 
+/* Barra visual del hopper */
 .visual-bar-container {
   position: relative;
-  width: 140px;
-  height: 220px;
-  border: 3px solid;
-  border-radius: 8px;
+  width: 8.75rem;
+  height: 13.75rem;
+  border: 0.1875rem solid;
+  border-radius: 0.625rem;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .visual-bar-fill {
@@ -50,124 +91,207 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  transition: height 0.5s ease-in-out;
+  transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .bar-text {
   position: relative;
-  font-size: 38px;
+  font-size: 2.375rem;
   font-weight: 400;
   z-index: 2;
+  letter-spacing: -1px;
 }
 
-.hopper-card.status-danger { border-left-color: #ff3333; }
-.visual-bar-container.status-danger { border-color: #ff3333; }
-.visual-bar-fill.status-danger { background-color: #ff3333; }
-.bar-text.status-danger { color: #ff3333; }
-.sensor-state.status-danger { background-color: #ff3333; color: white; padding: 4px 8px; border-radius: 4px;}
-
-.hopper-card.status-warning { border-left-color: #d98825; }
-.visual-bar-container.status-warning { border-color: #d98825; }
-.visual-bar-fill.status-warning { background-color: #d98825; }
-.bar-text.status-warning { color: #d98825; }
-.sensor-state.status-warning { background-color: #d98825; color: white; padding: 4px 8px; border-radius: 4px;}
-
-.hopper-card.status-ok { border-left-color: #2fb362; }
-.visual-bar-container.status-ok { border-color: #2c3e50; }
-.visual-bar-fill.status-ok { background-color: #2c3e50; }
-.bar-text.status-ok { color: white; }
-.sensor-state.status-ok { background-color: #2fb362; color: white; padding: 4px 8px; border-radius: 4px;}
-.ok-text { color: #2fb362; }
-
+/* Footer de tarjeta */
 .footer-text {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
 }
+
 .subtext {
   color: #a0aec0;
-  font-size: 13px;
+  font-size: 0.8125rem;
 }
 
-/* Layout Principal */
-.monitoring-container {
-  display: flex;
-  gap: 24px;
-  align-items: flex-start;
-  padding: 20px;
+/* =============================================
+   ESTADOS — DANGER
+   ============================================= */
+.hopper-card.status-danger { border-left-color: #fc4444; }
+.visual-bar-container.status-danger { border-color: #fc4444; }
+.visual-bar-fill.status-danger {
+  background: linear-gradient(to top, #c53030, #fc4444);
+}
+.bar-text.status-danger { color: #fc4444; }
+.sensor-state.status-danger {
+  background-color: #fc4444;
+  color: white;
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 700;
 }
 
-.hoppers-section {
-  flex: 3; /* Toma más espacio */
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+/* =============================================
+   ESTADOS — WARNING
+   ============================================= */
+.hopper-card.status-warning { border-left-color: #d98825; }
+.visual-bar-container.status-warning { border-color: #d98825; }
+.visual-bar-fill.status-warning {
+  background: linear-gradient(to top, #b7791f, #e6a02a);
+}
+.bar-text.status-warning { color: #d98825; }
+.sensor-state.status-warning {
+  background-color: #d98825;
+  color: white;
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 700;
 }
 
-.tickets-panel {
-  flex: 1; /* Columna lateral más delgada */
-  min-width: 300px;
+/* =============================================
+   ESTADOS — OK
+   ============================================= */
+.hopper-card.status-ok { border-left-color: #2fb362; }
+.visual-bar-container.status-ok { border-color: #2c3e50; }
+.visual-bar-fill.status-ok {
+  background: linear-gradient(to top, #1a2d3e, #2c3e50);
 }
+.bar-text.status-ok { color: white; }
+.sensor-state.status-ok {
+  background-color: #2fb362;
+  color: white;
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.ok-text { color: #2fb362; font-weight: 600; }
 
-/* Tarjeta Contenedora */
+/* =============================================
+   PANEL DE TICKETS
+   ============================================= */
 .tickets-container-card {
-  padding: 20px;
+  padding: 1.25rem;
   background: white;
-  border-radius: 12px;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .tickets-container-card h3 {
-  font-size: 18px;
-  color: #333;
-  margin-bottom: 20px;
+  font-size: 1.1rem;
+  color: #2d3748;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
 }
 
-/* Items Individuales */
 .ticket-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
-  margin-bottom: 12px;
-  border-radius: 6px;
-  border-left: 4px solid transparent;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  border-radius: 0.5rem;
+  border-left: 0.25rem solid transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ticket-item:hover {
+  transform: translateX(3px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .ticket-info {
   display: flex;
   flex-direction: column;
+  gap: 0.1rem;
 }
 
 .ticket-id {
-  font-weight: bold;
-  font-size: 14px;
+  font-weight: 700;
+  font-size: 0.875rem;
   color: #4a5568;
 }
 
 .ticket-material {
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: #718096;
 }
 
-/* Estilos por Estado */
 .ticket-item.pending {
-  background-color: #fffaf0; /* Crema suave */
-  border-left-color: #d98825; /* Tu naranja warning */
+  background-color: #fffaf0;
+  border-left-color: #d98825;
 }
 
 .ticket-item.completed {
-  background-color: #f0fff4; /* Verde suave */
-  border-left-color: #2fb362; /* Tu verde óptimo */
+  background-color: #f0fff4;
+  border-left-color: #2fb362;
 }
 
-/* Badges */
 .status-badge {
-  font-size: 11px;
-  padding: 4px 8px;
-  border-radius: 4px;
+  font-size: 0.6875rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 1rem;
   color: white;
-  font-weight: bold;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
 }
 
 .status-badge.pending { background-color: #b7791f; }
 .status-badge.completed { background-color: #38a169; }
+
+/* =============================================
+   RESPONSIVE — TABLET (≤ 1024px)
+   ============================================= */
+@media (max-width: 1024px) {
+  .monitoring-container {
+    flex-wrap: wrap;
+  }
+
+  .hoppers-section {
+    flex: 1 1 100%;
+  }
+
+  .tickets-panel {
+    flex: 1 1 100%;
+    min-width: unset;
+    position: relative;
+    top: 0;
+  }
+}
+
+/* =============================================
+   RESPONSIVE — MÓVIL (≤ 768px)
+   ============================================= */
+@media (max-width: 768px) {
+  .monitoring-container {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .hopper-grid {
+    gap: 1.25rem;
+  }
+
+  .hopper-card {
+    width: 100%;
+  }
+
+  .tickets-panel {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .visual-bar-container {
+    width: 7rem;
+    height: 11rem;
+  }
+
+  .bar-text {
+    font-size: 1.875rem;
+  }
+}

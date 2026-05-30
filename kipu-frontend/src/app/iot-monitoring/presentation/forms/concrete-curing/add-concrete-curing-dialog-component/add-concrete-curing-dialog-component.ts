@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import {
   MatDialogActions,
-  MatDialogClose,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
@@ -13,6 +12,7 @@ import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { TranslatePipe } from '@ngx-translate/core';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-add-concrete-curing-dialog-component',
@@ -20,7 +20,6 @@ import { TranslatePipe } from '@ngx-translate/core';
     FormsModule,
     MatButton,
     MatDialogActions,
-    MatDialogClose,
     MatDialogContent,
     MatDialogTitle,
     MatFormField,
@@ -29,6 +28,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     MatOption,
     MatSelect,
     TranslatePipe,
+    MatIcon,
   ],
   templateUrl: './add-concrete-curing-dialog-component.html',
   styleUrl: './add-concrete-curing-dialog-component.css',

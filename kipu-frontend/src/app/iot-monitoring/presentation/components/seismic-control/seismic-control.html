@@ -1,64 +1,68 @@
-<div class="seismic-dashboard">
+<section class="seismic-dashboard">
 
-  <div class="sensors-list">
+  <ul class="sensors-list" role="list">
     @for (sensor of filteredSeismicSensors(); track sensor.id) {
 
-      <mat-card class="seismic-card" [ngClass]="sensor.state">
+      <li class="seismic-card-item" role="listitem">
+        <mat-card class="seismic-card" [ngClass]="sensor.state">
 
-        <div class="card-header">
-          <div class="badges">
-            <span class="badge sensor-id">{{ sensor.sensorId }}</span>
-            <span class="badge sensor-status" [ngClass]="sensor.state">
-              {{ sensor.name }}
-            </span>
-          </div>
-          <span class="timestamp">{{ sensor.timeLecture }}</span>
-        </div>
-
-        @if (sensor.state === 'RISK') {
-          <div class="alert-box">
-            <mat-icon color="warn">error_outline</mat-icon>
-            <h4>{{ 'iot-monitoring.blockoperations' | translate }}</h4>
-            <p>{{ 'iot-monitoring.vibrationsexceeded' | translate }} ({{ sensor.lastLecture }} {{ sensor.unit }} > {{ sensor.limit }} {{ sensor.unit }})</p>
-          </div>
-
-          <div class="auth-section">
-            <p class="auth-text">Sector: {{ sensor.location }}. {{ 'iot-monitoring.residentauthorization' | translate }}</p>
-            <input type="password" placeholder="Authorization password" class="auth-input">
-            <button mat-flat-button color="primary" class="unlock-btn">
-              {{ 'iot-monitoring.takecare' | translate }}
-            </button>
-          </div>
-        }
-        @else {
-          <div class="normal-data-grid">
-            <div class="data-column">
-              <span class="data-label">{{ 'iot-monitoring.location' | translate }}</span>
-              <span class="data-value">{{ sensor.location }}</span>
+          <mat-card-header class="card-header">
+            <div class="badges">
+              <span class="badge sensor-id">{{ sensor.sensorId }}</span>
+              <span class="badge sensor-status" [ngClass]="sensor.state">
+                {{ sensor.name }}
+              </span>
             </div>
-            <div class="data-column">
-              <span class="data-label">{{ 'iot-monitoring.actuallecture' | translate }}</span>
-              <span class="data-value">{{ sensor.lastLecture }} {{ sensor.unit }}</span>
-            </div>
-            <div class="data-column">
-              <span class="data-label">{{ 'iot-monitoring.securelimit' | translate }}</span>
-              <span class="data-value">{{ sensor.limit }} {{ sensor.unit }}</span>
-            </div>
-          </div>
-        }
+            <span class="timestamp">{{ sensor.timeLecture }}</span>
+          </mat-card-header>
 
-        <div class="card-footer">
-          <span class="timestamp">{{ sensor.timeLecture }}</span>
-          <div class="actions">
-            <button mat-stroked-button color="warn" class="delete-btn" (click)="onDelete(sensor)">
-              <mat-icon>delete</mat-icon> {{ 'iot-monitoring.delete' | translate }}
-            </button>
-          </div>
-        </div>
+          <mat-card-content class="card-content">
+            @if (sensor.state === 'RISK') {
+              <div class="alert-box">
+                <mat-icon color="warn">error_outline</mat-icon>
+                <h4>{{ 'iot-monitoring.blockoperations' | translate }}</h4>
+                <p>{{ 'iot-monitoring.vibrationsexceeded' | translate }} ({{ sensor.lastLecture }} {{ sensor.unit }} > {{ sensor.limit }} {{ sensor.unit }})</p>
+              </div>
 
-      </mat-card>
+              <div class="auth-section">
+                <p class="auth-text">Sector: {{ sensor.location }}. {{ 'iot-monitoring.residentauthorization' | translate }}</p>
+                <input type="password" placeholder="Authorization password" class="auth-input">
+                <button mat-flat-button color="primary" class="unlock-btn">
+                  {{ 'iot-monitoring.takecare' | translate }}
+                </button>
+              </div>
+            }
+            @else {
+              <div class="normal-data-grid">
+                <div class="data-column">
+                  <span class="data-label">{{ 'iot-monitoring.location' | translate }}</span>
+                  <span class="data-value">{{ sensor.location }}</span>
+                </div>
+                <div class="data-column">
+                  <span class="data-label">{{ 'iot-monitoring.actuallecture' | translate }}</span>
+                  <span class="data-value">{{ sensor.lastLecture }} {{ sensor.unit }}</span>
+                </div>
+                <div class="data-column">
+                  <span class="data-label">{{ 'iot-monitoring.securelimit' | translate }}</span>
+                  <span class="data-value">{{ sensor.limit }} {{ sensor.unit }}</span>
+                </div>
+              </div>
+            }
+          </mat-card-content>
+
+          <mat-card-footer class="card-footer">
+            <span class="timestamp">{{ sensor.timeLecture }}</span>
+            <div class="actions">
+              <button mat-stroked-button color="warn" class="delete-btn" (click)="onDelete(sensor)">
+                <mat-icon>delete</mat-icon> {{ 'iot-monitoring.delete' | translate }}
+              </button>
+            </div>
+          </mat-card-footer>
+
+        </mat-card>
+      </li>
     }
-  </div>
+  </ul>
 
   <aside class="summary-panel">
     <mat-card class="summary-card">
@@ -96,4 +100,4 @@
     </mat-card>
   </aside>
 
-</div>
+</section>
