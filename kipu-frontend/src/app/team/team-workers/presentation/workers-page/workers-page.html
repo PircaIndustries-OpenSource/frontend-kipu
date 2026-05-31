@@ -1,20 +1,44 @@
 <section class="p-5">
 
   <div class="flex justify-between mx-10 mr-30 overflow-y-auto">
-      <h1 class="text-2xl font-bold">{{'team.workers.title'| translate }}</h1>
-
+    <h1 class="text-2xl font-bold">{{'team.workers.title'| translate }}</h1>
   </div>
 
   <div class="workers-div shadow-md/20 p-7 mx-40 mt-10">
 
-  <div class="explanation flex justify-between">
-    <div class="info">
-      <h2 class="text-2xl font-medium">{{'team.workers.register.title' | translate}}</h2>
-      <p class="text-(--color-neutral-border) font-medium text-base/7">{{'team.workers.register.description' | translate}}</p>
+    <div class="explanation flex justify-between items-center">
+      <div class="info">
+        <h2 class="text-2xl font-medium">{{'team.workers.register.title' | translate}}</h2>
+        <p class="text-(--color-neutral-border) font-medium text-base/7">{{'team.workers.register.description' | translate}}</p>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <mat-form-field class="w-96 !pb-0 pt-5" appearance="outline">
+          <mat-label>{{ "team.workers.search.title" | translate }}</mat-label>
+          <mat-icon matPrefix>search</mat-icon>
+          <input
+            type="text"
+            matInput
+            [formControl]="searchControl"
+            placeholder="{{'team.workers.search.placeholder' | translate}}"
+          />
+          @if (searchControl.value){
+            <button
+              matSuffix
+              mat-icon-button
+              (click)="clearSearch()"
+              aria-label="Limpiar"
+              class="text-gray-400 hover:text-gray-600"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          }
+        </mat-form-field>
+
+        <button matRipple class="px-s bg-accent text-white! py-s! rounded-m! font-bold! cursor-pointer transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2 shrink-0 h-12"
+                (click)="openFormDialog()">{{'team.workers.register.btn-add-worker' | translate }}</button>
+      </div>
     </div>
-    <button matRipple class="px-s bg-accent text-white! py-s! rounded-m! font-bold! cursor-pointer transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2"
-    (click)="openFormDialog()">{{'team.workers.register.btn-add-worker' | translate }}</button>
-  </div>
 
     <div class="workers-table mt-10">
 
@@ -29,21 +53,18 @@
 
       <div class="table-body max-h-120 overflow-y-scroll rounded-b-md">
 
-        @for (worker of this.teamStore.teamWorkers(); track worker.id) {
+        @for (worker of filteredWorkers; track worker.id) {
           <div class="grid grid-cols-6 border-2 border-(--color-neutral-border) w-full p-3 place-content-center align-middle">
             <div class="id-number flex justify-center">
               <h2 class="text-base">{{worker.dni}}</h2>
-
             </div>
 
             <div class="fullname flex justify-center">
               <h2 class="text-base">{{worker.fullName}}</h2>
-
             </div>
 
             <div class="position flex justify-center">
               <h2 class="text-base">{{worker.role}}</h2>
-
             </div>
 
             <div class="work-status flex justify-center">
@@ -53,37 +74,35 @@
               @else {
                 <h3 class="p-2 bg-(--color-neutral-border) w-fit rounded-md text-(--color-info-soft)">{{'team.workers.register.tab-status-inactive' | translate}}</h3>
               }
-
-
             </div>
 
-            <div class="assigned-tools flex justify-center align-middle h-full">
-              @if (worker.assignedTools.length == 1) {
-                <h2 class="text-base">{{worker.assignedTools.length}} {{'team.workers.register.tab-count-tools-one' |  translate}}</h2>
+            <div class="assigned-tools flex flex-col justify-center items-center text-center h-full px-2">
+              @if (worker.assignedTools && worker.assignedTools.length > 0) {
+                <h2 class="text-base font-medium text-slate-700">
+                  {{ worker.assignedTools.join(', ') }}
+                </h2>
               } @else {
-                <h2 class="text-base">{{worker.assignedTools.length}} {{'team.workers.register.tab-count-tools-many' |  translate}}</h2>
+                <h2 class="text-sm italic text-slate-400">
+                  {{ 'team.workers.register.no-tools' | translate }}
+                </h2>
               }
-
-
             </div>
 
             <div class="action flex justify-center">
               <button class="text-red-600 hover:text-red-800 hover:bg-red-50 font-medium text-base transition-all duration-200 px-3 py-1 cursor-pointer rounded-md"
-              (click)="deleteWorker(worker.id)">
+                      (click)="deleteWorker(worker.id)">
                 {{'team.workers.register.tab-btn-delete' | translate}}</button>
-
             </div>
           </div>
 
         } @empty {
           <div class="p-10 text-center text-slate-400">
-          {{ 'team.workers.register.no-workers-found' | translate }}
+            {{ 'team.workers.register.no-workers-found' | translate }}
+            @if(searchControl.value) { "{{ searchControl.value }}" }
           </div>
         }
 
-
       </div>
-
 
     </div>
 

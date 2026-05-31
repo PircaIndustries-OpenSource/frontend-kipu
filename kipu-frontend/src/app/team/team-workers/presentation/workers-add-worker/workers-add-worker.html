@@ -27,26 +27,21 @@
         <span class="font-bold text-slate-700 text-sm uppercase tracking-wide">
           {{ 'team.workers.add-modal.tools-title' | translate }}
         </span>
-        <button type="button" (click)="addTool()"
-                class="text-blue-600 hover:text-blue-800 text-sm font-bold transition-colors cursor-pointer">
-          {{ 'team.workers.add-modal.tools-add' | translate }}
-        </button>
       </div>
 
-      <div formArrayName="assignedTools" class="flex flex-col gap-3">
-        @for (tool of tools.controls; track $index) {
-          <div class="flex gap-2 items-center animate-in fade-in slide-in-from-top-1">
-            <mat-form-field appearance="outline" class="flex-1 !pb-0">
-              <input matInput [formControlName]="$index"
-                     placeholder="{{ 'team.workers.add-modal.tools-placeholder' | translate }}">
-            </mat-form-field>
-            <button mat-icon-button color="warn" (click)="removeTool($index)" type="button">
-              <mat-icon>delete_outline</mat-icon>
-            </button>
-          </div>
-        }
+      <div class="flex flex-col gap-3">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>{{ 'team.workers.add-modal.tools-placeholder' | translate }}</mat-label>
+          <mat-select formControlName="assignedTools" multiple>
+            @for (machinery of dialogData.machineryList; track machinery.id) {
+              <mat-option [value]="machinery">
+                {{ machinery.name }} (Horas: {{ machinery.maintenanceHours || '0' }}h)
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
 
-        @if (tools.length === 0) {
+        @if (workerForm.get('assignedTools')?.value?.length === 0) {
           <p class="text-center text-slate-400 text-xs italic py-2">
             {{ 'team.workers.add-modal.no-tools-added' | translate }}
           </p>
@@ -56,7 +51,7 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end" class="!gap-3 !p-6">
-    <button mat-button mat-dialog-close class="!rounded-md !px-6">
+    <button mat-button (click)="onCancel()" class="!rounded-md !px-6">
       {{ 'team.workers.add-modal.btn-cancel' | translate }}
     </button>
     <button mat-flat-button color="primary"
