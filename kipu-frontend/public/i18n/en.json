@@ -709,7 +709,8 @@
         "tab-btn-delete": "Delete",
         "tab-status-active": "ACTIVE",
         "tab-status-inactive": "INACTIVE",
-        "no-workers-found": "No workers registered yet."
+        "no-workers-found": "No workers registered yet.",
+        "no-tools": "No tools registered yet"
       },
       "add-modal": {
         "title": "Register New Worker",
@@ -725,6 +726,10 @@
         "btn-save": "Save Worker",
         "btn-cancel": "Cancel",
         "no-tools-added": "No initial tools assigned"
+      },
+      "search": {
+        "placeholder": "Search by name or id...",
+        "title": "Search Worker"
       }
     }
   },

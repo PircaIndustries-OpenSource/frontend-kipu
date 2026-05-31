@@ -709,7 +709,8 @@
         "tab-btn-delete": "Eliminar",
         "tab-status-active": "ACTIVO",
         "tab-status-inactive": "INACTIVO",
-        "no-workers-found": "No se encontraron trabajadores registrados."
+        "no-workers-found": "No se encontraron trabajadores registrados.",
+        "no-tools": "Sin herramientas registradas"
       },
       "add-modal": {
         "title": "Registrar Nuevo Obrero",
@@ -725,6 +726,10 @@
         "btn-save": "Guardar Obrero",
         "btn-cancel": "Cancelar",
         "no-tools-added": "Sin herramientas iniciales asignadas"
+      },
+      "search": {
+        "placeholder": "Buscar por nombre o dni...",
+        "title": "Buscar trabajador"
       }
     }
   },
