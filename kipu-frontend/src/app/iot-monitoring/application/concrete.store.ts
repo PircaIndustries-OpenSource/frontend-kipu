@@ -12,18 +12,47 @@ export class ConcreteStore {
   private loadingSignal = signal<boolean>(false);
   private errorSignal = signal<string | null>(null);
 
+  private simulationInterval: any = null;
+
   loadConcreteSensors() {
     this.loadingSignal.set(true);
     this.concreteApiService.getAllConcreteSensors().subscribe({
       next: (sensors) => {
         this.concreteSensorsSignal.set(sensors);
         this.loadingSignal.set(false);
+        this.startSimulation();
       },
       error: (err) => {
         this.errorSignal.set('Error al conectar con los sensores de curado de concreto.');
         this.loadingSignal.set(false);
       },
     });
+  }
+
+  private startSimulation() {
+    if (this.simulationInterval) return;
+    this.simulationInterval = setInterval(() => {
+      this.concreteSensorsSignal.update((sensors) =>
+        sensors.map((s) => {
+          const newS = new ConcreteEntity();
+          newS.id = s.id;
+          newS.projectId = s.projectId;
+          newS.sensorId = s.sensorId;
+          newS.location = s.location;
+          newS.unit = s.unit;
+          newS.limit = s.limit;
+          newS.state = s.state;
+
+          const tempDelta = (Math.random() - 0.5) * 0.6;
+          newS.temperature = Math.max(10, Math.min(45, Number((s.temperature + tempDelta).toFixed(1))));
+
+          const humDelta = (Math.random() - 0.5) * 1.0;
+          newS.humidity = Math.max(20, Math.min(95, Math.round(s.humidity + humDelta)));
+
+          return newS;
+        })
+      );
+    }, 4000);
   }
 
   deleteConcreteSensor(id: string) {

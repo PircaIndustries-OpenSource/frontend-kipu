@@ -1,7 +1,7 @@
 <section class="concrete-dashboard">
 
   <ul class="sensor-grid" role="list">
-    @for (sensor of concreteSensors(); track sensor.id) {
+    @for (sensor of filteredSensors(); track sensor.id) {
       <li class="sensor-card-item" role="listitem">
         <mat-card class="curing-card" [ngClass]="getSensorStatusClass(sensor.temperature, sensor.limit)">
 
@@ -70,8 +70,8 @@
 
       <nav class="filters" aria-label="Filtros rápidos de sensores" role="group">
         <p class="filters-title">{{ 'iot-monitoring.quickfilters' | translate }}</p>
-        <button class="filter-btn active">{{ 'iot-monitoring.allthesensors' | translate }}</button>
-        <button class="filter-btn outline">{{ 'iot-monitoring.justinofflinestate' | translate }}</button>
+        <button class="filter-btn" [class.active]="filterStatus() === 'ALL'" [class.outline]="filterStatus() !== 'ALL'" (click)="setFilter('ALL')">{{ 'iot-monitoring.allthesensors' | translate }}</button>
+        <button class="filter-btn" [class.active]="filterStatus() === 'OFFLINE'" [class.outline]="filterStatus() !== 'OFFLINE'" (click)="setFilter('OFFLINE')">{{ 'iot-monitoring.justinofflinestate' | translate }}</button>
       </nav>
     </mat-card>
   </aside>

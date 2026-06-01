@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { GeolocalizationEntity } from '../../domain/geolocalization.entity';
-import { GeolocalizationResponse } from '../models/geolocalization.response';
+import { GeolocalizationResource, GeolocalizationResponse } from '../models/geolocalization.response';
 import { GeolocalizationAssembler } from '../assemblers/geolocalization.assembler';
 import { environment } from '../../../../environments/environment';
 
@@ -18,5 +18,19 @@ export class GeolocalizationApiService {
     return this.httpClient
       .get<GeolocalizationResponse>(this.geoUrl)
       .pipe(map((response) => GeolocalizationAssembler.toEntitiesFromResponse(response)));
+  }
+
+  createGeolocalizationPoint(point: GeolocalizationEntity): Observable<GeolocalizationEntity> {
+    const body = GeolocalizationAssembler.toResourceFromEntity(point);
+    return this.httpClient
+      .post<GeolocalizationResource>(this.geoUrl, body)
+      .pipe(map((response) => GeolocalizationAssembler.toEntityFromResource(response)));
+  }
+
+  updateGeolocalizationPoint(point: GeolocalizationEntity): Observable<GeolocalizationEntity> {
+    const body = GeolocalizationAssembler.toResourceFromEntity(point);
+    return this.httpClient
+      .put<GeolocalizationResource>(`${this.geoUrl}/${point.id}`, body)
+      .pipe(map((response) => GeolocalizationAssembler.toEntityFromResource(response)));
   }
 }

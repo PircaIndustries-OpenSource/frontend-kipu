@@ -126,7 +126,19 @@
     "addnewccs": "Agregar nuevo sensor de curado de concreto",
     "addnewss": "Agregar nuevo sensor sísmico",
     "addnewhw": "Agregar nuevo sensor de tolvas",
-    "enterdetails": "Introduzca los datos del nuevo punto de control."
+    "enterdetails": "Introduzca los datos del nuevo punto de control.",
+    "addnewgeo": "Agregar nueva ubicación",
+    "addlocation": "Agregar Ubicación",
+    "latitude": "Latitud (0-100)",
+    "longitude": "Longitud (0-100)",
+    "edit": "Editar",
+    "save": "Guardar",
+    "edithopper": "Editar Tolva",
+    "editseismicsensor": "Editar Sensor Sísmico",
+    "editsensor": "Editar Sensor",
+    "attention": "Atención",
+    "configuredetailspoint": "Actualiza los detalles de este punto de control.",
+    "geofencemap": "Mapa de Geocercas"
   },
   "projects_dashboard": {
     "title": "Mis Proyectos",

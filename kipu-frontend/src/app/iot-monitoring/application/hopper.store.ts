@@ -12,18 +12,51 @@ export class HopperStore {
   private loadingSignal = signal<boolean>(false);
   private errorSignal = signal<string | null>(null);
 
+  private simulationInterval: any = null;
+
   loadHopperSensors() {
     this.loadingSignal.set(true);
     this.hopperApiService.getAllHopperSensors().subscribe({
       next: (sensors) => {
         this.hopperSensorsSignal.set(sensors);
         this.loadingSignal.set(false);
+        this.startSimulation();
       },
       error: (err) => {
         this.errorSignal.set('Error fatal en el Store:');
         this.loadingSignal.set(false);
       },
     });
+  }
+
+  private startSimulation() {
+    if (this.simulationInterval) return;
+    this.simulationInterval = setInterval(() => {
+      this.hopperSensorsSignal.update((sensors) =>
+        sensors.map((s) => {
+          const newS = new HopperEntity();
+          newS.id = s.id;
+          newS.projectId = s.projectId;
+          newS.sensorId = s.sensorId;
+          newS.name = s.name;
+          newS.unit = s.unit;
+          newS.limit = s.limit;
+          newS.state = s.state;
+
+          let newL = s.lastLecture - Math.floor(Math.random() * 3 + 1);
+          if (newL < 5) {
+            newL = 85 + Math.floor(Math.random() * 15);
+            newS.state = 'OPTIMUM';
+            console.log(`🚚 Tolva ${s.name} rellenada automáticamente`);
+          } else {
+            newS.state = newL < s.limit ? 'CRITIC' : 'OPTIMUM';
+          }
+          newS.lastLecture = newL;
+
+          return newS;
+        })
+      );
+    }, 6000);
   }
 
   eraseHopperSensor(id: string) {
@@ -46,6 +79,20 @@ export class HopperStore {
       },
       error: (err) => {
         console.error('❌ Error al crear el sensor. Revisa la estructura del JSON', err);
+      },
+    });
+  }
+
+  updateHopperSensor(updatedSensor: HopperEntity) {
+    this.hopperApiService.updateHopperSensor(updatedSensor).subscribe({
+      next: (savedSensor) => {
+        this.hopperSensorsSignal.update((sensors) =>
+          sensors.map((s) => (s.id === savedSensor.id ? savedSensor : s))
+        );
+        console.log('✅ Sensor de tolva actualizado correctamente');
+      },
+      error: (err) => {
+        console.error('❌ Error al actualizar el sensor de tolva.', err);
       },
     });
   }

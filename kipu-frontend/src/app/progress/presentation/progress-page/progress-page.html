@@ -1,36 +1,41 @@
-<div class="p-8 bg-gray-50 min-h-screen">
+<section class="flex flex-col gap-xl p-xl animate-fade-in">
 
   @if (currentView() === 'list') {
-    <div class="flex justify-between items-center mb-6">
+    <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-m sm:gap-0">
       <div>
-        <h1 class="text-2xl font-bold text-gray-800">{{ 'progress.title' | translate }}</h1>
-        <p class="text-sm text-gray-500">{{ 'progress.subtitle' | translate }}</p>
+        <h1 class="text-3xl font-bold text-primary tracking-tight">{{ 'progress.title' | translate }}</h1>
+        <p class="text-sm font-medium text-neutral-border mt-1">{{ 'progress.subtitle' | translate }}</p>
       </div>
-      <button mat-flat-button color="primary" class="!rounded-lg !py-6" (click)="openCreateForm()">
-        <mat-icon>add</mat-icon> {{ 'progress.actions.new' | translate }}
+      <button
+        (click)="openCreateForm()"
+        type="button"
+        matRipple
+        class="w-full sm:w-60 bg-accent text-white! py-5! rounded-m! font-bold! text-base! shadow-md! cursor-pointer transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2"
+      >
+        <mat-icon>add_circle</mat-icon>
+        {{ 'progress.actions.new' | translate }}
       </button>
-    </div>
+    </header>
 
-    <mat-tab-group animationDuration="0ms" class="bg-white rounded-t-xl shadow-sm border-b border-gray-100">
-
+    <mat-tab-group animationDuration="0ms" class="bg-white rounded-l border border-neutral-border/20 shadow-sm mt-m overflow-hidden">
       <mat-tab [label]="'progress.tabs.log' | translate">
-        <div class="p-6">
-          <div class="flex flex-wrap gap-4 mb-6 items-center">
-            <div class="w-[280px]">
+        <div class="p-xl flex flex-col gap-l">
+          <div class="flex flex-wrap gap-m items-center">
+            <div class="w-full sm:w-[280px]">
               <app-autocomplete-filter-list
                 [listOptions]="activityOptions"
                 [placeholder]="'progress.filters.activity' | translate"
                 (optionSelected)="onSearchChange($event)">
               </app-autocomplete-filter-list>
             </div>
-            <div class="w-[280px]">
+            <div class="w-full sm:w-[280px]">
               <app-autocomplete-filter-list
                 [listOptions]="specialtiesOptions"
                 [placeholder]="'progress.filters.specialty' | translate"
                 (optionSelected)="onSpecialtySelected($event)">
               </app-autocomplete-filter-list>
             </div>
-            <div class="w-[300px]">
+            <div class="w-full sm:w-[300px]">
               <mat-form-field appearance="outline" class="w-full bg-white !mb-[-1.25em]">
                 <mat-date-range-input [rangePicker]="picker">
                   <input matStartDate [placeholder]="'progress.filters.start_date' | translate" #startInput>
@@ -42,31 +47,31 @@
             </div>
           </div>
 
-          <div class="border border-gray-100 rounded-lg overflow-hidden">
-            <table class="w-full text-left text-sm">
-              <thead class="bg-gray-50 text-gray-400 uppercase font-semibold text-xs">
+          <div class="border border-neutral-border/20 rounded-m overflow-hidden">
+            <table class="w-full text-left text-sm border-collapse">
+              <thead class="bg-neutral-bg text-primary uppercase font-bold text-xs tracking-wider border-b border-neutral-border/20">
               <tr>
                 <th class="px-6 py-4">{{ 'progress.table.date' | translate }}</th>
                 <th class="px-6 py-4">{{ 'progress.table.activity' | translate }}</th>
                 <th class="px-6 py-4">{{ 'progress.table.specialty' | translate }}</th>
                 <th class="px-6 py-4">{{ 'progress.table.advance' | translate }}</th>
-                <th class="px-6 py-4">{{ 'progress.table.status' | translate }}</th>
+                <th class="px-6 py-4 text-center">{{ 'progress.table.status' | translate }}</th>
               </tr>
               </thead>
-              <tbody class="divide-y divide-gray-100">
+              <tbody class="divide-y divide-neutral-border/10">
                 @for (item of store.progressList(); track item.id) {
-                  <tr class="hover:bg-gray-50 transition-colors">
-                    <td class="px-6 py-4">{{ item.lastUpdate | date:'dd/MM/yyyy' }}</td>
+                  <tr class="hover:bg-neutral-bg transition-colors">
+                    <td class="px-6 py-4 font-medium text-neutral-border">{{ item.lastUpdate | date:'dd/MM/yyyy' }}</td>
                     <td class="px-6 py-4">
-                      <div class="font-bold text-gray-800">{{ item.activityName }}</div>
-                      <div class="text-xs text-gray-400 font-normal">{{ item.details }}</div>
+                      <div class="font-bold text-primary text-base">{{ item.activityName }}</div>
+                      <div class="text-xs text-neutral-border font-medium">{{ item.details }}</div>
                     </td>
-                    <td class="px-6 py-4 text-gray-500">{{ item.specialty }}</td>
-                    <td class="px-6 py-4 font-bold">{{ item.currentPercentage }}%</td>
-                    <td class="px-6 py-4">
-            <span [class]="getStatusBadgeClass(item.status)">
-              {{ 'progress.status.' + item.status.toLowerCase() | translate }}
-            </span>
+                    <td class="px-6 py-4 font-medium text-neutral-border">{{ item.specialty }}</td>
+                    <td class="px-6 py-4 font-black text-primary text-lg">{{ item.currentPercentage }}%</td>
+                    <td class="px-6 py-4 text-center">
+                      <span [class]="getStatusBadgeClass(item.status)">
+                        {{ 'progress.status.' + item.status.toLowerCase() | translate }}
+                      </span>
                     </td>
                   </tr>
                 }
@@ -77,32 +82,36 @@
       </mat-tab>
 
       <mat-tab [label]="'progress.tabs.photos' | translate">
-        <div class="p-6">
-          <div class="flex justify-between items-center mb-6">
-            <div class="flex gap-2">
-              <button mat-stroked-button class="!rounded-md !text-blue-500 !border-blue-500">Excavaciones</button>
-              <button mat-stroked-button class="!rounded-md !text-blue-500 !border-blue-500">Cimentación</button>
+        <div class="p-xl flex flex-col gap-l">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-m sm:gap-0">
+            <div class="flex gap-s flex-wrap">
+              <button class="px-4 py-2 border border-accent text-accent font-bold rounded-s text-sm hover:bg-accent/10 transition-colors">Excavaciones</button>
+              <button class="px-4 py-2 border border-neutral-border/20 text-neutral-border font-bold rounded-s text-sm hover:bg-neutral-bg transition-colors">Cimentación</button>
             </div>
-            <div class="flex gap-2">
-              <button mat-button class="text-gray-500">
+            <div class="flex gap-m w-full sm:w-auto">
+              <button class="px-4 py-2 flex items-center justify-center gap-2 text-neutral-border font-bold hover:text-primary transition-colors cursor-pointer">
                 <mat-icon>download</mat-icon> {{ 'progress.actions.export' | translate }}
               </button>
-              <button mat-flat-button class="!bg-gray-800 !text-white !rounded-md">
+              <button class="px-6 py-2 bg-primary text-white font-bold rounded-s shadow-sm hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto">
                 <mat-icon>add</mat-icon> {{ 'progress.actions.upload' | translate }}
               </button>
             </div>
           </div>
 
-          <div class="grid grid-cols-3 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-l">
             @for (photo of mockPhotos; track photo.url) {
-              <div class="h-48 bg-gray-200 rounded-xl relative overflow-hidden bg-cover bg-center shadow-sm hover:scale-[1.02] transition-transform cursor-pointer"
+              <div class="h-56 bg-neutral-bg rounded-m relative overflow-hidden bg-cover bg-center shadow-sm hover:shadow-md hover:scale-[1.02] transition-all cursor-pointer border border-neutral-border/10"
                    [style.background-image]="'url(' + photo.url + ')'">
                 <div class="absolute inset-0 bg-black/10 hover:bg-transparent transition-colors"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent text-white">
+                  <p class="font-bold text-sm">{{photo.title}}</p>
+                  <p class="text-xs opacity-80">{{photo.date}}</p>
+                </div>
               </div>
             }
-
-            <div class="h-48 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center text-gray-400 cursor-pointer hover:bg-gray-50 hover:border-[#3498DB] hover:text-[#3498DB] transition-all">
-              <mat-icon class="scale-150">add</mat-icon>
+            <div class="h-56 border-2 border-dashed border-neutral-border/40 rounded-m flex flex-col gap-2 items-center justify-center text-neutral-border cursor-pointer hover:bg-neutral-bg hover:border-accent hover:text-accent transition-all group">
+              <mat-icon class="scale-150 transition-transform group-hover:scale-[1.75]">add</mat-icon>
+              <span class="font-bold text-sm mt-2">Agregar Foto</span>
             </div>
           </div>
         </div>
@@ -111,92 +120,108 @@
   }
 
   @if (currentView() === 'create') {
-    <div class="flex gap-6">
-      <div class="flex-grow bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">{{ 'progress.form.title' | translate }}</h2>
+    <div class="flex flex-col lg:flex-row gap-xl">
+      <div class="flex-grow bg-white p-xl rounded-l shadow-sm border border-neutral-border/20 flex flex-col gap-l">
+        <h2 class="text-2xl font-bold text-primary tracking-tight">{{ 'progress.form.title' | translate }}</h2>
 
-        <form [formGroup]="progressForm" class="grid grid-cols-2 gap-x-6 gap-y-4">
-          <div class="flex flex-col gap-1">
-            <label class="text-xs font-bold text-gray-400 uppercase">{{ 'progress.form.date' | translate }}</label>
-            <input type="date" formControlName="date" class="bg-gray-50 border border-gray-200 p-3 rounded-lg outline-none">
+        <form [formGroup]="progressForm" class="grid grid-cols-1 sm:grid-cols-2 gap-x-xl gap-y-m">
+          <div class="flex flex-col gap-xs">
+            <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.date' | translate }}</label>
+            <input type="date" formControlName="date" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary">
           </div>
-          <div class="flex flex-col gap-1">
-            <label class="text-xs font-bold text-gray-400 uppercase">{{ 'progress.form.specialty' | translate }}</label>
-            <select formControlName="specialty" class="bg-gray-50 border border-gray-200 p-3 rounded-lg outline-none">
-              <option value="">{{ 'progress.form.specialty' | translate }}</option>
+          <div class="flex flex-col gap-xs">
+            <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.specialty' | translate }}</label>
+            <select formControlName="specialty" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary">
+              <option value="" disabled selected>{{ 'progress.form.specialty' | translate }}</option>
               @for (opt of specialtiesOptions; track opt) { <option [value]="opt">{{opt}}</option> }
             </select>
           </div>
-          <div class="col-span-2 flex flex-col gap-1">
-            <label class="text-xs font-bold text-gray-400 uppercase">{{ 'progress.form.activity' | translate }}</label>
-            <input type="text" formControlName="activityName" [placeholder]="'progress.form.activity_placeholder' | translate" class="bg-gray-50 border border-gray-200 p-3 rounded-lg outline-none">
+          <div class="sm:col-span-2 flex flex-col gap-xs">
+            <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.activity' | translate }}</label>
+            <input type="text" formControlName="activityName" [placeholder]="'progress.form.activity_placeholder' | translate" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary">
           </div>
-          <div class="flex flex-col gap-1">
-            <label class="text-xs font-bold text-gray-400 uppercase">{{ 'progress.form.location' | translate }}</label>
-            <input type="text" formControlName="location" [placeholder]="'progress.form.location_placeholder' | translate" class="bg-gray-50 border border-gray-200 p-3 rounded-lg outline-none">
+          <div class="flex flex-col gap-xs">
+            <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.location' | translate }}</label>
+            <input type="text" formControlName="location" [placeholder]="'progress.form.location_placeholder' | translate" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary">
           </div>
-          <div class="flex flex-col gap-1">
-            <label class="text-xs font-bold text-gray-400 uppercase">{{ 'progress.form.percentage' | translate }}</label>
-            <div class="relative"><input type="number" formControlName="percentage" class="bg-gray-50 border border-gray-200 p-3 rounded-lg outline-none w-full pr-10"><span class="absolute right-4 top-3 text-gray-400 font-bold">%</span></div>
+          <div class="flex flex-col gap-xs">
+            <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.percentage' | translate }}</label>
+            <div class="relative flex items-center">
+              <input type="number" formControlName="percentage" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-bold text-primary w-full pr-10">
+              <span class="absolute right-4 text-neutral-border font-black">%</span>
+            </div>
           </div>
-          <div class="col-span-2 flex flex-col gap-1">
-            <label class="text-xs font-bold text-gray-400 uppercase">{{ 'progress.form.description' | translate }}</label>
-            <textarea formControlName="description" rows="4" [placeholder]="'progress.form.description_placeholder' | translate" class="bg-gray-50 border border-gray-200 p-3 rounded-lg outline-none resize-none"></textarea>
+          <div class="sm:col-span-2 flex flex-col gap-xs">
+            <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.description' | translate }}</label>
+            <textarea formControlName="description" rows="4" [placeholder]="'progress.form.description_placeholder' | translate" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary resize-none"></textarea>
           </div>
-          <div class="flex flex-col gap-1">
-            <label class="text-xs font-bold text-gray-400 uppercase">{{ 'progress.form.responsible' | translate }}</label>
-
-            <select
-              formControlName="responsible"
-              class="bg-gray-50 border border-gray-200 p-3 rounded-lg outline-none"
-            >
+          <div class="flex flex-col gap-xs">
+            <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.responsible' | translate }}</label>
+            <select formControlName="responsible" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary">
               <option value="" disabled selected>Seleccione un Gestor</option>
               @for (name of gestoresOptions(); track name) {
                 <option [value]="name">{{ name }}</option>
               }
             </select>
           </div>
-          <div class="flex flex-col gap-1">
-            <label class="text-xs font-bold text-gray-400 uppercase">{{ 'progress.form.workers' | translate }}</label>
-            <input type="number" formControlName="workers" class="bg-gray-50 border border-gray-200 p-3 rounded-lg outline-none">
+          <div class="flex flex-col gap-xs">
+            <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.workers' | translate }}</label>
+            <input type="number" formControlName="workers" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary">
           </div>
-          <div class="col-span-2 flex flex-col gap-2 mt-2">
-            <label class="text-xs font-bold text-gray-400 uppercase">{{ 'progress.form.weather.label' | translate }}</label>
-            <div class="flex gap-2">
-              <button type="button" (click)="setWeather('sunny')" [class]="selectedWeather() === 'sunny' ? 'bg-gray-800 text-white' : 'border border-gray-200 text-gray-600'" class="px-6 py-2 rounded-md text-sm font-medium transition-colors">{{ 'progress.form.weather.sunny' | translate }}</button>
-              <button type="button" (click)="setWeather('cloudy')" [class]="selectedWeather() === 'cloudy' ? 'bg-gray-800 text-white' : 'border border-gray-200 text-gray-600'" class="px-6 py-2 rounded-md text-sm font-medium transition-colors">{{ 'progress.form.weather.cloudy' | translate }}</button>
-              <button type="button" (click)="setWeather('rainy')" [class]="selectedWeather() === 'rainy' ? 'bg-gray-800 text-white' : 'border border-gray-200 text-gray-600'" class="px-6 py-2 rounded-md text-sm font-medium transition-colors">{{ 'progress.form.weather.rainy' | translate }}</button>
+          <div class="sm:col-span-2 flex flex-col gap-s mt-2">
+            <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.weather.label' | translate }}</label>
+            <div class="flex gap-m flex-wrap">
+              <button type="button" (click)="setWeather('sunny')" [class]="selectedWeather() === 'sunny' ? 'bg-primary text-white border-primary shadow-md' : 'border-neutral-border/20 text-neutral-border bg-neutral-bg'" class="px-6 py-2 rounded-s text-sm font-bold transition-all border hover:border-primary cursor-pointer">{{ 'progress.form.weather.sunny' | translate }}</button>
+              <button type="button" (click)="setWeather('cloudy')" [class]="selectedWeather() === 'cloudy' ? 'bg-primary text-white border-primary shadow-md' : 'border-neutral-border/20 text-neutral-border bg-neutral-bg'" class="px-6 py-2 rounded-s text-sm font-bold transition-all border hover:border-primary cursor-pointer">{{ 'progress.form.weather.cloudy' | translate }}</button>
+              <button type="button" (click)="setWeather('rainy')" [class]="selectedWeather() === 'rainy' ? 'bg-primary text-white border-primary shadow-md' : 'border-neutral-border/20 text-neutral-border bg-neutral-bg'" class="px-6 py-2 rounded-s text-sm font-bold transition-all border hover:border-primary cursor-pointer">{{ 'progress.form.weather.rainy' | translate }}</button>
             </div>
           </div>
         </form>
 
-        <div class="mt-10 flex gap-4">
-          <button mat-flat-button class="!bg-gray-800 !text-white !py-6 flex-grow rounded-lg text-lg font-bold" (click)="saveProgress()">{{ 'progress.actions.save' | translate }}</button>
-          <button mat-button class="w-1/4 text-gray-500 font-bold" (click)="cancelCreation()">{{ 'progress.actions.cancel' | translate }}</button>
+        <div class="mt-xl flex flex-col sm:flex-row gap-m sm:gap-l border-t border-neutral-border/10 pt-l">
+          <button mat-flat-button class="!bg-primary !text-white !py-6 flex-grow rounded-m! text-lg! font-bold! shadow-md hover:bg-primary/90 transition-colors" (click)="saveProgress()">{{ 'progress.actions.save' | translate }}</button>
+          <button mat-button class="sm:w-48 text-neutral-border font-bold hover:text-primary transition-colors" (click)="cancelCreation()">{{ 'progress.actions.cancel' | translate }}</button>
         </div>
       </div>
-      <div class="w-[350px] flex flex-col gap-6">
-        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm h-fit">
-          <h3 class="font-bold text-gray-800 text-sm mb-4">Daily Statistics</h3>
-          <div class="flex flex-col gap-3 text-sm text-gray-600">
-            <div class="flex justify-between border-b pb-2"><span>Personnel on site:</span> <strong>18</strong></div>
-            <div class="flex justify-between"><span>Weather:</span> <strong>Sunny 25°C</strong></div>
+      <aside class="w-full lg:w-[350px] flex flex-col gap-xl">
+        <div class="bg-white p-xl rounded-l border border-neutral-border/20 shadow-sm flex flex-col gap-m">
+          <h3 class="text-xs font-black text-primary uppercase tracking-widest border-b border-neutral-border/10 pb-3">Daily Statistics</h3>
+          <div class="flex flex-col gap-4 text-sm">
+            <div class="flex justify-between items-center text-neutral-border font-medium">
+              <span>Personnel on site:</span> 
+              <strong class="text-primary font-black text-base">18</strong>
+            </div>
+            <div class="flex justify-between items-center text-neutral-border font-medium">
+              <span>Weather:</span> 
+              <strong class="text-primary font-black text-base">Sunny 25°C</strong>
+            </div>
+            <div class="flex justify-between items-center text-neutral-border font-medium">
+              <span>Hours worked:</span> 
+              <strong class="text-primary font-black text-base">8.5 h</strong>
+            </div>
           </div>
         </div>
-      </div>
+        <div class="bg-gradient-to-br from-primary to-[#1a252f] p-xl rounded-l shadow-sm flex flex-col gap-s text-white">
+          <h3 class="font-bold text-lg mb-2">Consejo</h3>
+          <p class="text-sm opacity-90 leading-relaxed">Registrar el avance de manera diaria asegura un mejor control presupuestal y de tiempos en el proyecto. Asegúrate de incluir fotografías.</p>
+        </div>
+      </aside>
     </div>
   }
 
   <ng-template #confirmDialogTemplate>
-    <div class="p-6 text-center">
-      <h2 class="text-xl font-bold mb-2">{{ 'progress.dialog.title' | translate }}</h2>
-      <p class="text-gray-800 font-medium">{{ 'progress.dialog.question' | translate }}</p>
-      <p class="text-xs text-gray-400 mt-1">{{ 'progress.dialog.warning' | translate }}</p>
-      <div class="flex gap-4 mt-8">
-        <button mat-stroked-button mat-dialog-close="discard" class="flex-grow !py-5">{{ 'progress.dialog.discard' | translate }}</button>
-        <button mat-flat-button color="primary" mat-dialog-close="save" class="flex-grow !py-5">{{ 'progress.dialog.save' | translate }}</button>
+    <div class="p-xl text-center flex flex-col gap-m items-center">
+      <div class="w-16 h-16 rounded-full bg-danger/10 flex items-center justify-center text-danger mb-2">
+        <mat-icon class="scale-150">warning</mat-icon>
+      </div>
+      <h2 class="text-2xl font-bold text-primary tracking-tight">{{ 'progress.dialog.title' | translate }}</h2>
+      <p class="text-neutral-border font-medium">{{ 'progress.dialog.question' | translate }}</p>
+      <p class="text-xs text-danger font-bold uppercase tracking-wider">{{ 'progress.dialog.warning' | translate }}</p>
+      <div class="flex flex-col sm:flex-row gap-m mt-l w-full">
+        <button mat-stroked-button mat-dialog-close="discard" class="flex-1 !py-5 !border-danger !text-danger !font-bold hover:!bg-danger hover:!text-white transition-colors">{{ 'progress.dialog.discard' | translate }}</button>
+        <button mat-flat-button color="primary" mat-dialog-close="save" class="flex-1 !py-5 !font-bold">{{ 'progress.dialog.save' | translate }}</button>
       </div>
     </div>
   </ng-template>
 
-</div>
+</section>

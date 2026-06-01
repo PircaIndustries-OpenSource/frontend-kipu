@@ -1,4 +1,4 @@
-<div class="grid grid-cols-2 gap-l w-full">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-l w-full items-stretch">
   @for (material of inventoryMaterials(); track material.id){
     <app-inventory-item [inventoryMaterial]="material"></app-inventory-item>
   }

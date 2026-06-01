@@ -1,6 +1,30 @@
 <section class="geo-dashboard">
 
+  <!-- ─── Map section ─── -->
   <section class="map-section">
+
+    <!-- Map header -->
+    <div class="map-header">
+      <div class="map-header-left">
+        <mat-icon class="map-header-icon">explore</mat-icon>
+        <div>
+          <h3 class="map-title">{{ 'iot-monitoring.geofencemap' | translate }}</h3>
+          <p class="map-subtitle">{{ 'iot-monitoring.worklimit' | translate }}</p>
+        </div>
+      </div>
+      <div class="map-stats">
+        <div class="map-stat inside">
+          <span class="stat-num">{{ getInsideCount() }}</span>
+          <span class="stat-lbl">Dentro</span>
+        </div>
+        <div class="map-stat outside">
+          <span class="stat-num">{{ getOutsideCount() }}</span>
+          <span class="stat-lbl">Fuera</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid map -->
     <div class="grid-container">
 
       <svg class="geofence-svg" width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -10,15 +34,30 @@
       @for (equip of geolocalizationPoints(); track equip.numberId) {
         <div class="map-marker" [style.left.%]="equip.longitude" [style.top.%]="equip.latitude">
           <div class="marker-tooltip" [ngClass]="equip.state">
-            @if (equip.state === 'OUTSIDE OF LIMIT') { <mat-icon class="alert-icon">warning</mat-icon> }
+            @if (equip.state === 'OUTSIDE OF LIMIT') {
+              <mat-icon class="alert-icon">warning</mat-icon>
+            } @else {
+              <mat-icon class="alert-icon">check_circle</mat-icon>
+            }
             {{ equip.name }}
           </div>
-          <div class="marker-dot" [ngClass]="equip.state"></div>
+          <div class="marker-pin" [ngClass]="equip.state">
+            <mat-icon class="pin-icon">location_on</mat-icon>
+          </div>
         </div>
       }
 
+      <!-- Legend -->
       <mat-card class="map-legend">
         <span class="legend-title">{{ 'iot-monitoring.legend' | translate }}</span>
+        <div class="legend-item">
+          <div class="legend-dot inside-dot"></div>
+          <span>Dentro del límite</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot outside-dot"></div>
+          <span>Fuera del límite</span>
+        </div>
         <div class="legend-item">
           <div class="dashed-line"></div>
           <span>{{ 'iot-monitoring.worklimit' | translate }}</span>
@@ -28,20 +67,54 @@
     </div>
   </section>
 
+  <!-- ─── Equipment sidebar ─── -->
   <aside class="equipment-panel">
     <mat-card class="equipment-card">
-      <h3 class="panel-title">{{ 'iot-monitoring.trackedteams' | translate }}</h3>
+
+      <div class="panel-header">
+        <h3 class="panel-title">{{ 'iot-monitoring.trackedteams' | translate }}</h3>
+        <span class="panel-count">{{ geolocalizationPoints().length }}</span>
+      </div>
+
+      <button mat-flat-button color="primary" class="add-geo-btn" (click)="openAddDialog()">
+        <mat-icon>add</mat-icon>
+        {{ 'iot-monitoring.addlocation' | translate }}
+      </button>
 
       <ul class="equipment-list">
         @for (equip of geolocalizationPoints(); track equip.id) {
           <li class="eq-item" [ngClass]="equip.state">
+
+            <!-- State icon -->
+            <div class="eq-icon" [ngClass]="equip.state">
+              @if (equip.state === 'OUTSIDE OF LIMIT') {
+                <mat-icon>warning</mat-icon>
+              } @else {
+                <mat-icon>my_location</mat-icon>
+              }
+            </div>
+
+            <!-- Info -->
             <div class="eq-info">
               <span class="eq-name">{{ equip.name }}</span>
+              <span class="eq-coords">
+                Lat {{ equip.latitude | number:'1.1-2' }} · Lon {{ equip.longitude | number:'1.1-2' }}
+              </span>
               <span class="eq-status-text" [ngClass]="equip.state">
-                {{ 'iot-monitoring.state' | translate }} {{ equip.state }}
+                {{ equip.state === 'OUTSIDE OF LIMIT' ? 'Fuera del límite' : 'Dentro del límite' }}
               </span>
             </div>
-            <div class="status-dot" [ngClass]="equip.state"></div>
+
+            <!-- Actions (Edit & Status) -->
+            <div class="eq-actions">
+              <button class="eq-edit-btn" (click)="openEditDialog(equip); $event.stopPropagation()" title="Configurar">
+                <mat-icon>tune</mat-icon>
+              </button>
+              <div class="status-pill" [ngClass]="equip.state">
+                <div class="pulse-dot" [ngClass]="equip.state"></div>
+              </div>
+            </div>
+
           </li>
         }
       </ul>

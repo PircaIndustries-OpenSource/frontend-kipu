@@ -4,12 +4,12 @@
       {{'inventory.title' | translate }}
     </h1>
   </header>
-  <div class="flex flex-row gap-xl">
+  <div class="flex flex-col lg:flex-row gap-xl">
     <div class="flex-1 min-w-0 flex flex-col gap-l">
       <app-inventory-list [inventoryMaterials]="inventoryMaterials()"></app-inventory-list>
     </div>
-    <aside class="w-64 flex flex-col gap-xl items-center">
-      <div class="flex flex-col gap-m">
+    <aside class="w-full lg:w-64 flex flex-col gap-xl">
+      <div class="flex flex-col gap-m w-full">
         <h3 class="text-xs font-black text-primary uppercase tracking-widest
                    border-b border-primary/10 pb-2">
           {{ 'general.summary' | translate }}

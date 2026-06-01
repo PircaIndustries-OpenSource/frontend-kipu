@@ -1,0 +1,58 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.inventory-card {
+  background-color: var(--color-neutral-bg) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: var(--radius-l) !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 0 !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+}
+
+.inventory-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15), 0 4px 12px -4px rgba(0, 0, 0, 0.1) !important;
+  border-color: var(--color-primary) !important;
+}
+
+.inventory-header {
+  padding: var(--spacing-l) var(--spacing-xl) !important;
+  margin: 0 !important;
+  background: linear-gradient(135deg, var(--color-primary) 0%, #1a252f 100%) !important;
+  color: #ffffff !important;
+}
+
+.inventory-content {
+  padding: var(--spacing-xl) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--spacing-xl) !important;
+  margin: 0 !important;
+  flex: 1;
+}
+
+.inventory-footer {
+  padding: 0 var(--spacing-xl) var(--spacing-xl) var(--spacing-xl) !important;
+  margin: 0 !important;
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-m);
+}
+
+@media (min-width: 640px) {
+  .inventory-grid {
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: var(--spacing-l);
+  }
+}

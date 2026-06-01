@@ -5,6 +5,7 @@ import { HopperStore } from '../../../application/hopper.store';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { AddHopperWatchDialogComponent } from '../../forms/hopper-watch/add-hopper-watch-dialog-component/add-hopper-watch-dialog-component';
+import { EditHopperWatchDialogComponent } from '../../forms/hopper-watch/edit-hopper-watch-dialog-component/edit-hopper-watch-dialog-component';
 import { HopperEntity } from '../../../domain/hopper.entity';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -44,6 +45,18 @@ export class HopperWatch implements OnInit {
       console.log('Resultado del diálogo:', result); // Revisa esto en la consola (F12)
       if (result) {
         this.store.addHopperSensor(result);
+      }
+    });
+  }
+
+  openEditDialog(sensor: HopperEntity) {
+    const dialogRef = this.dialog.open(EditHopperWatchDialogComponent, {
+      data: sensor,
+    });
+
+    dialogRef.afterClosed().subscribe((result: HopperEntity) => {
+      if (result) {
+        this.store.updateHopperSensor(result);
       }
     });
   }

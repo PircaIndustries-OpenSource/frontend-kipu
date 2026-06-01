@@ -5,6 +5,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MatRipple } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { RequestModifyDialog } from './request-modify-dialog/request-modify-dialog';
 import { RequestDetailDialog } from './request-detail-dialog/request-detail-dialog';
 import { LogisticsStore } from '../../../application/logistics.store';
@@ -12,7 +13,7 @@ import { DatePipe, NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-request-item',
-  imports: [MatCardModule, TranslatePipe, MatRipple, MatDialogModule, DatePipe, NgClass],
+  imports: [MatCardModule, TranslatePipe, MatRipple, MatDialogModule, DatePipe, NgClass, MatIconModule],
   templateUrl: './request-item.html',
   styleUrl: './request-item.css',
 })

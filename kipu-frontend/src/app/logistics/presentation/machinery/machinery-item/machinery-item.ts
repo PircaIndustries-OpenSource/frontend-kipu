@@ -9,9 +9,11 @@ import { MachineryHistoryDialog } from '../machinery-history-dialog/machinery-hi
 import { MachineryAssignDialog } from '../machinery-assign-dialog/machinery-assign-dialog';
 import { MachineryMaintenanceDialog } from '../machinery-maintenance-dialog/machinery-maintenance-dialog';
 
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-machinery-item',
-  imports: [MatCardModule, MatIconModule, TranslatePipe],
+  imports: [MatCardModule, MatIconModule, TranslatePipe, CommonModule],
   templateUrl: './machinery-item.html',
   styleUrl: './machinery-item.css',
 })

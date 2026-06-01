@@ -126,7 +126,19 @@
     "addnewccs": "Add New Concrete Curing Sensor",
     "addnewss": "Add New Seismic Sensor",
     "addnewhw": "Add New Hopper Watch",
-    "enterdetails": "Enter the details for the new monitoring point."
+    "enterdetails": "Enter the details for the new monitoring point.",
+    "addnewgeo": "Add New Location",
+    "addlocation": "Add Location",
+    "latitude": "Latitude (0-100)",
+    "longitude": "Longitude (0-100)",
+    "edit": "Edit",
+    "save": "Save",
+    "edithopper": "Edit Hopper",
+    "editseismicsensor": "Edit Seismic Sensor",
+    "editsensor": "Edit Sensor",
+    "attention": "Attention",
+    "configuredetailspoint": "Update the details for this monitoring point.",
+    "geofencemap": "Geofence Map"
   },
   "logout": {
     "title": "Logged out",

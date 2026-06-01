@@ -1,58 +1,79 @@
-<mat-card class="bg-white! border! border-primary! rounded-m! w-full overflow-hidden! flex! flex-col p-0! mb-l">
-  <div class="bg-primary! text-white! px-xl! py-m! flex flex-row justify-between items-center m-0!">
+<mat-card class="machinery-card">
+  <!-- Header con degradado dinámico según estado -->
+  <div class="machinery-header flex flex-col sm:flex-row justify-between items-start sm:items-center gap-m sm:gap-0"
+    [ngClass]="{
+         'in-use': item().status === 'IN_USE',
+         'urgent': item().status === 'URGENT_MAINTENANCE'
+       }">
     <div class="flex flex-row items-center gap-m">
-      <span class="font-bold text-xl">{{ item().id }}</span>
-      <span class="text-xs font-bold tracking-widest uppercase bg-white/20 px-2 py-0.5 rounded">
+      <span class="font-bold text-xl tracking-tight">{{ item().id }}</span>
+      <span
+        class="text-xs font-bold tracking-widest uppercase bg-white/20 px-2 py-0.5 rounded backdrop-blur-sm border border-white/10">
         {{ statusKey | translate }}
       </span>
     </div>
-    <div class="flex flex-row items-center gap-m">
-      <span class="text-sm opacity-80">
+    <div class="text-sm opacity-90 mt-2 sm:mt-0 flex items-center gap-2">
+      <span class="bg-white/10 px-3 py-1 rounded-full border border-white/10">
         {{ 'machinery.card.header.registration' | translate }}: {{ item().registrationDate }}
       </span>
-      <button (click)="openHistory()"
-              class="bg-white/20 hover:bg-white/30 text-white rounded-full w-8 h-8 flex items-center justify-center cursor-pointer transition-colors"
-              [title]="'machinery.card.header.history' | translate">
-        <mat-icon class="text-lg">history</mat-icon>
-      </button>
     </div>
   </div>
-  <mat-card-content class="p-xl! flex! flex-col gap-xl! m-0!">
-    <div class="grid grid-cols-4 gap-l">
+
+  <mat-card-content class="machinery-content">
+    <!-- Grid adaptable: 1 col en móvil, 2 en tablet, 4 en desktop -->
+    <div class="machinery-grid">
       <div class="flex flex-col gap-1">
-        <p class="text-xs text-neutral-border font-medium">{{ 'machinery.card.fields.equipment' | translate }}</p>
-        <p class="font-bold text-lg text-primary">{{ item().name }}</p>
+        <p class="text-xs text-neutral-border font-bold uppercase tracking-wider">{{ 'machinery.card.fields.equipment' |
+          translate }}</p>
+        <p class="font-bold text-lg text-primary truncate">{{ item().name }}</p>
       </div>
 
       <div class="flex flex-col gap-1">
-        <p class="text-xs text-neutral-border font-medium">{{ 'machinery.card.fields.assigned' | translate }}</p>
-        <p class="text-base font-medium text-primary">{{ item().assignedTo || '-' }}</p>
+        <p class="text-xs text-neutral-border font-bold uppercase tracking-wider">{{ 'machinery.card.fields.assigned' |
+          translate }}</p>
+        <p class="text-base font-semibold text-primary truncate">{{ item().assignedTo || '-' }}</p>
       </div>
+
       <div class="flex flex-col gap-1">
-        <p class="text-xs text-neutral-border font-medium">{{ 'machinery.card.fields.maintenance' | translate }}</p>
-        <p class="font-bold text-base text-primary">{{ item().maintenanceHours }}</p>
+        <p class="text-xs text-neutral-border font-bold uppercase tracking-wider">{{ 'machinery.card.fields.maintenance'
+          | translate }}</p>
+        <p class="text-base font-bold text-primary"
+          [ngClass]="{'text-danger!': item().status === 'URGENT_MAINTENANCE'}">
+          {{ item().maintenanceHours }} hrs
+        </p>
       </div>
     </div>
+
+    <!-- Detalle de asignación (Estilo del primer bloque) -->
     <div class="border! border-neutral-border! rounded-m! p-l! bg-neutral-bg! flex flex-col gap-s">
-      <p class="font-bold text-primary">{{ 'machinery.card.fields.assignment-detail' | translate }}</p>
-      <p class="text-sm text-primary leading-relaxed">{{ item().assignmentDetail }}</p>
+      <p class="text-xs text-neutral-border font-bold uppercase tracking-wider">{{
+        'machinery.card.fields.assignment-detail' | translate }}</p>
+      <p class="text-sm text-primary leading-relaxed">{{ item().assignmentDetail || '-' }}</p>
     </div>
   </mat-card-content>
-  <mat-card-actions class="px-xl! pb-xl! pt-0! flex! flex-row gap-l! w-full justify-between m-0!">
+
+  <!-- Acciones con iconos y responsive -->
+  <mat-card-actions class="machinery-actions">
     @if (item().status === 'IN_USE') {
-      <button (click)="registerReturn()"
-              class="flex-1 bg-accent! text-white! font-bold! rounded-m! py-s! cursor-pointer transition-base hover:brightness-110">
-        {{ 'machinery.card.actions.return' | translate }}
-      </button>
+    <button matRipple (click)="registerReturn()" class="btn-action-primary bg-success! text-white!">
+      <mat-icon class="text-base">keyboard_return</mat-icon>
+      {{ 'machinery.card.actions.return' | translate }}
+    </button>
     } @else {
-      <button (click)="openAssign()"
-              class="flex-1 bg-accent! text-white! font-bold! rounded-m! py-s! cursor-pointer transition-base hover:brightness-110">
-        {{ 'machinery.card.actions.assign' | translate }}
-      </button>
+    <button matRipple (click)="openAssign()" class="btn-action-primary bg-accent! text-white!">
+      <mat-icon class="text-base">assignment_ind</mat-icon>
+      {{ 'machinery.card.actions.assign' | translate }}
+    </button>
     }
-    <button (click)="registerMaintenance()"
-            class="flex-1 bg-danger! text-white! font-bold! rounded-m! py-s! cursor-pointer transition-base hover:brightness-110">
+
+    <button matRipple (click)="registerMaintenance()" class="btn-action-primary bg-danger! text-white!">
+      <mat-icon class="text-base">build</mat-icon>
       {{ 'machinery.card.actions.maintenance' | translate }}
+    </button>
+
+    <button matRipple (click)="openHistory()" class="btn-action-primary bg-primary! text-white!">
+      <mat-icon class="text-base">history</mat-icon>
+      {{ 'machinery.card.header.history' | translate }}
     </button>
   </mat-card-actions>
 </mat-card>

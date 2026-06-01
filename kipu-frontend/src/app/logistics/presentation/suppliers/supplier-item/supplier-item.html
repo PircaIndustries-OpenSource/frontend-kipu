@@ -1,42 +1,44 @@
-<mat-card class="bg-white! border! border-primary! rounded-m! w-full overflow-hidden! flex! flex-col p-0! mb-l">
-  <div class="bg-primary! text-white! px-xl! py-m! flex flex-row justify-between items-center m-0!">
+<mat-card class="supplier-card">
+  <div class="supplier-header flex flex-col sm:flex-row justify-between items-start sm:items-center gap-m sm:gap-0">
     <div class="flex flex-row items-center gap-m">
-      <span class="font-bold text-xl">{{ supplier().ruc }}</span>
-      <span class="text-xs font-bold tracking-widest uppercase bg-white/20 px-2 py-0.5 rounded">
+      <span class="font-bold text-xl tracking-tight">{{ supplier().ruc }}</span>
+      <span class="text-xs font-bold tracking-widest uppercase bg-white/20 px-2 py-0.5 rounded backdrop-blur-sm border border-white/10"
+            [ngClass]="supplier().status === 'Activo' ? 'text-success-soft bg-success/20 border-success/30' : ''">
         {{supplier().status}}
       </span>
     </div>
-    <div class="text-sm opacity-80">
-      {{ 'suppliers.card.onboarded' | translate }}: {{ supplier().onboarded }}
+    <div class="text-sm opacity-90 mt-2 sm:mt-0 bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm border border-white/10">
+      <mat-icon class="text-sm w-4 h-4 leading-4 inline-block align-text-bottom mr-1">person_add</mat-icon>
+      {{ 'suppliers.card.onboarded' | translate }}: <span class="font-semibold">{{ supplier().onboarded }}</span>
     </div>
   </div>
-  <mat-card-content class="p-xl! flex! flex-col gap-xl! m-0!">
-    <div class="grid grid-cols-4 gap-l">
+  <mat-card-content class="supplier-content">
+    <div class="supplier-grid">
       <div class="flex flex-col gap-1 min-w-0">
-        <p class="text-xs text-neutral-border font-medium">{{ 'suppliers.card.social-reason' | translate }}</p>
-        <p class="font-bold text-lg text-primary truncate">{{ supplier().socialReason }}</p>
+        <p class="text-xs text-neutral-border font-bold uppercase tracking-wider">{{ 'suppliers.card.social-reason' | translate }}</p>
+        <p class="font-bold text-lg text-primary truncate" [title]="supplier().socialReason">{{ supplier().socialReason }}</p>
       </div>
       <div class="flex flex-col gap-1 min-w-0">
-        <p class="text-xs text-neutral-border font-medium">{{ 'suppliers.card.contact' | translate }}</p>
-        <p class="text-base font-medium text-primary truncate">{{ supplier().contact }}</p>
+        <p class="text-xs text-neutral-border font-bold uppercase tracking-wider">{{ 'suppliers.card.contact' | translate }}</p>
+        <p class="text-base font-semibold text-primary truncate" [title]="supplier().contact">{{ supplier().contact }}</p>
       </div>
       <div class="flex flex-col gap-1 min-w-0">
-        <p class="text-xs text-neutral-border font-medium">{{ 'suppliers.card.phone' | translate }}</p>
-        <p class="text-base font-medium text-primary truncate">{{ supplier().phone }}</p>
+        <p class="text-xs text-neutral-border font-bold uppercase tracking-wider">{{ 'suppliers.card.phone' | translate }}</p>
+        <p class="text-base font-semibold text-primary truncate">{{ supplier().phone }}</p>
       </div>
       <div class="flex flex-col gap-1 min-w-0">
-        <p class="text-xs text-neutral-border font-medium">{{ 'suppliers.card.email' | translate }}</p>
+        <p class="text-xs text-neutral-border font-bold uppercase tracking-wider">{{ 'suppliers.card.email' | translate }}</p>
         <p class="font-bold text-base text-primary break-all">{{ supplier().email }}</p>
       </div>
     </div>
   </mat-card-content>
-  <mat-card-actions class=" pb-xl! pt-0! flex! w-[30%] self-start pl-xl! gap-m!">
-    <button (click)="openEdit()"
-            class="flex-1 bg-accent! text-white! font-bold! rounded-m! py-s! cursor-pointer transition-base hover:brightness-110">
+  <mat-card-actions class="supplier-actions">
+    <button matRipple (click)="openEdit()" class="btn-edit flex items-center justify-center gap-2">
+      <mat-icon class="text-base w-5 h-5 leading-5">edit</mat-icon>
       {{ 'suppliers.card.actions.button-edit' | translate }}
     </button>
-    <button (click)="deleteSupplier()"
-            class="flex-1 bg-danger! text-white! font-bold! rounded-m! py-s! cursor-pointer transition-base hover:brightness-110">
+    <button matRipple (click)="deleteSupplier()" class="btn-delete flex items-center justify-center gap-2">
+      <mat-icon class="text-base w-5 h-5 leading-5">delete</mat-icon>
       {{ 'suppliers.card.actions.button-delete' | translate }}
     </button>
   </mat-card-actions>

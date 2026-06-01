@@ -160,9 +160,9 @@ export class ProgressPage implements OnInit {
   }
 
   getStatusBadgeClass(s: string): string {
-    const b = 'px-3 py-1 rounded-md text-xs font-bold uppercase';
+    const b = 'px-3 py-1 rounded-s text-xs font-bold uppercase tracking-wider border';
     return s === 'Finished'
-      ? `${b} bg-green-100 text-emerald-600`
-      : `${b} bg-blue-100 text-blue-500`;
+      ? `${b} bg-success/10 text-success border-success/20`
+      : `${b} bg-primary/10 text-primary border-primary/20`;
   }
 }

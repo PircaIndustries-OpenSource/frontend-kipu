@@ -1,0 +1,52 @@
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon class="title-icon">tune</mat-icon>
+  {{ 'iot-monitoring.configuresensor' | translate }}
+</h2>
+
+<mat-dialog-content class="dialog-content">
+  <p class="form-instruction">{{ 'iot-monitoring.configuredetailspoint' | translate }}</p>
+
+  <div class="sensor-info-badge">
+    <mat-icon>my_location</mat-icon>
+    <span>ID: {{ data.numberId }}</span>
+    <span class="separator">·</span>
+    <span class="location-text">{{ data.name }}</span>
+  </div>
+
+  <div class="form-grid">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'iot-monitoring.name' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">label</mat-icon>
+      <input matInput [(ngModel)]="editForm.name" placeholder="Ex: Full Station #3">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'iot-monitoring.latitude' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">gps_fixed</mat-icon>
+      <input matInput type="number" [(ngModel)]="editForm.latitude" placeholder="Ex: 40" min="0" max="100">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'iot-monitoring.longitude' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">gps_fixed</mat-icon>
+      <input matInput type="number" [(ngModel)]="editForm.longitude" placeholder="Ex: 50" min="0" max="100">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'iot-monitoring.status' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">info</mat-icon>
+      <mat-select [(ngModel)]="editForm.state">
+        <mat-option value="OPERATIVE">Dentro del límite (OPERATIVE)</mat-option>
+        <mat-option value="NON OPERATIVE">No Operativo (NON OPERATIVE)</mat-option>
+        <mat-option value="OUTSIDE OF LIMIT">Fuera de límite (OUTSIDE OF LIMIT)</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="form-actions">
+  <button mat-button class="cancel-btn" (click)="onCancel()">{{ 'iot-monitoring.cancel' | translate }}</button>
+  <button mat-flat-button color="primary" class="save-btn" (click)="onSave()">
+    <mat-icon>save</mat-icon> {{ 'iot-monitoring.savechanges' | translate }}
+  </button>
+</mat-dialog-actions>

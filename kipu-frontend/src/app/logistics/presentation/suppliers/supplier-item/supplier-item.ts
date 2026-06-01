@@ -7,10 +7,15 @@ import { SupplierEditDialog } from '../supplier-edit-dialog/supplier-edit-dialog
 import { LogisticsStore } from '../../../application/logistics.store';
 import { ConfirmDialog } from '../../../../shared/presentation/confirm-dialog/confirm-dialog';
 
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatRipple } from '@angular/material/core';
+
 @Component({
   selector: 'app-supplier-item',
-  imports: [MatCard, MatCardActions, MatCardContent, TranslatePipe],
+  imports: [MatCard, MatCardActions, MatCardContent, TranslatePipe, CommonModule, MatIconModule, MatRipple],
   templateUrl: './supplier-item.html',
+  styleUrl: './supplier-item.css'
 })
 export class SupplierItem {
   supplier = input.required<SupplierEntity>();

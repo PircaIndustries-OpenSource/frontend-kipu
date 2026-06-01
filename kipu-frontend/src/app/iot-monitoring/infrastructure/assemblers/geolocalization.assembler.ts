@@ -26,4 +26,20 @@ export class GeolocalizationAssembler {
   ): GeolocalizationEntity[] {
     return geolocalizationResponse.map((resource) => this.toEntityFromResource(resource));
   }
+  static toResourceFromEntity(entity: GeolocalizationEntity): GeolocalizationResource {
+    const states: Record<string, number> = {
+      'OPERATIVE': 1,
+      'NON OPERATIVE': 2,
+      'OUTSIDE OF LIMIT': 0,
+    };
+    return {
+      id: entity.id,
+      numberId: entity.numberId,
+      name: entity.name,
+      projectId: entity.projectId,
+      longitude: entity.longitude,
+      latitude: entity.latitude,
+      state: states[entity.state] ?? 0,
+    } as GeolocalizationResource;
+  }
 }

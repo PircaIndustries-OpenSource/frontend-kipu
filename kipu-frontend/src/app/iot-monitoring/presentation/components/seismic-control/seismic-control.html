@@ -26,8 +26,8 @@
 
               <div class="auth-section">
                 <p class="auth-text">Sector: {{ sensor.location }}. {{ 'iot-monitoring.residentauthorization' | translate }}</p>
-                <input type="password" placeholder="Authorization password" class="auth-input">
-                <button mat-flat-button color="primary" class="unlock-btn">
+                <input #authInput type="password" placeholder="Authorization password" class="auth-input">
+                <button mat-flat-button color="primary" class="unlock-btn" (click)="unlockSensor(sensor, authInput.value); authInput.value=''">
                   {{ 'iot-monitoring.takecare' | translate }}
                 </button>
               </div>
@@ -53,6 +53,9 @@
           <mat-card-footer class="card-footer">
             <span class="timestamp">{{ sensor.timeLecture }}</span>
             <div class="actions">
+              <button mat-flat-button class="config-btn" (click)="openConfigureDialog(sensor)">
+                <mat-icon>tune</mat-icon> {{ 'iot-monitoring.configure' | translate }}
+              </button>
               <button mat-stroked-button color="warn" class="delete-btn" (click)="onDelete(sensor)">
                 <mat-icon>delete</mat-icon> {{ 'iot-monitoring.delete' | translate }}
               </button>

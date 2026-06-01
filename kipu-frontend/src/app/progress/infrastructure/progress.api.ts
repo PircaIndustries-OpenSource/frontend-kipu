@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { Observable, map } from 'rxjs';
 import { ProjectProgress } from '../domain/progress.entity';
 import { ProgressResponse } from './progress.response';
@@ -15,7 +16,7 @@ export class ProgressApi {
   private readonly http = inject(HttpClient);
 
   // Base path mapped via proxy to the json-server
-  private readonly basePath = '/api/v1/progress';
+  private readonly basePath = `${environment.kipuApiBaseUrl}/progress`;
 
   /**
    * Fetches all progress records from the server and maps them to domain entities.

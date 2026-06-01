@@ -1,30 +1,34 @@
-<mat-card class="bg-white! border! border-primary! rounded-m! w-full overflow-hidden! flex! flex-col p-0! mb-l">
-  <div class="bg-primary! text-white! px-xl! py-m! flex flex-row justify-between items-center m-0!">
+<mat-card class="waste-card">
+  <div class="waste-header flex flex-col sm:flex-row justify-between items-start sm:items-center gap-m sm:gap-0">
     <div class="flex flex-row items-center gap-m">
-      <span class="font-bold text-xl">{{ waste().id }}</span>
+      <span class="font-bold text-xl tracking-tight">{{ waste().id }}</span>
     </div>
-    <div class="text-sm opacity-80">
-      {{ 'waste.card.header.report-date' | translate }} {{ waste().date }}
+    <div class="text-sm opacity-90 mt-2 sm:mt-0 bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm border border-white/10">
+      <mat-icon class="text-sm w-4 h-4 leading-4 inline-block align-text-bottom mr-1">event_busy</mat-icon>
+      {{ 'waste.card.header.report-date' | translate }} <span class="font-semibold">{{ waste().date }}</span>
     </div>
   </div>
-  <mat-card-content class="p-xl! flex! flex-col gap-xl! m-0!">
-    <div class="grid grid-cols-4 gap-l">
-      <div class="flex flex-col gap-1">
-        <p class="text-xs text-neutral-border font-medium">{{ 'waste.card.fields.affected-material' | translate }}</p>
-        <p class="font-bold text-lg text-primary">{{ waste().materialName}}</p>
+  <mat-card-content class="waste-content">
+    <div class="waste-grid">
+      <div class="flex flex-col gap-1 min-w-0">
+        <p class="text-xs text-neutral-border font-bold uppercase tracking-wider">{{ 'waste.card.fields.affected-material' | translate }}</p>
+        <p class="font-bold text-lg text-primary truncate" [title]="waste().materialName">{{ waste().materialName}}</p>
       </div>
-      <div class="flex flex-col gap-1">
-        <p class="text-xs text-neutral-border font-medium">{{ 'waste.card.fields.discounted-quantity' | translate }}</p>
-        <p class="font-bold text-lg text-primary">{{ waste().quantity }} {{ waste().materialUnit }}</p>
+      <div class="flex flex-col gap-1 min-w-0">
+        <p class="text-xs text-neutral-border font-bold uppercase tracking-wider">{{ 'waste.card.fields.discounted-quantity' | translate }}</p>
+        <p class="font-bold text-lg text-danger truncate">{{ waste().quantity }} <span class="text-sm font-medium opacity-70">{{ waste().materialUnit }}</span></p>
       </div>
-      <div class="flex flex-col gap-1">
-        <p class="text-xs text-neutral-border font-medium">{{ 'waste.card.fields.reported-by' | translate }}</p>
-        <p class="font-bold text-lg text-primary">{{ waste().reportedBy }}</p>
+      <div class="flex flex-col gap-1 min-w-0">
+        <p class="text-xs text-neutral-border font-bold uppercase tracking-wider">{{ 'waste.card.fields.reported-by' | translate }}</p>
+        <p class="text-base font-semibold text-primary truncate" [title]="waste().reportedBy">{{ waste().reportedBy }}</p>
       </div>
     </div>
-    <div class="border! border-neutral-border! rounded-m! p-l! bg-neutral-bg! flex flex-col gap-s">
-      <p class="font-bold text-primary">{{ 'waste.card.fields.reason-title' | translate }}</p>
-      <p class="text-sm text-primary leading-relaxed">{{ waste().description }}</p>
+    <div class="border! border-neutral-border/50! rounded-m! p-l! bg-neutral-bg! flex flex-col gap-s shadow-inner">
+      <p class="font-bold text-primary flex items-center gap-2">
+        <mat-icon class="text-danger w-5 h-5 leading-5">warning</mat-icon>
+        {{ 'waste.card.fields.reason-title' | translate }}
+      </p>
+      <p class="text-sm text-primary leading-relaxed pl-7">{{ waste().description }}</p>
     </div>
   </mat-card-content>
 </mat-card>

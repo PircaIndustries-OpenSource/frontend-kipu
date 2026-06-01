@@ -22,4 +22,5 @@ export const environment = {
   kipuApiGeolocalizationEndpointPath: '/geolocalization',
   kipuApiHopperWatchEndpointPath: '/hopperWatch',
   kipuApiSeismicControlEndpointPath: '/seismicControl',
+  kipuApiBudgetEndpointPath: '/budgets',
 };

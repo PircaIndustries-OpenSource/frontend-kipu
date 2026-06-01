@@ -1,0 +1,99 @@
+.machinery-card {
+  background-color: #ffffff !important;
+  border: 1px solid var(--color-neutral-border) !important;
+  border-radius: var(--radius-m) !important;
+  width: 100% !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 0 !important;
+  margin-bottom: var(--spacing-l) !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+}
+
+.machinery-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15) !important;
+  border-color: var(--color-primary) !important;
+}
+
+.machinery-header {
+  padding: var(--spacing-m) var(--spacing-xl) !important;
+  margin: 0 !important;
+  background: linear-gradient(135deg, var(--color-primary) 0%, #1a252f 100%) !important;
+  color: #ffffff !important;
+}
+
+.machinery-header.in-use {
+  background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%) !important;
+}
+
+.machinery-header.urgent {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%) !important;
+}
+
+.machinery-content {
+  padding: var(--spacing-xl) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--spacing-l) !important;
+  margin: 0 !important;
+}
+
+.machinery-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-l);
+}
+
+@media (min-width: 640px) {
+  .machinery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .machinery-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.machinery-actions {
+  padding: 0 var(--spacing-xl) var(--spacing-xl) var(--spacing-xl) !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--spacing-m) !important;
+  width: 100% !important;
+}
+
+@media (min-width: 640px) {
+  .machinery-actions {
+    flex-direction: row !important;
+  }
+}
+
+.btn-action-primary {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700 !important;
+  border-radius: var(--radius-m) !important;
+  padding: var(--spacing-s) var(--spacing-m) !important;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  font-size: 0.875rem;
+}
+
+.btn-action-primary:hover {
+  filter: brightness(1.1);
+  transform: scale(1.02);
+}
+
+.btn-action-primary:active {
+  transform: scale(0.98);
+}

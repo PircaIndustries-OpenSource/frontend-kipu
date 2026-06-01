@@ -229,6 +229,24 @@
   background-color: #f7fafc;
 }
 
+.config-btn {
+  border-radius: 1.25rem !important;
+  padding: 0.25rem 1rem !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  background-color: #edf2f7 !important;
+  color: #4a5568 !important;
+  transition: all 0.2s ease !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.config-btn:hover {
+  background-color: #e2e8f0 !important;
+  color: #2d3748 !important;
+}
+
 .delete-btn {
   border-radius: 1.25rem !important;
   padding: 0.25rem 1rem !important;

@@ -1,0 +1,45 @@
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon class="title-icon">explore</mat-icon>
+  {{ 'iot-monitoring.addnewgeo' | translate }}
+</h2>
+
+<mat-dialog-content class="dialog-content">
+  <p class="form-instruction">{{ 'iot-monitoring.enterdetails' | translate }}</p>
+
+  <div class="form-grid">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'iot-monitoring.name' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">label</mat-icon>
+      <input matInput [(ngModel)]="sensorForm.name" placeholder="Ex: Full Station #3">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'iot-monitoring.latitude' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">gps_fixed</mat-icon>
+      <input matInput type="number" [(ngModel)]="sensorForm.latitude" placeholder="Ex: 40" min="0" max="100">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'iot-monitoring.longitude' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">gps_fixed</mat-icon>
+      <input matInput type="number" [(ngModel)]="sensorForm.longitude" placeholder="Ex: 50" min="0" max="100">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'iot-monitoring.status' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">info</mat-icon>
+      <mat-select [(ngModel)]="sensorForm.state">
+        <mat-option value="OPERATIVE">Dentro del límite (OPERATIVE)</mat-option>
+        <mat-option value="NON OPERATIVE">No Operativo (NON OPERATIVE)</mat-option>
+        <mat-option value="OUTSIDE OF LIMIT">Fuera de límite (OUTSIDE OF LIMIT)</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="form-actions">
+  <button mat-button class="cancel-btn" (click)="onCancel()">{{ 'iot-monitoring.cancel' | translate }}</button>
+  <button mat-flat-button color="primary" class="save-btn" (click)="onSave()">
+    {{ 'iot-monitoring.addlocation' | translate }}
+  </button>
+</mat-dialog-actions>

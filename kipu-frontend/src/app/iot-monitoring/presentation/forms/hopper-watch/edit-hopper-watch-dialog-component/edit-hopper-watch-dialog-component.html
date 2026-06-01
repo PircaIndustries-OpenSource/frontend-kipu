@@ -1,0 +1,54 @@
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon class="title-icon">tune</mat-icon>
+  {{ 'iot-monitoring.configuresensor' | translate }}
+</h2>
+
+<mat-dialog-content class="dialog-content">
+  <p class="form-instruction">{{ 'iot-monitoring.configuredetails' | translate }}</p>
+
+  <div class="sensor-info-badge">
+    <mat-icon>layers</mat-icon>
+    <span>ID: {{ data.sensorId }}</span>
+    <span class="separator">·</span>
+    <span class="location-text">{{ data.name }}</span>
+  </div>
+
+  <div class="form-grid">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'iot-monitoring.name' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">label</mat-icon>
+      <input matInput [(ngModel)]="editForm.name" placeholder="Ex: Fine Sand">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Sensor ID</mat-label>
+      <mat-icon matPrefix class="field-icon">vpn_key</mat-icon>
+      <input matInput [(ngModel)]="editForm.sensorId" placeholder="Ex: SM-088">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'iot-monitoring.unit' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">straighten</mat-icon>
+      <input matInput [(ngModel)]="editForm.unit" placeholder="Ex: %">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'iot-monitoring.limit' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">warning</mat-icon>
+      <input matInput type="number" [(ngModel)]="editForm.limit" placeholder="Ex: 15">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'iot-monitoring.lastlecture' | translate }}</mat-label>
+      <mat-icon matPrefix class="field-icon">bar_chart</mat-icon>
+      <input matInput type="number" [(ngModel)]="editForm.lastLecture" placeholder="Ex: 80">
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="form-actions">
+  <button mat-button class="cancel-btn" (click)="onCancel()">{{ 'iot-monitoring.cancel' | translate }}</button>
+  <button mat-flat-button color="primary" class="save-btn" (click)="onSave()">
+    <mat-icon>save</mat-icon> {{ 'iot-monitoring.savechanges' | translate }}
+  </button>
+</mat-dialog-actions>

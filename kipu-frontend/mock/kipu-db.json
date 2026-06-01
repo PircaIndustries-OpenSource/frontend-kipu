@@ -1,13 +1,6 @@
 {
   "identity": [
     {
-      "name": "Juan Perez",
-      "email": "kipu3@hotmail.com",
-      "password": "kipu12345",
-      "role": "Gestor Operativo",
-      "id": "vkgT3Nh"
-    },
-    {
       "name": "Paula Montoya",
       "email": "pau@gmail.com",
       "password": "paupau707",
@@ -29,25 +22,11 @@
       "id": "aXT7GBg"
     },
     {
-      "name": "123123123123",
-      "email": "12312312312312@gmail.com",
-      "password": "123124124312",
-      "role": "Gestor Operativo",
-      "id": "ljoK96D"
-    },
-    {
-      "name": "John Doe",
-      "email": "kipu3@hotmail.com",
-      "password": "kipu12345",
-      "role": "Gestor Operativo",
-      "id": "QV7q07J"
-    },
-    {
-      "name": "neo",
-      "email": "danielmera@gmail.com",
-      "password": "12345678",
-      "role": "Gestor Operativo",
-      "id": "a7UC7b7"
+      "name": "Carlos Mendoza",
+      "email": "cmendoza@pirca.com",
+      "password": "password123",
+      "role": "Ingeniero de Campo",
+      "id": "kLm9Pq2"
     }
   ],
   "projects": [
@@ -89,94 +68,94 @@
     },
     {
       "id": "pyXfjIq",
-      "name": "a",
-      "description": "a",
+      "name": "Renovación Parque Central",
+      "description": "Remodelación de áreas verdes y luminarias",
       "status": "IN_PROGRESS",
       "startDate": "2026-05-13T05:00:00.000Z",
       "endDate": "2026-05-26T05:00:00.000Z",
-      "location": "xd",
+      "location": "Plaza Central, Surco",
       "createdAt": "2026-05-11",
       "createdBy": "current-user",
       "imageUrl": "project-image3.png",
-      "totalBudget": 850000
+      "totalBudget": 120000
     },
     {
       "id": "vEXQoL6",
-      "name": "aaaaa",
-      "description": "asd",
+      "name": "Ampliación Planta Industrial",
+      "description": "Construcción de nuevo galpón de almacenamiento",
       "status": "PLANNED",
       "startDate": "2026-05-12T05:00:00.000Z",
       "endDate": "2026-05-20T05:00:00.000Z",
-      "location": "asdasd",
+      "location": "Zona Industrial Sur",
       "createdAt": "2026-05-11",
       "createdBy": "current-user",
       "imageUrl": "project-image1.png",
-      "totalBudget": 850000
+      "totalBudget": 450000
     },
     {
       "id": "whceCRF",
-      "name": "aasdasdasd",
-      "description": "asdasd",
+      "name": "Clínica de Especialidades",
+      "description": "Edificación de 4 niveles para atención médica",
       "status": "IN_PROGRESS",
       "startDate": "2026-05-12T05:00:00.000Z",
       "endDate": "2026-05-12T05:00:00.000Z",
-      "location": "asdasd",
+      "location": "Av. Brasil 450",
       "createdAt": "2026-05-11",
       "createdBy": "current-user",
       "imageUrl": "project-image3.png",
-      "totalBudget": 850000
+      "totalBudget": 950000
     },
     {
       "id": "8IZsgo_",
-      "name": "aaaaaaaaaaaaaaaaaa",
-      "description": "aaaaaaaaaaaaaaaaaa",
+      "name": "Condominio Las Terrazas",
+      "description": "Proyecto inmobiliario de 3 torres multifamiliares",
       "status": "PLANNED",
       "startDate": "2026-05-20T05:00:00.000Z",
       "endDate": "2026-05-31T05:00:00.000Z",
-      "location": "aaaaaaaaaaaaaaaaaaa",
+      "location": "Av. del Ejército 1020",
       "createdAt": "2026-05-11",
       "createdBy": "current-user",
       "imageUrl": "project-image4.jpg",
-      "totalBudget": 850000
+      "totalBudget": 2100000
     },
     {
       "id": "lluhwVv",
-      "name": "xdd....",
-      "description": ".....",
+      "name": "Pabellón Universitario B",
+      "description": "Ampliación de aulas para facultad de ingeniería",
       "status": "PLANNED",
       "startDate": "2026-05-21T05:00:00.000Z",
       "endDate": "2026-05-31T05:00:00.000Z",
-      "location": "....",
+      "location": "Campus Central",
       "createdAt": "2026-05-11",
       "createdBy": "current-user",
       "imageUrl": "project-image1.png",
-      "totalBudget": 850000
+      "totalBudget": 1800000
     },
     {
       "id": "YgMohp6",
-      "name": "aaaa21",
-      "description": "a",
+      "name": "Estacionamiento Subterráneo",
+      "description": "Construcción de 2 niveles de estacionamiento público",
       "status": "PLANNED",
       "startDate": "2026-05-27T05:00:00.000Z",
       "endDate": "2026-05-25T05:00:00.000Z",
-      "location": "as",
+      "location": "Centro Histórico",
       "createdAt": "2026-05-11",
       "createdBy": "current-user",
       "imageUrl": "project-image2.png",
-      "totalBudget": 850000
+      "totalBudget": 600000
     },
     {
       "id": "bINNav6",
-      "name": "asdasd",
-      "description": "a",
+      "name": "Puente Peatonal Av. Sol",
+      "description": "Infraestructura vial metálica para paso peatonal",
       "status": "PLANNED",
       "startDate": "2026-05-14T05:00:00.000Z",
       "endDate": "2026-05-19T05:00:00.000Z",
-      "location": "sdasd",
+      "location": "Av. Sol intersección Panamericana",
       "createdAt": "2026-05-11",
       "createdBy": "current-user",
       "imageUrl": "project-image5.png",
-      "totalBudget": 850000
+      "totalBudget": 320000
     }
   ],
   "documents": [
@@ -248,7 +227,7 @@
         },
         {
           "id": "us-1778215899308",
-          "fullName": "pepe raros"
+          "fullName": "José Ramos"
         },
         {
           "id": "us-04",
@@ -420,6 +399,13 @@
       "categoryId": "cat-006",
       "subcategory": "Soldadura",
       "measureUnit": "kg"
+    },
+    {
+      "id": "mat-015",
+      "name": "Alambre Negro Recocido #16",
+      "categoryId": "cat-004",
+      "subcategory": "Alambres",
+      "measureUnit": "kg"
     }
   ],
   "materialsInventory": [
@@ -520,6 +506,13 @@
       "currentStock": 18,
       "miniumStock": 5,
       "location": "Estante 3C"
+    },
+    {
+      "id": "inv-015",
+      "materialId": "mat-015",
+      "currentStock": 50,
+      "miniumStock": 20,
+      "location": "Estante 2B"
     }
   ],
   "supplierOffers": [
@@ -670,25 +663,308 @@
       "status": "ACTIVE"
     }
   ],
-  "materialsRequests": [],
-  "materialsWaste": [],
+  "materialsRequests": [
+    {
+      "id": "req-001",
+      "projectId": 1,
+      "requestDate": "2026-05-01",
+      "deadline": "2026-05-10",
+      "status": "PENDING",
+      "priority": "MEDIUM",
+      "deliveryLocation": "Sótano 2",
+      "budgetLineId": "PP-2026-05",
+      "purpose": "Construcción de tabiquería interior",
+      "additionalNotes": "Entregar durante la mañana.",
+      "suggestedSupplierId": "sup-002",
+      "attachments": [],
+      "activity": "Muros y tabiques",
+      "requestedBy": "us-01",
+      "items": [
+        {
+          "supplierOfferId": "soff-003",
+          "quantity": 70,
+          "materialName": "Cemento Portland Tipo I",
+          "categoryName": "Aglomerantes",
+          "materialUnit": "bolsa",
+          "materialSubcategory": "Cementos",
+          "pricePerUnit": 28
+        }
+      ],
+      "quantity": 47
+    },
+    {
+      "id": "req-002",
+      "projectId": 1,
+      "requestDate": "2026-05-02",
+      "deadline": "2026-05-08",
+      "status": "REFUSED",
+      "priority": "LOW",
+      "deliveryLocation": "",
+      "budgetLineId": "PP-2026-05",
+      "purpose": "Reposición de stock crítico de acero para refuerzo de losas",
+      "additionalNotes": "Urgente, stock por debajo del mínimo.",
+      "suggestedSupplierId": "sup-001",
+      "attachments": [],
+      "activity": "Estructuras de concreto",
+      "requestedBy": "us-02",
+      "items": [
+        {
+          "supplierOfferId": "soff-001",
+          "quantity": 100
+        }
+      ],
+      "quantity": 100
+    },
+    {
+      "id": "req-003",
+      "projectId": 1,
+      "requestDate": "2026-05-03",
+      "deadline": "2026-05-15",
+      "status": "APPROVED",
+      "priority": "LOW",
+      "deliveryLocation": "Patio de Maderas",
+      "budgetLineId": "PP-2026-06",
+      "purpose": "Fabricación de encofrados para columnas y vigas del Piso 4",
+      "additionalNotes": "Se requiere triplay fenólico de 18mm en buen estado.",
+      "suggestedSupplierId": "sup-004",
+      "attachments": [],
+      "activity": "Encofrados",
+      "requestedBy": "us-03",
+      "items": [
+        {
+          "supplierOfferId": "soff-007",
+          "quantity": 30
+        },
+        {
+          "supplierOfferId": "soff-008",
+          "quantity": 80
+        }
+      ]
+    },
+    {
+      "id": "req-004",
+      "projectId": 1,
+      "requestDate": "2026-05-04",
+      "deadline": "2026-05-05",
+      "status": "APPROVED",
+      "priority": "LOW",
+      "deliveryLocation": "Piso 3 - Área de trabajo",
+      "budgetLineId": "PP-2026-05",
+      "purpose": "Compra urgente de EPP para nuevo personal ingresante",
+      "additionalNotes": "Se necesita antes del inicio de obra del lunes.",
+      "suggestedSupplierId": "sup-005",
+      "attachments": [],
+      "activity": "Seguridad y salud",
+      "requestedBy": "us-01",
+      "items": [
+        {
+          "supplierOfferId": "soff-010",
+          "quantity": 20
+        },
+        {
+          "supplierOfferId": "soff-011",
+          "quantity": 15
+        }
+      ]
+    },
+    {
+      "id": "req-005",
+      "projectId": 1,
+      "requestDate": "2026-05-05",
+      "deadline": "2026-05-20",
+      "status": "APPROVED",
+      "priority": "LOW",
+      "deliveryLocation": "Patio de Agregados",
+      "budgetLineId": "PP-2026-06",
+      "purpose": "Preparación de mezcla para vaciado de losa del Piso 5",
+      "additionalNotes": "Programar recepción con 24h de anticipación.",
+      "suggestedSupplierId": "sup-006",
+      "attachments": [],
+      "activity": "Vaciado de concreto",
+      "requestedBy": "us-02",
+      "items": [
+        {
+          "supplierOfferId": "soff-013",
+          "quantity": 20
+        },
+        {
+          "supplierOfferId": "soff-014",
+          "quantity": 35
+        },
+        {
+          "supplierOfferId": "soff-003",
+          "quantity": 80
+        }
+      ]
+    },
+    {
+      "id": "req-006",
+      "projectId": 1,
+      "requestDate": "2026-05-06",
+      "deadline": "2026-05-07",
+      "status": "PENDING",
+      "priority": "LOW",
+      "deliveryLocation": "Estante 4B",
+      "budgetLineId": "PP-2026-05",
+      "purpose": "Discos de corte para amoladora por desgaste severo",
+      "additionalNotes": "",
+      "suggestedSupplierId": "sup-005",
+      "attachments": [],
+      "activity": "Habilitación de acero",
+      "requestedBy": "us-03",
+      "items": [
+        {
+          "supplierOfferId": "soff-009",
+          "quantity": 25,
+          "materialName": "Disco de Corte 7",
+          "categoryName": "Consumibles y Varios",
+          "materialUnit": "und",
+          "materialSubcategory": "Abrasivos",
+          "pricePerUnit": 12.8
+        }
+      ]
+    },
+    {
+      "id": "req-007",
+      "projectId": 1,
+      "requestDate": "2026-05-06",
+      "deadline": "2026-05-18",
+      "status": "PENDING",
+      "priority": "LOW",
+      "deliveryLocation": "Almacén Principal",
+      "budgetLineId": "PP-2026-06",
+      "purpose": "Reposición de ladrillos y bloques para muros interiores",
+      "additionalNotes": "Solicitar muestra antes de entrega masiva.",
+      "suggestedSupplierId": "sup-003",
+      "attachments": [],
+      "activity": "Muros y tabiques",
+      "requestedBy": "us-01",
+      "items": [
+        {
+          "supplierOfferId": "soff-005",
+          "quantity": 2000
+        },
+        {
+          "supplierOfferId": "soff-006",
+          "quantity": 500
+        }
+      ]
+    }
+  ],
+  "materialsWaste": [
+    {
+      "id": "rmt-001",
+      "projectId": 1,
+      "materialId": "mat-001",
+      "quantity": 50,
+      "unit": "und",
+      "classificationType": "ROTURA",
+      "date": "2026-05-02",
+      "description": "Ladrillos rotos durante maniobra de descarga del camión en obra. Material inutilizable.",
+      "reportedBy": "40213390",
+      "photoUrl": ""
+    },
+    {
+      "id": "rmt-002",
+      "projectId": 1,
+      "materialId": "mat-002",
+      "quantity": 5,
+      "unit": "bolsa",
+      "classificationType": "VENCIMIENTO",
+      "date": "2026-05-03",
+      "description": "Cemento fraguado por humedad en almacén. Bolsas expuestas a filtraciones.",
+      "reportedBy": "40213390",
+      "photoUrl": ""
+    },
+    {
+      "id": "rmt-003",
+      "projectId": 1,
+      "materialId": "mat-004",
+      "quantity": 3,
+      "unit": "varilla",
+      "classificationType": "ROTURA",
+      "date": "2026-05-04",
+      "description": "Varillas de acero dobladas incorrectamente durante corte en taller.",
+      "reportedBy": "45678912",
+      "photoUrl": ""
+    },
+    {
+      "id": "rmt-004",
+      "projectId": 1,
+      "materialId": "mat-005",
+      "quantity": 2,
+      "unit": "plancha",
+      "classificationType": "DEFECTO",
+      "date": "2026-05-05",
+      "description": "Planchas de triplay con delaminación. No aptas para encofrado.",
+      "reportedBy": "45678912",
+      "photoUrl": ""
+    },
+    {
+      "id": "rmt-005",
+      "projectId": 1,
+      "materialId": "mat-013",
+      "quantity": 10,
+      "unit": "und",
+      "classificationType": "ROTURA",
+      "date": "2026-05-06",
+      "description": "Listones de madera partidos por sobrecarga en almacén temporal.",
+      "reportedBy": "70123456",
+      "photoUrl": ""
+    },
+    {
+      "id": "rmt-006",
+      "projectId": 1,
+      "materialId": "mat-007",
+      "quantity": 3,
+      "unit": "und",
+      "classificationType": "DEFECTO",
+      "date": "2026-05-07",
+      "description": "Cascos de seguridad con fisuras en la carcasa. Lote defectuoso.",
+      "reportedBy": "40213390",
+      "photoUrl": ""
+    },
+    {
+      "id": "rmt-007",
+      "projectId": 1,
+      "materialId": "mat-009",
+      "quantity": 2,
+      "unit": "m3",
+      "classificationType": "CONTAMINACION",
+      "date": "2026-05-07",
+      "description": "Piedra chancada contaminada con tierra durante traslado.",
+      "reportedBy": "70123456",
+      "photoUrl": ""
+    },
+    {
+      "id": "9WXqUfi",
+      "projectId": "1",
+      "materialId": "mat-002",
+      "quantity": 4,
+      "date": "2026-05-31",
+      "description": "Bolsas de cemento rasgadas durante la movilización en el Sótano 1.",
+      "reportedBy": "Juan Perez",
+      "photoUrl": "",
+      "unit": "bolsa"
+    }
+  ],
   "materialsTools": [
     {
       "id": "tool-001",
       "name": "Amoladora Angular 9",
       "status": "IN_USE",
-      "physicalStatus": "a",
+      "physicalStatus": "Operativo",
       "assignedTo": "Miguel Estrada",
       "registrationDate": "2026-04-15",
-      "maintenanceHours": 1,
+      "maintenanceHours": "1",
       "assignmentDetail": "Entregado a Carlos Mendoza para trabajos de corte de acero en Sótano 2."
     },
     {
       "id": "tool-002",
       "name": "Mezcladora de Concreto 11p3",
-      "status": "IN_USE",
+      "status": "AVAILABLE",
       "physicalStatus": "Operativo",
-      "assignedTo": "70123456",
+      "assignedTo": "",
       "registrationDate": "2026-03-01",
       "maintenanceHours": "250",
       "assignmentDetail": "Asignada a cuadrilla de vaciado en Piso 3."
@@ -745,56 +1021,78 @@
     },
     {
       "id": "d0rrFHf",
-      "name": "a",
+      "name": "Sierra Circular 7-1/4",
       "status": "URGENT_MAINTENANCE",
-      "physicalStatus": "a",
+      "physicalStatus": "Requiere cambio de carbones",
       "assignedTo": "",
-      "registrationDate": "",
-      "maintenanceHours": "aaaaaaa",
-      "assignmentDetail": "aaaa esotilin"
+      "registrationDate": "2026-03-12",
+      "maintenanceHours": "120",
+      "assignmentDetail": "Fallo en motor detectado durante cortes en obra."
     },
     {
       "id": "f6kZVqO",
-      "name": "a",
+      "name": "Taladro Inalámbrico 20V",
       "status": "AVAILABLE",
-      "physicalStatus": "",
-      "assignedTo": "",
-      "registrationDate": "",
-      "maintenanceHours": "",
-      "assignmentDetail": ""
+      "physicalStatus": "Operativo",
+      "assignedTo": "54343234 - Pedro Castro",
+      "registrationDate": "2026-02-14",
+      "maintenanceHours": "15",
+      "assignmentDetail": "Asignado temporalmente para instalación de drywall."
     },
     {
       "id": "o64cimr",
-      "name": "a",
+      "name": "Esmeril Recto",
       "status": "AVAILABLE",
-      "physicalStatus": "",
+      "physicalStatus": "Operativo",
       "assignedTo": "12345678 - Miguel Estrada",
-      "registrationDate": "",
-      "maintenanceHours": "",
-      "assignmentDetail": "a"
+      "registrationDate": "2026-01-22",
+      "maintenanceHours": "40",
+      "assignmentDetail": "En uso para pulido de estructuras metálicas."
     },
     {
       "id": "PxmhJO_",
-      "name": "aaaaaa",
+      "name": "Generador Eléctrico 5000W",
       "status": "AVAILABLE",
-      "physicalStatus": "",
+      "physicalStatus": "Operativo",
       "assignedTo": "54343234 - Pedro Castro",
-      "registrationDate": "",
-      "maintenanceHours": "",
-      "assignmentDetail": "uwu"
+      "registrationDate": "2025-10-05",
+      "maintenanceHours": "300",
+      "assignmentDetail": "Equipo de respaldo en sector sin electrificación."
     },
     {
       "id": "WDgas0d",
-      "name": "esoMaquinin",
+      "name": "Apisonadora a Gasolina (Canguro)",
       "status": "AVAILABLE",
-      "physicalStatus": "",
-      "assignedTo": "",
-      "registrationDate": "",
-      "maintenanceHours": "",
-      "assignmentDetail": ""
+      "physicalStatus": "Operativo",
+      "assignedTo": "54343234 - Pedro Castro",
+      "registrationDate": "2026-04-10",
+      "maintenanceHours": "20",
+      "assignmentDetail": "En uso para compactación de zanjas."
     }
   ],
   "concreteCuring": [
+    {
+      "id": "3",
+      "projectId": "proj-02",
+      "sensorId": "S-TMP-03",
+      "state": 1,
+      "location": "Sótano 1",
+      "temperature": 25.5,
+      "humidity": 45,
+      "limit": 35,
+      "unit": "C"
+    },
+    {
+      "id": "4",
+      "projectId": "proj-01",
+      "sensorId": "S-TMP-04",
+      "location": "Losa N5",
+      "unit": "C",
+      "temperature": 36.1,
+      "humidity": 60,
+      "limit": 35,
+      "state": 2
+    },
     {
       "id": "1",
       "projectId": "proj-01",
@@ -836,6 +1134,15 @@
       "state": 1,
       "longitude": 65,
       "latitude": 55
+    },
+    {
+      "id": "7ycxpwh",
+      "numberId": 452,
+      "name": "Test #1",
+      "projectId": "proj-01",
+      "longitude": 40.3,
+      "latitude": 40,
+      "state": 0
     }
   ],
   "hopperWatch": [
@@ -850,7 +1157,7 @@
       "limit": 15
     },
     {
-      "id": 2,
+      "id": "2",
       "projectId": "proj-01",
       "sensorId": "SM-082",
       "name": "Crushed Stone",
@@ -865,26 +1172,45 @@
       "id": "1",
       "projectId": "proj-01",
       "sensorId": "S-VIB-02",
-      "location": "South Wall",
       "unit": "mm/s",
-      "state": 2,
-      "lastLecture": 7.2,
+      "lastLecture": 3.8,
       "limit": 5,
-      "timeLecture": "16/04/2026 10:30"
+      "location": "South Wall",
+      "timeLecture": "07:57:11 p. m.",
+      "state": 1
     },
     {
       "id": "2",
       "projectId": "proj-01",
       "sensorId": "S-VIB-01",
-      "location": "North Excavation",
       "unit": "mm/s",
-      "state": 1,
-      "lastLecture": 2.4,
-      "limit": 5,
-      "timeLecture": "16/04/2026 10:30"
+      "lastLecture": 0.5,
+      "limit": 1,
+      "location": "North Excavation",
+      "timeLecture": "31/5/2026, 7:50:58 p. m.",
+      "state": 1
     }
   ],
-  "field": [],
+  "field": [
+    {
+      "id": "fld-001",
+      "projectId": "proj-01",
+      "date": "2026-05-15",
+      "supervisorId": "us-02",
+      "reportTitle": "Inspección de zanjas Sótano 3",
+      "status": "APPROVED",
+      "notes": "Las excavaciones cumplen con las medidas establecidas en los planos estructurales. Terreno estable."
+    },
+    {
+      "id": "fld-002",
+      "projectId": "proj-02",
+      "date": "2026-05-16",
+      "supervisorId": "us-01",
+      "reportTitle": "Revisión de avance de techado",
+      "status": "PENDING",
+      "notes": "Se requiere validación de las instalaciones eléctricas antes del vaciado de concreto en Piso 1."
+    }
+  ],
   "team-workers": [
     {
       "id": "w-2",
@@ -893,7 +1219,8 @@
       "role": "Manejador",
       "status": "inactivo",
       "assignedTools": [
-        "Escuela"
+        "Casco",
+        "Guantes"
       ]
     },
     {
@@ -902,18 +1229,20 @@
       "fullName": "Miguel Estrada",
       "role": "Oficial",
       "status": "activo",
-      "assignedTools": []
+      "assignedTools": [
+        "Lentes de seguridad"
+      ]
     },
     {
+      "id": "w-1778261706149",
       "dni": "23242424",
       "fullName": "Neo Ramos",
       "role": "Capataz",
       "status": "activo",
       "assignedTools": [
-        "Tolva",
-        "Marañón"
-      ],
-      "id": "w-1778261706149"
+        "Radio Comunicador",
+        "Arnés de Seguridad"
+      ]
     }
   ],
   "team-users": [
@@ -940,8 +1269,8 @@
     },
     {
       "id": "us-10",
-      "fullName": "Mike Wasaouski",
-      "email": "MikeWasaouski@pirca.com",
+      "fullName": "Miguel Vásquez",
+      "email": "mvasquez@pirca.com",
       "isActive": true,
       "role": "Gestor"
     },
@@ -967,25 +1296,82 @@
       "role": "Cliente"
     },
     {
-      "email": "waza@gmail.com",
-      "firstName": "pepe",
-      "lastName": "raros",
+      "id": "us-1778215899308",
+      "fullName": "José Ramos",
+      "firstName": "José",
+      "lastName": "Ramos",
+      "email": "jramos@gmail.com",
       "role": "Administrador",
-      "fullName": "pepe raros",
-      "isActive": true,
-      "id": "us-1778215899308"
+      "isActive": true
     },
     {
-      "email": "Coral@gmail.com",
-      "firstName": "Pele",
-      "lastName": "mama",
+      "id": "us-1778218020628",
+      "fullName": "Coral Mamani",
+      "firstName": "Coral",
+      "lastName": "Mamani",
+      "email": "cmamani@gmail.com",
       "role": "Logistica",
-      "fullName": "Pele mama",
-      "isActive": true,
-      "id": "us-1778218020628"
+      "isActive": true
+    },
+    {
+      "id": "us-11",
+      "fullName": "Lucía Fernández",
+      "firstName": "Lucía",
+      "lastName": "Fernández",
+      "email": "lfernandez@pirca.com",
+      "role": "Ingeniero",
+      "isActive": true
     }
   ],
   "progress": [
+    {
+      "id": 1896,
+      "projectId": "proj-02",
+      "projectName": "Residencial San Miguel",
+      "activityName": "Vaciado de Losa N2",
+      "details": "Piso 2",
+      "specialty": "Estructuras",
+      "status": "Finished",
+      "currentPercentage": 100,
+      "startDate": "2026-05-10T08:00:00.000Z",
+      "endDate": "2026-05-11T18:00:00.000Z",
+      "lastUpdate": "2026-05-11T18:00:00.000Z",
+      "responsible": "Carlos Ramos",
+      "workers": 45,
+      "weather": "cloudy"
+    },
+    {
+      "id": 1897,
+      "projectId": "proj-02",
+      "projectName": "Residencial San Miguel",
+      "activityName": "Instalación de tuberías",
+      "details": "Piso 1 - Baños",
+      "specialty": "Instalaciones",
+      "status": "Active",
+      "currentPercentage": 45,
+      "startDate": "2026-05-12T08:00:00.000Z",
+      "endDate": "2026-05-15T18:00:00.000Z",
+      "lastUpdate": "2026-05-13T12:00:00.000Z",
+      "responsible": "Luis Gomez",
+      "workers": 12,
+      "weather": "rainy"
+    },
+    {
+      "id": 1898,
+      "projectId": "proj-01",
+      "projectName": "Edificio Los Álamos",
+      "activityName": "Excavación Profunda",
+      "details": "Sótano 3",
+      "specialty": "Estructuras",
+      "status": "Delayed",
+      "currentPercentage": 30,
+      "startDate": "2026-05-01T08:00:00.000Z",
+      "endDate": "2026-05-10T18:00:00.000Z",
+      "lastUpdate": "2026-05-15T10:00:00.000Z",
+      "responsible": "Julio Cardenas",
+      "workers": 15,
+      "weather": "cloudy"
+    },
     {
       "id": 1895,
       "projectId": "proj-02",
@@ -1005,6 +1391,51 @@
   ],
   "budgets": [
     {
+      "id": 27467,
+      "projectId": "proj-02",
+      "progressId": 1896,
+      "code": "02.01",
+      "name": "Presupuesto Estructuras",
+      "description": "Presupuesto general de estructuras",
+      "budgeted": 450000,
+      "executed": 125000,
+      "available": 325000,
+      "progress": 27,
+      "status": "normal",
+      "alert": null,
+      "expenseHistory": []
+    },
+    {
+      "id": 27468,
+      "projectId": "proj-02",
+      "progressId": 1897,
+      "code": "03.05",
+      "name": "Presupuesto Instalaciones",
+      "description": "Agua y desagüe",
+      "budgeted": 120000,
+      "executed": 115000,
+      "available": 5000,
+      "progress": 95,
+      "status": "warning",
+      "alert": "Presupuesto por agotarse",
+      "expenseHistory": []
+    },
+    {
+      "id": 27469,
+      "projectId": "proj-01",
+      "progressId": 1898,
+      "code": "01.01",
+      "name": "Presupuesto General",
+      "description": "Fase inicial",
+      "budgeted": 1500000,
+      "executed": 850000,
+      "available": 650000,
+      "progress": 56,
+      "status": "normal",
+      "alert": null,
+      "expenseHistory": []
+    },
+    {
       "id": 27466,
       "projectId": "proj-02",
       "progressId": 1895,
@@ -1022,7 +1453,7 @@
           "itemId": "1895",
           "concept": "Ladrillos",
           "amount": 1000,
-          "responsible": "Asuna Yuuki - Residente de Obra",
+          "responsible": "Ana Torres",
           "description": null,
           "date": "2026-05-12T20:59:59.631Z"
         }

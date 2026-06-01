@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { MatCard, MatCardContent, MatCardFooter, MatCardHeader } from '@angular/material/card';
 import { ConcreteEntity } from '../../../domain/concrete.entity';
 import { MatButton } from '@angular/material/button';
@@ -30,8 +30,21 @@ export class ConcreteCuring implements OnInit {
   constructor(private dialog: MatDialog) {}
 
   private store = inject(ConcreteStore);
-  //input.required<HopperEntity[]>();
   concreteSensors = this.store.concreteSensors;
+
+  filterStatus = signal<'ALL' | 'OFFLINE'>('ALL');
+
+  filteredSensors = computed(() => {
+    const sensors = this.concreteSensors();
+    if (this.filterStatus() === 'OFFLINE') {
+      return sensors.filter(s => s.state === 'OFFLINE' || s.state === 'UNKNOWN');
+    }
+    return sensors;
+  });
+
+  setFilter(status: 'ALL' | 'OFFLINE') {
+    this.filterStatus.set(status);
+  }
 
   ngOnInit(): void {
     if (this.concreteSensors().length === 0) {
