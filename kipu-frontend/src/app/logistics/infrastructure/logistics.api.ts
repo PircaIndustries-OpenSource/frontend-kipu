@@ -43,8 +43,10 @@ export class LogisticsApi {
   supplierOfferEndpoint = environment.kipuApiSupplierOfferEndPath;
   // GET
   getAllInventoryMaterials(): Observable<InventoryMaterialEntity[]> {
+    const projectId = localStorage.getItem('currentProjectId');
+    const url = projectId ? `${this.apiBaseUrl}${this.inventoryMaterialsEndpoint}?projectId=${projectId}` : `${this.apiBaseUrl}${this.inventoryMaterialsEndpoint}`;
     return this.http
-      .get<InventoryMaterialsResponse>(`${this.apiBaseUrl}${this.inventoryMaterialsEndpoint}`)
+      .get<InventoryMaterialsResponse>(url)
       .pipe(map((response) => InventoryMaterialAssembler.toEntitiesFromResponse(response)));
   }
   getAllMaterials(): Observable<MaterialEntity[]> {
@@ -53,13 +55,17 @@ export class LogisticsApi {
       .pipe(map((response) => MaterialsAssembler.toEntitiesFromResponse(response)));
   }
   getAllRequest(): Observable<RequestEntity[]> {
+    const projectId = localStorage.getItem('currentProjectId');
+    const url = projectId ? `${this.apiBaseUrl}${this.requestsEndpoint}?projectId=${projectId}` : `${this.apiBaseUrl}${this.requestsEndpoint}`;
     return this.http
-      .get<RequestResponse>(`${this.apiBaseUrl}${this.requestsEndpoint}`)
+      .get<RequestResponse>(url)
       .pipe(map((response) => RequestAssembler.toEntitiesFromResponse(response)));
   }
   getAllMachinery(): Observable<MachineryEntity[]> {
+    const projectId = localStorage.getItem('currentProjectId');
+    const url = projectId ? `${this.apiBaseUrl}${this.machineryEndpoint}?projectId=${projectId}` : `${this.apiBaseUrl}${this.machineryEndpoint}`;
     return this.http
-      .get<MachineryResponse>(`${this.apiBaseUrl}${this.machineryEndpoint}`)
+      .get<MachineryResponse>(url)
       .pipe(map((response) => MachineryAssembler.toEntitiesFromResponse(response)));
   }
   getAllSuppliers(): Observable<SupplierEntity[]> {
@@ -68,8 +74,10 @@ export class LogisticsApi {
       .pipe(map((response) => SupplierAssembler.toEntitiesFromResponse(response)));
   }
   getAllWaste(): Observable<WasteEntity[]> {
+    const projectId = localStorage.getItem('currentProjectId');
+    const url = projectId ? `${this.apiBaseUrl}${this.wasteEndpoint}?projectId=${projectId}` : `${this.apiBaseUrl}${this.wasteEndpoint}`;
     return this.http
-      .get<WasteResponse>(`${this.apiBaseUrl}${this.wasteEndpoint}`)
+      .get<WasteResponse>(url)
       .pipe(map((response) => WasteAssembler.toEntitiesFromResponse(response)));
   }
   getAllCategories(): Observable<CategoryEntity[]> {

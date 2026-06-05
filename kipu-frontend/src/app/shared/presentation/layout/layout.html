@@ -1,10 +1,10 @@
 <div class="flex h-screen w-screen overflow-hidden bg-[--color-neutral-bg]">
   <app-sidebar class="flex-none h-full"></app-sidebar>
-  <div class="flex flex-col flex-1 overflow-hidden">
+  <div class="flex flex-col flex-1 min-w-0 overflow-hidden">
     <header class="flex-none">
       <app-header [currentProject]="currentProject()?.name || 'Seleccione un proyecto'"></app-header>
     </header>
-    <main class="flex-1 overflow-y-auto p-xl bg-neutral-bg">
+    <main class="flex-1 min-w-0 overflow-y-auto p-xl bg-neutral-bg">
       <router-outlet></router-outlet>
     </main>
   </div>

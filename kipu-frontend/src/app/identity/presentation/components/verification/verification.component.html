@@ -32,7 +32,7 @@
                         value="0">
                 </div>
  
-                <a mat-flat-button color="primary" routerLink="/dashboard" class="w-full !py-6 !mb-4">{{ 'identity.verify_button' | translate }}</a>
+                <a mat-flat-button color="primary" routerLink="/projects" class="w-full !py-6 !mb-4">{{ 'identity.verify_button' | translate }}</a>
                 @if (isResendDisabled()) {
                   <span class="text-sm text-gray-400 cursor-not-allowed">
                           {{ 'identity.resend_code_wait' | translate }}{{ countdown() }}s

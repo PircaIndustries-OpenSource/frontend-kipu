@@ -11,7 +11,8 @@ export class ProgressStore {
   private readonly projectsStore = inject(ProjectsStore);
 
   // State signals
-  private readonly _progressList = signal<ProjectProgress[]>([]);
+  readonly _progressList = signal<ProjectProgress[]>([]);
+  readonly allProgress = this._progressList.asReadonly();
   private readonly _loading = signal<boolean>(false);
   private readonly _specialtyFilter = signal<string>('');
   private readonly _searchFilter = signal<string>('');

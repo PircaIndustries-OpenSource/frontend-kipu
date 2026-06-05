@@ -102,14 +102,7 @@ export const routes: Routes = [
           },
         ],
       },
-      {
-        path: 'dashboard',
-        canActivate: [projectSelectedGuard],
-        loadComponent: () =>
-          import('./projects/presentation/projects-dashboard/projects-dashboard.component').then(
-            (m) => m.ProjectsDashboardComponent,
-          ),
-      },
+
       {
         path: 'machinery',
         canActivate: [projectSelectedGuard],
@@ -133,14 +126,7 @@ export const routes: Routes = [
             (m) => m.InventoryPage,
           ),
       },
-      {
-        path: 'blueprints',
-        canActivate: [projectSelectedGuard],
-        loadComponent: () =>
-          import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
-            (m) => m.InventoryPage,
-          ),
-      },
+
       {
         path: 'signatures',
         canActivate: [projectSelectedGuard],
@@ -227,6 +213,20 @@ export const routes: Routes = [
               ),
           },
         ],
+      },
+      {
+        path: 'settings',
+        loadComponent: () =>
+          import('./shared/presentation/settings/settings').then(
+            (m) => m.SettingsComponent,
+          ),
+      },
+      {
+        path: 'notifications',
+        loadComponent: () =>
+          import('./shared/presentation/notifications/notifications').then(
+            (m) => m.NotificationsComponent,
+          ),
       },
       {
         path: '',
