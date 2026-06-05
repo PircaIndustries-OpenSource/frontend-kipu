@@ -11,6 +11,7 @@ export class ProjectEntity {
   createdBy: string;
   statusJustification?: string;
   imageUrl?: string;
+  statusLogs?: { date: string; status: string; justification?: string; changedBy: string }[];
 
   constructor() {
     this.id = '';
@@ -21,5 +22,6 @@ export class ProjectEntity {
     this.location = '';
     this.createdAt = '';
     this.createdBy = '';
+    this.statusLogs = [];
   }
 }

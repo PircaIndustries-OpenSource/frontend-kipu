@@ -10,6 +10,9 @@ import { DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
+import { DossierExportService } from '../../application/dossier-export.service';
+import { ProjectStateService } from '../../../../shared/application/project-state.service';
+
 @Component({
   selector: 'app-document-page',
   imports: [MatIcon, TranslatePipe, DatePipe, MatButtonModule, MatTooltipModule],
@@ -20,6 +23,8 @@ export class DocumentPage implements OnInit {
   private documentsStore = inject(DocumentsStore);
   private dialog = inject(MatDialog);
   private cdr = inject(ChangeDetectorRef);
+  private dossierExportService = inject(DossierExportService);
+  private projectStateService = inject(ProjectStateService);
 
   pendingDocuments: DocumentEntity[] = [];
   signedDocuments: DocumentEntity[] = [];
@@ -89,5 +94,27 @@ export class DocumentPage implements OnInit {
     const signedSigners = document.assignedTo?.filter((s) => s.signedAt) || [];
     if (signedSigners.length === 0) return new Date();
     return new Date(Math.max(...signedSigners.map((s) => new Date(s.signedAt!).getTime())));
+  }
+
+  exportDossier() {
+    const projectName = this.projectStateService.currentProjectName() || 'Proyecto General';
+    const stageName = 'Fase de Control de Calidad';
+    
+    // Compile signatures history from all signed documents
+    const signaturesList: any[] = [];
+    this.signedDocuments.forEach(doc => {
+      const signedSigners = doc.assignedTo?.filter(s => s.signedAt) || [];
+      signedSigners.forEach(signer => {
+        signaturesList.push({
+          date: signer.signedAt,
+          documentName: doc.type,
+          userName: signer.fullName,
+          userRole: (signer as any).role || 'Ingeniero',
+          hashSignature: doc.digitalSignatureToken || 'e3b0c44298f...'
+        });
+      });
+    });
+
+    this.dossierExportService.exportDossierPdf(projectName, stageName, signaturesList);
   }
 }

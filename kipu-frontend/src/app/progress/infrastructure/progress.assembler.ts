@@ -15,6 +15,7 @@ export class ProgressAssembler {
       startDate: new Date(response.startDate), // We add this mapping
       endDate: new Date(response.endDate), // We add this mapping
       lastUpdate: new Date(response.lastUpdate),
+      weight: response.weight,
     };
   }
 

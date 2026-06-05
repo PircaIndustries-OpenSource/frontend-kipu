@@ -1,74 +1,63 @@
 <div class="flex h-full w-[260px] flex-col font-inter" style="background-color: #2c3e50; color: #f8f9fa;">
 
   <div class="p-6 border-b border-white/10">
-    <h1 class="text-2xl font-bold m-0" style="color: #f8f9fa;">Kipu</h1>
-    <p class="text-xs mt-1" style="color: #b0bec5;">Gestión de Obras</p>
+    <h1 class="text-2xl font-bold m-0" style="color: #f8f9fa;">{{ 'sidebar.title' | translate }}</h1>
+    <p class="text-xs mt-1" style="color: #b0bec5;">{{ 'sidebar.subtitle' | translate }}</p>
   </div>
 
   <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-    <a routerLink="/dashboard" routerLinkActive="bg-[#3498db] text-white" [routerLinkActiveOptions]="{exact: true}"
+    <a routerLink="/projects" routerLinkActive="bg-[#3498db] text-white"
       class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
-      <mat-icon>dashboard</mat-icon>
-      <span class="font-medium">Dashboard</span>
+      <mat-icon>work</mat-icon>
+      <span class="font-medium">{{ 'sidebar.projects' | translate }}</span>
     </a>
 
     <a routerLink="/advances" routerLinkActive="bg-[#3498db] text-white"
       class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
       <mat-icon>trending_up</mat-icon>
-      <span class="font-medium">Avances</span>
+      <span class="font-medium">{{ 'sidebar.advances' | translate }}</span>
     </a>
 
     <a routerLink="/rnc" routerLinkActive="bg-[#3498db] text-white"
       class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
       <mat-icon>report_problem</mat-icon>
-      <span class="font-medium">RNC</span>
-    </a>
-    <a routerLink="/projects" routerLinkActive="bg-[#3498db] text-white"
-      class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
-      <mat-icon>work</mat-icon>
-      <span class="font-medium">Proyectos</span>
+      <span class="font-medium">{{ 'sidebar.rnc' | translate }}</span>
     </a>
 
     <a routerLink="/logistics" routerLinkActive="bg-[#3498db] text-white"
       class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
       <mat-icon>inventory_2</mat-icon>
-      <span class="font-medium">Materiales</span>
+      <span class="font-medium">{{ 'sidebar.materials' | translate }}</span>
     </a>
 
     <a routerLink="/machinery" routerLinkActive="bg-[#3498db] text-white"
       class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
       <mat-icon>precision_manufacturing</mat-icon>
-      <span class="font-medium">Maquinaria</span>
-    </a>
-
-    <a routerLink="/blueprints" routerLinkActive="bg-[#3498db] text-white"
-      class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
-      <mat-icon>architecture</mat-icon>
-      <span class="font-medium">Planos</span>
+      <span class="font-medium">{{ 'sidebar.machinery' | translate }}</span>
     </a>
 
     <a routerLink="/signatures" routerLinkActive="bg-[#3498db] text-white"
       class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
       <mat-icon>draw</mat-icon>
-      <span class="font-medium">Firmas</span>
+      <span class="font-medium">{{ 'sidebar.signatures' | translate }}</span>
     </a>
 
     <a routerLink="/budget" routerLinkActive="bg-[#3498db] text-white"
       class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
       <mat-icon>payments</mat-icon>
-      <span class="font-medium">Presupuesto</span>
+      <span class="font-medium">{{ 'sidebar.budget' | translate }}</span>
     </a>
 
     <a routerLink="/team" routerLinkActive="bg-[#3498db] text-white"
       class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
       <mat-icon>groups</mat-icon>
-      <span class="font-medium">Equipo</span>
+      <span class="font-medium">{{ 'sidebar.team' | translate }}</span>
     </a>
 
     <a routerLink="/iot-monitoring" routerLinkActive="bg-[#3498db] text-white"
       class="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/10" style="color: #b0bec5;">
       <mat-icon>sensors</mat-icon>
-      <span class="font-medium">Monitoreo IoT</span>
+      <span class="font-medium">{{ 'sidebar.iot_monitoring' | translate }}</span>
     </a>
   </nav>
 
@@ -81,10 +70,8 @@
           <mat-icon style="color: #f8f9fa;">person</mat-icon>
         </div>
         <div class="flex flex-col text-left overflow-hidden">
-          <span class="text-sm font-semibold truncate" style="color: #f8f9fa;">{{ currentUser()?.name || 'Usuario
-            Invitado' }}</span>
-          <span class="text-[10px] uppercase truncate" style="color: #b0bec5;">{{ currentUser()?.role || 'Sin Rol'
-            }}</span>
+          <span class="text-sm font-semibold truncate" style="color: #f8f9fa;">{{ currentUser()?.name || ('sidebar.guest_user' | translate) }}</span>
+          <span class="text-[10px] uppercase truncate" style="color: #b0bec5;">{{ currentUser()?.role || ('sidebar.no_role' | translate) }}</span>
         </div>
       </div>
       <mat-icon style="color: #b0bec5;" class="scale-75">expand_more</mat-icon>
@@ -93,7 +80,7 @@
     <mat-menu #userMenu="matMenu" yPosition="above" class="bg-white">
       <button mat-menu-item (click)="logout()">
         <mat-icon class="text-red-500">logout</mat-icon>
-        <span class="text-red-500 font-medium">Cerrar Sesión</span>
+        <span class="text-red-500 font-medium">{{ 'sidebar.logout' | translate }}</span>
       </button>
     </mat-menu>
   </div>

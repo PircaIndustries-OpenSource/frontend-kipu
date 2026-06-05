@@ -1,0 +1,139 @@
+<style>
+  .settings-wrapper {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 2rem 1rem !important;
+    display: block !important;
+  }
+  .settings-card {
+    width: 100% !important;
+    max-width: 768px !important;
+    margin: 0 auto !important;
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(226, 232, 240, 0.5) !important;
+    border-radius: 1rem !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+    padding: 2rem !important;
+    box-sizing: border-box !important;
+    display: block !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  .settings-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 2rem !important;
+    width: 100% !important;
+  }
+  @media (max-width: 768px) {
+    .settings-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>
+
+<div class="settings-wrapper bg-neutral-bg min-h-[85vh]">
+  <div class="settings-card">
+ 
+     <!-- Top Header -->
+     <div class="flex items-center justify-between mb-8 pb-6 border-b border-slate-100">
+       <div class="flex items-center gap-3">
+         <div class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-white text-xl">
+           ⚙️
+         </div>
+         <div>
+           <h2 class="text-2xl font-bold text-slate-800">{{ 'settings.title' | translate }}</h2>
+           <p class="text-slate-500 text-xs mt-0.5">{{ 'settings.subtitle' | translate }}</p>
+         </div>
+       </div>
+ 
+       <button (click)="goBack()"
+         class="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-sm rounded-lg transition-all active:scale-95 cursor-pointer">
+         <i class="pi pi-arrow-left text-xs"></i>
+         {{ 'settings.back' | translate }}
+       </button>
+     </div>
+ 
+     <!-- Preferences Form -->
+     <div class="settings-grid">
+
+      <!-- Contrast Preferences -->
+      <div class="flex flex-col gap-2 p-5 bg-slate-50/50 border border-slate-100 rounded-xl">
+        <label class="font-semibold text-slate-700 flex items-center gap-2">
+          <span>🌓 {{ 'settings.contrast_label' | translate }}</span>
+        </label>
+        <p class="text-slate-500 text-xs mb-2">{{ 'settings.contrast_desc' | translate }}</p>
+        <p-selectButton [options]="contrastOptions" [(ngModel)]="contrast" optionLabel="label" optionValue="value"
+          styleClass="w-full text-sm">
+        </p-selectButton>
+      </div>
+
+      <!-- Font Size Preferences -->
+      <div class="flex flex-col gap-2 p-5 bg-slate-50/50 border border-slate-100 rounded-xl">
+        <label class="font-semibold text-slate-700 flex items-center gap-2">
+          <span>🔍 {{ 'settings.font_label' | translate }}</span>
+        </label>
+        <p class="text-slate-500 text-xs mb-2">{{ 'settings.font_desc' | translate }}</p>
+        <p-selectButton [options]="fontOptions" [(ngModel)]="fontSize" optionLabel="label" optionValue="value"
+          styleClass="w-full text-sm">
+        </p-selectButton>
+      </div>
+
+      <!-- Color Blindness Preferences -->
+      <div class="flex flex-col gap-2 p-5 bg-slate-50/50 border border-slate-100 rounded-xl">
+        <label class="font-semibold text-slate-700 flex items-center gap-2">
+          <span>🎨 {{ 'settings.color_blind_label' | translate }}</span>
+        </label>
+        <p class="text-slate-500 text-xs mb-2">{{ 'settings.color_blind_desc' | translate }}</p>
+        <p-selectButton [options]="colorBlindnessOptions" [(ngModel)]="colorBlindness" optionLabel="label"
+          optionValue="value" styleClass="w-full text-sm">
+        </p-selectButton>
+      </div>
+
+      <!-- Language Preferences -->
+      <div class="flex flex-col gap-2 p-5 bg-slate-50/50 border border-slate-100 rounded-xl">
+        <label class="font-semibold text-slate-700 flex items-center gap-2">
+          <span>🌐 {{ 'settings.language_label' | translate }}</span>
+        </label>
+        <p class="text-slate-500 text-xs mb-2">{{ 'settings.language_desc' | translate }}</p>
+        <p-selectButton [options]="languageOptions" [(ngModel)]="language" optionLabel="label" optionValue="value"
+          styleClass="w-full text-sm">
+        </p-selectButton>
+      </div>
+
+      <!-- Toggle Switch Preferences (Dyslexic Font) -->
+      <div class="flex items-center justify-between p-5 bg-slate-50/50 border border-slate-100 rounded-xl">
+        <div class="flex flex-col gap-1 pr-4">
+          <span class="font-semibold text-slate-700 flex items-center gap-2">📖 {{ 'settings.dyslexic_label' | translate
+            }}</span>
+          <span class="text-slate-500 text-xs">{{ 'settings.dyslexic_desc' | translate }}</span>
+        </div>
+        <p-toggleSwitch [(ngModel)]="dyslexicFont"></p-toggleSwitch>
+      </div>
+
+      <!-- Toggle Switch Preferences (Reduced Motion) -->
+      <div class="flex items-center justify-between p-5 bg-slate-50/50 border border-slate-100 rounded-xl">
+        <div class="flex flex-col gap-1 pr-4">
+          <span class="font-semibold text-slate-700 flex items-center gap-2">🏃 {{ 'settings.motion_label' | translate
+            }}</span>
+          <span class="text-slate-500 text-xs">{{ 'settings.motion_desc' | translate }}</span>
+        </div>
+        <p-toggleSwitch [(ngModel)]="reducedMotion"></p-toggleSwitch>
+      </div>
+
+      <!-- Toggle Switch Preferences (Simplified UI) -->
+      <div
+        class="col-span-1 md:col-span-2 flex items-center justify-between p-5 bg-slate-50/50 border border-slate-100 rounded-xl">
+        <div class="flex flex-col gap-1 pr-4">
+          <span class="font-semibold text-slate-700 flex items-center gap-2">📱 {{ 'settings.simplified_label' |
+            translate }}</span>
+          <span class="text-slate-500 text-xs">{{ 'settings.simplified_desc' | translate }}</span>
+        </div>
+        <p-toggleSwitch [(ngModel)]="simplifiedUI"></p-toggleSwitch>
+      </div>
+
+    </div>
+
+  </div>
+</div>
