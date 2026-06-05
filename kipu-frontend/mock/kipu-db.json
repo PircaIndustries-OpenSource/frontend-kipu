@@ -115,7 +115,7 @@
       "location": "Av. del Ejército 1020",
       "createdAt": "2026-05-11",
       "createdBy": "current-user",
-      "imageUrl": "project-image4.jpg",
+      "imageUrl": "project-image4.png",
       "totalBudget": 2100000
     },
     {
@@ -602,6 +602,18 @@
     }
   ],
   "materialsSuppliers": [
+    {
+      "id": "sup-001",
+      "ruc": "20100128218",
+      "onboarded": "2024-01-15",
+      "socialReason": "Aceros Arequipa S.A.",
+      "contact": "Departamento de Ventas",
+      "phone": "01-517-1800",
+      "email": "ventas@acerosarequipa.com",
+      "categories": "Metales y Acero",
+      "paymentTerms": "NET 30",
+      "status": "ACTIVE"
+    },
     {
       "id": "sup-002",
       "ruc": "20457896324",
@@ -1098,7 +1110,7 @@
       "projectId": "proj-01",
       "sensorId": "S-TMP-01",
       "state": 1,
-      "location": "Floor Level 3",
+      "location": "Piso 3",
       "temperature": 34.5,
       "humidity": 58,
       "limit": 35,
@@ -1108,7 +1120,7 @@
       "id": "2",
       "projectId": "proj-01",
       "sensorId": "S-TMP-02",
-      "location": "Columns B Sec.",
+      "location": "Columnas Sección B",
       "unit": "C",
       "temperature": 28,
       "humidity": 65,
@@ -1121,7 +1133,7 @@
       "id": "1",
       "projectId": "proj-01",
       "sensorId": "S-GEO-01",
-      "name": "Full Station #1",
+      "name": "Estación Total #1",
       "state": 0,
       "longitude": 45,
       "latitude": 35
@@ -1130,7 +1142,7 @@
       "id": "2",
       "projectId": "proj-01",
       "sensorId": "S-GEO-02",
-      "name": "Concrete Vibrator #2",
+      "name": "Vibrador de Concreto #2",
       "state": 1,
       "longitude": 65,
       "latitude": 55
@@ -1138,7 +1150,7 @@
     {
       "id": "7ycxpwh",
       "numberId": 452,
-      "name": "Test #1",
+      "name": "Grúa Torre #1",
       "projectId": "proj-01",
       "longitude": 40.3,
       "latitude": 40,
@@ -1150,7 +1162,7 @@
       "id": "1",
       "projectId": "proj-01",
       "sensorId": "SM-088",
-      "name": "Fine Sand",
+      "name": "Arena Fina",
       "unit": "%",
       "state": 2,
       "lastLecture": 12,
@@ -1160,7 +1172,7 @@
       "id": "2",
       "projectId": "proj-01",
       "sensorId": "SM-082",
-      "name": "Crushed Stone",
+      "name": "Piedra Chancada",
       "unit": "%",
       "state": 1,
       "lastLecture": 80,
@@ -1175,7 +1187,7 @@
       "unit": "mm/s",
       "lastLecture": 3.8,
       "limit": 5,
-      "location": "South Wall",
+      "location": "Muro Sur",
       "timeLecture": "07:57:11 p. m.",
       "state": 1
     },
@@ -1186,7 +1198,7 @@
       "unit": "mm/s",
       "lastLecture": 0.5,
       "limit": 1,
-      "location": "North Excavation",
+      "location": "Excavación Norte",
       "timeLecture": "31/5/2026, 7:50:58 p. m.",
       "state": 1
     }
@@ -1338,7 +1350,8 @@
       "lastUpdate": "2026-05-11T18:00:00.000Z",
       "responsible": "Carlos Ramos",
       "workers": 45,
-      "weather": "cloudy"
+      "weather": "cloudy",
+      "weight": 30
     },
     {
       "id": 1897,
@@ -1354,12 +1367,13 @@
       "lastUpdate": "2026-05-13T12:00:00.000Z",
       "responsible": "Luis Gomez",
       "workers": 12,
-      "weather": "rainy"
+      "weather": "rainy",
+      "weight": 30
     },
     {
       "id": 1898,
       "projectId": "proj-01",
-      "projectName": "Edificio Los Álamos",
+      "projectName": "Edificio Corporativo Los Olivos",
       "activityName": "Excavación Profunda",
       "details": "Sótano 3",
       "specialty": "Estructuras",
@@ -1370,7 +1384,8 @@
       "lastUpdate": "2026-05-15T10:00:00.000Z",
       "responsible": "Julio Cardenas",
       "workers": 15,
-      "weather": "cloudy"
+      "weather": "cloudy",
+      "weight": 100
     },
     {
       "id": 1895,
@@ -1386,7 +1401,8 @@
       "lastUpdate": "2026-05-12T00:00:00.000Z",
       "responsible": "Manuel Francia",
       "workers": 67,
-      "weather": "sunny"
+      "weather": "sunny",
+      "weight": 40
     }
   ],
   "budgets": [

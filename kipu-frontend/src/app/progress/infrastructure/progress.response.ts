@@ -10,4 +10,5 @@ export interface ProgressResponse {
   startDate: string; // We add this
   endDate: string; // We add this
   lastUpdate: string;
+  weight?: number;
 }

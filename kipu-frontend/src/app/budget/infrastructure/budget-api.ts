@@ -17,7 +17,9 @@ export class BudgetApi {
    * Fetches all budget items from the server
    */
   getAllBudgets(): Observable<BudgetResponse[]> {
-    return this.http.get<BudgetResponse[]>(this.budgetUrl);
+    const projectId = localStorage.getItem('currentProjectId');
+    const url = projectId ? `${this.budgetUrl}?projectId=${projectId}` : this.budgetUrl;
+    return this.http.get<BudgetResponse[]>(url);
   }
 
   /**

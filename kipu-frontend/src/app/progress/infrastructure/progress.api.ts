@@ -24,7 +24,9 @@ export class ProgressApi {
    * @returns An observable containing the list of mapped entities
    */
   getAllProgress(): Observable<ProjectProgress[]> {
-    return this.http.get<ProgressResponse[]>(this.basePath).pipe(
+    const projectId = localStorage.getItem('currentProjectId');
+    const url = projectId ? `${this.basePath}?projectId=${projectId}` : this.basePath;
+    return this.http.get<ProgressResponse[]>(url).pipe(
       map((responses) => ProgressAssembler.toEntityList(responses))
     );
   };

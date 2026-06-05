@@ -9,18 +9,76 @@
   </div>
   <div class="flex items-center gap-6">
     <app-language-switcher></app-language-switcher>
+    
+    <!-- Notification Bell with Dropdown Overlay -->
+    <div class="relative">
+      <button
+        (click)="op.toggle($event)"
+        class="text-primary flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-110 active:scale-90 overflow-visible relative">
+        <i class="pi pi-bell text-2xl"></i>
+        <span 
+          *ngIf="notificationService.unreadCount() > 0"
+          class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white animate-pulse">
+          {{ notificationService.unreadCount() }}
+        </span>
+      </button>
+
+      <p-popover #op [style]="{ width: '360px' }">
+        <div class="p-2">
+          <div class="flex justify-between items-center mb-3 pb-2 border-b border-slate-100">
+            <span class="font-bold text-xs text-slate-800">{{ 'notifications.header_latest' | translate }}</span>
+            <button 
+              (click)="goToAllNotifications(); op.hide()"
+              class="text-[11px] font-semibold text-blue-600 hover:text-blue-800 bg-transparent border-none cursor-pointer">
+              {{ 'notifications.header_view_all' | translate }}
+            </button>
+          </div>
+
+          <!-- List of Last 3 Scoped Notifications -->
+          <div class="flex flex-col gap-2">
+            <div 
+              *ngFor="let item of notificationService.latestThreeNotifications()"
+              (click)="selectNotification(item, op)"
+              [class]="'flex gap-2.5 p-2 rounded-lg border cursor-pointer hover:bg-slate-50/50 transition-colors ' + (item.read ? 'bg-white border-slate-100 opacity-75' : 'bg-slate-50/50 border-slate-200')">
+              
+              <!-- Read/Unread State Indicator -->
+              <div class="flex-none flex items-center">
+                <span [class]="'h-2 w-2 rounded-full ' + (item.read ? 'bg-slate-300' : 'bg-blue-500')"></span>
+              </div>
+
+              <!-- Content details -->
+              <div class="flex-1 min-w-0">
+                <p [class]="'text-xs truncate font-bold ' + (item.read ? 'text-slate-600' : 'text-slate-800')">{{ item.title }}</p>
+                <p class="text-[10px] text-slate-500 truncate mt-0.5">{{ item.description }}</p>
+              </div>
+
+              <!-- Stop Propagation Dismiss (x) button -->
+              <div class="flex-none flex items-center">
+                <button
+                  (click)="dismissNotification($event, item.id)"
+                  class="bg-transparent border-none text-slate-400 hover:text-red-500 text-xs p-1 cursor-pointer transition-colors"
+                  [title]="'notifications.dismiss' | translate">
+                  <i class="pi pi-times"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Empty Tray message -->
+            <div 
+              *ngIf="notificationService.latestThreeNotifications().length === 0"
+              class="text-center py-6 text-slate-400 text-xs">
+              <i class="pi pi-bell-slash mb-1.5 text-lg block text-slate-300"></i>
+              {{ 'notifications.header_empty' | translate }}
+            </div>
+          </div>
+        </div>
+      </p-popover>
+    </div>
+
+    <!-- Settings Navigation with Back Path -->
     <button
-      routerLink="/notifications"
-      class="text-primary flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-110 active:scale-90 overflow-visible"
-      matBadge=" "
-      matBadgeSize="small"
-      matBadgeColor="warn"
-      matBadgePosition="above after"
-      [matBadgeHidden]="!unreadRequest()">
-      <mat-icon class="text-[32px]! w-8! h-8!">notifications</mat-icon>
-    </button>
-    <button
-      routerLink="/settings"
+      [routerLink]="['/settings']"
+      [queryParams]="{ from: currentUrl }"
       class="text-primary flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-110 active:scale-90">
       <mat-icon class="text-[32px]! w-8! h-8!">settings</mat-icon>
     </button>

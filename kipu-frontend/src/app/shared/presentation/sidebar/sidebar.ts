@@ -6,11 +6,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { LogoutDialogComponent } from '../logout-dialog/logout-dialog.component';
 import { AuthStore } from '../../../identity/application/auth.store';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, MatIconModule, RouterModule, MatMenuModule, MatDialogModule],
+  imports: [CommonModule, MatIconModule, RouterModule, MatMenuModule, MatDialogModule, TranslateModule],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css',
 })
