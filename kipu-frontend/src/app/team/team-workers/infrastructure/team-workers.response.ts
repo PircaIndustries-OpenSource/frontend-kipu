@@ -1,10 +1,16 @@
-export type TeamWorkersResponse = TeamWorkersResource[];
+export interface TeamWorkerMachineryResource {
+  machineryId: string;
+  fullName: string;
+}
 
 export interface TeamWorkersResource {
-  id: string,
-  dni: string,
-  fullName: string,
-  role: string,
-  status: string,
-  assignedTools: string[]
+  id: string;
+  dni: string;
+  fullName: string;
+  role: string;
+  isActive: boolean;
+  projectId: string;
+  machineries: TeamWorkerMachineryResource[];
 }
+
+export type TeamWorkersResponse = TeamWorkersResource[];

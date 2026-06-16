@@ -1087,6 +1087,33 @@
       "registrationDate": "2026-04-10",
       "maintenanceHours": "20",
       "assignmentDetail": "En uso para compactación de zanjas."
+    },
+    {
+      "id": "jZmzUWP",
+      "name": "CAT 320",
+      "status": "IN_USE",
+      "assignedTo": "Puto Charli",
+      "registrationDate": "2026-06-16",
+      "maintenanceHours": "",
+      "assignmentDetail": "Assigned to worker Puto Charli"
+    },
+    {
+      "id": "Un2mNO2",
+      "name": "TEMPO 124",
+      "status": "AVAILABLE",
+      "assignedTo": "",
+      "registrationDate": "",
+      "maintenanceHours": "",
+      "assignmentDetail": "TILIN TILIN"
+    },
+    {
+      "id": "aEFfGmO",
+      "name": "TEMPO CUARENTON 2323",
+      "status": "IN_USE",
+      "assignedTo": "El Pepe",
+      "registrationDate": "2026-06-16",
+      "maintenanceHours": "",
+      "assignmentDetail": "Assigned to worker El Pepe"
     }
   ],
   "concreteCuring": [

@@ -52,8 +52,7 @@
       </div>
 
       <div class="table-body max-h-120 overflow-y-scroll rounded-b-md">
-
-        @for (worker of filteredWorkers; track worker.id) {
+        @for (worker of teamStore.teamWorkers(); track worker.id) {
           <div class="grid grid-cols-6 border-2 border-(--color-neutral-border) w-full p-3 place-content-center align-middle">
             <div class="id-number flex justify-center">
               <h2 class="text-base">{{worker.dni}}</h2>
@@ -68,7 +67,7 @@
             </div>
 
             <div class="work-status flex justify-center">
-              @if (worker.status == "activo"){
+              @if (worker.isActive){
                 <h3 class="p-2 bg-[#CAFFC9] w-fit rounded-md text-(--color-success)">{{'team.workers.register.tab-status-active' | translate}}</h3>
               }
               @else {
@@ -77,9 +76,9 @@
             </div>
 
             <div class="assigned-tools flex flex-col justify-center items-center text-center h-full px-2">
-              @if (worker.assignedTools && worker.assignedTools.length > 0) {
+              @if (worker.machineries && worker.machineries.length > 0) {
                 <h2 class="text-base font-medium text-slate-700">
-                  {{ worker.assignedTools.join(', ') }}
+                  {{ getMachineryNames(worker.machineries) }}
                 </h2>
               } @else {
                 <h2 class="text-sm italic text-slate-400">
@@ -101,7 +100,6 @@
             @if(searchControl.value) { "{{ searchControl.value }}" }
           </div>
         }
-
       </div>
 
     </div>
