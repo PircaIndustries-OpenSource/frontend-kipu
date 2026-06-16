@@ -4,6 +4,7 @@ export const environment = {
   microsoftClientId: '5a443317-5785-48ef-827d-012ab62f8319',
   kipuApiBaseUrl: '/api/v1',
   kipuApiHost: 'http://localhost:3000',
+  kipuApiHostLocal: 'http://localhost:8080/api/v1',
   kipuApiInventoryMaterialsEndpointPath: '/materials/inventory',
   kipuApiMaterialsEndpointPath: '/materials',
   kipuApiRequestEndpointPath: '/materials/requests',

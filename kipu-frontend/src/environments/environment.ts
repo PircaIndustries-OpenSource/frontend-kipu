@@ -4,6 +4,7 @@ export const environment = {
   microsoftClientId: '5a443317-5785-48ef-827d-012ab62f8319',
   kipuApiHost: 'https://kipu-mock-api.onrender.com',
   kipuApiBaseUrl: 'https://kipu-mock-api.onrender.com/api/v1',
+  kipuApiHostLocal: 'http://localhost:8080/api/v1',
   kipuApiInventoryMaterialsEndpointPath: '/materials/inventory',
   kipuApiMaterialsEndpointPath: '/materials',
   kipuApiRequestEndpointPath: '/materials/requests',

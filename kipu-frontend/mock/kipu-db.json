@@ -27,6 +27,13 @@
       "password": "password123",
       "role": "Ingeniero de Campo",
       "id": "kLm9Pq2"
+    },
+    {
+      "name": "Ramos Neo",
+      "email": "doriangray292929@gmail.com",
+      "password": "123456789",
+      "role": "Gestor Operativo",
+      "id": "deM9jR-"
     }
   ],
   "projects": [
