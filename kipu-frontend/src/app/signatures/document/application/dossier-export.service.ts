@@ -3,17 +3,21 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DossierExportService {
-
-  exportDossierPdf(projectName: string, stageName: string, signatures: any[], dateRange?: { start: Date | null, end: Date | null }) {
+  exportDossierPdf(
+    projectName: string,
+    stageName: string,
+    signatures: any[],
+    dateRange?: { start: Date | null; end: Date | null },
+  ) {
     const doc = new jsPDF();
 
     // 1. Encabezado / Branding de Kipu
     doc.setFillColor(44, 62, 80); // Color principal oscuro
     doc.rect(0, 0, 210, 40, 'F');
-    
+
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(22);
     doc.text('KIPU - DOSSIER DE CALIDAD', 14, 25);
@@ -29,23 +33,29 @@ export class DossierExportService {
     doc.text(`Fecha de Generación: ${new Date().toLocaleString()}`, 14, 71);
 
     if (dateRange && dateRange.start && dateRange.end) {
-      doc.text(`Periodo Restringido: ${dateRange.start.toLocaleDateString()} al ${dateRange.end.toLocaleDateString()}`, 14, 78);
+      doc.text(
+        `Periodo Restringido: ${dateRange.start.toLocaleDateString()} al ${dateRange.end.toLocaleDateString()}`,
+        14,
+        78,
+      );
     }
 
     // 3. Tabla con el historial de Firmas Electrónicas y Aprobaciones
     const headers = [['Fecha', 'Documento / Hito', 'Firmante', 'Rol', 'Llave Hash / Certificado']];
     const data = signatures
-      .filter(sig => {
+      .filter((sig) => {
         if (!dateRange || !dateRange.start || !dateRange.end) return true;
-        const sigDate = new Date(sig.date || sig.signedAt);
+        // Ahora leemos estrictamente "sig.date"
+        const sigDate = new Date(sig.date);
         return sigDate >= dateRange.start && sigDate <= dateRange.end;
       })
-      .map(sig => [
-        new Date(sig.date || sig.signedAt).toLocaleDateString(),
-        sig.documentName || sig.documentType || 'Plano Técnico',
-        sig.userName || sig.fullName || 'Firmante',
-        sig.userRole || sig.role || 'Ingeniero',
-        (sig.hashSignature || sig.digitalSignatureToken || 'N/A').substring(0, 16) + '...' // Hash acortado para legibilidad
+      .map((sig) => [
+        // Usamos los campos exactos que manda document-page.ts
+        new Date(sig.date).toLocaleDateString(),
+        sig.documentName || 'Plano Técnico',
+        sig.userName || 'Firmante',
+        sig.userRole || 'Ingeniero',
+        (sig.hashSignature || 'N/A').substring(0, 16) + '...', // Hash acortado para legibilidad
       ]);
 
     autoTable(doc, {
@@ -54,7 +64,7 @@ export class DossierExportService {
       body: data,
       theme: 'striped',
       headStyles: { fillColor: [52, 152, 219] }, // Accent color
-      styles: { fontSize: 9 }
+      styles: { fontSize: 9 },
     });
 
     // 4. Pie de Página con firma inalterable

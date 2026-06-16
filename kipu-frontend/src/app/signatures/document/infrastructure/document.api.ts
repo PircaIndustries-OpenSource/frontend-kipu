@@ -1,8 +1,7 @@
-// infrastructure/api/document.api.ts
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { catchError, map, Observable, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { DocumentEntity } from '../domain/model/document.entity';
 import { DocumentResource, DocumentResponse } from './document.response';
 import { DocumentAssembler } from './document.assembler';
@@ -12,52 +11,39 @@ import { DocumentAssembler } from './document.assembler';
 })
 export class DocumentApi {
   http: HttpClient = inject(HttpClient);
-  apiBaseUrl = environment.kipuApiBaseUrl;
-  documentsEndpoint = environment.kipuApiDocumentsEndpointPath; // 'documents'
-  documentsUrl = `${this.apiBaseUrl}${this.documentsEndpoint}`;
 
-  getAllDocuments(): Observable<DocumentEntity[]> {
-    const projectId = localStorage.getItem('currentProjectId');
-    const url = projectId ? `${this.documentsUrl}?projectId=${projectId}` : this.documentsUrl;
+  apiBaseUrl = environment.kipuApiHostLocal;
+  documentsEndpoint = '/documents';
+  BASE_URL = `${this.apiBaseUrl}${this.documentsEndpoint}`;
+
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+  }
+
+  // GET /api/v1/documents?projectId={id}
+  getAllDocuments(projectId: string): Observable<DocumentEntity[]> {
+    const params = new HttpParams().set('projectId', projectId);
     return this.http
-      .get<DocumentResponse>(url)
+      .get<DocumentResponse>(this.BASE_URL, { headers: this.getHeaders(), params })
       .pipe(map((response) => DocumentAssembler.toEntitiesFromResponse(response)));
   }
 
-  getDocumentsByProject(projectId: string): Observable<DocumentEntity[]> {
-    const url = `${this.documentsUrl}?projectId=${projectId}`;
+  // POST /api/v1/documents
+  postDocument(payload: any): Observable<DocumentEntity> {
     return this.http
-      .get<DocumentResponse>(url)
-      .pipe(map((response) => DocumentAssembler.toEntitiesFromResponse(response)));
-  }
-
-  getDocumentById(id: string): Observable<DocumentEntity> {
-    const url = `${this.documentsUrl}/${id}`;
-    return this.http
-      .get<DocumentResource>(url)
+      .post<DocumentResource>(this.BASE_URL, payload, { headers: this.getHeaders() })
       .pipe(map((resource) => DocumentAssembler.toEntityFromResource(resource)));
   }
 
-  postDocument(document: DocumentEntity): Observable<DocumentEntity> {
-    const resource = DocumentAssembler.toResourceFromEntity(document);
+  // PATCH /api/v1/documents/sign/{id}
+  signDocument(id: string): Observable<DocumentEntity> {
+    const url = `${this.BASE_URL}/sign/${id}`;
     return this.http
-      .post<DocumentResource>(this.documentsUrl, resource)
-      .pipe(map((createdResource) => DocumentAssembler.toEntityFromResource(createdResource)));
-  }
-
-  updateDocument(document: DocumentEntity): Observable<DocumentEntity> {
-    const url = `${this.documentsUrl}/${document.id}`;
-    return this.http.put<DocumentEntity>(url, document).pipe(
-      tap(() => console.log('Documento actualizado en API:', document)),
-      catchError((error) => {
-        console.error('Error en updateDocument:', error);
-        throw error;
-      }),
-    );
-  }
-
-  deleteDocument(id: string): Observable<void> {
-    const url = `${this.documentsUrl}/${id}`;
-    return this.http.delete<void>(url);
+      .patch<DocumentResource>(url, {}, { headers: this.getHeaders() })
+      .pipe(map((resource) => DocumentAssembler.toEntityFromResource(resource)));
   }
 }

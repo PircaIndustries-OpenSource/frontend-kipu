@@ -1,17 +1,16 @@
-
 export interface DocumentResource {
   id: string;
   type: string;
   isSigned: boolean;
   digitalSignatureToken: string | null;
-  deadLine: string | Date;
-  assignedTo: UserDocumentResource[];
+  deadLine: string;
+  projectId: string;
+  signers: SignerResource[];
 }
 
-export interface UserDocumentResource {
-  id: string;
+export interface SignerResource {
+  teamUserId: string;
   fullName: string;
-  signedAt?: string | Date;
 }
 
 export type DocumentResponse = DocumentResource[];

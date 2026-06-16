@@ -10,13 +10,14 @@ describe('DossierExportService', () => {
 
     // Mock jsPDF prototype methods manually to avoid saving files and drawing errors
     jsPDF.prototype.save = function() { return this; };
+
     jsPDF.prototype.text = function() { return this; };
     jsPDF.prototype.rect = function() { return this; };
     jsPDF.prototype.setFillColor = function() { return this; };
     jsPDF.prototype.setTextColor = function() { return this; };
     jsPDF.prototype.setFontSize = function() { return this; };
     jsPDF.prototype.setFont = function() { return this; };
-    
+
     // Set a dummy lastAutoTable property to prevent crashes
     (jsPDF.prototype as any).lastAutoTable = { finalY: 100 };
   });
