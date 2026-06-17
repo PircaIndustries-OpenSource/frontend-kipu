@@ -2,15 +2,13 @@
 
 <mat-dialog-content>
   <p class="text-sm text-gray-500 mb-4">Actualiza el estado operativo para <strong>{{ data.project.name }}</strong></p>
-  
+
   <form [formGroup]="statusForm" class="flex flex-col gap-4 mt-2">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Nuevo Estado</mat-label>
       <mat-select formControlName="status">
-        <mat-option value="PLANNED">Planificación</mat-option>
-        <mat-option value="IN_PROGRESS">En ejecución</mat-option>
+        <mat-option value="ACTIVE">Activo (En ejecución / Planificación)</mat-option>
         <mat-option value="ON_HOLD">Pausado (Paralizada)</mat-option>
-        <mat-option value="COMPLETED">Completado</mat-option>
       </mat-select>
     </mat-form-field>
 
