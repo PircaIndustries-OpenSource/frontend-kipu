@@ -17,8 +17,10 @@ export class DocumentApi {
   documentsUrl = `${this.apiBaseUrl}${this.documentsEndpoint}`;
 
   getAllDocuments(): Observable<DocumentEntity[]> {
+    const projectId = localStorage.getItem('currentProjectId');
+    const url = projectId ? `${this.documentsUrl}?projectId=${projectId}` : this.documentsUrl;
     return this.http
-      .get<DocumentResponse>(this.documentsUrl)
+      .get<DocumentResponse>(url)
       .pipe(map((response) => DocumentAssembler.toEntitiesFromResponse(response)));
   }
 

@@ -15,6 +15,7 @@
   "packageManager": "npm@11.12.1",
   "dependencies": {
     "@abacritt/angularx-social-login": "^2.6.0",
+    "@angular/animations": "^21.2.16",
     "@angular/cdk": "^21.2.9",
     "@angular/common": "^21.2.0",
     "@angular/compiler": "^21.2.0",
@@ -27,7 +28,12 @@
     "@azure/msal-browser": "^5.11.0",
     "@ngx-translate/core": "^17.0.0",
     "@ngx-translate/http-loader": "^17.0.0",
+    "@primeng/themes": "^21.0.4",
     "i18n": "^0.15.3",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.8",
+    "primeicons": "^7.0.0",
+    "primeng": "^21.1.9",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "^0.16.2"

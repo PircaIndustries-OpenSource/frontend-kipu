@@ -1,61 +1,234 @@
 @import "tailwindcss";
+@import "primeicons/primeicons.css";
+
 @theme {
-  --color-primary: #2c3e50;
-  --color-accent: #3498db;
-  --color-text-main: #212529;
-  --color-neutral-bg: #f8f9fa;
-  --color-neutral-border: #b0bec5;
+    --color-primary: #2c3e50;
+    --color-accent: #3498db;
+    --color-text-main: #212529;
+    --color-neutral-bg: #f8f9fa;
+    --color-neutral-border: #b0bec5;
 
-  --color-success: #28AE60;
-  --color-warning: #BD760D;
-  --color-danger:  #FE2318;
-  --color-info:    #3598DB;
-  --color-success-soft: #CAFFC9;
-  --color-warning-soft: #FEFBEA;
-  --color-danger-soft:  #FFD9D8;
-  --color-info-soft:    #E6F4FF;
+    --color-success: #28AE60;
+    --color-warning: #BD760D;
+    --color-danger: #FE2318;
+    --color-info: #3598DB;
+    --color-success-soft: #CAFFC9;
+    --color-warning-soft: #FEFBEA;
+    --color-danger-soft: #FFD9D8;
+    --color-info-soft: #E6F4FF;
 
-  --font-inter: "Interh", sans-serif;
+    --font-inter: "Interh", sans-serif;
 
-  --spacing-3xs: 0.125rem;
-  --spacing-2xs: 0.25rem;
-  --spacing-xs: 0.5rem;
-  --spacing-s: 0.75rem;
-  --spacing-m: 1.0rem;
-  --spacing-l: 1.5rem;
-  --spacing-xl: 2.0rem;
-  --spacing-2xl: 3.0rem;
-  --spacing-3xl: 4.0rem;
+    --spacing-3xs: 0.125rem;
+    --spacing-2xs: 0.25rem;
+    --spacing-xs: 0.5rem;
+    --spacing-s: 0.75rem;
+    --spacing-m: 1.0rem;
+    --spacing-l: 1.5rem;
+    --spacing-xl: 2.0rem;
+    --spacing-2xl: 3.0rem;
+    --spacing-3xl: 4.0rem;
 
-  --radius-sm: 0.25rem;
-  --radius-m: 0.5rem;
-  --radius-l: 0.75rem;
-  --radius-full: 20rem;
+    --radius-sm: 0.25rem;
+    --radius-m: 0.5rem;
+    --radius-l: 0.75rem;
+    --radius-full: 20rem;
 
-  --text-xs:   0.75rem;
-  --text-sm:   0.875rem;
-  --text-base: 1rem;
-  --text-lg:   1.125rem;
-  --text-xl:   1.25rem;
-  --text-2xl:  1.5rem;
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
 
-  --transition-base: 150ms ease;
+    --transition-base: 150ms ease;
 }
-@layer base{
-  body {
-    @apply bg-[--color-neutral-bg] text-[--color-text-main] font-inter;
-  }
-  input, textarea, select, button {
-    @apply font-inter;
-  }
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-neutral-border) transparent;
-  }
+
+@layer base {
+    body {
+        @apply bg-[--color-neutral-bg] text-[--color-text-main] font-inter;
+    }
+
+    input,
+    textarea,
+    select,
+    button {
+        @apply font-inter;
+    }
+
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--color-neutral-border) transparent;
+    }
 }
 
 cdk-overlay-backdrop {
-  background-color: rgba(0, 0, 0, 0.3) !important;
-  backdrop-filter: blur(6px) !important;
-  -webkit-backdrop-filter: blur(6px);
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px);
+}
+
+/* ==========================================================================
+   Accessibility & High Contrast Styles
+   ========================================================================== */
+
+/* High Contrast Override */
+body.accessibility-high-contrast {
+    --color-primary: #000000 !important;
+    --color-accent: #ffd700 !important;
+    --color-neutral-bg: #121212 !important;
+    --color-neutral-border: #ffffff !important;
+
+    background-color: #121212 !important;
+    color: #ffffff !important;
+
+    /* Tailwind v4 overrides */
+    --color-white: #000000 !important;
+    --color-slate-50: #000000 !important;
+    --color-slate-100: #121212 !important;
+    --color-slate-800: #ffffff !important;
+    --color-slate-900: #ffffff !important;
+    --color-gray-50: #000000 !important;
+    --color-gray-100: #121212 !important;
+    --color-gray-800: #ffffff !important;
+}
+
+/* Force black backgrounds & white borders for PrimeNG elements in high contrast */
+body.accessibility-high-contrast .p-card,
+body.accessibility-high-contrast .p-dialog,
+body.accessibility-high-contrast .p-dialog-content,
+body.accessibility-high-contrast .p-dialog-header,
+body.accessibility-high-contrast .p-dropdown,
+body.accessibility-high-contrast .p-dropdown-panel,
+body.accessibility-high-contrast .p-selectbutton,
+body.accessibility-high-contrast .p-togglebutton,
+body.accessibility-high-contrast .p-datatable,
+body.accessibility-high-contrast .p-datatable-thead th,
+body.accessibility-high-contrast .p-datatable-tbody td,
+body.accessibility-high-contrast input,
+body.accessibility-high-contrast select,
+body.accessibility-high-contrast textarea,
+body.accessibility-high-contrast button {
+    background-color: #000000 !important;
+    border: 2px solid #ffffff !important;
+    color: #ffffff !important;
+}
+
+/* Yellow/Gold accent highlight for active/hover states */
+body.accessibility-high-contrast .p-dropdown-item:hover,
+body.accessibility-high-contrast .p-dropdown-item.p-highlight,
+body.accessibility-high-contrast .p-togglebutton.p-highlight,
+body.accessibility-high-contrast .p-button:hover,
+body.accessibility-high-contrast .p-tabmenuitem.p-highlight,
+body.accessibility-high-contrast .p-tabmenuitem:hover,
+body.accessibility-high-contrast .p-selectbutton .p-button.p-highlight {
+    background-color: #ffd700 !important;
+    color: #000000 !important;
+    border-color: #ffd700 !important;
+}
+
+body.accessibility-high-contrast .p-tablist-active-bar {
+    background-color: #ffd700 !important;
+}
+
+/* Font scale classes */
+body.accessibility-font-large,
+body.accessibility-font-large p,
+body.accessibility-font-large span,
+body.accessibility-font-large button,
+body.accessibility-font-large input,
+body.accessibility-font-large select,
+body.accessibility-font-large textarea,
+body.accessibility-font-large td,
+body.accessibility-font-large th {
+    font-size: 1.15rem !important;
+}
+
+body.accessibility-font-large h1 {
+    font-size: 2.15rem !important;
+}
+
+body.accessibility-font-large h2 {
+    font-size: 1.85rem !important;
+}
+
+body.accessibility-font-large h3 {
+    font-size: 1.55rem !important;
+}
+
+body.accessibility-font-xlarge,
+body.accessibility-font-xlarge p,
+body.accessibility-font-xlarge span,
+body.accessibility-font-xlarge button,
+body.accessibility-font-xlarge input,
+body.accessibility-font-xlarge select,
+body.accessibility-font-xlarge textarea,
+body.accessibility-font-xlarge td,
+body.accessibility-font-xlarge th {
+    font-size: 1.35rem !important;
+}
+
+body.accessibility-font-xlarge h1 {
+    font-size: 2.5rem !important;
+}
+
+body.accessibility-font-xlarge h2 {
+    font-size: 2.15rem !important;
+}
+
+body.accessibility-font-xlarge h3 {
+    font-size: 1.85rem !important;
+}
+
+/* Dyslexic Font Override */
+body.accessibility-font-dyslexic,
+body.accessibility-font-dyslexic * {
+    font-family: 'Comic Sans MS', cursive, sans-serif !important;
+}
+
+/* Daltonism/Color Blindness approximation filters */
+body.accessibility-protanopia {
+    filter: contrast(120%) saturate(80%) hue-rotate(-10deg) !important;
+}
+
+body.accessibility-deuteranopia {
+    filter: contrast(110%) saturate(85%) hue-rotate(10deg) !important;
+}
+
+body.accessibility-tritanopia {
+    filter: contrast(120%) saturate(90%) hue-rotate(180deg) !important;
+}
+
+/* Reduced Motion Override */
+body.accessibility-reduced-motion,
+body.accessibility-reduced-motion * {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+}
+
+/* Layout routing components block fix */
+main>*:not(router-outlet),
+app-settings,
+app-notifications {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* PrimeNG SelectButton responsive fix */
+.p-selectbutton {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+}
+
+.p-selectbutton .p-button {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
 }
