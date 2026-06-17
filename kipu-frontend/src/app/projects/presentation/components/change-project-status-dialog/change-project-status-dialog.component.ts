@@ -16,9 +16,9 @@ import { ProjectsStore } from '../../../application/projects.store';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
   ],
-  templateUrl: './change-project-status-dialog.component.html'
+  templateUrl: './change-project-status-dialog.component.html',
 })
 export class ChangeProjectStatusDialogComponent {
   private fb = inject(FormBuilder);
@@ -27,12 +27,13 @@ export class ChangeProjectStatusDialogComponent {
   public data = inject(MAT_DIALOG_DATA);
 
   statusForm = this.fb.group({
-    status: [this.data.project.status, Validators.required],
-    statusJustification: ['']
+    // If the project is not currently paused, map its default form option state to 'ACTIVE'
+    status: [this.data.project.status === 'ON_HOLD' ? 'ON_HOLD' : 'ACTIVE', Validators.required],
+    statusJustification: [this.data.project.statusJustification || ''],
   });
 
   constructor() {
-    this.statusForm.get('status')?.valueChanges.subscribe(status => {
+    this.statusForm.get('status')?.valueChanges.subscribe((status) => {
       const justificationControl = this.statusForm.get('statusJustification');
       if (status === 'ON_HOLD') {
         justificationControl?.setValidators([Validators.required]);
@@ -50,8 +51,12 @@ export class ChangeProjectStatusDialogComponent {
     }
 
     const { status, statusJustification } = this.statusForm.value;
-    
-    this.projectsStore.updateProjectStatus(this.data.project.id, status!, statusJustification ?? undefined);
+
+    // If user sets it to 'ACTIVE', we clear the status so the main component's reactive loop recalculates its base status dynamically
+    const targetStatus = status === 'ACTIVE' ? 'IN_PROGRESS' : 'ON_HOLD';
+    const justification = status === 'ACTIVE' ? '' : (statusJustification ?? undefined);
+
+    this.projectsStore.updateProjectStatus(this.data.project.id, targetStatus, justification);
     this.dialogRef.close();
   }
 }

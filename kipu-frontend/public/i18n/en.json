@@ -551,7 +551,8 @@
       "total-amount": "TOTAL BUDGET",
       "executed": "EXECUTED",
       "available": "S/ {{value}} AVAILABLE",
-      "executed-lower": "executed"
+      "executed-lower": "executed",
+      "exceeded": "Exceeded by"
     },
     "actions": {
       "new-expense": "New Expense",
@@ -593,7 +594,8 @@
       "recent-movements": "RECENT MOVEMENTS"
     },
     "errors": {
-      "insufficient-funds": "Expense blocked: Amount exceeds available budget."
+      "insufficient-funds": "Insufficient funds in the selected budget item.",
+      "global-limit-exceeded": "Operation blocked: This expense exceeds the master project budget limit."
     }
   },
   "waste": {
@@ -805,7 +807,25 @@
     },
     "tabs": {
       "log": "Progress Log (PPC)",
-      "photos": "Photo Log"
+      "photos": "Photo Log",
+      "calendar": "Calendar"
+    },
+    "specialties": {
+      "structures": "Structures",
+      "facilities": "Facilities",
+      "architecture": "Architecture"
+    },
+    "calendar": {
+      "today": "Today",
+      "days": {
+        "sun": "Sun",
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat"
+      }
     },
     "filters": {
       "activity": "Search activity...",
@@ -818,7 +838,9 @@
       "activity": "Performed Activity",
       "specialty": "Specialty",
       "advance": "Advance (%)",
-      "status": "Status"
+      "status": "Status",
+      "weight": "Weight",
+      "actions": "Actions"
     },
     "form": {
       "title": "New Daily Progress",
@@ -839,7 +861,9 @@
         "cloudy": "Cloudy",
         "rainy": "Rainy",
         "storm": "Storm"
-      }
+      },
+      "weight": "Activity Weight",
+      "weight_placeholder": "E.g. 10"
     },
     "status": {
       "finished": "Completed",
@@ -852,6 +876,41 @@
       "warning": "If you don't, they will be lost.",
       "discard": "No, discard changes",
       "save": "Save changes"
+    },
+    "delete_dialog": {
+      "title": "Confirm Deletion",
+      "question": "Are you sure you want to delete this record?",
+      "warning": "This action cannot be undone and data will be lost permanently.",
+      "confirm_btn": "Yes, delete",
+      "cancel_btn": "No, cancel"
+    },
+    "history": {
+      "title": "Progress History",
+      "subtitle": "Breakdown of independent daily sub-logs for this activity.",
+      "child_title": "Register New Mini-advance for",
+      "select_responsible": "Select a Manager",
+      "btn_back": "Back",
+      "btn_new_child": "Register new mini-advance",
+      "btn_edit_child": "Edit",
+      "empty_state": "No mini-advances registered for this activity. Press the button above to create the first one.",
+      "no_location": "Not specified",
+      "stats_title": "Daily Statistics",
+      "stats_personnel": "Personnel on site",
+      "stats_weather": "Weather",
+      "stats_hours": "Hours worked",
+      "tip_title": "Tip",
+      "tip_desc": "Logging progress daily ensures better budget and time control on the project. Make sure to include photographs.",
+      "btn_edit_parent": "Edit Activity Texts",
+      "btn_delete": "Delete"
+    },
+    "messages": {
+      "clear_children_first": "Cannot delete: You must remove all linked sub-advances from the history view first.",
+      "percentage_exceeded": "Limit exceeded: The sum of sub-advances cannot surpass 100%. Remaining maximum allowed: {{max}}%."
+    },
+    "weather": {
+      "sunny": "Sunny",
+      "cloudy": "Cloudy",
+      "rainy": "Rainy"
     }
   },
   "sidebar": {

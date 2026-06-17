@@ -34,4 +34,12 @@ export class ProgressApi {
   createProgress(data: ProjectProgress): Observable<ProjectProgress> {
     return this.http.post<ProjectProgress>(this.basePath, data);
   };
+
+  updateProgress(id: number, data: ProjectProgress): Observable<ProjectProgress> {
+    return this.http.put<ProjectProgress>(`${this.basePath}/${id}`, data);
+  }
+
+  deleteProgress(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.basePath}/${id}`);
+  }
 }

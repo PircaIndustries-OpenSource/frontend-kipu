@@ -1,0 +1,61 @@
+<div class="flex flex-col gap-l animate-fade-in">
+  <header class="flex justify-between items-center bg-neutral-bg p-m rounded-s border border-neutral-border/10">
+    <div class="flex items-center gap-m">
+      <button type="button" (click)="changeMonth(-1)" class="p-2 hover:bg-neutral-border/10 rounded-full transition-colors cursor-pointer flex items-center">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <h3 class="text-xl font-bold text-primary min-w-48 text-center uppercase tracking-wide">
+        {{ calendarDate() | date:'MMMM yyyy':'':currentLang }}
+      </h3>
+      <button type="button" (click)="changeMonth(1)" class="p-2 hover:bg-neutral-border/10 rounded-full transition-colors cursor-pointer flex items-center">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+    <button type="button" (click)="setToday()" class="px-5 py-2 border border-accent text-accent font-bold rounded-s text-sm hover:bg-accent/10 transition-all cursor-pointer flex items-center gap-1 shadow-sm">
+      <mat-icon class="text-base !w-4 !h-4">today</mat-icon>
+      {{ 'progress.calendar.today' | translate }}
+    </button>
+  </header>
+
+  <div class="w-full border border-neutral-border/20 rounded-m overflow-hidden bg-white shadow-sm">
+    <div class="grid grid-cols-7 bg-primary text-white text-center font-black text-xs tracking-widest py-3 uppercase">
+      <div>{{ 'progress.calendar.days.sun' | translate }}</div>
+      <div>{{ 'progress.calendar.days.mon' | translate }}</div>
+      <div>{{ 'progress.calendar.days.tue' | translate }}</div>
+      <div>{{ 'progress.calendar.days.wed' | translate }}</div>
+      <div>{{ 'progress.calendar.days.thu' | translate }}</div>
+      <div>{{ 'progress.calendar.days.fri' | translate }}</div>
+      <div>{{ 'progress.calendar.days.sat' | translate }}</div>
+    </div>
+
+    <div class="flex flex-col divide-y divide-neutral-border/10">
+      @for (week of calendarWeeks(); track $index) {
+        <div class="grid grid-cols-7 divide-x divide-neutral-border/10 min-h-28">
+          @for (day of week; track $index) {
+            <div class="p-2 flex flex-col gap-1 transition-colors relative" [class.bg-neutral-bg/30]="!day">
+            @if (day) {
+              <span class="text-xs font-black text-neutral-border mb-1 block">
+                  {{ day | date:'d' }}
+                </span>
+
+              <div class="flex flex-col gap-1 overflow-y-auto max-h-24 pr-1 scrollbar-thin">
+                @for (child of getMiniAdvancesForDate(day); track child.id) {
+                  <button
+                    type="button"
+                    (click)="onMiniAdvanceClick(child)"
+                    class="w-full text-left bg-accent/10 hover:bg-accent/20 border-l-4 border-accent px-2 py-1 rounded-r text-[11px] font-bold text-accent transition-all cursor-pointer flex items-center justify-between gap-1 shadow-sm shrink-0 min-w-0"
+                    [title]="child.activityName + ' (' + child.currentPercentage + '%)'"
+                  >
+                    <span class="truncate block flex-grow font-bold pr-1 min-w-0">{{ child.activityName || 'Advance' }}</span>
+                    <span class="font-black opacity-90 text-[10px] whitespace-nowrap shrink-0">{{ child.currentPercentage }}%</span>
+                  </button>
+                }
+              </div>
+            }
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</div>
