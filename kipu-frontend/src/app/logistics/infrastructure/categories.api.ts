@@ -9,7 +9,7 @@ import { CategoriesAssembler } from './materials/categories.assembler';
 @Injectable({
   providedIn: 'root',
 })
-export class LogisticsApi {
+export class CategoriesApi {
   http = inject(HttpClient);
   apiBaseUrl = environment.kipuApiBaseUrlLocal;
   categoriesEndpoint = environment.kipuApiCategoriesEndPath;

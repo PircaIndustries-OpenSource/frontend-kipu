@@ -9,7 +9,7 @@ import { InventoryMaterialAssembler } from './inventory/inventoryMaterial.assemb
 @Injectable({
   providedIn: 'root',
 })
-export class LogisticsApi {
+export class InventoryApi {
   http = inject(HttpClient);
   apiBaseUrl = environment.kipuApiBaseUrl;
   inventoryMaterialsEndpoint = environment.kipuApiInventoryMaterialsEndpointPath;
