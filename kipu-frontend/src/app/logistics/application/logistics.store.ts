@@ -14,7 +14,6 @@ export type EnrichedRequestItem = import('../domain/request.entity').RequestItem
   materialName: string;
   categoryName: string;
   materialUnit: string;
-  materialSubcategory: string;
   pricePerUnit: number;
 };
 
@@ -26,7 +25,6 @@ export type InventoryView = InventoryMaterialEntity & {
   materialName: string;
   materialCategory: string;
   materialUnit: string;
-  materialSubcategory: string;
 };
 
 export type WasteView = WasteEntity & {
@@ -111,7 +109,6 @@ export class LogisticsStore {
         materialName: materialRelated?.name || 'Material Unknown',
         materialCategory: category?.name || 'Without Category',
         materialUnit: materialRelated?.measureUnit || 'Without unit',
-        materialSubcategory: materialRelated?.subcategory || 'Without Subcategory',
       };
     });
   });
@@ -178,7 +175,6 @@ export class LogisticsStore {
           materialName: material?.name || 'Unknown Name',
           categoryName: category?.name || 'Unknown Category',
           materialUnit: material?.measureUnit || 'Without unit',
-          materialSubcategory: material?.subcategory || 'Without Subcategory',
           pricePerUnit: supplierOfferRelated?.unitPrice || 0,
         };
       });

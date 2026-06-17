@@ -7,7 +7,6 @@ export class MaterialsAssembler {
       id: resource.id,
       name: resource.name,
       categoryId: resource.categoryId,
-      subcategory: resource.subcategory,
       measureUnit: resource.measureUnit,
     };
   }
