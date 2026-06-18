@@ -10,7 +10,7 @@ import { environment } from '../../../../environments/environment';
 export class ConcreteApiService {
   private httpClient = inject(HttpClient);
 
-  private apiUrl = environment.kipuApiBaseUrl;
+  private apiUrl = (environment as any).kipuApiBaseUrl || environment.kipuApiBaseUrl;
   private concreteEndpoint = environment.kipuApiConcreteCuringEndpointPath;
   private concreteUrl = `${this.apiUrl}${this.concreteEndpoint}`;
 

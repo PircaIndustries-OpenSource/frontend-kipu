@@ -10,7 +10,7 @@ import { environment } from '../../../../environments/environment';
 export class SeismicApiService {
   private httpClient = inject(HttpClient);
 
-  private apiUrl = environment.kipuApiBaseUrl;
+  private apiUrl = (environment as any).kipuApiBaseUrl || environment.kipuApiBaseUrl;
   private seismicEndpoint = environment.kipuApiSeismicControlEndpointPath;
   private seismicUrl = `${this.apiUrl}${this.seismicEndpoint}`;
 

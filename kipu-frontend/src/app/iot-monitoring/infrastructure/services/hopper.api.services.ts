@@ -10,7 +10,7 @@ import { environment } from '../../../../environments/environment';
 export class HopperApiService {
   private httpClient = inject(HttpClient);
 
-  private apiUrl = environment.kipuApiBaseUrl;
+  private apiUrl = (environment as any).kipuApiBaseUrl || environment.kipuApiBaseUrl;
   private hopperEndpoint = environment.kipuApiHopperWatchEndpointPath;
   private hopperUrl = `${this.apiUrl}${this.hopperEndpoint}`;
 
