@@ -116,9 +116,11 @@
   </mat-card-content>
 
   <mat-card-actions class="actions-row">
-    <button matRipple class="btn-secondary" (click)="openModifyDialog()">
-      {{ 'request.card.actions.modify' | translate }}
-    </button>
+    @if (request().status === 'PENDING') {
+      <button matRipple class="btn-secondary" (click)="openModifyDialog()">
+        {{ 'request.card.actions.modify' | translate }}
+      </button>
+    }
     <button matRipple class="btn-primary" (click)="openDetailDialog()">
       {{ 'request.card.actions.view-details' | translate }}
     </button>

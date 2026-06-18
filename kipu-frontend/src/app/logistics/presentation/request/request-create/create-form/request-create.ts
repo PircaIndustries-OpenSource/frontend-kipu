@@ -169,14 +169,14 @@ export class RequestCreate implements OnInit {
       },
     ];
     request.suggestedSupplierId = this.supplierSelected()?.id ?? '';
-    request.budgetLineId = this.selectedBudgetLine();
+    request.budgetLineId = this.selectedBudgetLine() || null;
     request.priority = formValue.priority ?? 'LOW';
     request.deliveryLocation = formValue.deliveryLocation ?? '';
     request.purpose = formValue.purpose ?? '';
     request.additionalNotes = formValue.additionalNotes ?? '';
     request.requestDate = new Date().toISOString().split('T')[0];
     request.deadline = formValue.requiredDate ?? '';
-    request.requestedBy = this.authStore.userName();
+    request.requestedBy = this.authStore.userId() || '1';
     request.status = 'PENDING';
 
     this.logisticsStore.addRequest(request, () => {
@@ -192,9 +192,36 @@ export class RequestCreate implements OnInit {
     });
   }
 
-  selectedUnit = computed(() => this.materialSelected()?.measureUnit);
+  measureUnitLabels: Record<string, string> = {
+    UNIT: 'und',
+    PIECE: 'pza',
+    TON: 'ton',
+    METER: 'm',
+    LINEAR_METER: 'ml',
+    SQUARE_METER: 'm2',
+    CUBIC_METER: 'm3',
+    LITER: 'l',
+    GALLON: 'gal',
+    BAG: 'bol',
+    ROLL: 'rll',
+    ROD: 'var',
+    SHEET: 'plan',
+    BUCKET: 'bal',
+    BOX: 'cja',
+  };
+
+  selectedUnit = computed(() => {
+    const unit = this.materialSelected()?.measureUnit;
+    return unit ? this.measureUnitLabels[unit] || unit : undefined;
+  });
   isMaterialDisabled = computed(() => this.logisticsStore.selectedCategory().length === 0);
   isSupplierDisabled = computed(() => this.logisticsStore.selectedMaterial().length === 0);
   materialSelected = computed(() => this.logisticsStore.getMaterialSelected());
   supplierSelected = computed(() => this.logisticsStore.getSupplierSelected());
+
+  dateFilter = (d: Date | null): boolean => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return d !== null && d >= today;
+  };
 }

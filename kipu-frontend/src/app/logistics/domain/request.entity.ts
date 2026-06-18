@@ -14,14 +14,14 @@ export class RequestEntity {
   status: string;
   priority: string;
   deliveryLocation: string;
-  budgetLineId: string;
+  budgetLineId: string | null;
   purpose: string;
   additionalNotes: string;
   suggestedSupplierId: string;
   attachments: string[];
   items: RequestItem[];
   requestedBy: string;
-  activity: string;
+  activity: string | null;
   constructor() {
     this.id = '';
     this.projectId = '';
@@ -30,7 +30,7 @@ export class RequestEntity {
     this.status = '';
     this.priority = '';
     this.deliveryLocation = '';
-    this.budgetLineId = '';
+    this.budgetLineId = null;
     this.purpose = '';
     this.additionalNotes = '';
     this.suggestedSupplierId = '';

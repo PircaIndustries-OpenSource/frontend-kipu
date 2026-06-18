@@ -6,6 +6,34 @@
 
   <mat-dialog-content class="!flex !flex-col !gap-8 !p-10 !m-0 overflow-y-auto max-h-[65vh]">
 
+    <div class="grid grid-cols-2 gap-4">
+      <div class="flex flex-col w-full">
+        <span class="text-xs font-bold text-primary/80 uppercase tracking-wider mb-1">
+          {{ 'request.create.fields.category' | translate }}
+        </span>
+        <div class="w-full min-h-[56px] flex items-center px-4 rounded-m border border-neutral-border/20 bg-neutral-bg text-sm text-primary font-medium">
+          {{ categoryName() }}
+        </div>
+      </div>
+      <div class="flex flex-col w-full">
+        <span class="text-xs font-bold text-primary/80 uppercase tracking-wider mb-1">
+          {{ 'request.create.fields.specific-material' | translate }}
+        </span>
+        <div class="w-full min-h-[56px] flex items-center px-4 rounded-m border border-neutral-border/20 bg-neutral-bg text-sm text-primary font-medium">
+          {{ materialName() }} ({{ measureUnit() }})
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col w-full">
+      <span class="text-xs font-bold text-primary/80 uppercase tracking-wider mb-1">
+        {{ 'request.create.fields.suggested-supplier' | translate }}
+      </span>
+      <div class="w-full min-h-[56px] flex items-center px-4 rounded-m border border-neutral-border/20 bg-neutral-bg text-sm text-primary font-medium">
+        {{ supplierName() }}
+      </div>
+    </div>
+
     <div class="flex flex-col w-full">
       <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
         <mat-label class="text-(--color-text-main)!">{{ 'request.create.fields.quantity' | translate }}</mat-label>
@@ -37,7 +65,7 @@
     <div class="flex flex-col w-full">
       <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
         <mat-label class="text-(--color-text-main)!">{{ 'request.create.fields.required-date' | translate }}</mat-label>
-        <input matInput formControlName="deadline" [matDatepicker]="modifyPicker" readonly />
+        <input matInput formControlName="deadline" [matDatepicker]="modifyPicker" [matDatepickerFilter]="dateFilter" readonly />
         <mat-datepicker-toggle matIconSuffix [for]="modifyPicker"></mat-datepicker-toggle>
         <mat-datepicker #modifyPicker></mat-datepicker>
         @if (modifyForm.get('deadline')?.hasError('required') && modifyForm.get('deadline')?.touched) {

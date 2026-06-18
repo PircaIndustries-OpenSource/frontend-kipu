@@ -9,12 +9,12 @@ export interface RequestResource {
   status: string;
   priority: string;
   deliveryLocation: string;
-  budgetLineId: string;
+  budgetLineId: string | null;
   purpose: string;
   additionalNotes: string;
   suggestedSupplierId: string;
   attachments: string[];
   items: RequestItem[];
   requestedBy: string;
-  activity: string;
+  activity: string | null;
 }

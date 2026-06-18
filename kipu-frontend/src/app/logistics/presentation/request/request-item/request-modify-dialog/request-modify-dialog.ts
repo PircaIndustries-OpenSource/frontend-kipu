@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import {
   MatDatepicker,
@@ -19,7 +19,8 @@ import { MatSelect } from '@angular/material/select';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { RequestEntity } from '../../../../domain/request.entity';
+import { LogisticsStore } from '../../../../application/logistics.store';
+import { EnrichedRequest } from '../../../../application/logistics.store';
 
 @Component({
   selector: 'app-request-modify-dialog',
@@ -45,10 +46,34 @@ import { RequestEntity } from '../../../../domain/request.entity';
   templateUrl: './request-modify-dialog.html',
   styleUrl: './request-modify-dialog.css',
 })
-export class RequestModifyDialog {
+export class RequestModifyDialog implements OnInit {
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<RequestModifyDialog>);
-  private data = inject<RequestEntity>(MAT_DIALOG_DATA);
+  private data = inject<EnrichedRequest>(MAT_DIALOG_DATA);
+  private logisticsStore = inject(LogisticsStore);
+
+  measureUnitLabels: Record<string, string> = {
+    UNIT: 'und', PIECE: 'pza', TON: 'ton', METER: 'm',
+    LINEAR_METER: 'ml', SQUARE_METER: 'm2', CUBIC_METER: 'm3',
+    LITER: 'l', GALLON: 'gal', BAG: 'bol', ROLL: 'rll',
+    ROD: 'var', SHEET: 'plan', BUCKET: 'bal', BOX: 'cja',
+  };
+
+  item = computed(() => this.data.items[0]);
+
+  materialName = computed(() => this.item()?.materialName ?? '');
+  categoryName = computed(() => this.item()?.categoryName ?? '');
+  measureUnit = computed(() => {
+    const unit = this.item()?.materialUnit;
+    return unit ? this.measureUnitLabels[unit] || unit : '';
+  });
+  supplierName = computed(() => {
+    const supplierId = this.item()?.supplierOfferId;
+    const offer = this.logisticsStore.supplierOffer().find(s => s.id === supplierId);
+    const supplier = this.logisticsStore.suppliers().find(s => s.id === offer?.supplierId);
+    return supplier?.socialReason ?? '';
+  });
+  itemId = computed(() => this.data.items[0]?.supplierOfferId ?? '');
 
   modifyForm: FormGroup = this.fb.group({
     quantity: [this.data.items[0]?.quantity ?? 1, [Validators.required, Validators.min(0.01)]],
@@ -59,6 +84,11 @@ export class RequestModifyDialog {
     additionalNotes: [this.data.additionalNotes],
   });
 
+  ngOnInit() {
+    this.logisticsStore.loadSupplierOffers();
+    this.logisticsStore.loadSuppliers();
+  }
+
   onSave() {
     if (this.modifyForm.invalid) {
       this.modifyForm.markAllAsTouched();
@@ -66,7 +96,11 @@ export class RequestModifyDialog {
     }
     const form = this.modifyForm.value;
     this.dialogRef.close({
-      items: [{ ...this.data.items[0], quantity: form.quantity }],
+      items: [{
+        supplierOfferId: this.data.items[0]?.supplierOfferId ?? '',
+        quantity: form.quantity,
+        id: this.data.items[0]?.supplierOfferId ?? undefined,
+      }],
       priority: form.priority,
       deadline: form.deadline,
       deliveryLocation: form.deliveryLocation,
@@ -78,4 +112,10 @@ export class RequestModifyDialog {
   onCancel() {
     this.dialogRef.close();
   }
+
+  dateFilter = (d: Date | null): boolean => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return d !== null && d >= today;
+  };
 }
