@@ -1,4 +1,5 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
+import { Observable } from 'rxjs';
 import { InventoryMaterialEntity } from '../domain/inventoryMaterial.entity';
 import { LogisticsApi } from '../infrastructure/logistics.api';
 import { RequestEntity } from '../domain/request.entity';
@@ -9,12 +10,14 @@ import { BudgetStore } from '../../budget/application/budget-store';
 import { MaterialEntity } from '../domain/material.entity';
 import { CategoryEntity } from '../domain/category.entity';
 import { SupplierOfferEntity } from '../domain/supplierOffer.entity';
+import { MaterialsApi } from '../infrastructure/materials.api';
+import { InventoryApi } from '../infrastructure/inventory.api';
+import { CategoriesApi } from '../infrastructure/categories.api';
 
 export type EnrichedRequestItem = import('../domain/request.entity').RequestItem & {
   materialName: string;
   categoryName: string;
   materialUnit: string;
-  materialSubcategory: string;
   pricePerUnit: number;
 };
 
@@ -26,7 +29,6 @@ export type InventoryView = InventoryMaterialEntity & {
   materialName: string;
   materialCategory: string;
   materialUnit: string;
-  materialSubcategory: string;
 };
 
 export type WasteView = WasteEntity & {
@@ -39,6 +41,9 @@ export type WasteView = WasteEntity & {
 })
 export class LogisticsStore {
   logisticsApi = inject(LogisticsApi);
+  materialsApi = inject(MaterialsApi);
+  inventoryApi = inject(InventoryApi);
+  categoriesApi = inject(CategoriesApi);
   budgetStore = inject(BudgetStore);
   //MATERIAL
   private materialsSignal = signal<MaterialEntity[]>([]);
@@ -111,7 +116,6 @@ export class LogisticsStore {
         materialName: materialRelated?.name || 'Material Unknown',
         materialCategory: category?.name || 'Without Category',
         materialUnit: materialRelated?.measureUnit || 'Without unit',
-        materialSubcategory: materialRelated?.subcategory || 'Without Subcategory',
       };
     });
   });
@@ -135,21 +139,21 @@ export class LogisticsStore {
 
   loadMaterials(force = false) {
     if (force || this.materialsSignal().length === 0) {
-      this.logisticsApi.getAllMaterials().subscribe((data) => {
+      this.materialsApi.getAllMaterials().subscribe((data) => {
         this.materialsSignal.set(data);
       });
     }
   }
   loadInventoryMaterials = (force = false) => {
     if (force || this.inventorySignal().length === 0) {
-      this.logisticsApi.getAllInventoryMaterials().subscribe((data) => {
+      this.inventoryApi.getAllInventoryMaterials().subscribe((data) => {
         this.inventorySignal.set(data);
       });
     }
   };
   loadCategories(force = false) {
     if (force || this.categoriesSignal().length === 0) {
-      this.logisticsApi.getAllCategories().subscribe((data) => {
+      this.categoriesApi.getAllCategories().subscribe((data) => {
         this.categoriesSignal.set(data);
       });
     }
@@ -170,16 +174,15 @@ export class LogisticsStore {
 
     return requests.map((request) => {
       const detailsItem = request.items.map((item) => {
-        const supplierOfferRelated = supplierOffer.find((s) => s.id === item.supplierOfferId);
-        const material = materials.find((m) => m.id === supplierOfferRelated?.materialId);
+        const material = materials.find((m) => m.id === item.materialCatalogId);
         const category = categories.find((c) => c.id === material?.categoryId);
+        const offer = supplierOffer.find((s) => String(s.supplierId) === item.supplierId && String(s.materialId) === item.materialCatalogId);
         return {
           ...item,
           materialName: material?.name || 'Unknown Name',
           categoryName: category?.name || 'Unknown Category',
           materialUnit: material?.measureUnit || 'Without unit',
-          materialSubcategory: material?.subcategory || 'Without Subcategory',
-          pricePerUnit: supplierOfferRelated?.unitPrice || 0,
+          pricePerUnit: offer?.unitPrice || item.unitPrice,
         };
       });
       return {
@@ -199,7 +202,7 @@ export class LogisticsStore {
       result = result.filter((i) => i.status === 'PENDING');
     }
     if (this.approvedRequestFilterSignal()) {
-      result = result.filter((i) => i.status === 'APPROVED');
+      result = result.filter((i) => i.status === 'APPROVED' || i.status === 'ACCEPTED');
     }
     if (this.refusedRequestFilterSignal()) {
       result = result.filter((i) => i.status === 'REFUSED');
@@ -255,8 +258,8 @@ export class LogisticsStore {
       (sf) => sf.supplierId === supplierSelectedId && sf.materialId === materialSelectedId,
     );
   });
-  addRequest(request: RequestEntity, onSuccess?: () => void) {
-    this.logisticsApi.postRequest(request).subscribe({
+  addRequest(body: Record<string, unknown>, onSuccess?: () => void) {
+    this.logisticsApi.postRequest(body).subscribe({
       next: (newRequest) => {
         this.requestsSignal.update((prev) => [...prev, newRequest]);
         onSuccess?.();
@@ -274,6 +277,17 @@ export class LogisticsStore {
       },
       error: (err) => {
         console.error('Error updating request:', err);
+      },
+    });
+  }
+  updateRequestStatus(id: string, status: string, onSuccess?: () => void) {
+    this.logisticsApi.patchRequestStatus(id, status).subscribe({
+      next: (updated) => {
+        this.requestsSignal.update((prev) => prev.map((r) => (r.id === id ? updated : r)));
+        onSuccess?.();
+      },
+      error: (err) => {
+        console.error('Error updating request status:', err);
       },
     });
   }
@@ -352,6 +366,35 @@ export class LogisticsStore {
         this.supplierOfferSignal.set(data);
       });
     }
+  }
+  getSupplierOffers(supplierId: string): Observable<SupplierOfferEntity[]> {
+    return this.logisticsApi.getSupplierOffersBySupplier(supplierId);
+  }
+  addSupplierOffer(offer: { supplierId: number; materialCatalogId: number; unitPrice: number }, onSuccess?: () => void, onError?: (err: unknown) => void) {
+    this.logisticsApi.postSupplierOffer(offer).subscribe({
+      next: (newOffer) => {
+        this.supplierOfferSignal.update((prev) => [...prev, newOffer]);
+        onSuccess?.();
+      },
+      error: (err: any) => {
+        if (err?.status === 409) {
+          console.warn('Supplier offer already exists, updating instead', err);
+          this.loadSupplierOffers(true);
+        } else {
+          console.error('Error adding supplier offer', err);
+        }
+        onError?.(err);
+      },
+    });
+  }
+  removeSupplierOffer(id: string, onSuccess?: () => void) {
+    this.logisticsApi.deleteSupplierOffer(id).subscribe({
+      next: () => {
+        this.supplierOfferSignal.update((prev) => prev.filter((o) => o.id !== id));
+        onSuccess?.();
+      },
+      error: (err) => console.error('Error deleting supplier offer', err),
+    });
   }
   getSupplierByMaterial(material: MaterialEntity | undefined) {
     if (!material) {

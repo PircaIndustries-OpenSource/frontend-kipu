@@ -4,10 +4,9 @@ import { MaterialEntity } from '../../domain/material.entity';
 export class MaterialsAssembler {
   static toEntityFromResource(resource: MaterialResource): MaterialEntity {
     return {
-      id: resource.id,
+      id: String(resource.id),
       name: resource.name,
-      categoryId: resource.categoryId,
-      subcategory: resource.subcategory,
+      categoryId: String(resource.categoryId),
       measureUnit: resource.measureUnit,
     };
   }

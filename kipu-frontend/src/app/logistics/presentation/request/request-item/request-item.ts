@@ -51,9 +51,14 @@ export class RequestItem {
   }
 
   openDetailDialog() {
-    this.dialog.open(RequestDetailDialog, {
+    const ref = this.dialog.open(RequestDetailDialog, {
       width: '750px',
       data: this.request(),
+    });
+    ref.afterClosed().subscribe((result) => {
+      if (result === 'updated') {
+        this.store.loadRequest(true);
+      }
     });
   }
 }

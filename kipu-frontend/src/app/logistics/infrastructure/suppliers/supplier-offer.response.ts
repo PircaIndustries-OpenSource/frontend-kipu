@@ -1,8 +1,8 @@
 export type SupplierOfferResponse = SupplierOfferResource[];
 
 export interface SupplierOfferResource {
-  id: string;
-  supplierId: string;
-  materialId: string;
+  id: number;
+  supplierId: number;
+  materialCatalogId: number;
   unitPrice: number;
 }

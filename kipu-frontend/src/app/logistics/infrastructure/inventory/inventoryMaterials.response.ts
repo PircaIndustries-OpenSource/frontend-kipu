@@ -2,8 +2,8 @@ export type InventoryMaterialsResponse = InventoryMaterialResource[];
 
 export interface InventoryMaterialResource {
   id: string;
-  materialId: string;
+  materialCatalogId: string;
   currentStock: number;
-  miniumStock: number;
+  minimumStock: number;
   location: string;
 }

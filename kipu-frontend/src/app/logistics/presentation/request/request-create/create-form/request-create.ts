@@ -66,7 +66,7 @@ export class RequestCreate implements OnInit {
     category: ['', Validators.required],
     material: ['', Validators.required],
     supplier: ['', Validators.required],
-    budgetLine: ['', Validators.required],
+    budgetLine: [''],
     quantity: ['1', [Validators.required, Validators.min(1)]],
     priority: ['', Validators.required],
     requiredDate: ['', Validators.required],
@@ -90,8 +90,7 @@ export class RequestCreate implements OnInit {
   nameCategories = computed<string[]>(() => this.categories().map((category) => category.name));
   nameMaterials = computed<string[]>(() => this.materials().map((material) => material.name));
 
-  // Maps active project progress activities for the dropdown
-  nameBudgetLines = computed(() => this.progressStore.progressList().map((p) => p.activityName));
+  nameBudgetLines = computed(() => this.budgetStore.budgetItems().map((b) => b.name));
 
   suppliersByMaterial = computed(() => {
     const material = this.materialSelected();
@@ -118,6 +117,7 @@ export class RequestCreate implements OnInit {
   supplierOffer = computed(() => {
     return this.logisticsStore.getSupplierOfferByMaterialIdAndSupplierId();
   });
+  unitPrice = computed(() => this.supplierOffer()?.unitPrice ?? 0);
 
   onCategoryMaterialSelect(category: string) {
     this.logisticsStore.filterByCategory(category);
@@ -136,22 +136,11 @@ export class RequestCreate implements OnInit {
     this.requestForm.get('supplier')?.setValue(supplierSocialReason);
   }
 
-  /**
-   * Links the selected Progress Activity to its corresponding Budget Line
-   */
-  onBudgetLineSelect(activityName: string) {
-    this.selectedBudgetLine.set(activityName);
-    this.requestForm.get('budgetLine')?.setValue(activityName);
-
-    // Find progress by activity name to get its ID
-    const progress = this.progressStore.progressList().find((p) => p.activityName === activityName);
-    if (progress) {
-      // Find the budget item that shares the same progressId
-      const budgetItem = this.budgetStore.budgetItems().find((b) => b.progressId === progress.id);
-      this.selectedBudgetItem.set(budgetItem || null);
-    } else {
-      this.selectedBudgetItem.set(null);
-    }
+  onBudgetLineSelect(budgetName: string) {
+    this.selectedBudgetLine.set(budgetName);
+    this.requestForm.get('budgetLine')?.setValue(budgetName);
+    const item = this.budgetStore.budgetItems().find((b) => b.name === budgetName);
+    this.selectedBudgetItem.set(item || null);
   }
 
   onSubmit() {
@@ -160,26 +149,29 @@ export class RequestCreate implements OnInit {
       return;
     }
     const formValue = this.requestForm.value;
-    const request = new RequestEntity();
+    const offer = this.supplierOffer();
+    if (!offer) {
+      console.error('No supplier offer found for selected material and supplier');
+      return;
+    }
 
-    request.items = [
-      {
-        supplierOfferId: this.supplierOffer()?.id ?? '',
+    const body = {
+      deadline: formValue.requiredDate,
+      requestPriority: formValue.priority,
+      deliveryLocation: formValue.deliveryLocation,
+      budgetLineId: this.selectedBudgetItem()?.id ?? null,
+      purpose: formValue.purpose,
+      additionalNotes: formValue.additionalNotes ?? '',
+      requestedBy: Number(this.authStore.userId()) || 1,
+      items: [{
+        materialCatalogId: Number(offer.materialId),
+        supplierId: Number(offer.supplierId),
         quantity: formValue.quantity ?? 1,
-      },
-    ];
-    request.suggestedSupplierId = this.supplierSelected()?.id ?? '';
-    request.budgetLineId = this.selectedBudgetLine();
-    request.priority = formValue.priority ?? 'LOW';
-    request.deliveryLocation = formValue.deliveryLocation ?? '';
-    request.purpose = formValue.purpose ?? '';
-    request.additionalNotes = formValue.additionalNotes ?? '';
-    request.requestDate = new Date().toISOString().split('T')[0];
-    request.deadline = formValue.requiredDate ?? '';
-    request.requestedBy = this.authStore.userName();
-    request.status = 'PENDING';
+        unitPrice: offer.unitPrice,
+      }],
+    };
 
-    this.logisticsStore.addRequest(request, () => {
+    this.logisticsStore.addRequest(body, () => {
       this.dialog.open(SuccessDialog, {
         width: '25rem',
         disableClose: true,
@@ -192,9 +184,36 @@ export class RequestCreate implements OnInit {
     });
   }
 
-  selectedUnit = computed(() => this.materialSelected()?.measureUnit);
+  measureUnitLabels: Record<string, string> = {
+    UNIT: 'und',
+    PIECE: 'pza',
+    TON: 'ton',
+    METER: 'm',
+    LINEAR_METER: 'ml',
+    SQUARE_METER: 'm2',
+    CUBIC_METER: 'm3',
+    LITER: 'l',
+    GALLON: 'gal',
+    BAG: 'bol',
+    ROLL: 'rll',
+    ROD: 'var',
+    SHEET: 'plan',
+    BUCKET: 'bal',
+    BOX: 'cja',
+  };
+
+  selectedUnit = computed(() => {
+    const unit = this.materialSelected()?.measureUnit;
+    return unit ? this.measureUnitLabels[unit] || unit : undefined;
+  });
   isMaterialDisabled = computed(() => this.logisticsStore.selectedCategory().length === 0);
   isSupplierDisabled = computed(() => this.logisticsStore.selectedMaterial().length === 0);
   materialSelected = computed(() => this.logisticsStore.getMaterialSelected());
   supplierSelected = computed(() => this.logisticsStore.getSupplierSelected());
+
+  dateFilter = (d: Date | null): boolean => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return d !== null && d >= today;
+  };
 }

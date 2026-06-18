@@ -93,6 +93,13 @@
       "role": "Gestor Operativo",
       "apiId": "v1",
       "id": "PHK_35B"
+    },
+    {
+      "name": "Paula",
+      "email": "Pauli@gmail.com",
+      "password": "123456789",
+      "role": "Logística y Administración",
+      "id": "0SHsu04"
     }
   ],
   "projects": [
@@ -742,7 +749,30 @@
       "status": "ACTIVE"
     }
   ],
-  "materialsRequests": [],
+  "materialsRequests": [
+    {
+      "id": "req-001",
+      "projectId": "proj-001",
+      "requestDate": "2026-06-17",
+      "deadline": "2026-06-30",
+      "status": "PENDING",
+      "priority": "HIGH",
+      "deliveryLocation": "Site A - Warehouse 1",
+      "budgetLineId": "bl-001",
+      "purpose": "Construction of perimeter wall",
+      "additionalNotes": "Requires delivery before 2 PM",
+      "suggestedSupplierId": "sup-001",
+      "attachments": [],
+      "items": [
+        {
+          "supplierOfferId": "soff-001",
+          "quantity": 50
+        }
+      ],
+      "requestedBy": "1",
+      "activity": "Cimentación"
+    }
+  ],
   "materialsWaste": [],
   "materialsTools": [
     {

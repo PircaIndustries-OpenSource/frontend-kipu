@@ -24,7 +24,7 @@ import { CategoryEntity } from '../domain/category.entity';
 import { CategoriesResponse } from './materials/categories.response';
 import { CategoriesAssembler } from './materials/categories.assembler';
 import { SupplierOfferEntity } from '../domain/supplierOffer.entity';
-import { SupplierOfferResponse } from './suppliers/supplier-offer.response';
+import { SupplierOfferResource, SupplierOfferResponse } from './suppliers/supplier-offer.response';
 import { SupplierOfferAssembler } from './suppliers/supplier-offer.assembler';
 
 @Injectable({
@@ -32,7 +32,7 @@ import { SupplierOfferAssembler } from './suppliers/supplier-offer.assembler';
 })
 export class LogisticsApi {
   http = inject(HttpClient);
-  apiBaseUrl = environment.kipuApiBaseUrl;
+  apiBaseUrl = (environment as any).kipuApiHostLocal || environment.kipuApiBaseUrl;
   inventoryMaterialsEndpoint = environment.kipuApiInventoryMaterialsEndpointPath;
   materialsEndpoint = environment.kipuApiMaterialsEndpointPath;
   requestsEndpoint = environment.kipuApiRequestEndpointPath;
@@ -90,10 +90,23 @@ export class LogisticsApi {
       .get<SupplierOfferResponse>(`${this.apiBaseUrl}${this.supplierOfferEndpoint}`)
       .pipe(map((response) => SupplierOfferAssembler.toEntitiesFromResponse(response)));
   }
-  //POST
-  postRequest(request: RequestEntity): Observable<RequestEntity> {
+  getSupplierOffersBySupplier(supplierId: string): Observable<SupplierOfferEntity[]> {
     return this.http
-      .post<RequestResource>(`${this.apiBaseUrl}${this.requestsEndpoint}`, request)
+      .get<SupplierOfferResponse>(`${this.apiBaseUrl}${this.supplierOfferEndpoint}?supplierId=${supplierId}`)
+      .pipe(map((response) => SupplierOfferAssembler.toEntitiesFromResponse(response)));
+  }
+  postSupplierOffer(offer: { supplierId: number; materialCatalogId: number; unitPrice: number }): Observable<SupplierOfferEntity> {
+    return this.http
+      .post<SupplierOfferResource>(`${this.apiBaseUrl}${this.supplierOfferEndpoint}`, offer)
+      .pipe(map((response) => SupplierOfferAssembler.toEntityFromResource(response)));
+  }
+  deleteSupplierOffer(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiBaseUrl}${this.supplierOfferEndpoint}/${id}`);
+  }
+  //POST
+  postRequest(body: Record<string, unknown>): Observable<RequestEntity> {
+    return this.http
+      .post<RequestResource>(`${this.apiBaseUrl}${this.requestsEndpoint}`, body)
       .pipe(map((response) => RequestAssembler.toEntityFromResource(response)));
   }
   postMachinery(machinery: MachineryEntity): Observable<MachineryEntity> {
@@ -107,8 +120,9 @@ export class LogisticsApi {
       .pipe(map((response) => WasteAssembler.toEntityFromResource(response)));
   }
   postSupplier(supplier: SupplierEntity): Observable<SupplierEntity> {
+    const body = SupplierAssembler.toBackendCreate(supplier);
     return this.http
-      .post<SupplierResource>(`${this.apiBaseUrl}${this.suppliersEndpoint}`, supplier)
+      .post<SupplierResource>(`${this.apiBaseUrl}${this.suppliersEndpoint}`, body)
       .pipe(map((response) => SupplierAssembler.toEntityFromResource(response)));
   }
   //PATCH
@@ -123,10 +137,17 @@ export class LogisticsApi {
       .pipe(map((response) => MachineryAssembler.toEntityFromResource(response)));
   }
   patchSupplier(id: string, updates: Partial<SupplierEntity>): Observable<SupplierEntity> {
+    const body = SupplierAssembler.toBackendPatch(updates);
     return this.http
-      .patch<SupplierResource>(`${this.apiBaseUrl}${this.suppliersEndpoint}/${id}`, updates)
+      .patch<SupplierResource>(`${this.apiBaseUrl}${this.suppliersEndpoint}/${id}`, body)
       .pipe(map((response) => SupplierAssembler.toEntityFromResource(response)));
   }
+  patchRequestStatus(id: string, status: string): Observable<RequestEntity> {
+    return this.http
+      .patch<RequestResource>(`${this.apiBaseUrl}${this.requestsEndpoint}/${id}/status`, { status })
+      .pipe(map((response) => RequestAssembler.toEntityFromResource(response)));
+  }
+
   //DELETE
   deleteSupplier(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiBaseUrl}${this.suppliersEndpoint}/${id}`);

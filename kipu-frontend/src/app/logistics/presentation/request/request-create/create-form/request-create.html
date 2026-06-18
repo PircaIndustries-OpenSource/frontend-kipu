@@ -86,6 +86,18 @@
         </div>
       </div>
     </div>
+    <div class="flex flex-col gap-1">
+      <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
+        Precio Unitario
+      </span>
+      <div class="w-full min-h-[56px] flex items-center px-4 rounded-m border border-neutral-border/20 bg-white text-sm">
+        @if (supplierOffer()) {
+          <span class="text-primary font-medium">S/ {{ unitPrice() | number:'1.2-2' }} / {{ selectedUnit() }}</span>
+        } @else {
+          <span class="text-neutral-border">Selecciona material y proveedor</span>
+        }
+      </div>
+    </div>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-l">
       <div class="flex flex-col gap-1">
         <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
@@ -97,7 +109,7 @@
           [placeholder]="'request.create.placeholders.select' | translate"
         ></app-autocomplete-filter-list>
         @if (requestForm.get('budgetLine')?.invalid && requestForm.get('budgetLine')?.touched){
-          <mat-error>{{ 'request.create.validation.budget-line-required' | translate }}</mat-error>
+          <mat-error>Selecciona una línea presupuestal</mat-error>
         }
       </div>
       <div class="flex flex-col gap-1">
@@ -124,7 +136,7 @@
           {{ 'request.create.fields.required-date' | translate }}
         </span>
         <mat-form-field>
-          <input formControlName="requiredDate" matInput [matDatepicker]="picker" [placeholder]="'request.create.placeholders.date' | translate">
+          <input formControlName="requiredDate" matInput [matDatepicker]="picker" [matDatepickerFilter]="dateFilter" [placeholder]="'request.create.placeholders.date' | translate">
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
           @if (requestForm.get('requiredDate')?.hasError('required') && requestForm.get('requiredDate')?.touched) {
