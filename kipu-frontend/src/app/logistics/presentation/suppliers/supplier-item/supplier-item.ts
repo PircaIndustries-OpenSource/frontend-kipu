@@ -24,13 +24,35 @@ export class SupplierItem {
 
   openEdit() {
     const dialogRef = this.dialog.open(SupplierEditDialog, {
-      width: '550px',
+      width: '600px',
       disableClose: true,
       data: this.supplier(),
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.logisticsStore.updateSupplier(this.supplier().id, result);
+        this.logisticsStore.updateSupplier(this.supplier().id, result.supplier, () => {
+          const supplierId = String(this.supplier().id);
+          for (const id of result.removedOfferIds) {
+            this.logisticsStore.removeSupplierOffer(String(id));
+          }
+          if (result.newOffers?.length) {
+            let completed = 0;
+            const total = result.newOffers.length;
+            const checkDone = () => {
+              completed++;
+              if (completed >= total) {
+                this.logisticsStore.loadSupplierOffers(true);
+              }
+            };
+            for (const offer of result.newOffers) {
+              this.logisticsStore.addSupplierOffer({
+                supplierId: Number(supplierId),
+                materialCatalogId: Number(offer.materialId),
+                unitPrice: offer.unitPrice,
+              }, checkDone, checkDone);
+            }
+          }
+        });
       }
     });
   }

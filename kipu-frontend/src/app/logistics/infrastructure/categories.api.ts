@@ -11,7 +11,7 @@ import { CategoriesAssembler } from './materials/categories.assembler';
 })
 export class CategoriesApi {
   http = inject(HttpClient);
-  apiBaseUrl = environment.kipuApiBaseUrlLocal;
+  apiBaseUrl = (environment as any).kipuApiHostLocal || environment.kipuApiBaseUrl;
   categoriesEndpoint = environment.kipuApiCategoriesEndPath;
 
   getAllCategories(): Observable<CategoryEntity[]> {

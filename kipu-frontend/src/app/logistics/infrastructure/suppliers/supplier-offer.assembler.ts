@@ -4,9 +4,9 @@ import { SupplierOfferEntity } from '../../domain/supplierOffer.entity';
 export class SupplierOfferAssembler {
   static toEntityFromResource(resource: SupplierOfferResource): SupplierOfferEntity {
     return {
-      id: resource.id,
-      supplierId: resource.supplierId,
-      materialId: resource.materialId,
+      id: String(resource.id),
+      supplierId: String(resource.supplierId),
+      materialId: String(resource.materialCatalogId),
       unitPrice: resource.unitPrice,
     };
   }

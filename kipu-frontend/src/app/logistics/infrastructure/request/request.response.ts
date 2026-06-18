@@ -1,20 +1,15 @@
-import { RequestItem } from '../../domain/request.entity';
+import { MaterialRequestItemResource } from './request.item.resource';
 
 export type RequestResponse = RequestResource[];
 export interface RequestResource {
   id: string;
-  projectId: string;
-  requestDate: string;
   deadline: string;
-  status: string;
-  priority: string;
+  requestStatus: string;
+  requestPriority: string;
   deliveryLocation: string;
-  budgetLineId: string | null;
+  budgetLineId: number | null;
   purpose: string;
   additionalNotes: string;
-  suggestedSupplierId: string;
-  attachments: string[];
-  items: RequestItem[];
-  requestedBy: string;
-  activity: string | null;
+  requestedBy: number;
+  items: MaterialRequestItemResource[];
 }

@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DocumentsStore } from '../../application/document.store';
 import { DocumentEntity } from '../../domain/model/document.entity';
 import { SignatureComponent } from '../signature-component/signature-component';
-import { SignatureAddComponent } from '../signature-add/signature-add'; // ✅ Para CREAR documento
+import { SignatureAddComponent } from '../signature-add/signature-add';
 import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
@@ -40,7 +40,6 @@ export class DocumentPage implements OnInit {
       this.signedCount = this.signedDocuments.length;
 
       this.cdr.detectChanges();
-
     });
   }
 
@@ -56,8 +55,9 @@ export class DocumentPage implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.success) {
-        console.log('Nuevo documento creado:', result.document);
-        this.documentsStore.addLocalDocument(result.document);
+        // 1. Ahora pasamos el "payload" directo hacia el store para que haga el POST
+        console.log('Nuevo documento a crear en BD:', result.payload);
+        this.documentsStore.addLocalDocument(result.payload);
         this.cdr.detectChanges();
       }
     });
@@ -75,13 +75,9 @@ export class DocumentPage implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.success) {
         this.documentsStore.loadAllDocuments();
-
-
       }
-
     });
   }
-
 
   getSignersNames(document: DocumentEntity): string {
     if (!document.assignedTo || document.assignedTo.length === 0) {
@@ -90,27 +86,28 @@ export class DocumentPage implements OnInit {
     return document.assignedTo.map((signer) => signer.fullName).join(', ');
   }
 
+  // 2. Como ya no guardamos cuando firmó exactamente cada quien,
+  // devolvemos la fecha en la que se generó esta vista.
   getLastSignedDate(document: DocumentEntity): Date {
-    const signedSigners = document.assignedTo?.filter((s) => s.signedAt) || [];
-    if (signedSigners.length === 0) return new Date();
-    return new Date(Math.max(...signedSigners.map((s) => new Date(s.signedAt!).getTime())));
+    return new Date();
   }
 
   exportDossier() {
     const projectName = this.projectStateService.currentProjectName() || 'Proyecto General';
     const stageName = 'Fase de Control de Calidad';
-    
-    // Compile signatures history from all signed documents
+
     const signaturesList: any[] = [];
-    this.signedDocuments.forEach(doc => {
-      const signedSigners = doc.assignedTo?.filter(s => s.signedAt) || [];
-      signedSigners.forEach(signer => {
+
+    // 3. Compilamos historial iterando todos los signers de los docs firmados
+    this.signedDocuments.forEach((doc) => {
+      const signers = doc.assignedTo || [];
+      signers.forEach((signer) => {
         signaturesList.push({
-          date: signer.signedAt,
+          date: new Date(), // Se asume la fecha actual de la exportación
           documentName: doc.type,
           userName: signer.fullName,
-          userRole: (signer as any).role || 'Ingeniero',
-          hashSignature: doc.digitalSignatureToken || 'e3b0c44298f...'
+          userRole: 'Firmante', // Tu backend no devuelve el rol en Document, lo forzamos visualmente
+          hashSignature: doc.digitalSignatureToken || 'e3b0c44298f...',
         });
       });
     });

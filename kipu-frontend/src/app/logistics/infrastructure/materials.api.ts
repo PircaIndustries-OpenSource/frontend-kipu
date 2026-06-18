@@ -11,7 +11,7 @@ import { MaterialResource, MaterialsResponse } from './materials/materials.respo
 })
 export class MaterialsApi {
   http = inject(HttpClient);
-  apiBaseUrl = environment.kipuApiBaseUrlLocal;
+  apiBaseUrl = (environment as any).kipuApiHostLocal || environment.kipuApiBaseUrl;
   materialsEndpoint = environment.kipuApiMaterialsEndpointPath;
   getAllMaterials(): Observable<MaterialEntity[]> {
     return this.http

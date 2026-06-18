@@ -1,16 +1,13 @@
 import { Component, inject, OnInit, HostListener } from '@angular/core';
 import { MatDialogActions, MatDialogContent, MatDialogRef } from '@angular/material/dialog';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatError } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
-import { DocumentsStore } from '../../application/document.store';
 import { TeamUsersStore } from '../../../../team/team-users/application/team-users.store';
-import { DocumentEntity, UserDocument } from '../../domain/model/document.entity';
 
 @Component({
   selector: 'app-signature-add',
@@ -31,7 +28,6 @@ import { DocumentEntity, UserDocument } from '../../domain/model/document.entity
 })
 export class SignatureAddComponent implements OnInit {
   private dialogRef = inject(MatDialogRef<SignatureAddComponent>);
-  private documentsStore = inject(DocumentsStore);
   private teamUsersStore = inject(TeamUsersStore);
   private fb = inject(FormBuilder);
 
@@ -45,6 +41,7 @@ export class SignatureAddComponent implements OnInit {
   userSearchTerm = '';
 
   get allUsers() {
+    // Usamos teamUsers (todos) o tableUsers (excluyendo current), usaremos teamUsers para que todos firmen
     return this.teamUsersStore.teamUsers().filter((user) => user.isActive);
   }
 
@@ -66,19 +63,13 @@ export class SignatureAddComponent implements OnInit {
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     const target = event.target as HTMLElement;
-    if (!target.closest('.user-dropdown-container')) {
-      this.showUserDropdown = false;
-    }
+    if (!target.closest('.user-dropdown-container')) this.showUserDropdown = false;
   }
 
   toggleUserDropdown(event?: MouseEvent) {
-    if (event) {
-      event.stopPropagation();
-    }
+    if (event) event.stopPropagation();
     this.showUserDropdown = !this.showUserDropdown;
-    if (this.showUserDropdown) {
-      this.userSearchTerm = '';
-    }
+    if (this.showUserDropdown) this.userSearchTerm = '';
   }
 
   toggleUserSelection(userId: string) {
@@ -115,15 +106,7 @@ export class SignatureAddComponent implements OnInit {
   }
 
   getRoleTranslation(role: string): string {
-    const roleMap: Record<string, string> = {
-      Administrador: 'Administrador',
-      Gestor: 'Gestor',
-      'Gestor Operativo': 'Gestor',
-      Logistica: 'Logística',
-      Cliente: 'Cliente',
-      Ingeniero: 'Ingeniero',
-    };
-    return roleMap[role] || role;
+    return this.teamUsersStore.getRoleTranslation(role);
   }
 
   onConfirm() {
@@ -133,44 +116,36 @@ export class SignatureAddComponent implements OnInit {
     }
 
     const formValue = this.documentForm.value;
+    const currentProjectId = localStorage.getItem('currentProjectId');
     const currentUser = this.teamUsersStore.currentUser();
-    const currentUserId = currentUser?.id || '';
-    const currentUserName = currentUser?.fullName || 'Usuario actual';
 
-    const assignedUsers: UserDocument[] = formValue.selectedUsers.map((userId: string) => {
-      const user = this.teamUsersStore.teamUsers().find((u) => u.id === userId);
-      return {
-        id: userId,
-        fullName: user?.fullName || 'Usuario',
-        signedAt: undefined,
-      };
+    // 1. Armamos los firmantes (SignerResource)
+    let signersPayload = formValue.selectedUsers.map((userId: string) => {
+      const user = this.allUsers.find((u) => u.id === userId);
+      return { teamUserId: userId, fullName: user?.fullName || 'Usuario' };
     });
 
-    const currentUserAlreadyAdded = assignedUsers.some((u) => u.id === currentUserId);
-
-    if (!currentUserAlreadyAdded && currentUserId) {
-      assignedUsers.unshift({
-        id: currentUserId,
-        fullName: currentUserName,
-        signedAt: undefined,
-      });
+    // 2. Nos aseguramos de incluir al CurrentUser si no estaba
+    const currentUserAlreadyAdded = signersPayload.some(
+      (s: any) => s.teamUserId === currentUser?.id,
+    );
+    if (!currentUserAlreadyAdded && currentUser?.id) {
+      signersPayload.unshift({ teamUserId: currentUser.id, fullName: currentUser.fullName });
     }
 
-    const newDocument = new DocumentEntity();
-    newDocument.id = `doc-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`;
-    newDocument.type = formValue.documentType;
-    newDocument.deadLine = new Date(formValue.deadline);
-    newDocument.isSigned = false;
-    newDocument.digitalSignatureToken = null;
-    newDocument.assignedTo = assignedUsers;
+    // 3. Formateamos la fecha para LocalDateTime (Ej: 2026-12-31T23:59:59)
+    const deadlineDate = new Date(formValue.deadline);
+    const formattedDeadline = deadlineDate.toISOString().substring(0, 19);
 
-    console.log(' Documento creado:', newDocument);
-    console.log(' Fecha límite:', newDocument.deadLine);
+    // 4. Creamos el payload exacto de tu backend (CreateDocumentResource)
+    const payload = {
+      type: formValue.documentType,
+      deadLine: formattedDeadline,
+      projectId: currentProjectId,
+      signers: signersPayload,
+    };
 
-    this.dialogRef.close({
-      success: true,
-      document: newDocument,
-    });
+    this.dialogRef.close({ success: true, payload: payload });
   }
 
   cancel() {
@@ -180,11 +155,9 @@ export class SignatureAddComponent implements OnInit {
   get documentTypeControl() {
     return this.documentForm.get('documentType');
   }
-
   get deadlineControl() {
     return this.documentForm.get('deadline');
   }
-
   get selectedUsersControl() {
     return this.documentForm.get('selectedUsers');
   }

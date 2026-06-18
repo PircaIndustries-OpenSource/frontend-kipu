@@ -1,12 +1,9 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { TeamUsersEntity } from '../domain/model/team-users.entity';
-import { TeamWorkersEntity } from '../../team-workers/domain/model/team-workers.entity';
 import { TeamUsersApi } from '../infrastructure/team-users.api';
-import { TranslateModule, TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { Identity } from '../../../identity/domain/identity.model';
+import { TranslateService } from '@ngx-translate/core';
 import { TeamUsersAssembler } from '../infrastructure/team-users.assembler';
 import { map, switchMap } from 'rxjs';
-
 
 @Injectable({
   providedIn: 'root',
@@ -16,43 +13,39 @@ export class TeamUsersStore {
   private translate = inject(TranslateService);
 
   private teamUsersSignal = signal<TeamUsersEntity[]>([]);
-  private searchTermSignal = signal<string>('');
   private currentUserSignal = signal<TeamUsersEntity>(new TeamUsersEntity());
+
   readonly teamUsers = computed(() => this.teamUsersSignal());
   readonly currentUser = computed(() => this.currentUserSignal());
-  readonly filteredUsers = computed(() => {
-    const users = this.teamUsers();
-    const searchTeam = this.searchTermSignal().toLowerCase().trim();
 
-    if (!searchTeam || searchTeam === '' || searchTeam === null || searchTeam === undefined)
-      return users;
-
-    return users.filter(
-      (user) =>
-        user.fullName.toLowerCase().includes(searchTeam) ||
-        user.email.toLowerCase().includes(searchTeam) ||
-        this.getRoleTranslation(user.role).toLowerCase().includes(searchTeam) ||
-        (user.isActive ? 'activo' : 'inactivo').includes(searchTeam),
-    );
+  // Excluimos al current user SOLO para la tabla del HTML
+  readonly tableUsers = computed(() => {
+    const currentEmail = this.currentUser().email;
+    return this.teamUsers().filter((user) => user.email !== currentEmail);
   });
+
+  // Estadísticas basadas en la data global (incluyéndote a ti)
   readonly totalActiveUsers = computed(
     () => this.teamUsers().filter((user) => user.isActive).length,
   );
   readonly totalManagers = computed(
-    () => this.teamUsers().filter((user) => user.isActive && user.role == 'Gestor'
-    || user.role == "Gestor Operativo").length,
+    () =>
+      this.teamUsers().filter(
+        (user) => user.isActive && (user.role === 'Gestor' || user.role === 'Gestor Operativo'),
+      ).length,
   );
   readonly totalLogistics = computed(
-    () => this.teamUsers().filter((user) => user.isActive && user.role == 'Logistica').length,
+    () => this.teamUsers().filter((user) => user.isActive && user.role === 'Logistica').length,
   );
   readonly totalClients = computed(
-    () => this.teamUsers().filter((user) => user.isActive && user.role == 'Cliente').length,
+    () => this.teamUsers().filter((user) => user.isActive && user.role === 'Cliente').length,
   );
 
   getRoleTranslation(role: string): string {
     const translationMap: Record<string, string> = {
       Administrador: this.translate.instant('team.users.role-dictionary.administrator'),
       Gestor: this.translate.instant('team.users.role-dictionary.manager'),
+      'Gestor Operativo': this.translate.instant('team.users.role-dictionary.manager'),
       Logistica: this.translate.instant('team.users.role-dictionary.logistics'),
       Cliente: this.translate.instant('team.users.role-dictionary.client'),
       Ingeniero: this.translate.instant('team.users.role-dictionary.engineer'),
@@ -60,54 +53,69 @@ export class TeamUsersStore {
     return translationMap[role] || role;
   }
 
+  loadUsers(searchTerm: string = '') {
+    const projectId = localStorage.getItem('currentProjectId');
+    if (!projectId) return;
 
-loadUsers() {
-  if (this.teamUsersSignal().length === 0) {
-    this.teamApi.getAllUsers()
+    this.teamApi
+      .getAllUsers(projectId, searchTerm)
       .pipe(
-        switchMap(allUsers =>
-          this.teamApi.getCurrentUser().pipe(
-            map(currentUser => ({ allUsers, currentUser }))
-          )
-        )
+        switchMap((allUsers) =>
+          this.teamApi.getCurrentUser().pipe(map((currentUser) => ({ allUsers, currentUser }))),
+        ),
       )
       .subscribe({
         next: ({ allUsers, currentUser }) => {
           const currentUserEntity = TeamUsersAssembler.toEntityFromIdentity(currentUser);
           this.currentUserSignal.set(currentUserEntity);
-          // Verificar si ya existe
-          const userExists = allUsers.some(user => user.id === currentUserEntity.id);
 
-          // Agregar solo si no existe
-          const finalUsers = userExists ? allUsers : [...allUsers, currentUserEntity];
+          // Verificamos por EMAIL si ya existes en lo que trajo el backend
+          const userExists = allUsers.some((user) => user.email === currentUserEntity.email);
 
-          this.teamUsersSignal.set(finalUsers);
+          // AUTO-REGISTRO EN LA BASE DE DATOS
+          // Si no existes y NO estamos en medio de una búsqueda (searchTerm vacío)
+          if (!userExists && (!searchTerm || searchTerm === '')) {
+            const payload = {
+              fullName: currentUserEntity.fullName,
+              email: currentUserEntity.email,
+              role: currentUserEntity.role,
+              projectId: projectId,
+            };
+
+            this.teamApi.createUser(payload).subscribe({
+              next: (savedUser) => {
+                console.log(
+                  '✅ Usuario actual guardado automáticamente en la Base de Datos',
+                  savedUser,
+                );
+                // Insertamos el usuario con el ID real que generó Spring Boot
+                this.teamUsersSignal.set([savedUser, ...allUsers]);
+              },
+              error: (err) => console.error('⚠️ Error al auto-guardar al usuario en la BD:', err),
+            });
+          } else {
+            // Si ya existes, o estamos filtrando, simplemente inyectamos la data normal
+            const finalUsers = userExists ? allUsers : [currentUserEntity, ...allUsers];
+            this.teamUsersSignal.set(finalUsers);
+          }
         },
-        error: (err) => console.error('Error loading users:', err)
+        error: (err) => console.error('Error loading users:', err),
       });
-  }
-}
-
-  updateSearchTerm(term: string) {
-    this.searchTermSignal.set(term);
-  }
-
-  cleanSearch() {
-    this.searchTermSignal.set('');
   }
 
   inviteUser(userData: any) {
-    const userToSave = {
-      ...userData,
+    const projectId = localStorage.getItem('currentProjectId');
+    if (!projectId) return;
+
+    const payload = {
       fullName: `${userData.firstName} ${userData.lastName}`,
-      isActive: true,
-      id: `us-${Date.now()}`,
+      email: userData.email,
+      role: userData.role,
+      projectId: projectId,
     };
 
-    this.teamApi.postUser(userToSave).subscribe({
+    this.teamApi.createUser(payload).subscribe({
       next: (newUser) => {
-        // Si la API responde OK, actualizamos la lista local para que
-        // el nuevo usuario aparezca en la tabla sin recargar la página.
         this.teamUsersSignal.update((currentUsers) => [...currentUsers, newUser]);
       },
       error: (err) => console.error('Error al invitar:', err),
@@ -115,12 +123,10 @@ loadUsers() {
   }
 
   toggleUserStatus(user: TeamUsersEntity) {
-    const updatedUser = { ...user, isActive: !user.isActive };
+    const wantsToActivate = !user.isActive;
 
-    // 1. Avisamos al servidor
-    this.teamApi.updateUser(updatedUser).subscribe({
+    this.teamApi.updateUserStatus(user.id, wantsToActivate).subscribe({
       next: (savedUser) => {
-        // 2. Actualizamos la Signal de forma inmutable
         this.teamUsersSignal.update((users) =>
           users.map((u) => (u.id === savedUser.id ? savedUser : u)),
         );
@@ -128,6 +134,4 @@ loadUsers() {
       error: (err) => console.error('Error al actualizar estado:', err),
     });
   }
-
-
 }

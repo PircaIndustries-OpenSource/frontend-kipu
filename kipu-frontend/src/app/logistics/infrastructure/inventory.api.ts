@@ -11,7 +11,7 @@ import { InventoryMaterialAssembler } from './inventory/inventoryMaterial.assemb
 })
 export class InventoryApi {
   http = inject(HttpClient);
-  apiBaseUrl = environment.kipuApiBaseUrl;
+  apiBaseUrl = (environment as any).kipuApiHostLocal || environment.kipuApiBaseUrl;
   inventoryMaterialsEndpoint = environment.kipuApiInventoryMaterialsEndpointPath;
   // GET
   getAllInventoryMaterials(): Observable<InventoryMaterialEntity[]> {

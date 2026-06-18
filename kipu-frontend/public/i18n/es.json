@@ -604,7 +604,8 @@
       "total-amount": "PRESUPUESTO TOTAL",
       "executed": "EJECUTADO",
       "available": "S/ {{value}} DISPONIBLES",
-      "executed-lower": "ejecutado"
+      "executed-lower": "ejecutado",
+      "exceeded": "Excedido en"
     },
     "actions": {
       "new-expense": "Nuevo Gasto",
@@ -646,7 +647,8 @@
       "recent-movements": "MOVIMIENTOS RECIENTES"
     },
     "errors": {
-      "insufficient-funds": "Gasto bloqueado: El monto excede el presupuesto disponible."
+      "insufficient-funds": "Fondos insuficientes en la partida seleccionada.",
+      "global-limit-exceeded": "Operación bloqueada: El gasto supera el límite del presupuesto total del proyecto."
     }
   },
   "team": {
@@ -805,11 +807,29 @@
     },
     "tabs": {
       "log": "Registro de Avance (PPC)",
-      "photos": "Bitácora Fotográfica"
+      "photos": "Bitácora Fotográfica",
+      "calendar": "Calendario"
+    },
+    "specialties": {
+      "structures": "Estructuras",
+      "facilities": "Instalaciones",
+      "architecture": "Arquitectura"
+    },
+    "calendar": {
+      "today": "Hoy",
+      "days": {
+        "sun": "Dom",
+        "mon": "Lun",
+        "tue": "Mar",
+        "wed": "Mié",
+        "thu": "Jue",
+        "fri": "Vie",
+        "sat": "Sáb"
+      }
     },
     "filters": {
       "activity": "Buscar actividad...",
-      "specialty": "Filtrar por: Especialidad",
+      "specialty": "Filtrar por: Specialty",
       "start_date": "Fecha inicio",
       "end_date": "Fecha fin"
     },
@@ -818,7 +838,9 @@
       "activity": "Actividad Realizada",
       "specialty": "Especialidad",
       "advance": "Avance (%)",
-      "status": "Estado"
+      "status": "Estado",
+      "weight": "Peso",
+      "actions": "Acciones"
     },
     "form": {
       "title": "Nuevo Avance Diario",
@@ -839,7 +861,9 @@
         "cloudy": "Nublado",
         "rainy": "Lluvia",
         "storm": "Tormenta"
-      }
+      },
+      "weight": "Peso de la Actividad",
+      "weight_placeholder": "Ej: 10"
     },
     "status": {
       "finished": "Terminado",
@@ -852,6 +876,41 @@
       "warning": "De no hacerlo, serán borrados.",
       "discard": "No, descartar cambios",
       "save": "Guardar cambios"
+    },
+    "delete_dialog": {
+      "title": "Confirmar Eliminación",
+      "question": "¿Estás seguro de que deseas eliminar este registro?",
+      "warning": "Esta acción no se puede deshacer y los datos se perderán permanentemente.",
+      "confirm_btn": "Sí, eliminar",
+      "cancel_btn": "No, cancelar"
+    },
+    "history": {
+      "title": "Historial de Avances",
+      "subtitle": "Desglose de reportes diarios independientes para esta actividad.",
+      "child_title": "Registrar Nuevo Miniavance para",
+      "select_responsible": "Seleccione un Gestor",
+      "btn_back": "Volver",
+      "btn_new_child": "Registrar nuevo miniavance",
+      "btn_edit_child": "Editar",
+      "empty_state": "No hay miniavances registrados para esta actividad. Presiona el botón superior para crear el primero.",
+      "no_location": "No especificada",
+      "stats_title": "Estadísticas Diarias",
+      "stats_personnel": "Personal en obra",
+      "stats_weather": "Clima",
+      "stats_hours": "Horas trabajadas",
+      "tip_title": "Consejo",
+      "tip_desc": "Registrar el avance de manera diaria asegura un mejor control presupuestal y de tiempos en el proyecto. Asegúrate de incluir fotografías.",
+      "btn_edit_parent": "Editar Textos de Actividad",
+      "btn_delete": "Eliminar"
+    },
+    "messages": {
+      "clear_children_first": "No se puede eliminar: Debes borrar todos los sub-avances vinculados desde el historial primero.",
+      "percentage_exceeded": "Límite excedido: La suma de sub-avances no puede superar el 100%. Máximo permitido restante: {{max}}%."
+    },
+    "weather": {
+      "sunny": "Soleado",
+      "cloudy": "Nublado",
+      "rainy": "Lluvioso"
     }
   },
   "sidebar": {

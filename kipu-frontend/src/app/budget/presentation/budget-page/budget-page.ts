@@ -103,8 +103,19 @@ export class BudgetPage implements OnInit {
       if (success) {
         this.dialog.closeAll();
         this.expenseForm.reset();
+        this.errorMessage = null;
       } else {
-        this.errorMessage = 'budget.errors.insufficient-funds';
+        // Automatically checks if failure is due to general allocation or item limit exhaustion
+        const amount = Number(this.expenseForm.value.amount);
+        const currentItem = this.store
+          .budgetItems()
+          .find((i) => i.progressId === Number(this.expenseForm.value.itemId));
+
+        if (currentItem && currentItem.available < amount) {
+          this.errorMessage = 'budget.errors.insufficient-funds';
+        } else {
+          this.errorMessage = 'budget.errors.global-limit-exceeded';
+        }
       }
     }
   }

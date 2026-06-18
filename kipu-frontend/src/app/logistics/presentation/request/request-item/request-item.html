@@ -4,18 +4,12 @@
       <span class="font-bold text-xl tracking-tight">{{ request().id }}</span>
       <span class="status-badge"
             [ngClass]="{
-        'status-approved': request().status === 'APPROVED',
+        'status-approved': request().status === 'ACCEPTED',
         'status-refused': request().status === 'REFUSED',
         'status-pending': request().status === 'PENDING',
       }">
         {{ request().status }}
       </span>
-    </div>
-
-    <div class="text-sm opacity-90 mt-2 sm:mt-0 bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm border border-white/10">
-      <mat-icon class="text-sm w-4 h-4 leading-4 inline-block align-text-bottom mr-1">calendar_today</mat-icon>
-      {{ 'request.card.header.request-date' | translate }}
-      <span class="font-semibold">{{ request().requestDate }}</span>
     </div>
   </div>
 

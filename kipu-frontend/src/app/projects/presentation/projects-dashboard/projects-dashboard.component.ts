@@ -56,34 +56,33 @@ export class ProjectsDashboardComponent implements OnInit {
         return this.projects().filter(p => p.status === 'IN_PROGRESS').length;
     });
 
-    getAdvance(project: ProjectEntity | null): number {
-        if (!project) return 0;
-        if (project.status === 'COMPLETED') return 100;
+  getAdvance(project: ProjectEntity | null): number {
+    if (!project) return 0;
+    if (project.status === 'COMPLETED') return 100;
 
-        // Fetch advances for this project
-        const projectAdvances = this.progressStore.allProgress().filter(
-            item => String(item.projectId) === String(project.id)
-        );
+    // Extract the purified structural parent entries from the progress store state
+    const projectAdvances = this.progressStore.progressList().filter(
+      item => String(item.projectId) === String(project.id) && !item.isMiniAdvance
+    );
 
-        if (projectAdvances.length === 0) {
-            return project.status === 'IN_PROGRESS' ? 45 : 10;
-        }
-
-        // Add weights fallback
-        const advancesWithWeights = projectAdvances.map(item => ({
-            ...item,
-            weight: item.weight !== undefined ? item.weight : 1
-        }));
-
-        const totalWeight = advancesWithWeights.reduce((sum, item) => sum + (item.weight || 0), 0);
-        if (totalWeight === 0) return 0;
-
-        const completedWeight = advancesWithWeights.reduce((sum, item) => {
-            return sum + ((item.weight || 0) * (item.currentPercentage || 0) / 100);
-        }, 0);
-
-        return Math.round((completedWeight / totalWeight) * 100);
+    // Standard operational design mock fallbacks for empty states
+    if (projectAdvances.length === 0) {
+      return project.status === 'IN_PROGRESS' ? 45 : 10;
     }
+
+    // Apply strict math weights verification over core parents
+    const totalWeight = projectAdvances.reduce((sum, item) => sum + (item.weight || 1), 0);
+    if (totalWeight === 0) return 0;
+
+    // Calculate the physical aggregated progress breakdown metric
+    const completedWeight = projectAdvances.reduce((sum, item) => {
+      const currentWeight = item.weight || 1;
+      const currentPercentage = item.currentPercentage || 0;
+      return sum + (currentWeight * currentPercentage / 100);
+    }, 0);
+
+    return Math.round((completedWeight / totalWeight) * 100);
+  }
 
     getRNCs(project: ProjectEntity | null): number {
         if (!project) return 0;
@@ -134,15 +133,44 @@ export class ProjectsDashboardComponent implements OnInit {
         }, 1500);
     }
 
-    getDisplayStatus(status: string) {
-        const map: Record<string, string> = {
-            'PLANNED': 'Planificación',
-            'IN_PROGRESS': 'En ejecución',
-            'ON_HOLD': 'Pausado',
-            'COMPLETED': 'Completado'
-        };
-        return map[status] || status;
+  getRealStatus(project: ProjectEntity): string {
+    if (project.status === 'ON_HOLD') {
+      return 'ON_HOLD';
     }
+
+    const advance = this.getAdvance(project);
+    if (advance === 0) {
+      return 'PLANNED';
+    } else if (advance === 100) {
+      return 'COMPLETED';
+    } else {
+      return 'IN_PROGRESS';
+    }
+  }
+
+  getDisplayStatus(project: ProjectEntity): string {
+    const status = this.getRealStatus(project);
+    const map: Record<string, string> = {
+      'PLANNED': 'Planificación',
+      'IN_PROGRESS': 'En ejecución',
+      'ON_HOLD': 'Pausado',
+      'COMPLETED': 'Completado'
+    };
+    return map[status] || status;
+  }
+
+  /**
+   * Resolves display labels for raw structural log strings without inline template casting pollutions.
+   */
+  getDisplayStatusFromLog(status: string): string {
+    const map: Record<string, string> = {
+      'PLANNED': 'Planificación',
+      'IN_PROGRESS': 'En ejecución',
+      'ON_HOLD': 'Pausado',
+      'COMPLETED': 'Completado'
+    };
+    return map[status] || status;
+  }
 
     getProjectStatusLogs(projectId: string): any[] {
         return [

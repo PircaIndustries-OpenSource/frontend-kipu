@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { RequestList } from '../request-list/request-list';
 import { LogisticsStore } from '../../../application/logistics.store';
 import { SummaryCard } from '../../../../shared/presentation/summary-card/summary-card';
@@ -20,11 +20,16 @@ export class RequestPage implements OnInit {
   requests = this.logisticsStore.requestFiltered;
   availableBudget = this.budgetStore.totalAvailable;
   totalBudget = this.budgetStore.totalBudgeted;
+  pendingCount = computed(() => this.logisticsStore.requestDetailsView().filter(r => r.status === 'PENDING').length);
+  approvedCount = computed(() => this.logisticsStore.requestDetailsView().filter(r => r.status === 'ACCEPTED').length);
+  refusedCount = computed(() => this.logisticsStore.requestDetailsView().filter(r => r.status === 'REFUSED').length);
+
   ngOnInit() {
     this.logisticsStore.loadRequest();
     this.logisticsStore.loadSupplierOffers();
     this.logisticsStore.loadMaterials();
     this.logisticsStore.loadCategories();
+    this.budgetStore.loadBudgetItems();
   }
   onFilterChange(filter: string) {
     this.logisticsStore.filterRequest(filter);

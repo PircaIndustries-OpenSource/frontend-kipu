@@ -1,119 +1,146 @@
 <div [formGroup]="modifyForm" class="flex flex-col border-(--color-neutral-border)! bg-white">
 
   <h2 mat-dialog-title class="!m-0 !p-8 !text-2xl !font-black text-(--color-primary)! border-b border-(--color-neutral-border)! bg-(--color-neutral-bg)! rounded-t-xl!">
-    {{ 'request.modify.title' | translate }}
+    Modificar Solicitud #{{ data.id }}
   </h2>
 
-  <mat-dialog-content class="!flex !flex-col !gap-8 !p-10 !m-0 overflow-y-auto max-h-[65vh]">
+  <mat-dialog-content class="!flex !flex-col !gap-6 !p-8 !m-0 overflow-y-auto max-h-[70vh]">
 
     <div class="grid grid-cols-2 gap-4">
-      <div class="flex flex-col w-full">
-        <span class="text-xs font-bold text-primary/80 uppercase tracking-wider mb-1">
-          {{ 'request.create.fields.category' | translate }}
-        </span>
-        <div class="w-full min-h-[56px] flex items-center px-4 rounded-m border border-neutral-border/20 bg-neutral-bg text-sm text-primary font-medium">
+      <div class="flex flex-col gap-1">
+        <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">Categoría</span>
+        <div class="w-full min-h-[48px] flex items-center px-4 rounded-m border border-neutral-border/20 bg-neutral-bg text-sm text-primary font-medium">
           {{ categoryName() }}
         </div>
       </div>
-      <div class="flex flex-col w-full">
-        <span class="text-xs font-bold text-primary/80 uppercase tracking-wider mb-1">
-          {{ 'request.create.fields.specific-material' | translate }}
-        </span>
-        <div class="w-full min-h-[56px] flex items-center px-4 rounded-m border border-neutral-border/20 bg-neutral-bg text-sm text-primary font-medium">
+      <div class="flex flex-col gap-1">
+        <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">Material Específico</span>
+        <div class="w-full min-h-[48px] flex items-center px-4 rounded-m border border-neutral-border/20 bg-neutral-bg text-sm text-primary font-medium">
           {{ materialName() }} ({{ measureUnit() }})
         </div>
       </div>
     </div>
 
-    <div class="flex flex-col w-full">
-      <span class="text-xs font-bold text-primary/80 uppercase tracking-wider mb-1">
-        {{ 'request.create.fields.suggested-supplier' | translate }}
-      </span>
-      <div class="w-full min-h-[56px] flex items-center px-4 rounded-m border border-neutral-border/20 bg-neutral-bg text-sm text-primary font-medium">
-        {{ supplierName() }}
+    <div class="flex flex-col gap-1">
+      <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">Proveedor</span>
+      <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+        <mat-select formControlName="suggestedSupplier">
+          @for (s of nameSuppliers(); track s) {
+            <mat-option [value]="s">{{ s }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">Línea Presupuestal</span>
+      <div class="w-full min-h-[48px] flex items-center px-4 rounded-m border border-neutral-border/20 bg-neutral-bg text-sm text-primary font-medium">
+        {{ budgetLineName() }}
       </div>
     </div>
 
     <div class="flex flex-col w-full">
       <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-        <mat-label class="text-(--color-text-main)!">{{ 'request.create.fields.quantity' | translate }}</mat-label>
+        <mat-label>Cantidad</mat-label>
         <input matInput formControlName="quantity" type="number" step="1" />
         @if (modifyForm.get('quantity')?.hasError('required') && modifyForm.get('quantity')?.touched) {
-          <mat-error class="text-(--color-danger)!">{{ 'request.create.validation.quantity-required' | translate }}</mat-error>
-        }
-        @if (modifyForm.get('quantity')?.hasError('min')) {
-          <mat-error class="text-(--color-danger)!">{{ 'request.create.validation.quantity-min' | translate }}</mat-error>
+          <mat-error class="text-(--color-danger)!">Requerido</mat-error>
         }
       </mat-form-field>
     </div>
 
+    <div class="flex flex-col gap-1">
+      <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">Precio Unitario</span>
+      <div class="w-full min-h-[48px] flex items-center px-4 rounded-m border border-neutral-border/20 bg-neutral-bg text-sm text-primary font-medium">
+        S/ {{ unitPrice() | number:'1.2-2' }} / {{ measureUnit() }}
+      </div>
+    </div>
+
     <div class="flex flex-col w-full">
       <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-        <mat-label class="text-(--color-text-main)!">{{ 'request.create.fields.priority' | translate }}</mat-label>
+        <mat-label>Prioridad</mat-label>
         <mat-select formControlName="priority">
-          <mat-option value="LOW">{{ 'request.create.priority.low' | translate }}</mat-option>
-          <mat-option value="MEDIUM">{{ 'request.create.priority.medium' | translate }}</mat-option>
-          <mat-option value="HIGH">{{ 'request.create.priority.high' | translate }}</mat-option>
-          <mat-option value="CRITICAL">{{ 'request.create.priority.critical' | translate }}</mat-option>
+          <mat-option value="LOW">Baja</mat-option>
+          <mat-option value="MEDIUM">Media</mat-option>
+          <mat-option value="HIGH">Alta</mat-option>
+          <mat-option value="CRITICAL">Crítica</mat-option>
         </mat-select>
-        @if (modifyForm.get('priority')?.hasError('required') && modifyForm.get('priority')?.touched) {
-          <mat-error class="text-(--color-danger)!">{{ 'request.create.validation.priority-required' | translate }}</mat-error>
-        }
       </mat-form-field>
     </div>
 
     <div class="flex flex-col w-full">
       <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-        <mat-label class="text-(--color-text-main)!">{{ 'request.create.fields.required-date' | translate }}</mat-label>
-        <input matInput formControlName="deadline" [matDatepicker]="modifyPicker" [matDatepickerFilter]="dateFilter" readonly />
-        <mat-datepicker-toggle matIconSuffix [for]="modifyPicker"></mat-datepicker-toggle>
-        <mat-datepicker #modifyPicker></mat-datepicker>
-        @if (modifyForm.get('deadline')?.hasError('required') && modifyForm.get('deadline')?.touched) {
-          <mat-error class="text-(--color-danger)!">{{ 'request.create.validation.date-required' | translate }}</mat-error>
-        }
+        <mat-label>Fecha Requerida</mat-label>
+        <input matInput formControlName="deadline" [matDatepicker]="modPicker" [matDatepickerFilter]="dateFilter" readonly />
+        <mat-datepicker-toggle matIconSuffix [for]="modPicker"></mat-datepicker-toggle>
+        <mat-datepicker #modPicker></mat-datepicker>
       </mat-form-field>
     </div>
 
     <div class="flex flex-col w-full">
       <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-        <mat-label class="text-(--color-text-main)!">{{ 'request.create.fields.delivery-location' | translate }}</mat-label>
-        <input matInput formControlName="deliveryLocation" [placeholder]="'request.create.placeholders.location' | translate" />
-        @if (modifyForm.get('deliveryLocation')?.hasError('required') && modifyForm.get('deliveryLocation')?.touched) {
-          <mat-error class="text-(--color-danger)">{{ 'request.create.validation.location-required' | translate }}</mat-error>
-        }
+        <mat-label>Ubicación de Entrega</mat-label>
+        <input matInput formControlName="deliveryLocation" />
       </mat-form-field>
     </div>
 
     <div class="flex flex-col w-full">
       <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-        <mat-label class="text-(--color-text-main)!">{{ 'request.create.fields.purpose' | translate }}</mat-label>
-        <textarea matInput formControlName="purpose" rows="3" [placeholder]="'request.create.placeholders.purpose' | translate"></textarea>
-        @if (modifyForm.get('purpose')?.hasError('required') && modifyForm.get('purpose')?.touched) {
-          <mat-error class="text-(--color-danger)!">{{ 'request.create.validation.purpose-required' | translate }}</mat-error>
-        }
+        <mat-label>Propósito</mat-label>
+        <textarea matInput formControlName="purpose" rows="2"></textarea>
       </mat-form-field>
     </div>
 
     <div class="flex flex-col w-full">
       <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
-        <mat-label class="text-(--color-text-main)!">{{ 'request.create.fields.additional-notes' | translate }}</mat-label>
-        <textarea matInput formControlName="additionalNotes" rows="2" [placeholder]="'request.create.placeholders.additional-notes' | translate"></textarea>
+        <mat-label>Notas Adicionales</mat-label>
+        <textarea matInput formControlName="additionalNotes" rows="2"></textarea>
       </mat-form-field>
     </div>
+
+    <div class="bg-white border border-neutral-border/20 rounded-m p-6 shadow-sm flex flex-col gap-4">
+      <h3 class="text-xs font-black text-primary uppercase tracking-widest">Verificación Presupuestal</h3>
+
+      <div class="grid grid-cols-3 gap-4">
+        <div class="flex flex-col items-center p-3 bg-neutral-bg rounded-s border border-neutral-border/20">
+          <span class="text-[10px] text-neutral-border uppercase font-bold tracking-wider">Item Budget</span>
+          <span class="text-xl font-bold text-primary">S/ {{ assignedBudget() | number:'1.2-2' }}</span>
+        </div>
+        <div class="flex flex-col items-center p-3 bg-neutral-bg rounded-s border border-neutral-border/20">
+          <span class="text-[10px] text-neutral-border uppercase font-bold tracking-wider">Ejecutado</span>
+          <span class="text-xl font-bold text-warning">S/ {{ executedAmount() | number:'1.2-2' }}</span>
+        </div>
+        <div class="flex flex-col items-center p-3 bg-neutral-bg rounded-s border border-neutral-border/20">
+          <span class="text-[10px] text-neutral-border uppercase font-bold tracking-wider">Disponible</span>
+          <span class="text-xl font-bold text-success">S/ {{ availableAmount() | number:'1.2-2' }}</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2 pt-4 border-t border-neutral-border/10">
+        <div class="flex justify-between items-center">
+          <span class="text-xs font-bold text-neutral-border uppercase">Request Estimated Cost:</span>
+          <span class="text-lg font-black" [class.text-danger]="isOverBudget()">
+            S/ {{ requestedAmount() | number:'1.2-2' }}
+          </span>
+        </div>
+        @if (isOverBudget()) {
+          <div class="flex items-center gap-2 px-3 py-1 bg-red-50 text-danger rounded-full">
+            <mat-icon class="text-sm! w-4! h-4!">warning</mat-icon>
+            <span class="text-[10px] font-bold uppercase">Budget Alert: Cost exceeds available funds</span>
+          </div>
+        }
+      </div>
+    </div>
+
   </mat-dialog-content>
 
-  <mat-dialog-actions align="end" class="!px-8 !py-8 !m-0 !gap-4 bg-(--color-neutral-bg)! border-t border-(--color-neutral-border)!">
-    <button mat-stroked-button mat-dialog-close class="!rounded-xl !px-8 !py-6 !font-bold text-(--color-neutral-border)! hover:bg-white! transition-all" type="button">
-      {{ 'request.modify.btn-cancel' | translate }}
+  <mat-dialog-actions align="end" class="!px-8 !py-6 !m-0 !gap-4 bg-neutral-bg! border-t border-neutral-border/20!">
+    <button mat-stroked-button (click)="onCancel()" class="!rounded-xl !px-8 !py-5 !font-bold" type="button">
+      Cancelar
     </button>
-    <button
-      mat-flat-button
-      class="bg-(--color-accent)! text-white! py-6! px-10! rounded-xl! font-bold! text-base! cursor-pointer! transition-all hover:brightness-110! active:scale-95! shadow-md shadow-(--color-accent)/20"
-      (click)="onSave()"
-      type="button"
-    >
-      {{ 'request.modify.btn-save' | translate }}
+    <button mat-flat-button class="bg-accent! text-white! py-5! px-10! rounded-xl! font-bold!"
+            (click)="onSave()" type="button">
+      Guardar Cambios
     </button>
   </mat-dialog-actions>
-
 </div>

@@ -47,16 +47,27 @@ export class SuppliersPage implements OnInit {
 
   openCreateDialog() {
     const dialogRef = this.dialog.open(SupplierCreateForm, {
-      width: '550px',
+      width: '600px',
       disableClose: true,
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const supplier: SupplierEntity = {
           ...new SupplierEntity(),
-          ...result,
+          ...result.supplier,
         };
-        this.logisticsStore.addSupplier(supplier);
+        this.logisticsStore.addSupplier(supplier, () => {
+          const newId = this.logisticsStore.suppliersSignal().at(-1)?.id;
+          if (newId && result.offers?.length) {
+            for (const offer of result.offers) {
+              this.logisticsStore.addSupplierOffer({
+                supplierId: Number(newId),
+                materialCatalogId: Number(offer.materialId),
+                unitPrice: offer.unitPrice,
+              });
+            }
+          }
+        });
       }
     });
   }

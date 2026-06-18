@@ -1,7 +1,6 @@
 export interface UserDocument {
   id: string;
   fullName: string;
-  signedAt?: Date;
 }
 
 export class DocumentEntity {
@@ -10,7 +9,7 @@ export class DocumentEntity {
   isSigned: boolean;
   digitalSignatureToken: string | null;
   deadLine: Date;
-  assignedTo: UserDocument[]; 
+  assignedTo: UserDocument[];
 
   constructor() {
     this.id = '';
