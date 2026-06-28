@@ -1,8 +1,25 @@
-<div class="flex h-screen w-screen overflow-hidden bg-[--color-neutral-bg]">
-  <app-sidebar class="flex-none h-full"></app-sidebar>
+<div class="flex h-screen w-screen overflow-hidden bg-[--color-neutral-bg] relative">
+  <!-- Desktop Sidebar -->
+  <app-sidebar class="hidden md:block flex-none h-full"></app-sidebar>
+
+  <!-- Mobile Sidebar Drawer -->
+  @if (isSidebarOpen()) {
+    <div class="fixed inset-0 z-50 flex md:hidden">
+      <!-- Backdrop -->
+      <div class="fixed inset-0 bg-black/50" (click)="toggleSidebar()"></div>
+      <!-- Drawer content -->
+      <div class="relative flex flex-col w-[260px] h-full bg-[#2c3e50] shadow-xl z-10 animate-fade-in-left">
+        <app-sidebar class="h-full" (click)="toggleSidebar()"></app-sidebar>
+      </div>
+    </div>
+  }
+
   <div class="flex flex-col flex-1 min-w-0 overflow-hidden">
     <header class="flex-none">
-      <app-header [currentProject]="currentProject()?.name || 'Seleccione un proyecto'"></app-header>
+      <app-header 
+        [currentProject]="currentProject()?.name || 'Seleccione un proyecto'"
+        (toggleSidebar)="toggleSidebar()">
+      </app-header>
     </header>
     <main class="flex-1 min-w-0 overflow-y-auto p-xl bg-neutral-bg">
       <router-outlet></router-outlet>

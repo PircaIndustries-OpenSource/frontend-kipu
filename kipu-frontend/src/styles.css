@@ -74,7 +74,7 @@ cdk-overlay-backdrop {
 
 /* High Contrast Override */
 body.accessibility-high-contrast {
-    --color-primary: #000000 !important;
+    --color-primary: #ffffff !important;
     --color-accent: #ffd700 !important;
     --color-neutral-bg: #121212 !important;
     --color-neutral-border: #ffffff !important;
@@ -84,13 +84,31 @@ body.accessibility-high-contrast {
 
     /* Tailwind v4 overrides */
     --color-white: #000000 !important;
+    
+    /* Backgrounds mapped to black/dark-gray */
     --color-slate-50: #000000 !important;
     --color-slate-100: #121212 !important;
-    --color-slate-800: #ffffff !important;
-    --color-slate-900: #ffffff !important;
     --color-gray-50: #000000 !important;
     --color-gray-100: #121212 !important;
+    
+    /* Text/Border colors mapped to white/yellow for high contrast */
+    --color-slate-200: #ffffff !important;
+    --color-slate-300: #ffffff !important;
+    --color-slate-400: #ffd700 !important;
+    --color-slate-500: #ffd700 !important;
+    --color-slate-600: #ffffff !important;
+    --color-slate-700: #ffffff !important;
+    --color-slate-800: #ffffff !important;
+    --color-slate-900: #ffffff !important;
+    
+    --color-gray-200: #ffffff !important;
+    --color-gray-300: #ffffff !important;
+    --color-gray-400: #ffd700 !important;
+    --color-gray-500: #ffd700 !important;
+    --color-gray-600: #ffffff !important;
+    --color-gray-700: #ffffff !important;
     --color-gray-800: #ffffff !important;
+    --color-gray-900: #ffffff !important;
 }
 
 /* Force black backgrounds & white borders for PrimeNG elements in high contrast */
@@ -182,7 +200,7 @@ body.accessibility-font-xlarge h3 {
 
 /* Dyslexic Font Override */
 body.accessibility-font-dyslexic,
-body.accessibility-font-dyslexic * {
+body.accessibility-font-dyslexic *:not(mat-icon):not(.pi):not(.material-icons):not(.material-symbols-outlined) {
     font-family: 'Comic Sans MS', cursive, sans-serif !important;
 }
 
@@ -232,3 +250,28 @@ app-notifications {
     overflow: hidden !important;
     white-space: nowrap !important;
 }
+
+/* ==========================================================================
+   Enforce Kipu Light Theme against PrimeNG Auto-Dark Mode
+   ========================================================================== */
+body:not(.accessibility-high-contrast) .p-datatable,
+body:not(.accessibility-high-contrast) .p-datatable-thead th,
+body:not(.accessibility-high-contrast) .p-datatable-tbody td,
+body:not(.accessibility-high-contrast) .p-datatable-header,
+body:not(.accessibility-high-contrast) .p-datatable-footer {
+    background-color: #ffffff !important;
+    color: #334155 !important;
+    border-color: #e2e8f0 !important;
+}
+
+body:not(.accessibility-high-contrast) .p-selectbutton .p-button {
+    background-color: #f1f5f9 !important;
+    color: #475569 !important;
+    border-color: #e2e8f0 !important;
+}
+
+body:not(.accessibility-high-contrast) .p-selectbutton .p-button.p-highlight {
+    background-color: #3b82f6 !important;
+    color: #ffffff !important;
+    border-color: #3b82f6 !important;
+}

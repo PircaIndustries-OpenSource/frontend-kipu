@@ -27,6 +27,13 @@
       "password": "password123",
       "role": "Ingeniero de Campo",
       "id": "kLm9Pq2"
+    },
+    {
+      "name": "jhon kipu",
+      "email": "jhon@kipu.com",
+      "password": "jhon12345",
+      "role": "Gestor Operativo",
+      "id": "EZcHJdU"
     }
   ],
   "projects": [
@@ -1080,6 +1087,15 @@
       "registrationDate": "2026-04-10",
       "maintenanceHours": "20",
       "assignmentDetail": "En uso para compactación de zanjas."
+    },
+    {
+      "id": "0MCrEXm",
+      "name": "CAT 320 Excavator",
+      "status": "AVAILABLE",
+      "assignedTo": "54343234 - Pedro Castro",
+      "registrationDate": "",
+      "maintenanceHours": "",
+      "assignmentDetail": "Assignment details"
     }
   ],
   "concreteCuring": [
@@ -1333,6 +1349,15 @@
       "email": "lfernandez@pirca.com",
       "role": "Ingeniero",
       "isActive": true
+    },
+    {
+      "email": "jhon@kipu.com",
+      "firstName": "jhon",
+      "lastName": "kipu",
+      "role": "Gestor",
+      "fullName": "jhon kipu",
+      "isActive": true,
+      "id": "us-1782595193625"
     }
   ],
   "progress": [
@@ -1444,12 +1469,21 @@
       "name": "Presupuesto General",
       "description": "Fase inicial",
       "budgeted": 1500000,
-      "executed": 850000,
-      "available": 650000,
-      "progress": 56,
+      "executed": 851245,
+      "available": 648755,
+      "progress": 57,
       "status": "normal",
       "alert": null,
-      "expenseHistory": []
+      "expenseHistory": [
+        {
+          "itemId": "1898",
+          "concept": "123",
+          "amount": 1245,
+          "responsible": "Inversor Centro SAC - Logistica",
+          "description": "",
+          "date": "2026-06-27T21:17:26.232Z"
+        }
+      ]
     },
     {
       "id": 27466,

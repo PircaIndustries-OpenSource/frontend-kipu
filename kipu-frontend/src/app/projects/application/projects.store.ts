@@ -59,4 +59,10 @@ export class ProjectsStore {
       }
     });
   }
+
+  clearState() {
+    this.projectsSignal.set([]);
+    this.currentProjectIdSignal.set(null);
+    localStorage.removeItem('currentProjectId');
+  }
 }

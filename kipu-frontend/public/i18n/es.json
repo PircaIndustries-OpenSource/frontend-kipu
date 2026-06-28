@@ -604,6 +604,7 @@
       "total-amount": "PRESUPUESTO TOTAL",
       "executed": "EJECUTADO",
       "available": "S/ {{value}} DISPONIBLES",
+      "exceeded": "S/ {{value}} EXCEDIDO",
       "executed-lower": "ejecutado"
     },
     "actions": {
@@ -852,6 +853,12 @@
       "warning": "De no hacerlo, serán borrados.",
       "discard": "No, descartar cambios",
       "save": "Guardar cambios"
+    },
+    "stats": {
+      "title": "Estadísticas del Día",
+      "workers": "Personal en obra:",
+      "weather": "Clima:",
+      "hours": "Horas trabajadas:"
     }
   },
   "sidebar": {

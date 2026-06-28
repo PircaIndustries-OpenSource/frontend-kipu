@@ -6,6 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { LogoutDialogComponent } from '../logout-dialog/logout-dialog.component';
 import { AuthStore } from '../../../identity/application/auth.store';
+import { ProjectsStore } from '../../../projects/application/projects.store';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -18,8 +19,10 @@ import { TranslateModule } from '@ngx-translate/core';
 export class SidebarComponent {
   private dialog = inject(MatDialog);
   private router = inject(Router);
+  private projectsStore = inject(ProjectsStore);
   authStore = inject(AuthStore);
   currentUser = this.authStore.currentUser;
+  
   logout() {
     const dialogRef = this.dialog.open(LogoutDialogComponent, {
       width: '400px',
@@ -28,7 +31,7 @@ export class SidebarComponent {
 
     dialogRef.afterClosed().subscribe(() => {
       this.authStore.logout();
-      localStorage.removeItem('currentProjectId');
+      this.projectsStore.clearState();
       this.router.navigate(['/login']);
     });
   }

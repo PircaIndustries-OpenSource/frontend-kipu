@@ -551,6 +551,7 @@
       "total-amount": "TOTAL BUDGET",
       "executed": "EXECUTED",
       "available": "S/ {{value}} AVAILABLE",
+      "exceeded": "S/ {{value}} EXCEEDED",
       "executed-lower": "executed"
     },
     "actions": {
@@ -852,6 +853,12 @@
       "warning": "If you don't, they will be lost.",
       "discard": "No, discard changes",
       "save": "Save changes"
+    },
+    "stats": {
+      "title": "Daily Statistics",
+      "workers": "Personnel on site:",
+      "weather": "Weather:",
+      "hours": "Hours worked:"
     }
   },
   "sidebar": {

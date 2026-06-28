@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, Output, EventEmitter } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { Router, RouterModule } from '@angular/router';
@@ -27,6 +27,7 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class Header {
   currentProject = input<string>();
+  @Output() toggleSidebar = new EventEmitter<void>();
   notificationService = inject(NotificationService);
   router = inject(Router);
 

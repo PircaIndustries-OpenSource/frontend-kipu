@@ -21,6 +21,15 @@ export class GeolocalizationAndGeofence implements OnInit {
   private dialog = inject(MatDialog);
 
   geolocalizationPoints = this.store.geolocalizationPoints;
+  zoomLevel = 1;
+
+  zoomIn(): void {
+    if (this.zoomLevel < 3) this.zoomLevel += 0.5;
+  }
+
+  zoomOut(): void {
+    if (this.zoomLevel > 0.5) this.zoomLevel -= 0.5;
+  }
 
   ngOnInit(): void {
     if (this.geolocalizationPoints().length === 0) {

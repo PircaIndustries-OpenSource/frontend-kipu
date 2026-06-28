@@ -127,4 +127,8 @@ export class BudgetPage implements OnInit {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   }
+
+  getAbs(val: number): number {
+    return Math.abs(val);
+  }
 }

@@ -124,7 +124,7 @@
           {{ 'request.create.fields.required-date' | translate }}
         </span>
         <mat-form-field>
-          <input formControlName="requiredDate" matInput [matDatepicker]="picker" [placeholder]="'request.create.placeholders.date' | translate">
+          <input formControlName="requiredDate" matInput [min]="minDate" [matDatepicker]="picker" [placeholder]="'request.create.placeholders.date' | translate">
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
           @if (requestForm.get('requiredDate')?.hasError('required') && requestForm.get('requiredDate')?.touched) {

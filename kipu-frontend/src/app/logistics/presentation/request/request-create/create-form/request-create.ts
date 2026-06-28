@@ -80,8 +80,12 @@ export class RequestCreate implements OnInit {
   quantity = signal(1);
   selectedBudgetLine = signal('');
   selectedBudgetItem = signal<BudgetItemEntity | null>(null); // Track the linked budget line
+  minDate: Date;
 
   constructor() {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    this.minDate = tomorrow;
     this.requestForm.get('quantity')?.valueChanges.subscribe((val) => this.quantity.set(val ?? 1));
   }
 
@@ -188,6 +192,8 @@ export class RequestCreate implements OnInit {
           subtitle: 'request.create.success.message',
           textButton: 'request.create.success.close',
         },
+      }).afterClosed().subscribe(() => {
+        this.goToRequestPage();
       });
     });
   }
