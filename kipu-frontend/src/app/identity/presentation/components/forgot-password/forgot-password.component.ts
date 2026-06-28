@@ -44,13 +44,21 @@ export class ForgotPasswordComponent {
 
     this.identityService.requestPasswordReset(email).subscribe({
       next: (exists) => {
-        this.submitting = false;
-
         if (exists) {
-          this.router.navigate(['/reset-password'], { queryParams: { email } });
+          this.identityService.generateOtp(email).subscribe({
+            next: () => {
+              this.submitting = false;
+              this.router.navigate(['/verification'], { queryParams: { email, context: 'reset' } });
+            },
+            error: () => {
+              this.submitting = false;
+              alert('Error al enviar el código al correo.');
+            }
+          });
           return;
         }
 
+        this.submitting = false;
         alert('No se encontró una cuenta con ese correo.');
       },
       error: () => {

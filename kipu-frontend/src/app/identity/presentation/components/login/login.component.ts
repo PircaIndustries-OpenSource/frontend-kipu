@@ -55,21 +55,58 @@ export class LoginComponent {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+      rememberMe: [false]
     });
   }
 
+  isSubmitting = false;
+
   onLogin() {
     if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value;
+      this.isSubmitting = true;
+      const { email, password, rememberMe } = this.loginForm.value;
       this.identityService.login(email, password).subscribe({
         next: (user) => {
           if (user) {
-            this.authStore.login(user);
-            this.router.navigate(['/verification']);
+            // Check trusted device
+            const trustedStr = localStorage.getItem('trusted_device_' + email);
+            if (trustedStr) {
+              try {
+                const trusted = JSON.parse(trustedStr);
+                const now = new Date().getTime();
+                // 30 days
+                if (now - trusted.timestamp < 30 * 24 * 60 * 60 * 1000) {
+                  this.isSubmitting = false;
+                  this.authStore.login(user);
+                  this.router.navigate(['/projects']);
+                  return;
+                }
+              } catch (e) {}
+            }
+
+            // Generate OTP for 2FA
+            this.identityService.generateOtp(email).subscribe({
+              next: () => {
+                this.isSubmitting = false;
+                this.router.navigate(['/verification'], { 
+                  queryParams: { email, context: 'login' },
+                  state: { user, rememberMe }
+                });
+              },
+              error: () => {
+                this.isSubmitting = false;
+                alert('No se pudo enviar el correo de verificación.');
+              }
+            });
           } else {
+            this.isSubmitting = false;
             alert('Credenciales incorrectas');
           }
         },
+        error: () => {
+          this.isSubmitting = false;
+          alert('Error al iniciar sesión.');
+        }
       });
     }
   }

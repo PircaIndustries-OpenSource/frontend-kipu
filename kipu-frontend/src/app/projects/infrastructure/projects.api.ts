@@ -14,9 +14,13 @@ export class ProjectsApi {
   apiBaseUrl = environment.kipuApiBaseUrl;
   projectsEndpoint = environment.kipuApiProjectsEndpointPath;
 
-  getAll(): Observable<ProjectEntity[]> {
+  getAll(createdBy?: string): Observable<ProjectEntity[]> {
+    let url = `${this.apiBaseUrl}${this.projectsEndpoint}`;
+    if (createdBy) {
+      url += `?createdBy=${encodeURIComponent(createdBy)}`;
+    }
     return this.http
-      .get<ProjectsResponse>(`${this.apiBaseUrl}${this.projectsEndpoint}`)
+      .get<ProjectsResponse>(url)
       .pipe(map((response) => ProjectAssembler.toEntitiesFromResponse(response)));
   }
 

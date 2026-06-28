@@ -64,8 +64,8 @@
         <mat-form-field appearance="outline" class="w-full">
           <mat-label>{{ 'identity.role' | translate }}</mat-label>
           <mat-select formControlName="role">
-            <mat-option value="Gestor Operativo">{{ 'identity.role_manager' | translate }}</mat-option>
-            <mat-option value="Logística y Administración">{{ 'identity.role_logistics' | translate }}</mat-option>
+            <mat-option value="USER">{{ 'identity.role_manager' | translate }}</mat-option>
+            <mat-option value="ADMIN">{{ 'identity.role_logistics' | translate }}</mat-option>
           </mat-select>
           @if (registerForm.get('role')?.hasError('required')) {
           <mat-error>{{ 'identity.err_role_required' | translate }}</mat-error>

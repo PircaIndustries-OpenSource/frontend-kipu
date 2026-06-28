@@ -22,13 +22,17 @@
         </mat-form-field>
 
         <div class="flex items-center justify-between mb-4">
-          <mat-checkbox color="primary" class="text-sm">{{ 'identity.remember_me' | translate }}</mat-checkbox>
+          <mat-checkbox color="primary" class="text-sm" formControlName="rememberMe">{{ 'identity.remember_me' | translate }}</mat-checkbox>
           <a routerLink="/forgot-password" class="text-sm text-blue-500 hover:underline">{{ 'identity.forgot_password' |
             translate }}</a>
         </div>
 
-        <button mat-flat-button color="primary" type="submit" class="!py-6" [disabled]="loginForm.invalid">
-          {{ 'identity.login_button' | translate }}
+        <button mat-flat-button color="primary" type="submit" class="!py-6 text-lg" [disabled]="loginForm.invalid || isSubmitting">
+          @if (isSubmitting) {
+            {{ 'identity.processing' | translate }}
+          } @else {
+            {{ 'identity.login_button' | translate }}
+          }
         </button>
 
         <div class="flex items-center gap-4 my-6">

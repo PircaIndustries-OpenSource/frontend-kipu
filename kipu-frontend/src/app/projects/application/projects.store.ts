@@ -1,12 +1,14 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { ProjectEntity } from '../domain/project.entity';
 import { ProjectsApi } from '../infrastructure/projects.api';
+import { AuthStore } from '../../identity/application/auth.store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectsStore {
   projectsApi = inject(ProjectsApi);
+  authStore = inject(AuthStore);
 
   private projectsSignal = signal<ProjectEntity[]>([]);
   private currentProjectIdSignal = signal<string | null>(localStorage.getItem('currentProjectId') || null);
@@ -21,7 +23,8 @@ export class ProjectsStore {
 
   loadProjects() {
     if (this.projectsSignal().length === 0) {
-      this.projectsApi.getAll().subscribe((data) => {
+      const email = this.authStore.currentUser()?.email || '';
+      this.projectsApi.getAll(email).subscribe((data) => {
         this.projectsSignal.set(data);
       });
     }
@@ -33,6 +36,9 @@ export class ProjectsStore {
   }
 
   addProject(project: ProjectEntity) {
+    if (!project.createdBy) {
+      project.createdBy = this.authStore.currentUser()?.email || '';
+    }
     this.projectsApi.create(project).subscribe((newProject) => {
       this.projectsSignal.update((projects) => [...projects, newProject]);
     });

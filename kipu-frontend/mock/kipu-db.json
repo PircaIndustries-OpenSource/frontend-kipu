@@ -34,6 +34,20 @@
       "password": "jhon12345",
       "role": "Gestor Operativo",
       "id": "EZcHJdU"
+    },
+    {
+      "name": "Benicio Del Toro",
+      "email": "glessmort@gmail.com",
+      "password": "OAuth-google-6uxchupe",
+      "role": "Gestor Operativo",
+      "id": "nQaX78K"
+    },
+    {
+      "name": "smtp test",
+      "email": "geripep137@divahd.com",
+      "password": "test12345",
+      "role": "Gestor Operativo",
+      "id": "3Yd7YvV"
     }
   ],
   "projects": [
