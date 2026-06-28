@@ -1,5 +1,5 @@
 <section class="p-6">
-  <div class="flex justify-between items-center mb-8">
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
     <h1 class="text-2xl font-bold flex items-center gap-2">
       <mat-icon>description</mat-icon>
       {{ 'signatures.page.title' | translate }}
@@ -22,16 +22,18 @@
     </div>
   </div>
 
-  <div class="flex gap-6">
+  <div class="flex flex-col lg:flex-row gap-6">
     <div class="flex-1 flex flex-col gap-6">
 
       <div class="bg-white rounded-xl shadow-md overflow-hidden">
         <div class="bg-yellow-50 px-6 py-4 border-b border-yellow-200 flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <mat-icon class="text-yellow-700">warning</mat-icon>
-            <h2 class="text-lg font-semibold text-yellow-800 m-0">
-              {{ 'signatures.page.pending-title' | translate }}
-            </h2>
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+            <div class="flex items-center gap-2">
+              <mat-icon class="text-yellow-700">warning</mat-icon>
+              <h2 class="text-lg font-semibold text-yellow-800 m-0 break-words">
+                {{ 'signatures.page.pending-title' | translate }}
+              </h2>
+            </div>
           </div>
           <span class="text-xs text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full">
             {{ pendingCount }}
@@ -40,7 +42,7 @@
         <div class="divide-y divide-gray-100 max-h-80 overflow-y-auto">
           @for (doc of pendingDocuments; track doc.id) {
             <div class="px-6 py-4 hover:bg-gray-50 transition-colors">
-              <div class="flex justify-between items-center">
+              <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div class="flex-1">
                   <div class="flex items-center gap-3 mb-1">
                     <mat-icon class="text-gray-500 text-sm">description</mat-icon>
@@ -80,11 +82,13 @@
 
       <div class="bg-white rounded-xl shadow-md overflow-hidden">
         <div class="bg-green-50 px-6 py-4 border-b border-green-200 flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <mat-icon class="text-green-700">check_circle</mat-icon>
-            <h2 class="text-lg font-semibold text-green-800 m-0">
-              {{ 'signatures.page.signed-title' | translate }}
-            </h2>
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+            <div class="flex items-center gap-2">
+              <mat-icon class="text-green-700">check_circle</mat-icon>
+              <h2 class="text-lg font-semibold text-green-800 m-0 break-words">
+                {{ 'signatures.page.signed-title' | translate }}
+              </h2>
+            </div>
           </div>
           <span class="text-xs text-green-600 bg-green-100 px-2 py-1 rounded-full">
             {{ signedCount }}
@@ -93,7 +97,7 @@
         <div class="divide-y divide-gray-100 max-h-64 overflow-y-auto">
           @for (doc of signedDocuments; track doc.id) {
             <div class="px-6 py-3 hover:bg-gray-50 transition-colors">
-              <div class="flex justify-between items-center">
+              <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                   <div class="flex items-center gap-2 mb-1">
                     <mat-icon class="text-green-600 text-sm">verified</mat-icon>
@@ -126,7 +130,7 @@
       </div>
     </div>
 
-    <div class="w-80 flex flex-col gap-4">
+    <div class="w-full lg:w-80 flex flex-col gap-4">
 
       <div class="bg-white rounded-xl shadow-md p-5">
         <div class="flex items-center gap-2 mb-3">

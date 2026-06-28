@@ -65,8 +65,10 @@
 /* Cabecera común */
 .card-header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem;
   margin-bottom: 1.25rem;
 }
 
@@ -176,6 +178,13 @@
 
 .data-label { color: #a0aec0; font-size: 0.75rem; }
 .data-value { color: #2d3748; font-size: 0.9375rem; font-weight: 500; }
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
 
 /* --- PANEL DE RESUMEN --- */
 .summary-card {
@@ -302,5 +311,28 @@
 
   .data-column {
     flex: 1 1 calc(50% - 0.5rem);
+  }
+
+  .card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .actions button {
+    flex: 1 1 auto;
+    justify-content: center;
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.7rem !important;
   }
 }

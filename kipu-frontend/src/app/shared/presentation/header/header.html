@@ -1,13 +1,18 @@
-<div class="flex items-center justify-between px-xl h-16 bg-white border-b border-neutral-border/40">
+<div class="flex items-center justify-between px-4 md:px-xl h-16 bg-white border-b border-neutral-border/40">
   <div class="flex items-center gap-3">
-    <h1 class="text-2xl font-bold text-primary">{{currentProject()}}</h1>
+    <button
+      (click)="toggleSidebar.emit()"
+      class="md:hidden text-primary flex items-center justify-center cursor-pointer hover:scale-110 active:scale-90 transition-all duration-200">
+      <mat-icon class="text-[28px]! w-7! h-7!">menu</mat-icon>
+    </button>
+    <h1 class="text-lg md:text-2xl font-bold text-primary truncate max-w-[140px] md:max-w-none">{{currentProject()}}</h1>
     <button
       routerLink="/projects"
       class="text-neutral-border hover:text-primary cursor-pointer transition-all duration-200 hover:scale-110 active:scale-90">
       <mat-icon class="text-[20px]! w-5! h-5!">edit</mat-icon>
     </button>
   </div>
-  <div class="flex items-center gap-6">
+  <div class="flex items-center gap-2 md:gap-6">
     <app-language-switcher></app-language-switcher>
     
     <!-- Notification Bell with Dropdown Overlay -->
@@ -15,7 +20,7 @@
       <button
         (click)="op.toggle($event)"
         class="text-primary flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-110 active:scale-90 overflow-visible relative">
-        <i class="pi pi-bell text-2xl"></i>
+        <i class="pi pi-bell !text-[24px] !leading-[24px] !flex !items-center !justify-center"></i>
         <span 
           *ngIf="notificationService.unreadCount() > 0"
           class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white animate-pulse">
@@ -80,7 +85,7 @@
       [routerLink]="['/settings']"
       [queryParams]="{ from: currentUrl }"
       class="text-primary flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-110 active:scale-90">
-      <mat-icon class="text-[32px]! w-8! h-8!">settings</mat-icon>
+      <mat-icon class="!text-[24px] !w-[24px] !h-[24px] !leading-[24px] !flex !items-center !justify-center">settings</mat-icon>
     </button>
   </div>
 </div>

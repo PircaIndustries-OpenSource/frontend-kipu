@@ -1,4 +1,5 @@
-<nav mat-tab-nav-bar [tabPanel]="tabPanel" class="mb-6">
+<div class="w-full overflow-x-auto">
+  <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="mb-6 min-w-max">
   <!--
    <a mat-tab-link
      routerLink="iot-monitoring"
@@ -32,7 +33,8 @@
     {{'iot-monitoring.SeismicControl'|translate}}
   </a>
 
-</nav>
+  </nav>
+</div>
 <mat-tab-nav-panel #tabPanel>
   <router-outlet></router-outlet>
 </mat-tab-nav-panel>

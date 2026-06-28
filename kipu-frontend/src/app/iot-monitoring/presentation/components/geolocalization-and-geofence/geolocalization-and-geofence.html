@@ -24,28 +24,38 @@
       </div>
     </div>
 
-    <!-- Grid map -->
-    <div class="grid-container">
+    <!-- Map wrapper with zoom controls -->
+    <div class="map-wrapper" style="position: relative; width: 100%;">
+      
+      <div class="zoom-controls">
+        <button (click)="zoomIn()" class="zoom-btn" title="Acercar"><mat-icon>add</mat-icon></button>
+        <button (click)="zoomOut()" class="zoom-btn" title="Alejar"><mat-icon>remove</mat-icon></button>
+      </div>
 
-      <svg class="geofence-svg" width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <polygon points="20,30 65,30 65,85 20,70" class="geofence-polygon" />
-      </svg>
+      <!-- Grid map -->
+      <div class="grid-container">
+        <div class="map-content-wrapper" [style.transform]="'scale(' + zoomLevel + ')'">
+          <svg class="geofence-svg" width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <polygon points="20,30 65,30 65,85 20,70" class="geofence-polygon" />
+          </svg>
 
-      @for (equip of geolocalizationPoints(); track equip.numberId) {
-        <div class="map-marker" [style.left.%]="equip.longitude" [style.top.%]="equip.latitude">
-          <div class="marker-tooltip" [ngClass]="equip.state">
-            @if (equip.state === 'OUTSIDE OF LIMIT') {
-              <mat-icon class="alert-icon">warning</mat-icon>
-            } @else {
-              <mat-icon class="alert-icon">check_circle</mat-icon>
-            }
-            {{ equip.name }}
-          </div>
-          <div class="marker-pin" [ngClass]="equip.state">
-            <mat-icon class="pin-icon">location_on</mat-icon>
-          </div>
+          @for (equip of geolocalizationPoints(); track equip.numberId) {
+            <div class="map-marker" [style.left.%]="equip.longitude" [style.top.%]="equip.latitude">
+              <div class="marker-tooltip" [ngClass]="equip.state">
+                @if (equip.state === 'OUTSIDE OF LIMIT') {
+                  <mat-icon class="alert-icon">warning</mat-icon>
+                } @else {
+                  <mat-icon class="alert-icon">check_circle</mat-icon>
+                }
+                {{ equip.name }}
+              </div>
+              <div class="marker-pin" [ngClass]="equip.state">
+                <mat-icon class="pin-icon">location_on</mat-icon>
+              </div>
+            </div>
+          }
         </div>
-      }
+      </div>
 
       <!-- Legend -->
       <mat-card class="map-legend">
@@ -63,7 +73,6 @@
           <span>{{ 'iot-monitoring.worklimit' | translate }}</span>
         </div>
       </mat-card>
-
     </div>
   </section>
 

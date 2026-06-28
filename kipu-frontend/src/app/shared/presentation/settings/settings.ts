@@ -21,6 +21,61 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
       width: 100% !important;
       height: 100% !important;
     }
+    .settings-wrapper {
+      width: 100% !important;
+      box-sizing: border-box !important;
+      padding: 2rem 1rem !important;
+      display: block !important;
+    }
+    .settings-card {
+      width: 100% !important;
+      max-width: 768px !important;
+      margin: 0 auto !important;
+      background: rgba(255, 255, 255, 0.8) !important;
+      backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(226, 232, 240, 0.5) !important;
+      border-radius: 1rem !important;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+      padding: 2rem !important;
+      box-sizing: border-box !important;
+      display: block !important;
+      position: relative !important;
+      overflow: hidden !important;
+    }
+    .settings-grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 2rem !important;
+      width: 100% !important;
+    }
+    @media (max-width: 768px) {
+      .settings-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    /* PrimeNG SelectButton Overrides to match Tailwind UI */
+    :host ::ng-deep .p-selectbutton .p-button {
+      background: #f1f5f9 !important; /* slate-100 */
+      color: #475569 !important; /* slate-600 */
+      border: 1px solid #e2e8f0 !important; /* slate-200 */
+    }
+    :host ::ng-deep .p-selectbutton .p-button.p-highlight {
+      background: #3b82f6 !important; /* blue-500 */
+      color: #ffffff !important;
+      border-color: #3b82f6 !important;
+    }
+    :host ::ng-deep .p-selectbutton .p-button:first-child {
+      border-top-left-radius: 0.5rem !important;
+      border-bottom-left-radius: 0.5rem !important;
+    }
+    :host ::ng-deep .p-selectbutton .p-button:last-child {
+      border-top-right-radius: 0.5rem !important;
+      border-bottom-right-radius: 0.5rem !important;
+    }
+    :host ::ng-deep .p-selectbutton .p-button:not(:first-child):not(:last-child) {
+      border-radius: 0 !important;
+    }
   `],
   imports: [
     CommonModule,

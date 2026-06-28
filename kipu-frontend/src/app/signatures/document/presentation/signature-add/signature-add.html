@@ -122,18 +122,25 @@
       <div class="flex flex-col gap-1 mt-2">
         <span class="text-xs font-bold text-gray-700 uppercase tracking-wider">
           {{ 'signatures.dialog.attach-document' | translate }}
+          <span class="text-red-500">*</span>
         </span>
-        <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 flex flex-col items-center gap-3 text-center cursor-pointer hover:border-pink-400 hover:bg-pink-50/30 transition-all duration-200">
-          <mat-icon class="text-4xl text-gray-400">cloud_upload</mat-icon>
+        <div (click)="fileInput.click()" class="border-2 border-dashed border-gray-300 rounded-lg p-8 flex flex-col items-center gap-3 text-center cursor-pointer hover:border-pink-400 hover:bg-pink-50/30 transition-all duration-200">
+          <input type="file" #fileInput class="hidden" (change)="onFileSelected($event)">
+          <mat-icon class="text-4xl text-gray-400" [ngClass]="attachedFileControl?.value ? 'text-pink-500' : 'text-gray-400'">cloud_upload</mat-icon>
           <div class="flex flex-col gap-1">
             <span class="text-sm font-semibold text-gray-700">
-              {{ 'signatures.dialog.dropzone' | translate }}
+              {{ attachedFileControl?.value || ('signatures.dialog.dropzone' | translate) }}
             </span>
             <span class="text-xs text-gray-500">
               {{ 'signatures.dialog.dropzone-hint' | translate }}
             </span>
           </div>
         </div>
+        @if (attachedFileControl?.invalid && attachedFileControl?.touched) {
+          <p class="text-xs text-red-500 mt-1">
+            El archivo adjunto es obligatorio para continuar.
+          </p>
+        }
       </div>
 
       @if (selectedUsersControl?.value?.length > 0) {

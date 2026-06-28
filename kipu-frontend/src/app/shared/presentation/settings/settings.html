@@ -1,38 +1,3 @@
-<style>
-  .settings-wrapper {
-    width: 100% !important;
-    box-sizing: border-box !important;
-    padding: 2rem 1rem !important;
-    display: block !important;
-  }
-  .settings-card {
-    width: 100% !important;
-    max-width: 768px !important;
-    margin: 0 auto !important;
-    background: rgba(255, 255, 255, 0.8) !important;
-    backdrop-filter: blur(12px) !important;
-    border: 1px solid rgba(226, 232, 240, 0.5) !important;
-    border-radius: 1rem !important;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
-    padding: 2rem !important;
-    box-sizing: border-box !important;
-    display: block !important;
-    position: relative !important;
-    overflow: hidden !important;
-  }
-  .settings-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 2rem !important;
-    width: 100% !important;
-  }
-  @media (max-width: 768px) {
-    .settings-grid {
-      grid-template-columns: 1fr !important;
-    }
-  }
-</style>
-
 <div class="settings-wrapper bg-neutral-bg min-h-[85vh]">
   <div class="settings-card">
  
@@ -86,9 +51,9 @@
           <span>🎨 {{ 'settings.color_blind_label' | translate }}</span>
         </label>
         <p class="text-slate-500 text-xs mb-2">{{ 'settings.color_blind_desc' | translate }}</p>
-        <p-selectButton [options]="colorBlindnessOptions" [(ngModel)]="colorBlindness" optionLabel="label"
-          optionValue="value" styleClass="w-full text-sm">
-        </p-selectButton>
+        <select [(ngModel)]="colorBlindness" class="w-full p-2.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer">
+          <option *ngFor="let opt of colorBlindnessOptions" [value]="opt.value">{{ opt.label }}</option>
+        </select>
       </div>
 
       <!-- Language Preferences -->
@@ -109,7 +74,7 @@
             }}</span>
           <span class="text-slate-500 text-xs">{{ 'settings.dyslexic_desc' | translate }}</span>
         </div>
-        <p-toggleSwitch [(ngModel)]="dyslexicFont"></p-toggleSwitch>
+        <p-toggleSwitch [(ngModel)]="dyslexicFont" class="flex-shrink-0"></p-toggleSwitch>
       </div>
 
       <!-- Toggle Switch Preferences (Reduced Motion) -->
@@ -119,7 +84,7 @@
             }}</span>
           <span class="text-slate-500 text-xs">{{ 'settings.motion_desc' | translate }}</span>
         </div>
-        <p-toggleSwitch [(ngModel)]="reducedMotion"></p-toggleSwitch>
+        <p-toggleSwitch [(ngModel)]="reducedMotion" class="flex-shrink-0"></p-toggleSwitch>
       </div>
 
       <!-- Toggle Switch Preferences (Simplified UI) -->
@@ -130,7 +95,7 @@
             translate }}</span>
           <span class="text-slate-500 text-xs">{{ 'settings.simplified_desc' | translate }}</span>
         </div>
-        <p-toggleSwitch [(ngModel)]="simplifiedUI"></p-toggleSwitch>
+        <p-toggleSwitch [(ngModel)]="simplifiedUI" class="flex-shrink-0"></p-toggleSwitch>
       </div>
 
     </div>
