@@ -61,5 +61,15 @@ export class IdentityService {
       }),
     );
   }
+
+  generateOtp(email: string): Observable<boolean> {
+    return this.http.post(`${this.apiUrl}/otp/generate`, { email }, { observe: 'response' })
+      .pipe(map(response => response.status === 200));
+  }
+
+  validateOtp(email: string, code: string): Observable<boolean> {
+    return this.http.post<{valid: boolean}>(`${this.apiUrl}/otp/validate`, { email, code })
+      .pipe(map(response => response.valid));
+  }
 }
 

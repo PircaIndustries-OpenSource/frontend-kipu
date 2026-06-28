@@ -71,7 +71,15 @@
         </div>
         <div class="flex flex-col text-left overflow-hidden">
           <span class="text-sm font-semibold truncate" style="color: #f8f9fa;">{{ currentUser()?.name || ('sidebar.guest_user' | translate) }}</span>
-          <span class="text-[10px] uppercase truncate" style="color: #b0bec5;">{{ currentUser()?.role || ('sidebar.no_role' | translate) }}</span>
+          <span class="text-[10px] uppercase truncate" style="color: #b0bec5;">
+            @if (currentUser()?.role === 'ROLE_USER' || currentUser()?.role === 'USER') {
+              {{ 'identity.role_manager' | translate }}
+            } @else if (currentUser()?.role === 'ROLE_ADMIN' || currentUser()?.role === 'ADMIN') {
+              {{ 'identity.role_logistics' | translate }}
+            } @else {
+              {{ currentUser()?.role || ('sidebar.no_role' | translate) }}
+            }
+          </span>
         </div>
       </div>
       <mat-icon style="color: #b0bec5;" class="scale-75">expand_more</mat-icon>

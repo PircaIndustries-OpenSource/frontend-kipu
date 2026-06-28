@@ -27,6 +27,8 @@
     "register_button": "Registrarse",
     "has_account": "¿Ya tienes una cuenta?",
     "login_link": "Inicia sesión aquí",
+    "processing": "Procesando...",
+    "error_registering": "Error al registrar la cuenta",
     "banner_system_desc": "Sistema de Gestión de Obras",
     "banner_control_title": "Control Total",
     "banner_control_desc": "Gestiona tus proyectos de construcción desde cualquier lugar",
