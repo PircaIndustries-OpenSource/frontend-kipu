@@ -26,8 +26,6 @@ import { SeismicEntity } from '../../../../domain/seismic.entity';
     MatFormField,
     MatInput,
     MatLabel,
-    MatOption,
-    MatSelect,
     TranslatePipe,
     MatIcon,
   ],

@@ -1,6 +1,7 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal, effect } from '@angular/core';
 import { GeolocalizationApiService } from '../infrastructure/services/geolocalization.api.service';
 import { GeolocalizationEntity } from '../domain/geolocalization.entity';
+import { ProjectsStore } from '../../projects/application/projects.store';
 
 @Injectable({ providedIn: 'root' })
 export class GeolocalizationStore {
@@ -13,6 +14,18 @@ export class GeolocalizationStore {
   private errorSignal = signal<string | null>(null);
 
   private simulationInterval: any = null;
+  private projectsStore = inject(ProjectsStore);
+
+  constructor() {
+    effect(() => {
+      const activeId = this.projectsStore.currentProjectId();
+      if (activeId) {
+        this.loadGeolocalizationPoints();
+      } else {
+        this.geolocalizationPointsSignal.set([]);
+      }
+    });
+  }
 
   loadGeolocalizationPoints() {
     this.loadingSignal.set(true);

@@ -109,7 +109,7 @@
             </div>
             }
 
-            <img [src]="project.imageUrl ? 'assets/' + project.imageUrl : 'assets/project' + ((project.id === 'proj-01' ? 1 : project.id === 'proj-02' ? 2 : project.id === 'proj-03' ? 3 : 4)) + '.jpg'"
+            <img [src]="resolveImageUrl(project)"
                 class="h-48 w-full object-cover" alt="Project Image">
             <div class="p-6 relative">
                 <div class="flex justify-between items-start mb-4">

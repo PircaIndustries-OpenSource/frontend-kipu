@@ -9,14 +9,13 @@ import {
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {map, Observable, startWith} from 'rxjs';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {MatFormField, MatInput} from '@angular/material/input';
 import {AsyncPipe} from '@angular/common';
 @Component({
   selector: 'app-autocomplete-filter-list',
   imports: [
     MatAutocompleteModule,
     MatFormField,
-    MatLabel,
     ReactiveFormsModule,
     AsyncPipe,
     MatInput,

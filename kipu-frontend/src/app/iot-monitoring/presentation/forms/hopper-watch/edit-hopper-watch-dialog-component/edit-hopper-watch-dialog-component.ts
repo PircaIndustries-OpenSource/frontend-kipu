@@ -26,8 +26,6 @@ import { HopperEntity } from '../../../../domain/hopper.entity';
     MatFormField,
     MatInput,
     MatLabel,
-    MatOption,
-    MatSelect,
     TranslatePipe,
     MatIcon,
   ],

@@ -10,6 +10,8 @@ import { MatDialogRef, MatDialog, MatDialogModule } from '@angular/material/dial
 import { catchError, map, Observable, of, switchMap, timer } from 'rxjs';
 import { ProjectsStore } from '../../../application/projects.store';
 import { SuccessDialog } from '../../../../shared/presentation/success-dialog/success-dialog';
+import { UploadService } from '../../../../shared/infrastructure/upload.service';
+import { MatIconModule } from '@angular/material/icon';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -26,6 +28,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MatNativeDateModule,
     MatDialogModule,
     TranslateModule,
+    MatIconModule
   ],
   templateUrl: './create-project-dialog.component.html',
 })
@@ -34,6 +37,12 @@ export class CreateProjectDialogComponent {
   private projectsStore = inject(ProjectsStore);
   private dialogRef = inject(MatDialogRef<CreateProjectDialogComponent>);
   private dialog = inject(MatDialog);
+  private uploadService = inject(UploadService);
+
+  selectedFile: File | null = null;
+  selectedFileName = '';
+  isUploading = false;
+  uploadedImageUrl: string | null = null;
 
   projectForm = this.fb.group({
     name: ['', [Validators.required], [this.nameDuplicationValidator()]],
@@ -44,6 +53,14 @@ export class CreateProjectDialogComponent {
     estimatedBudget: [''],
     location: ['', [Validators.required]],
   });
+
+  onFileSelected(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      this.selectedFile = file;
+      this.selectedFileName = file.name;
+    }
+  }
 
   nameDuplicationValidator() {
     return (control: AbstractControl): Observable<{ [key: string]: unknown } | null> => {
@@ -64,6 +81,25 @@ export class CreateProjectDialogComponent {
       return;
     }
 
+    if (this.selectedFile) {
+      this.isUploading = true;
+      this.uploadService.uploadFile(this.selectedFile).subscribe({
+        next: (url) => {
+          this.uploadedImageUrl = url;
+          this.isUploading = false;
+          this.finalizeSubmit();
+        },
+        error: () => {
+          this.isUploading = false;
+          this.finalizeSubmit(); // continue with default image if upload fails
+        }
+      });
+    } else {
+      this.finalizeSubmit();
+    }
+  }
+
+  private finalizeSubmit() {
     const { name, description, status, startDate, endDate, estimatedBudget, location } =
       this.projectForm.value;
 
@@ -75,6 +111,7 @@ export class CreateProjectDialogComponent {
       'project-image5.png',
     ];
     const randomImage = placeholderImages[Math.floor(Math.random() * placeholderImages.length)];
+    const imageUrl = this.uploadedImageUrl || randomImage;
 
     const project = {
       id: '',
@@ -86,13 +123,10 @@ export class CreateProjectDialogComponent {
       totalBudget: estimatedBudget ? Number(estimatedBudget) : 0,
       location: location ?? '',
       createdAt: new Date().toISOString().split('T')[0],
-      createdBy: 'current-user',
-      imageUrl: randomImage,
+      createdBy: '', // Store will assign this automatically
+      imageUrl: imageUrl,
     };
 
-    // Assuming the store calls API and handles it internally.
-    // In a real app we might want to wait for the subscription, but the store abstraction doesn't return an observable from addProject.
-    // Wait, addProject in store.ts adds to signal asynchronously, so the project gets created.
     this.projectsStore.addProject(project);
 
     this.dialogRef.close();
@@ -107,3 +141,4 @@ export class CreateProjectDialogComponent {
     });
   }
 }
+

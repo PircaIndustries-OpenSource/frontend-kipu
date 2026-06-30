@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable, map } from 'rxjs';
 import { ProjectProgress } from '../domain/progress.entity';
+import { ProgressPhotoEntity } from '../domain/progress-photo.entity';
 import { ProgressResponse } from './progress.response';
 import { ProgressAssembler } from './progress.assembler';
 
@@ -32,6 +33,26 @@ export class ProgressApi {
   };
 
   createProgress(data: ProjectProgress): Observable<ProjectProgress> {
-    return this.http.post<ProjectProgress>(this.basePath, data);
+    const payload = {
+        ...data,
+        percentage: data.currentPercentage
+    };
+    return this.http.post<ProjectProgress>(this.basePath, payload);
   };
+
+  getAllPhotos(projectId: string): Observable<ProgressPhotoEntity[]> {
+    return this.http.get<ProgressPhotoEntity[]>(`${this.basePath}/photos?projectId=${projectId}`);
+  }
+
+  createPhoto(photo: ProgressPhotoEntity): Observable<ProgressPhotoEntity> {
+    return this.http.post<ProgressPhotoEntity>(`${this.basePath}/photos`, photo);
+  }
+
+  updatePhoto(id: number, title: string): Observable<ProgressPhotoEntity> {
+    return this.http.put<ProgressPhotoEntity>(`${this.basePath}/photos/${id}`, { title });
+  }
+
+  deletePhoto(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.basePath}/photos/${id}`);
+  }
 }

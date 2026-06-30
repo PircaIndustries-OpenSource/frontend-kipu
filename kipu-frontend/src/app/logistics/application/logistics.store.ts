@@ -1,8 +1,9 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal, effect } from '@angular/core';
 import { InventoryMaterialEntity } from '../domain/inventoryMaterial.entity';
 import { LogisticsApi } from '../infrastructure/logistics.api';
 import { RequestEntity } from '../domain/request.entity';
 import { MachineryEntity } from '../domain/machinery.entity';
+import { ProjectsStore } from '../../projects/application/projects.store';
 import { SupplierEntity } from '../domain/supplier.entity';
 import { WasteEntity } from '../domain/waste.entity';
 import { BudgetStore } from '../../budget/application/budget-store';
@@ -40,6 +41,29 @@ export type WasteView = WasteEntity & {
 export class LogisticsStore {
   logisticsApi = inject(LogisticsApi);
   budgetStore = inject(BudgetStore);
+  private projectsStore = inject(ProjectsStore);
+
+  constructor() {
+    effect(() => {
+      const activeId = this.projectsStore.currentProjectId();
+      if (activeId) {
+        this.loadInventoryMaterials(true);
+        this.loadRequest(true);
+        this.loadMachinery(true);
+        this.loadWaste(true);
+        this.loadMaterials(true);
+        this.loadCategories(true);
+        this.loadSupplierOffers(true);
+        this.loadSuppliers(true);
+      } else {
+        this.inventorySignal.set([]);
+        this.requestsSignal.set([]);
+        this.machinerySignal.set([]);
+        this.wasteSignal.set([]);
+      }
+    });
+  }
+
   //MATERIAL
   private materialsSignal = signal<MaterialEntity[]>([]);
   private categoriesSignal = signal<CategoryEntity[]>([]);

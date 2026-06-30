@@ -13,7 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-verification',
   standalone: true,
-  imports: [RouterLink, MatButtonModule, MatCardModule, AuthBannerComponent, TranslateModule, ReactiveFormsModule],
+  imports: [MatButtonModule, MatCardModule, AuthBannerComponent, TranslateModule, ReactiveFormsModule],
   templateUrl: './verification.component.html',
 })
 export class VerificationComponent implements OnInit, OnDestroy {
@@ -133,5 +133,9 @@ export class VerificationComponent implements OnInit, OnDestroy {
     if (this.timerInterval) {
       clearInterval(this.timerInterval);
     }
+  }
+
+  goBack() {
+    this.router.navigate(['/login']);
   }
 }

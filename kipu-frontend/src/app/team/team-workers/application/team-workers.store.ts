@@ -1,7 +1,8 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal, effect } from '@angular/core';
 import { TranslateModule, TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { TeamWorkersApi } from '../infrastructure/team-workers.api';
 import { TeamWorkersEntity } from '../domain/model/team-workers.entity';
+import { ProjectStateService } from '../../../shared/application/project-state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,9 +13,21 @@ export class TeamWorkersStore {
 
   private teamWorkersSignal = signal<TeamWorkersEntity[]>([]);
   readonly teamWorkers = computed(() => this.teamWorkersSignal());
+  private projectsStore = inject(ProjectStateService);
 
-  loadWorkers() {
-    if (this.teamWorkersSignal().length == 0) {
+  constructor() {
+    effect(() => {
+      const activeId = this.projectsStore.currentProjectId();
+      if (activeId) {
+        this.loadWorkers(true);
+      } else {
+        this.teamWorkersSignal.set([]);
+      }
+    });
+  }
+
+  loadWorkers(force = false) {
+    if (force || this.teamWorkersSignal().length == 0) {
       this.teamApi.getAllWorkers().subscribe((data) => {
         this.teamWorkersSignal.set(data);
       });

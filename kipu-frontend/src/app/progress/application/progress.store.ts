@@ -1,4 +1,4 @@
-import { Injectable, inject, signal, computed } from '@angular/core';
+import { Injectable, inject, signal, computed, effect } from '@angular/core';
 import { ProgressApi } from '../infrastructure/progress.api';
 import { ProjectProgress } from '../domain/progress.entity';
 import { ProjectsStore } from '../../projects/application/projects.store';
@@ -20,6 +20,19 @@ export class ProgressStore {
     start: null,
     end: null,
   });
+
+  constructor() {
+    effect(() => {
+      const activeId = this.projectsStore.currentProjectId();
+      if (activeId) {
+        this.loadProgress();
+        this.loadPhotos();
+      } else {
+        this._progressList.set([]);
+        this._photosList.set([]);
+      }
+    });
+  }
 
   /**
    * Reactive selector that filters progress entries by the currently selected project
@@ -90,5 +103,40 @@ export class ProgressStore {
   }
   setDateRange(start: Date | null, end: Date | null): void {
     this._dateRange.set({ start, end });
+  }
+
+  // Photos
+  readonly _photosList = signal<import('../domain/progress-photo.entity').ProgressPhotoEntity[]>([]);
+  readonly allPhotos = this._photosList.asReadonly();
+
+  loadPhotos(): void {
+    const currentProjectId = this.projectsStore.currentProjectId();
+    if (currentProjectId) {
+      this.progressApi.getAllPhotos(currentProjectId).subscribe({
+        next: (photos) => this._photosList.set(photos),
+        error: (err) => console.error('Error fetching photos', err),
+      });
+    }
+  }
+
+  addPhoto(photo: import('../domain/progress-photo.entity').ProgressPhotoEntity): void {
+    this.progressApi.createPhoto(photo).subscribe({
+      next: (savedPhoto) => this._photosList.update(list => [savedPhoto, ...list]),
+      error: (err) => console.error('Error saving photo', err),
+    });
+  }
+
+  updatePhotoTitle(id: number, title: string): void {
+    this.progressApi.updatePhoto(id, title).subscribe({
+      next: (updatedPhoto) => this._photosList.update(list => list.map(p => p.id === id ? updatedPhoto : p)),
+      error: (err) => console.error('Error updating photo', err),
+    });
+  }
+
+  deletePhoto(id: number): void {
+    this.progressApi.deletePhoto(id).subscribe({
+      next: () => this._photosList.update(list => list.filter(p => p.id !== id)),
+      error: (err) => console.error('Error deleting photo', err),
+    });
   }
 }

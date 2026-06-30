@@ -1,8 +1,9 @@
 // presentation/store/documents.store.ts
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, effect, inject } from '@angular/core';
 import { DocumentEntity } from '../domain/model/document.entity';
 import { DocumentApi } from '../infrastructure/document.api';
 import { catchError, map, Observable, of } from 'rxjs';
+import { ProjectsStore } from '../../../projects/application/projects.store';
 
 
 @Injectable({ providedIn: 'root' })
@@ -14,7 +15,18 @@ export class DocumentsStore {
   readonly documents$ = this.documents.asReadonly();
   readonly currentToken$ = this.currentToken.asReadonly();
 
-  constructor(private documentApi: DocumentApi) {}
+  private projectsStore = inject(ProjectsStore);
+
+  constructor(private documentApi: DocumentApi) {
+    effect(() => {
+      const activeId = this.projectsStore.currentProjectId();
+      if (activeId) {
+        this.loadAllDocuments();
+      } else {
+        this.documents.set([]);
+      }
+    });
+  }
 
   async loadAllDocuments(): Promise<void> {
     this.documentApi.getAllDocuments().subscribe({

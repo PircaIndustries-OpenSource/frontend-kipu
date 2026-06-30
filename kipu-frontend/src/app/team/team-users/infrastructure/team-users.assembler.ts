@@ -3,12 +3,12 @@ import { TeamUsersEntity } from '../domain/model/team-users.entity';
 import { Identity } from '../../../identity/domain/identity.model';
 
 export class TeamUsersAssembler {
-  static toEntityFromResource(resource: TeamUsersResource): TeamUsersEntity{
+  static toEntityFromResource(resource: any): TeamUsersEntity{
     return {
       id: resource.id,
-      fullName: resource.fullName,
+      fullName: resource.fullName || resource.username || 'Usuario Invitado',
       email: resource.email,
-      isActive: resource.isActive,
+      isActive: resource.isActive !== undefined ? resource.isActive : true,
       role: resource.role
     };
   }

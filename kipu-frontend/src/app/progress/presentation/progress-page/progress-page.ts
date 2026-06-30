@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal, TemplateRef, ViewChild, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -13,9 +13,11 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { ProgressStore } from '../../application/progress.store';
 import { AutocompleteFilterList } from '../../../shared/presentation/autocomplete-filter-list/autocomplete-filter-list';
 import { ProjectProgress } from '../../domain/progress.entity';
+import { ProgressPhotoEntity } from '../../domain/progress-photo.entity';
 import { ProjectsStore } from '../../../projects/application/projects.store';
 import { TeamUsersStore } from '../../../team/team-users/application/team-users.store'; //
 import { TeamUsersEntity } from '../../../team/team-users/domain/model/team-users.entity'; //
+import { UploadService } from '../../../shared/infrastructure/upload.service';
 
 @Component({
   selector: 'app-progress-page',
@@ -89,9 +91,12 @@ export class ProgressPage implements OnInit {
     });
   }
 
+  private readonly uploadService = inject(UploadService);
+
   ngOnInit(): void {
     this.teamUsersStore.loadUsers();
     this.store.loadProgress();
+    this.store.loadPhotos();
   }
 
   openCreateForm(): void {
@@ -132,6 +137,7 @@ export class ProgressPage implements OnInit {
         responsible: val.responsible,
         workers: val.workers,
         weather: val.weather,
+        isMiniAdvance: false
       };
 
       this.store.addProgress(newEntry);
@@ -164,5 +170,48 @@ export class ProgressPage implements OnInit {
     return s === 'Finished'
       ? `${b} bg-success/10 text-success border-success/20`
       : `${b} bg-primary/10 text-primary border-primary/20`;
+  }
+
+  onPhotoUpload(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      this.uploadService.uploadFile(file).subscribe({
+        next: (url) => {
+          this.store.addPhoto({
+            projectId: this.projectsStore.currentProjectId() || 'unknown',
+            title: 'Nueva foto',
+            url: url,
+            uploadDate: new Date().toLocaleDateString('es-ES')
+          });
+        },
+        error: (err) => {
+          console.error('Error uploading image', err);
+        }
+      });
+    }
+  }
+
+  @ViewChild('editPhotoDialogTemplate') editPhotoDialogTemplate!: TemplateRef<unknown>;
+  @ViewChild('deletePhotoDialogTemplate') deletePhotoDialogTemplate!: TemplateRef<unknown>;
+  editPhotoControl = new FormControl('');
+
+  openEditPhotoDialog(photo: ProgressPhotoEntity) {
+    this.editPhotoControl.setValue(photo.title);
+    this.dialog.open(this.editPhotoDialogTemplate).afterClosed().subscribe((res) => {
+      if (res === 'save') {
+        const newTitle = this.editPhotoControl.value;
+        if (newTitle && newTitle.trim() !== '' && newTitle !== photo.title) {
+          this.store.updatePhotoTitle(photo.id!, newTitle.trim());
+        }
+      }
+    });
+  }
+
+  openDeletePhotoDialog(id: number) {
+    this.dialog.open(this.deletePhotoDialogTemplate).afterClosed().subscribe((res) => {
+      if (res === 'confirm') {
+        this.store.deletePhoto(id);
+      }
+    });
   }
 }

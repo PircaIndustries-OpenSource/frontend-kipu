@@ -44,6 +44,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'invitations/:id',
+    loadComponent: () =>
+      import('./identity/presentation/components/invitation/invitation-page.component').then(
+        (m) => m.InvitationPage,
+      ),
+  },
+  {
     path: '',
     component: Layout,
     canActivate: [authGuard],
