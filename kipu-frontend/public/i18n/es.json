@@ -58,7 +58,7 @@
     "resend_code": "Reenviar código",
     "resend_code_wait": "Reenviar código en ",
     "resend_code_success_title": "Código Reenviado",
-    "resend_code_success_desc": "Se le reenvió el código de verificación a su número telefónico",
+    "resend_code_success_desc": "Se le reenvió el código de verificación a su correo electrónico.",
     "register_success_title": "¡Registro exitoso!",
     "register_success_desc": "Solo queda un último paso restante para empezar a utilizar la aplicación",
     "err_name_required": "El nombre es obligatorio.",
