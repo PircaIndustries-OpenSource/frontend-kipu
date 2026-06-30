@@ -1,5 +1,7 @@
 import { Injectable, signal, computed, inject, effect } from '@angular/core';
 import { ProjectStateService } from './project-state.service';
+import { AuthStore } from '../../identity/application/auth.store';
+import { HttpClient } from '@angular/common/http';
 
 export interface AppNotification {
   id: string;
@@ -17,6 +19,8 @@ export interface AppNotification {
 })
 export class NotificationService {
   private projectStateService = inject(ProjectStateService);
+  private authStore = inject(AuthStore);
+  private http = inject(HttpClient);
 
   private notificationsSignal = signal<AppNotification[]>([]);
 
@@ -26,9 +30,8 @@ export class NotificationService {
   // Notifications filtered by active project ID
   readonly projectNotifications = computed(() => {
     const activeId = this.projectStateService.currentProjectId();
-    if (!activeId) return [];
     return this.notificationsSignal()
-      .filter((n) => n.projectId === activeId)
+      .filter((n) => n.projectId === activeId || !n.projectId || n.projectId === '')
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   });
 
@@ -93,6 +96,14 @@ export class NotificationService {
     effect(() => {
       localStorage.setItem('kipu-notifications', JSON.stringify(this.notificationsSignal()));
     });
+
+    // Reactively load invitations when current user changes
+    effect(() => {
+      const user = this.authStore.currentUser();
+      if (user?.email) {
+        this.loadInvitations(user.email);
+      }
+    });
   }
 
   addNotification(notification: {
@@ -143,5 +154,30 @@ export class NotificationService {
         projectId: this.projectStateService.currentProjectId() || '',
       });
     }
+  }
+
+  loadInvitations(email: string) {
+    this.http.get<any[]>(`http://localhost:8080/api/v1/invitations/user/${encodeURIComponent(email)}`).subscribe({
+      next: (invitations) => {
+        invitations.filter((inv: any) => inv.status === 'PENDING').forEach((inv: any) => {
+          // Check if it already exists
+          const exists = this.notificationsSignal().find(n => n.id === `inv-${inv.id}`);
+          if (!exists) {
+            const newNotif: AppNotification = {
+              id: `inv-${inv.id}`,
+              title: 'Nueva Invitación a Proyecto',
+              description: `Has sido invitado al proyecto con rol: ${inv.role}`,
+              type: 'invitacion',
+              route: `/invitations/${inv.id}`,
+              projectId: '',
+              read: false,
+              date: new Date().toISOString(),
+            };
+            this.notificationsSignal.update((list) => [newNotif, ...list]);
+          }
+        });
+      },
+      error: (err) => console.error('Error fetching invitations', err)
+    });
   }
 }

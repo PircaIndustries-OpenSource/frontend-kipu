@@ -1,8 +1,22 @@
 <h2 mat-dialog-title class="font-bold text-xl mb-4">{{ 'projects_dashboard.create_title' | translate }}</h2>
 
-<mat-dialog-content>
-  <form [formGroup]="projectForm" class="flex flex-col gap-4 mt-2">
-    <mat-form-field appearance="outline" class="w-full">
+<mat-dialog-content class="!pt-4">
+  <form [formGroup]="projectForm" class="flex flex-col gap-4 mt-4">
+    <div class="flex items-center justify-between mb-2">
+      <div class="flex-grow">
+        <p class="text-sm text-gray-500 font-medium mb-2">{{ ('projects_dashboard.create_cover_image' | translate) || 'Imagen de Portada' }}</p>
+        <button type="button" mat-stroked-button (click)="fileInput.click()" class="!border-dashed !border-2 !border-gray-300 !text-gray-600 hover:!bg-gray-50 !w-full !py-6">
+          <mat-icon>cloud_upload</mat-icon>
+          Subir imagen (JPG, PNG)
+        </button>
+        <input type="file" hidden #fileInput (change)="onFileSelected($event)" accept="image/*">
+        @if (selectedFileName) {
+          <p class="text-xs text-green-600 mt-2 flex items-center gap-1"><mat-icon class="scale-75">check_circle</mat-icon> {{ selectedFileName }}</p>
+        }
+      </div>
+    </div>
+
+    <mat-form-field appearance="outline" class="w-full mt-2">
       <mat-label>{{ 'projects_dashboard.create_name' | translate }}</mat-label>
       <input matInput formControlName="name" [placeholder]="'projects_dashboard.create_name_placeholder' | translate">
       @if (projectForm.get('name')?.hasError('required')) {

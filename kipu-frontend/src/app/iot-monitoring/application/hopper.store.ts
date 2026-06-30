@@ -1,6 +1,7 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal, effect } from '@angular/core';
 import { HopperEntity } from '../domain/hopper.entity';
 import { HopperApiService } from '../infrastructure/services/hopper.api.services';
+import { ProjectsStore } from '../../projects/application/projects.store';
 
 @Injectable({ providedIn: 'root' })
 export class HopperStore {
@@ -13,6 +14,18 @@ export class HopperStore {
   private errorSignal = signal<string | null>(null);
 
   private simulationInterval: any = null;
+  private projectsStore = inject(ProjectsStore);
+
+  constructor() {
+    effect(() => {
+      const activeId = this.projectsStore.currentProjectId();
+      if (activeId) {
+        this.loadHopperSensors();
+      } else {
+        this.hopperSensorsSignal.set([]);
+      }
+    });
+  }
 
   loadHopperSensors() {
     this.loadingSignal.set(true);

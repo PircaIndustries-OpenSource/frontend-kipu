@@ -1,6 +1,7 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal, effect } from '@angular/core';
 import { SeismicEntity } from '../domain/seismic.entity';
 import { SeismicApiService } from '../infrastructure/services/seismic.api.service';
+import { ProjectsStore } from '../../projects/application/projects.store';
 
 @Injectable({ providedIn: 'root' })
 export class SeismicStore {
@@ -13,6 +14,18 @@ export class SeismicStore {
   private errorSignal = signal<string | null>(null);
 
   private simulationInterval: any = null;
+  private projectsStore = inject(ProjectsStore);
+
+  constructor() {
+    effect(() => {
+      const activeId = this.projectsStore.currentProjectId();
+      if (activeId) {
+        this.loadSeismicSensors();
+      } else {
+        this.seismicSensorsSignal.set([]);
+      }
+    });
+  }
 
   loadSeismicSensors() {
     this.loadingSignal.set(true);

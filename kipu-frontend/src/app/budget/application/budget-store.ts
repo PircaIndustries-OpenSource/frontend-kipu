@@ -1,4 +1,4 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal, effect } from '@angular/core';
 import { BudgetItemEntity } from '../domain/budget-item.entity';
 import { ProjectsStore } from '../../projects/application/projects.store';
 import { BudgetApi } from '../infrastructure/budget-api';
@@ -22,6 +22,17 @@ export class BudgetStore {
   private readonly budgetItemsSignal = signal<BudgetItemEntity[]>([]);
   private readonly searchQuery = signal<string>('');
   readonly selectedItem = signal<BudgetItemEntity | null>(null);
+
+  constructor() {
+    effect(() => {
+      const activeId = this.projectsStore.currentProjectId();
+      if (activeId) {
+        this.loadBudgetItems();
+      } else {
+        this.budgetItemsSignal.set([]);
+      }
+    });
+  }
 
   // Authorized personnel list
   readonly authorizedPersonnel = computed(() =>
@@ -198,7 +209,7 @@ export class BudgetStore {
         this.budgetItemsSignal.set(entities);
       },
       error: (err) => {
-        console.error('Error fetching budgets from db.json', err);
+        console.error('Error fetching budgets', err);
         this.budgetItemsSignal.set([]);
       },
     });

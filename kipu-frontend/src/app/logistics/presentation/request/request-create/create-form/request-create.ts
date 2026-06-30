@@ -54,8 +54,8 @@ export class RequestCreate implements OnInit {
     this.logisticsStore.loadMaterials();
     this.logisticsStore.loadSupplierOffers();
     this.logisticsStore.loadSuppliers();
-    this.progressStore.loadProgress(); // Load progress entries from db.json
-    this.budgetStore.loadBudgetItems(); // Load budget items from db.json
+    this.progressStore.loadProgress(); // Load progress entries
+    this.budgetStore.loadBudgetItems(); // Load budget items
   }
 
   goToRequestPage() {
@@ -203,4 +203,15 @@ export class RequestCreate implements OnInit {
   isSupplierDisabled = computed(() => this.logisticsStore.selectedMaterial().length === 0);
   materialSelected = computed(() => this.logisticsStore.getMaterialSelected());
   supplierSelected = computed(() => this.logisticsStore.getSupplierSelected());
+
+  uploadedDocumentName: string | null = null;
+  uploadedDocumentFile: File | null = null;
+
+  onDocumentUpload(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      this.uploadedDocumentName = file.name;
+      this.uploadedDocumentFile = file;
+    }
+  }
 }

@@ -144,6 +144,17 @@ export class ProjectsDashboardComponent implements OnInit {
         return map[status] || status;
     }
 
+    resolveImageUrl(project: ProjectEntity): string {
+        if (project.imageUrl) {
+            if (project.imageUrl.startsWith('http')) {
+                return project.imageUrl;
+            }
+            return 'assets/' + project.imageUrl;
+        }
+        const defaultNum = project.id === 'proj-01' ? 1 : project.id === 'proj-02' ? 2 : project.id === 'proj-03' ? 3 : 4;
+        return 'assets/project' + defaultNum + '.jpg';
+    }
+
     getProjectStatusLogs(projectId: string): any[] {
         return [
             { date: '2026-05-20T10:00:00.000Z', status: 'IN_PROGRESS', justification: 'Inicio de vaciado de columnas del sótano.', changedBy: 'Paula Montoya' },

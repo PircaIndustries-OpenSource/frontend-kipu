@@ -1,4 +1,4 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal, effect } from '@angular/core';
 import { TeamUsersEntity } from '../domain/model/team-users.entity';
 import { TeamWorkersEntity } from '../../team-workers/domain/model/team-workers.entity';
 import { TeamUsersApi } from '../infrastructure/team-users.api';
@@ -6,6 +6,7 @@ import { TranslateModule, TranslatePipe, TranslateService } from '@ngx-translate
 import { Identity } from '../../../identity/domain/identity.model';
 import { TeamUsersAssembler } from '../infrastructure/team-users.assembler';
 import { map, switchMap } from 'rxjs';
+import { ProjectStateService } from '../../../shared/application/project-state.service';
 
 
 @Injectable({
@@ -14,6 +15,7 @@ import { map, switchMap } from 'rxjs';
 export class TeamUsersStore {
   teamApi = inject(TeamUsersApi);
   private translate = inject(TranslateService);
+  private projectStateService = inject(ProjectStateService);
 
   private teamUsersSignal = signal<TeamUsersEntity[]>([]);
   private searchTermSignal = signal<string>('');
@@ -60,33 +62,44 @@ export class TeamUsersStore {
     return translationMap[role] || role;
   }
 
+  constructor() {
+    effect(() => {
+      const activeId = this.projectStateService.currentProjectId();
+      if (activeId) {
+        this.loadUsers(activeId);
+      } else {
+        this.teamUsersSignal.set([]);
+      }
+    });
+  }
 
-loadUsers() {
-  if (this.teamUsersSignal().length === 0) {
-    this.teamApi.getAllUsers()
-      .pipe(
-        switchMap(allUsers =>
-          this.teamApi.getCurrentUser().pipe(
-            map(currentUser => ({ allUsers, currentUser }))
+  loadUsers(projectId?: string) {
+    if (projectId) {
+      this.teamApi.getAllUsers(projectId)
+        .pipe(
+          switchMap(allUsers =>
+            this.teamApi.getCurrentUser().pipe(
+              map(currentUser => ({ allUsers, currentUser }))
+            )
           )
         )
-      )
-      .subscribe({
-        next: ({ allUsers, currentUser }) => {
-          const currentUserEntity = TeamUsersAssembler.toEntityFromIdentity(currentUser);
-          this.currentUserSignal.set(currentUserEntity);
-          // Verificar si ya existe
-          const userExists = allUsers.some(user => user.id === currentUserEntity.id);
-
-          // Agregar solo si no existe
-          const finalUsers = userExists ? allUsers : [...allUsers, currentUserEntity];
-
-          this.teamUsersSignal.set(finalUsers);
-        },
-        error: (err) => console.error('Error loading users:', err)
-      });
+        .subscribe({
+          next: ({ allUsers, currentUser }) => {
+            if (!currentUser) {
+              this.teamUsersSignal.set(allUsers);
+              return;
+            }
+            const currentUserEntity = TeamUsersAssembler.toEntityFromIdentity(currentUser);
+            this.currentUserSignal.set(currentUserEntity);
+            
+            // Filtrar el usuario actual de allUsers ya que la vista lo renderiza manualmente al inicio
+            const filteredAllUsers = allUsers.filter(user => user.email !== currentUserEntity.email);
+            this.teamUsersSignal.set(filteredAllUsers);
+          },
+          error: (err) => console.error('Error loading users:', err)
+        });
+    }
   }
-}
 
   updateSearchTerm(term: string) {
     this.searchTermSignal.set(term);
@@ -97,18 +110,17 @@ loadUsers() {
   }
 
   inviteUser(userData: any) {
-    const userToSave = {
+    const projectId = this.projectStateService.currentProjectId() || '1';
+
+    const invitationToSave = {
       ...userData,
-      fullName: `${userData.firstName} ${userData.lastName}`,
-      isActive: true,
-      id: `us-${Date.now()}`,
+      projectId: projectId,
     };
 
-    this.teamApi.postUser(userToSave).subscribe({
-      next: (newUser) => {
-        // Si la API responde OK, actualizamos la lista local para que
-        // el nuevo usuario aparezca en la tabla sin recargar la página.
-        this.teamUsersSignal.update((currentUsers) => [...currentUsers, newUser]);
+    this.teamApi.postInvitation(invitationToSave).subscribe({
+      next: (newInvitation) => {
+        // Invitación enviada exitosamente.
+        console.log('Invitación enviada', newInvitation);
       },
       error: (err) => console.error('Error al invitar:', err),
     });

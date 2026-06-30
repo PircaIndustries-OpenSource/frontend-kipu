@@ -36,7 +36,7 @@
               </app-autocomplete-filter-list>
             </div>
             <div class="w-full sm:w-[300px]">
-              <mat-form-field appearance="outline" class="w-full bg-white !mb-[-1.25em]">
+              <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full bg-white">
                 <mat-date-range-input [rangePicker]="picker">
                   <input matStartDate [placeholder]="'progress.filters.start_date' | translate" #startInput>
                   <input matEndDate [placeholder]="'progress.filters.end_date' | translate" #endInput (dateChange)="onDateRangeChange(startInput.valueAsDate, endInput.valueAsDate)">
@@ -84,32 +84,47 @@
       <mat-tab [label]="'progress.tabs.photos' | translate">
         <div class="p-xl flex flex-col gap-l">
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-m sm:gap-0">
-            <div class="flex gap-s flex-wrap">
-              <button class="px-4 py-2 border border-accent text-accent font-bold rounded-s text-sm hover:bg-accent/10 transition-colors">Excavaciones</button>
-              <button class="px-4 py-2 border border-neutral-border/20 text-neutral-border font-bold rounded-s text-sm hover:bg-neutral-bg transition-colors">Cimentación</button>
+            <div class="w-full sm:w-[280px]">
+              <app-autocomplete-filter-list
+                [listOptions]="activityOptions"
+                [placeholder]="'progress.filters.activity' | translate"
+                (optionSelected)="onSearchChange($event)">
+              </app-autocomplete-filter-list>
             </div>
-            <div class="flex flex-col sm:flex-row gap-m w-full sm:w-auto">
+            <div class="flex flex-col sm:flex-row gap-m w-full sm:w-auto mt-4 sm:mt-0">
               <button class="px-4 py-2 flex items-center justify-center gap-2 text-neutral-border font-bold hover:text-primary transition-colors cursor-pointer w-full sm:w-auto">
                 <mat-icon>download</mat-icon> {{ 'progress.actions.export' | translate }}
               </button>
-              <button class="px-6 py-2 bg-primary text-white font-bold rounded-s shadow-sm hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto">
+              <input type="file" hidden #photoInput (change)="onPhotoUpload($event)" accept="image/*">
+              <button (click)="photoInput.click()" class="px-6 py-2 bg-primary text-white font-bold rounded-s shadow-sm hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto">
                 <mat-icon>add</mat-icon> {{ 'progress.actions.upload' | translate }}
               </button>
             </div>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-l">
-            @for (photo of mockPhotos; track photo.url) {
-              <div class="h-56 bg-neutral-bg rounded-m relative overflow-hidden bg-cover bg-center shadow-sm hover:shadow-md hover:scale-[1.02] transition-all cursor-pointer border border-neutral-border/10"
+            @for (photo of store.allPhotos(); track photo.id) {
+              <div class="h-56 bg-neutral-bg rounded-m relative overflow-hidden bg-cover bg-center shadow-sm hover:shadow-md transition-all border border-neutral-border/10 group"
                    [style.background-image]="'url(' + photo.url + ')'">
-                <div class="absolute inset-0 bg-black/10 hover:bg-transparent transition-colors"></div>
+                <div class="absolute inset-0 bg-black/10 hover:bg-black/30 transition-colors"></div>
+                
+                <!-- Action buttons (visible on hover) -->
+                <div class="absolute top-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button (click)="openEditPhotoDialog(photo)" class="bg-white/80 hover:bg-white text-primary rounded-full p-2 cursor-pointer transition-colors" title="Editar descripción">
+                    <mat-icon class="scale-[0.8] !w-5 !h-5 flex items-center justify-center">edit</mat-icon>
+                  </button>
+                  <button (click)="openDeletePhotoDialog(photo.id!)" class="bg-white/80 hover:bg-danger hover:text-white text-danger rounded-full p-2 cursor-pointer transition-colors" title="Eliminar foto">
+                    <mat-icon class="scale-[0.8] !w-5 !h-5 flex items-center justify-center">delete</mat-icon>
+                  </button>
+                </div>
+
                 <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent text-white">
                   <p class="font-bold text-sm">{{photo.title}}</p>
-                  <p class="text-xs opacity-80">{{photo.date}}</p>
+                  <p class="text-xs opacity-80">{{photo.uploadDate}}</p>
                 </div>
               </div>
             }
-            <div class="h-56 border-2 border-dashed border-neutral-border/40 rounded-m flex flex-col gap-2 items-center justify-center text-neutral-border cursor-pointer hover:bg-neutral-bg hover:border-accent hover:text-accent transition-all group">
+            <div (click)="photoInput.click()" class="h-56 border-2 border-dashed border-neutral-border/40 rounded-m flex flex-col gap-2 items-center justify-center text-neutral-border cursor-pointer hover:bg-neutral-bg hover:border-accent hover:text-accent transition-all group">
               <mat-icon class="scale-150 transition-transform group-hover:scale-[1.75]">add</mat-icon>
               <span class="font-bold text-sm mt-2">Agregar Foto</span>
             </div>
@@ -220,6 +235,31 @@
       <div class="flex flex-col sm:flex-row gap-m mt-l w-full">
         <button mat-stroked-button mat-dialog-close="discard" class="flex-1 !py-5 !border-danger !text-danger !font-bold hover:!bg-danger hover:!text-white transition-colors">{{ 'progress.dialog.discard' | translate }}</button>
         <button mat-flat-button color="primary" mat-dialog-close="save" class="flex-1 !py-5 !font-bold">{{ 'progress.dialog.save' | translate }}</button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #editPhotoDialogTemplate>
+    <div class="p-xl text-center flex flex-col gap-m items-center">
+      <h2 class="text-2xl font-bold text-primary tracking-tight">Editar Descripción de la Foto</h2>
+      <input type="text" [formControl]="editPhotoControl" class="w-full bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary mt-m">
+      <div class="flex flex-col sm:flex-row gap-m mt-l w-full">
+        <button mat-stroked-button mat-dialog-close="discard" class="flex-1 !py-5 !text-neutral-border !font-bold hover:!text-primary transition-colors">Cancelar</button>
+        <button mat-flat-button color="primary" mat-dialog-close="save" class="flex-1 !py-5 !font-bold">Guardar</button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #deletePhotoDialogTemplate>
+    <div class="p-xl text-center flex flex-col gap-m items-center">
+      <div class="w-16 h-16 rounded-full bg-danger/10 flex items-center justify-center text-danger mb-2">
+        <mat-icon class="scale-150">delete</mat-icon>
+      </div>
+      <h2 class="text-2xl font-bold text-primary tracking-tight">Eliminar Foto</h2>
+      <p class="text-neutral-border font-medium">¿Estás seguro de que quieres eliminar esta foto?</p>
+      <div class="flex flex-col sm:flex-row gap-m mt-l w-full">
+        <button mat-stroked-button mat-dialog-close="discard" class="flex-1 !py-5 !text-neutral-border !font-bold hover:!text-primary transition-colors">Cancelar</button>
+        <button mat-flat-button color="warn" mat-dialog-close="confirm" class="flex-1 !py-5 !bg-danger !text-white !font-bold">Eliminar</button>
       </div>
     </div>
   </ng-template>

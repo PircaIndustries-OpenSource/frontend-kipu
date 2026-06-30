@@ -1,4 +1,4 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal, inject } from '@angular/core';
 import { Identity } from '../domain/identity.model';
 
 @Injectable({
@@ -9,9 +9,13 @@ export class AuthStore {
   readonly currentUser = computed(() => this.currentUserSignal());
   readonly userName = computed(() => this.currentUser()?.name ?? '');
   readonly userId = computed(() => this.currentUser()?.id ?? '');
+
   constructor() {
     const stored = localStorage.getItem('currentUser');
-    if (stored) this.currentUserSignal.set(JSON.parse(stored));
+    if (stored) {
+      const user = JSON.parse(stored);
+      this.currentUserSignal.set(user);
+    }
   }
   login(user: Identity) {
     localStorage.setItem('currentUser', JSON.stringify(user));

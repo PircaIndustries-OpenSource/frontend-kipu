@@ -214,15 +214,19 @@
       <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
         {{ 'request.create.fields.attachments' | translate }}
       </span>
-      <div class="border-2 border-dashed border-neutral-border/30 rounded-m p-xl flex flex-col items-center gap-m text-center cursor-pointer hover:border-accent hover:bg-accent/5 transition-all">
+      <input type="file" hidden #docInput (change)="onDocumentUpload($event)">
+      <div (click)="docInput.click()" class="border-2 border-dashed border-neutral-border/30 rounded-m p-xl flex flex-col items-center gap-m text-center cursor-pointer hover:border-accent hover:bg-accent/5 transition-all">
         <mat-icon class="text-3xl text-neutral-border">cloud_upload</mat-icon>
         <span class="text-sm font-bold text-primary">{{ 'request.create.placeholders.dropzone' | translate }}</span>
         <span class="text-xs text-neutral-border">{{ 'request.create.placeholders.dropzone-hint' | translate }}</span>
       </div>
+      @if (uploadedDocumentName) {
+        <p class="text-xs text-green-600 mt-2 flex items-center gap-1"><mat-icon class="scale-75">check_circle</mat-icon> {{ uploadedDocumentName }}</p>
+      }
     </div>
   </div>
 
-  <div class="flex justify-end gap-m">
+  <div class="flex justify-end gap-m mb-8">
     <button
       (click)="goToRequestPage()"
       type="button"

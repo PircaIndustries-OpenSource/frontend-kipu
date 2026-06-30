@@ -22,9 +22,9 @@ export class TeamUsersApi {
   teamUsersEndpoint = environment.kipuApiTeamUsersEndpointPath;
   teamUsersUrl = `${this.apiBaseUrl}${this.teamUsersEndpoint}`;
 
-  getAllUsers(): Observable<TeamUsersEntity[]> {
+  getAllUsers(projectId: string): Observable<TeamUsersEntity[]> {
     return this.http
-      .get<TeamUsersResponse>(this.teamUsersUrl)
+      .get<TeamUsersResponse>(`${this.teamUsersUrl}?projectId=${projectId}`)
       .pipe(map((response) => TeamUsersAssembler.toEntitiesFromResponse(response)));
   }
 
@@ -48,6 +48,30 @@ export class TeamUsersApi {
   updateUser(user: TeamUsersEntity): Observable<TeamUsersEntity> {
     const url = `${this.teamUsersUrl}/${user.id}`;
     return this.http.put<TeamUsersEntity>(url, user);
+  }
+
+  // Invitations
+  invitationsEndpoint = environment.kipuApiInvitationsEndpointPath;
+  invitationsUrl = `${this.apiBaseUrl}${this.invitationsEndpoint}`;
+
+  postInvitation(invitation: any): Observable<any> {
+    return this.http.post<any>(this.invitationsUrl, invitation);
+  }
+
+  getInvitations(projectId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.invitationsUrl}?projectId=${projectId}`);
+  }
+
+  getInvitationsByEmail(email: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.invitationsUrl}/user/${email}`);
+  }
+
+  acceptInvitation(id: number): Observable<any> {
+    return this.http.put<any>(`${this.invitationsUrl}/${id}/accept`, {});
+  }
+
+  rejectInvitation(id: number): Observable<any> {
+    return this.http.put<any>(`${this.invitationsUrl}/${id}/reject`, {});
   }
 }
 

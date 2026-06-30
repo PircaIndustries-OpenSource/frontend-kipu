@@ -1,6 +1,7 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal, effect } from '@angular/core';
 import { ConcreteEntity } from '../domain/concrete.entity';
 import { ConcreteApiService } from '../infrastructure/services/concrete.api.service';
+import { ProjectsStore } from '../../projects/application/projects.store';
 
 @Injectable({ providedIn: 'root' })
 export class ConcreteStore {
@@ -13,6 +14,18 @@ export class ConcreteStore {
   private errorSignal = signal<string | null>(null);
 
   private simulationInterval: any = null;
+  private projectsStore = inject(ProjectsStore);
+
+  constructor() {
+    effect(() => {
+      const activeId = this.projectsStore.currentProjectId();
+      if (activeId) {
+        this.loadConcreteSensors();
+      } else {
+        this.concreteSensorsSignal.set([]);
+      }
+    });
+  }
 
   loadConcreteSensors() {
     this.loadingSignal.set(true);

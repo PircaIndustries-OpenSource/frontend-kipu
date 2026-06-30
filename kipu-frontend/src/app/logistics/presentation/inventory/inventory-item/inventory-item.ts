@@ -7,7 +7,7 @@ import { InventoryView } from '../../../application/logistics.store';
 
 @Component({
   selector: 'app-inventory-item',
-  imports: [TranslatePipe, MatCardModule, MatIcon, MatRipple],
+  imports: [TranslatePipe, MatCardModule, MatIcon],
   templateUrl: './inventory-item.html',
   styleUrl: './inventory-item.css',
 })

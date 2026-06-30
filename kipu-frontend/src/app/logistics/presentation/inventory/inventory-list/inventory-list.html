@@ -1,5 +1,13 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-l w-full items-stretch">
-  @for (material of inventoryMaterials(); track material.id){
+  @for (material of inventoryMaterials(); track material.id) {
     <app-inventory-item [inventoryMaterial]="material"></app-inventory-item>
+  } @empty {
+    <div class="col-span-1 sm:col-span-2 border-2 border-dashed border-neutral-border/30 rounded-m p-xl flex flex-col items-center gap-m text-center bg-white shadow-sm mt-4">
+      <div class="w-20 h-20 bg-neutral-bg rounded-full flex items-center justify-center text-neutral-border/50">
+        <mat-icon class="scale-[2.5]">inventory_2</mat-icon>
+      </div>
+      <h2 class="text-xl font-bold text-primary mt-2">Inventario Vacío</h2>
+      <p class="text-neutral-border text-sm max-w-md">No hay materiales registrados aún. Solicita un nuevo material a través de la sección de solicitudes para comenzar a llenar tu inventario.</p>
+    </div>
   }
 </div>

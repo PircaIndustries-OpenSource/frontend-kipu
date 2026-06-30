@@ -186,6 +186,7 @@
     "create_err_req": "Obligatorio.",
     "create_cancel": "Cancelar",
     "create_submit": "Crear Proyecto",
+    "create_cover_image": "Portada del Proyecto",
     "select_title": "Seleccionar Proyecto",
     "select_desc": "Estás a punto de seleccionar el proyecto:",
     "select_prompt": "¿Quieres continuar?",

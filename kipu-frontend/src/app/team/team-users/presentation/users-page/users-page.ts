@@ -55,10 +55,14 @@ export class UsersPage implements OnInit {
   getRoleBadgeClass(role: string): string {
     const roleMap: Record<string, string> = {
       Administrador: 'bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm',
+      ROLE_ADMIN: 'bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm',
       Gestor: 'bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm',
       "Gestor Operativo": 'bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm',
+      ROLE_USER: 'bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm',
       Logistica: 'bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm',
+      ROLE_LOGISTICS: 'bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm',
       Cliente: 'bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm',
+      ROLE_CLIENT: 'bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm',
     };
     return roleMap[role] || 'bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm';
   }
@@ -66,10 +70,14 @@ export class UsersPage implements OnInit {
   getRoleTranslation(role: string): string {
     const translationMap: Record<string, string> = {
       Administrador: this.translate.instant('team.users.role-dictionary.administrator'),
+      ROLE_ADMIN: this.translate.instant('team.users.role-dictionary.administrator'),
       Gestor: this.translate.instant('team.users.role-dictionary.manager'),
       "Gestor Operativo": this.translate.instant('team.users.role-dictionary.manager'),
+      ROLE_USER: this.translate.instant('team.users.role-dictionary.manager'),
       Logistica: this.translate.instant('team.users.role-dictionary.logistics'),
+      ROLE_LOGISTICS: this.translate.instant('team.users.role-dictionary.logistics'),
       Cliente: this.translate.instant('team.users.role-dictionary.client'),
+      ROLE_CLIENT: this.translate.instant('team.users.role-dictionary.client'),
       Ingeniero: this.translate.instant('team.users.role-dictionary.engineer'),
     };
     return translationMap[role] || role;
