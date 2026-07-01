@@ -2,25 +2,19 @@
   <h2 mat-dialog-title>{{"team.users.send-invitation.title" | translate}}</h2>
 
   <mat-dialog-content>
-    <p class="text-gray-500 mb-4 text-sm">{{'team.users.send-invitation.credentials' | translate}}</p>
+    <p class="text-gray-500 mb-4 text-sm">{{'team.users.send-invitation.select-user' | translate}}</p>
 
     <div class="flex flex-col gap-2 mt-2">
       <mat-form-field appearance="outline" class="w-full">
-        <mat-label>{{'team.users.send-invitation.email' | translate}}</mat-label>
-        <input required formControlName="email" matInput placeholder="{{'team.users.send-invitation.email-placeholder' | translate}}" type="email">
+        <mat-label>{{'team.users.send-invitation.user-label' | translate}}</mat-label>
+        <mat-select formControlName="selectedUser">
+          @for (user of iamUsers; track user.id) {
+            <mat-option [value]="user">
+              {{ user.name || user.email }} ({{ user.email }})
+            </mat-option>
+          }
+        </mat-select>
       </mat-form-field>
-
-      <div class="flex gap-4">
-        <mat-form-field appearance="outline" class="flex-1">
-          <mat-label>{{'team.users.send-invitation.name' | translate}}</mat-label>
-          <input required formControlName="firstName" matInput placeholder="{{'team.users.send-invitation.name-placeholder' | translate}}">
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="flex-1">
-          <mat-label>{{ 'team.users.send-invitation.lastname' | translate }}</mat-label>
-          <input required formControlName="lastName" matInput placeholder="{{'team.users.send-invitation.lastname-placeholder' | translate}}">
-        </mat-form-field>
-      </div>
 
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>{{'team.users.send-invitation.rol' | translate}}</mat-label>
@@ -41,4 +35,3 @@
     </button>
   </mat-dialog-actions>
 </div>
-

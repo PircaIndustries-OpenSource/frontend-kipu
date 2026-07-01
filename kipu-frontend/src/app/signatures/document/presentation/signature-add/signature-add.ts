@@ -60,7 +60,7 @@ export class SignatureAddComponent implements OnInit {
 
   ngOnInit() {
     if (this.teamUsersStore.teamUsers().length === 0) {
-      this.teamUsersStore.loadUsers();
+      this.teamUsersStore.loadIamUsers();
     }
   }
 

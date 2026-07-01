@@ -3,6 +3,7 @@ export class MachineryEntity {
   name: string;
   status: 'IN_USE' | 'URGENT_MAINTENANCE' | 'AVAILABLE';
   assignedTo: string;
+  assignedWorkerId: string;
   registrationDate: string;
   maintenanceHours: string;
   assignmentDetail: string;
@@ -12,6 +13,7 @@ export class MachineryEntity {
     this.name = '';
     this.status = 'AVAILABLE';
     this.assignedTo = '';
+    this.assignedWorkerId = '';
     this.registrationDate = '';
     this.maintenanceHours = '';
     this.assignmentDetail = '';

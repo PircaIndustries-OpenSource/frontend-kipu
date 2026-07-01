@@ -3,6 +3,7 @@ import { TranslateModule, TranslatePipe, TranslateService } from '@ngx-translate
 import { TeamWorkersApi } from '../infrastructure/team-workers.api';
 import { TeamWorkersEntity } from '../domain/model/team-workers.entity';
 import { ProjectStateService } from '../../../shared/application/project-state.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class TeamWorkersStore {
   teamApi = inject(TeamWorkersApi);
   private translate = inject(TranslateService);
 
-  private teamWorkersSignal = signal<TeamWorkersEntity[]>([]);
+  teamWorkersSignal = signal<TeamWorkersEntity[]>([]);
   readonly teamWorkers = computed(() => this.teamWorkersSignal());
   private projectsStore = inject(ProjectStateService);
 
@@ -42,12 +43,7 @@ export class TeamWorkersStore {
       error: (err) => console.log(err)
     });
   }
-  addWorker(worker: TeamWorkersEntity) {
-    this.teamApi.postWorker(worker).subscribe({
-      next: (newWorker) => {
-        this.teamWorkersSignal.update(prev => [...prev, newWorker]);
-      },
-      error: (error) => console.log(error)
-    });
+  addWorker(worker: TeamWorkersEntity): Observable<TeamWorkersEntity> {
+    return this.teamApi.postWorker(worker);
   }
 }

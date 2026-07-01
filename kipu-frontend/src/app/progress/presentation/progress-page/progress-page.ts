@@ -94,7 +94,7 @@ export class ProgressPage implements OnInit {
   private readonly uploadService = inject(UploadService);
 
   ngOnInit(): void {
-    this.teamUsersStore.loadUsers();
+    this.teamUsersStore.loadIamUsers();
     this.store.loadProgress();
     this.store.loadPhotos();
   }

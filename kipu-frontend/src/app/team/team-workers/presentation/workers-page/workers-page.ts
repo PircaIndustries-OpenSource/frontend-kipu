@@ -1,18 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { TranslateModule, TranslatePipe } from '@ngx-translate/core'; // Añadido TranslateModule si usas directivas
+import { Component, OnInit, inject } from '@angular/core';
+import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { MatRipple } from '@angular/material/core';
 import { TeamWorkersStore } from '../../application/team-workers.store';
 import { LogisticsStore } from '../../../../logistics/application/logistics.store';
-import { inject } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { WorkersAddWorker } from '../workers-add-worker/workers-add-worker';
-
-// IMPORTS EXACTOS DEL BUSCADOR DE USERS
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatFormField, MatInput, MatLabel, MatSuffix, MatPrefix } from '@angular/material/input';
+import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-
 @Component({
   selector: 'app-workers-page',
   imports: [
@@ -20,8 +16,8 @@ import { MatIcon } from '@angular/material/icon';
     TranslatePipe,
     MatRipple,
     MatDialogModule,
-    ReactiveFormsModule, // Requerido para formControl
-    MatFormField, // Componentes de Material
+    ReactiveFormsModule,
+    MatFormField,
     MatLabel,
     MatInput,
     MatIconButton,
@@ -35,10 +31,8 @@ export class WorkersPage implements OnInit {
   logisticsStore: LogisticsStore = inject(LogisticsStore);
   dialog = inject(MatDialog);
 
-  // CONTROL REACTIVO IGUAL AL DE USERS
   searchControl = new FormControl('');
 
-  // FILTRADO REACTIVO EN TIEMPO REAL
   get filteredWorkers() {
     const query = (this.searchControl.value || '').trim().toLowerCase();
     const allWorkers = this.teamStore.teamWorkers();
@@ -52,7 +46,6 @@ export class WorkersPage implements OnInit {
     );
   }
 
-  // MÉTODO PARA LIMPIAR EL INPUT
   clearSearch() {
     this.searchControl.setValue('');
   }
@@ -93,17 +86,21 @@ export class WorkersPage implements OnInit {
       assignedTools: assignedToolNames,
     };
 
-    this.teamStore.addWorker(workerDTO);
+    this.teamStore.addWorker(workerDTO).subscribe({
+      next: (newWorker) => {
+        const today = new Date().toISOString().split('T')[0];
 
-    const today = new Date().toISOString().split('T')[0];
-
-    selectedMachineries.forEach((machinery: any) => {
-      this.logisticsStore.updateMachinery(machinery.id, {
-        status: 'IN_USE',
-        assignedTo: workerDTO.fullName,
-        registrationDate: today,
-        assignmentDetail: `Asignado al operador ${workerDTO.fullName}`,
-      });
+        selectedMachineries.forEach((machinery: any) => {
+          this.logisticsStore.updateMachinery(machinery.id, {
+            status: 'IN_USE',
+            assignedTo: newWorker.fullName,
+            assignedWorkerId: newWorker.id,
+            registrationDate: today,
+            assignmentDetail: `Asignado al operador ${newWorker.fullName}`,
+          });
+        });
+      },
+      error: (error) => console.log(error),
     });
   }
 
@@ -122,6 +119,7 @@ export class WorkersPage implements OnInit {
           this.logisticsStore.updateMachinery(machineryItem.id, {
             status: 'AVAILABLE',
             assignedTo: '',
+            assignedWorkerId: '',
             assignmentDetail: 'Maquinaria liberada por eliminación de operador',
           });
         }

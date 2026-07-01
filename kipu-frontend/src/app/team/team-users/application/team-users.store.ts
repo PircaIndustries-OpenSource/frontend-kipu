@@ -66,39 +66,38 @@ export class TeamUsersStore {
     effect(() => {
       const activeId = this.projectStateService.currentProjectId();
       if (activeId) {
-        this.loadUsers(activeId);
+        this.loadIamUsers();
       } else {
         this.teamUsersSignal.set([]);
       }
     });
   }
 
-  loadUsers(projectId?: string) {
-    if (projectId) {
-      this.teamApi.getAllUsers(projectId)
-        .pipe(
-          switchMap(allUsers =>
-            this.teamApi.getCurrentUser().pipe(
-              map(currentUser => ({ allUsers, currentUser }))
-            )
+  loadIamUsers() {
+    this.teamApi.getAllIamUsers()
+      .pipe(
+        switchMap(allUsers =>
+          this.teamApi.getCurrentUser().pipe(
+            map(currentUser => ({ allUsers, currentUser }))
           )
         )
-        .subscribe({
-          next: ({ allUsers, currentUser }) => {
-            if (!currentUser) {
-              this.teamUsersSignal.set(allUsers);
-              return;
-            }
-            const currentUserEntity = TeamUsersAssembler.toEntityFromIdentity(currentUser);
-            this.currentUserSignal.set(currentUserEntity);
-            
-            // Filtrar el usuario actual de allUsers ya que la vista lo renderiza manualmente al inicio
-            const filteredAllUsers = allUsers.filter(user => user.email !== currentUserEntity.email);
-            this.teamUsersSignal.set(filteredAllUsers);
-          },
-          error: (err) => console.error('Error loading users:', err)
-        });
-    }
+      )
+      .subscribe({
+        next: ({ allUsers, currentUser }) => {
+          if (!currentUser) {
+            this.teamUsersSignal.set(allUsers.map(u => TeamUsersAssembler.toEntityFromIdentity(u)));
+            return;
+          }
+          const currentUserEntity = TeamUsersAssembler.toEntityFromIdentity(currentUser);
+          this.currentUserSignal.set(currentUserEntity);
+
+          const filteredAllUsers = allUsers
+            .map(u => TeamUsersAssembler.toEntityFromIdentity(u))
+            .filter(user => user.email !== currentUserEntity.email);
+          this.teamUsersSignal.set(filteredAllUsers);
+        },
+        error: (err) => console.error('Error loading users:', err)
+      });
   }
 
   updateSearchTerm(term: string) {
@@ -112,15 +111,18 @@ export class TeamUsersStore {
   inviteUser(userData: any) {
     const projectId = this.projectStateService.currentProjectId() || '1';
 
-    const invitationToSave = {
-      ...userData,
+    const teamUserToSave = {
+      userId: userData.userId,
+      fullName: userData.fullName,
+      email: userData.email,
+      role: userData.role,
       projectId: projectId,
     };
 
-    this.teamApi.postInvitation(invitationToSave).subscribe({
-      next: (newInvitation) => {
-        // Invitación enviada exitosamente.
-        console.log('Invitación enviada', newInvitation);
+    this.teamApi.createTeamUser(teamUserToSave).subscribe({
+      next: (newUser) => {
+        const entity = TeamUsersAssembler.toEntityFromResource(newUser);
+        this.teamUsersSignal.update((prev) => [...prev, entity]);
       },
       error: (err) => console.error('Error al invitar:', err),
     });
@@ -129,10 +131,8 @@ export class TeamUsersStore {
   toggleUserStatus(user: TeamUsersEntity) {
     const updatedUser = { ...user, isActive: !user.isActive };
 
-    // 1. Avisamos al servidor
     this.teamApi.updateUser(updatedUser).subscribe({
       next: (savedUser) => {
-        // 2. Actualizamos la Signal de forma inmutable
         this.teamUsersSignal.update((users) =>
           users.map((u) => (u.id === savedUser.id ? savedUser : u)),
         );

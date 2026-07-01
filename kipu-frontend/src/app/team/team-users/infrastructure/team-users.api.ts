@@ -19,13 +19,12 @@ import { Identity } from '../../../identity/domain/identity.model';
 export class TeamUsersApi {
   http: HttpClient = inject(HttpClient);
   apiBaseUrl = environment.kipuApiBaseUrl;
-  teamUsersEndpoint = environment.kipuApiTeamUsersEndpointPath;
-  teamUsersUrl = `${this.apiBaseUrl}${this.teamUsersEndpoint}`;
 
-  getAllUsers(projectId: string): Observable<TeamUsersEntity[]> {
-    return this.http
-      .get<TeamUsersResponse>(`${this.teamUsersUrl}?projectId=${projectId}`)
-      .pipe(map((response) => TeamUsersAssembler.toEntitiesFromResponse(response)));
+  iamUsersUrl = `${this.apiBaseUrl}${environment.kipuApiIamUsersEndpointPath}`;
+  teamUsersUrl = `${this.apiBaseUrl}${environment.kipuApiTeamUsersEndpointPath}`;
+
+  getAllIamUsers(): Observable<Identity[]> {
+    return this.http.get<Identity[]>(this.iamUsersUrl);
   }
 
   getCurrentUser(): Observable<Identity | null> {
@@ -33,20 +32,18 @@ export class TeamUsersApi {
 
     if (storedUser) {
       const user = JSON.parse(storedUser);
-      console.log('✅ Current user obtenido de localStorage:', user);
       return of(user);
     }
 
-    console.warn('⚠️ No hay usuario en localStorage');
     return of(null);
   }
 
-  postUser(user: TeamUsersEntity): Observable<TeamUsersEntity> {
-    return this.http.post<TeamUsersEntity>(this.teamUsersUrl, user);
+  createTeamUser(user: any): Observable<any> {
+    return this.http.post<any>(this.teamUsersUrl, user);
   }
 
   updateUser(user: TeamUsersEntity): Observable<TeamUsersEntity> {
-    const url = `${this.teamUsersUrl}/${user.id}`;
+    const url = `${this.iamUsersUrl}/${user.id}`;
     return this.http.put<TeamUsersEntity>(url, user);
   }
 
@@ -74,4 +71,3 @@ export class TeamUsersApi {
     return this.http.put<any>(`${this.invitationsUrl}/${id}/reject`, {});
   }
 }
-

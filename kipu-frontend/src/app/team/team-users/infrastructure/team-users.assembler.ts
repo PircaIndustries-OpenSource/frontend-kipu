@@ -6,6 +6,7 @@ export class TeamUsersAssembler {
   static toEntityFromResource(resource: any): TeamUsersEntity{
     return {
       id: resource.id,
+      userId: resource.userId,
       fullName: resource.fullName || resource.username || 'Usuario Invitado',
       email: resource.email,
       isActive: resource.isActive !== undefined ? resource.isActive : true,
@@ -27,6 +28,7 @@ export class TeamUsersAssembler {
 
     return {
       id: identity.id!,
+      userId: Number(identity.id!) || 0,
       fullName: identity.name!,
       email: identity.email,
       isActive: true,

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -39,7 +39,7 @@ import { TeamWorkersStore } from '../../../../team/team-workers/application/team
   ],
   templateUrl: './machinery-assign-dialog.html',
 })
-export class MachineryAssignDialog {
+export class MachineryAssignDialog implements OnInit {
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<MachineryAssignDialog>);
   workersStore = inject(TeamWorkersStore);
@@ -62,6 +62,7 @@ export class MachineryAssignDialog {
     this.dialogRef.close({
       workerDni: this.assignForm.value.workerDni,
       workerName: worker?.fullName ?? '',
+      workerId: worker?.id ?? '',
     });
   }
 }

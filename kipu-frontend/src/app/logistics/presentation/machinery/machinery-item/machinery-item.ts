@@ -45,6 +45,7 @@ export class MachineryItem {
       if (result) {
         this.logisticsStore.updateMachinery(this.item().id, {
           assignedTo: result.workerName || result.workerDni,
+          assignedWorkerId: result.workerId,
           status: 'IN_USE',
         });
       }
@@ -54,6 +55,7 @@ export class MachineryItem {
   registerReturn() {
     this.logisticsStore.updateMachinery(this.item().id, {
       assignedTo: '',
+      assignedWorkerId: '',
       status: 'AVAILABLE',
     });
   }

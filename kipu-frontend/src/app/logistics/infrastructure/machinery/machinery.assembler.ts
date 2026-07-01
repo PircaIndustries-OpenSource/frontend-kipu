@@ -8,6 +8,7 @@ export class MachineryAssembler {
       name: resource.name,
       status: resource.status,
       assignedTo: resource.assignedTo,
+      assignedWorkerId: '',
       registrationDate: resource.registrationDate,
       maintenanceHours: resource.maintenanceHours,
       assignmentDetail: resource.assignmentDetail,
