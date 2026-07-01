@@ -1,4 +1,4 @@
-import { computed, Injectable, signal, inject } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { Identity } from '../domain/identity.model';
 
 @Injectable({

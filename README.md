@@ -2,15 +2,15 @@
 
 **[Kipu](https://github.com/kipu-os) is a collaborative, open-source Construction Management Platform designed to streamline project planning, execution, and monitoring.**
 
-This repository contains the complete frontend application for Kipu, built with Angular and integrated with .NET backend services for real-time data management.
+This repository contains the complete frontend web application for Kipu, built with Angular. It is designed to connect to the Kipu REST API and features a mock server for local development.
+
+---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- **Node.js** 18.x or higher
-- **Angular CLI** 18.x or higher
-- **.NET 8 SDK** (for backend API)
-- **MySQL** or **MariaDB** (for database)
+- **Node.js** 20.x or higher
+- **npm** 11.x or higher
 
 ### Installation
 
@@ -25,77 +25,101 @@ This repository contains the complete frontend application for Kipu, built with 
     npm install
     ```
 
-3.  **Configure Environment Variables**
-    Copy `.env.example` to `.env` and update with your backend API URL:
-    ```bash
-    cp .env.example .env
-    ```
+3.  **Run with Mock API (Local Development)**
+    To run the frontend locally without needing a live backend, you can run the mock API alongside the Angular dev server.
     
-    In `.env` set:
-    ```env
-    API_URL=http://localhost:5000/api
-    ```
+    Open two terminals inside the `kipu-frontend` directory:
+    
+    *   **Terminal 1 (Mock API Server):**
+        ```bash
+        npm run mock
+        ```
+        *Starts a json-server on `http://localhost:3000` with mock endpoints.*
 
-4.  **Run the Application**
-    ```bash
-    ng serve
-    ```
+    *   **Terminal 2 (Angular Dev Server):**
+        ```bash
+        npm start
+        ```
+        *Starts Angular at `http://localhost:4200` and proxies API requests to the mock server.*
 
-    Open [http://localhost:4200](http://localhost:4200) in your browser.
-
-## 🛠️ Development
-
-### Development Commands
-
-| Command | Description |
-|---------|-------------|
-| `ng serve` | Start development server with hot reload |
-| `ng build` | Build for production |
-| `ng test` | Run unit tests |
-| `ng e2e` | Run end-to-end tests |
-
-### Running the Backend
-Ensure the .NET backend is running:
-
-```bash
-cd "E:\Git projects\Open Source\backend-kipu\backend"
-.\mvnw spring-boot:run
-```
-
-## 🏗️ Architecture
-
-### Tech Stack
-- **Frontend**: Angular 20
-- **UI Components**: Angular Material
-- **State Management**: NgRx
-- **i18n**: ngx-translate
-- **Charts**: ngx-charts, Chart.js
-- **Testing**: Jasmine, Karma, Cypress
-
-### Folder Structure
-```
-kipu-frontend/
-├── src/
-│   ├── app/
-│   │   ├── core/          # Core services, guards, interceptors
-│   │   ├── shared/        # Reusable components and pipes
-│   │   ├── identity/      # Authentication and user management
-│   │   ├── projects/      # Project management module
-│   │   ├── construction/  # Construction monitoring modules
-│   │   └── iot-monitoring/ # IoT device management
-│   └── environments/      # Environment-specific configurations
-├── public/              # Static assets and translations
-└── translations/        # Additional i18n files
-```
-
-## 👥 Contributing
-
-Contributions are welcome! Please read our [CONTRIBUTING.md](CONTRIBUTING.md) (if available) for detailed guidelines.
-
-## 📝 License
-
-This project is open source software licensed under the [MIT License](LICENSE).
+4.  **Connect to a Live Deployed Backend**
+    To test or run locally against a live backend (like `https://kipu-api-os.duckdns.org`), you can update the API hosts in [environment.development.ts](file:///e:/Git%20projects/Open%20Source/frontend-kipu/kipu-frontend/src/environments/environment.development.ts).
 
 ---
 
-**Built with ❤️ for the Construction Community**
+## 🛠️ Commands
+
+| Command | Description |
+|---------|-------------|
+| `npm start` | Starts the local dev server on `http://localhost:4200` |
+| `npm run mock` | Starts the `json-server` mock database on `http://localhost:3000` |
+| `npm run build` | Compiles the production build into the `dist/` directory |
+| `npm test` | Runs unit tests using Vitest |
+| `npm run deploy` | Builds the project for production and deploys to Firebase Hosting |
+
+---
+
+## 📁 Environment Configuration
+
+The application uses Angular environment files for configuration:
+
+-   **Development:** [environment.development.ts](file:///e:/Git%20projects/Open%20Source/frontend-kipu/kipu-frontend/src/environments/environment.development.ts)
+    -   Configured to use `/api/v1` base path which proxies requests to the local mock/Spring Boot server.
+-   **Production:** [environment.ts](file:///e:/Git%20projects/Open%20Source/frontend-kipu/kipu-frontend/src/environments/environment.ts)
+    -   Configured to point to the production backend deployment: `https://kipu-api-os.duckdns.org/api/v1`.
+
+---
+
+## 🏗️ Architecture & Tech Stack
+
+### Technology Stack
+-   **Framework**: Angular 21 (with Standalone Components)
+-   **Styling**: TailwindCSS & PostCSS
+-   **UI Libraries**: PrimeNG & Angular Material
+-   **Testing**: Vitest & JSDOM
+
+### Folder Structure
+```text
+kipu-frontend/
+├── mock/                  # json-server configurations and mock database
+├── public/                # Static assets and i18n translation bundles
+├── src/
+│   ├── app/
+│   │   ├── budget/        # Budgeting and financial management modules
+│   │   ├── identity/      # Authentication, registration, and user profiles
+│   │   ├── iot-monitoring/# Sensor metrics telemetry and alerts
+│   │   ├── logistics/     # Material catalogs, inventory, and supplier offers
+│   │   ├── progress/      # Project progress tracking and Gantt charts
+│   │   ├── projects/      # Core project administration and configuration
+│   │   ├── signatures/    # Document handling and electronic sign-offs
+│   │   └── shared/        # Reusable pipes, directives, and components
+│   └── environments/      # Environment variables (dev / prod)
+├── proxy.conf.json        # Decouples local API requests during development
+└── firebase.json          # Deployment configuration for Firebase Hosting
+```
+
+---
+
+## 🚀 Deployment to Firebase Hosting
+
+To deploy updates to the production hosting domain (`https://kipu-frontend-42d0d.web.app`):
+
+1.  Make sure you are logged in to the Firebase CLI:
+    ```bash
+    npx firebase login
+    ```
+2.  Deploy using the unified deployment script:
+    ```bash
+    npm run deploy
+    ```
+    *This will compile the production bundle utilizing the production endpoints and push the build to Firebase Hosting.*
+
+---
+
+## 👥 Contributing
+
+Contributions are welcome! Please follow standard Angular style guidelines and ensure all tests pass before proposing a pull request.
+
+## 📝 License
+
+This project is open-source software licensed under the [MIT License](LICENSE).
