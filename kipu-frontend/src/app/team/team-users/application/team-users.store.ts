@@ -1,11 +1,10 @@
 import { computed, inject, Injectable, signal, effect } from '@angular/core';
+import { Observable } from 'rxjs';
 import { TeamUsersEntity } from '../domain/model/team-users.entity';
-import { TeamWorkersEntity } from '../../team-workers/domain/model/team-workers.entity';
 import { TeamUsersApi } from '../infrastructure/team-users.api';
-import { TranslateModule, TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Identity } from '../../../identity/domain/identity.model';
 import { TeamUsersAssembler } from '../infrastructure/team-users.assembler';
-import { map, switchMap } from 'rxjs';
 import { ProjectStateService } from '../../../shared/application/project-state.service';
 
 
@@ -63,41 +62,37 @@ export class TeamUsersStore {
   }
 
   constructor() {
+    const stored = localStorage.getItem('currentUser');
+    if (stored) {
+      const identity = JSON.parse(stored);
+      this.currentUserSignal.set(TeamUsersAssembler.toEntityFromIdentity(identity));
+    }
+
     effect(() => {
       const activeId = this.projectStateService.currentProjectId();
       if (activeId) {
-        this.loadIamUsers();
+        this.loadTeamUsers(activeId);
       } else {
         this.teamUsersSignal.set([]);
       }
     });
   }
 
-  loadIamUsers() {
-    this.teamApi.getAllIamUsers()
-      .pipe(
-        switchMap(allUsers =>
-          this.teamApi.getCurrentUser().pipe(
-            map(currentUser => ({ allUsers, currentUser }))
-          )
-        )
-      )
-      .subscribe({
-        next: ({ allUsers, currentUser }) => {
-          if (!currentUser) {
-            this.teamUsersSignal.set(allUsers.map(u => TeamUsersAssembler.toEntityFromIdentity(u)));
-            return;
-          }
-          const currentUserEntity = TeamUsersAssembler.toEntityFromIdentity(currentUser);
-          this.currentUserSignal.set(currentUserEntity);
+  loadTeamUsers(projectId: string) {
+    this.teamApi.getTeamUsersByProject(projectId).subscribe({
+      next: (users) => {
+        const currentUserEmail = this.currentUser().email;
+        const filtered = currentUserEmail
+          ? users.filter((u) => u.email !== currentUserEmail)
+          : users;
+        this.teamUsersSignal.set(filtered);
+      },
+      error: (err) => console.error('Error loading team users:', err),
+    });
+  }
 
-          const filteredAllUsers = allUsers
-            .map(u => TeamUsersAssembler.toEntityFromIdentity(u))
-            .filter(user => user.email !== currentUserEntity.email);
-          this.teamUsersSignal.set(filteredAllUsers);
-        },
-        error: (err) => console.error('Error loading users:', err)
-      });
+  loadIamUsers(): Observable<Identity[]> {
+    return this.teamApi.getAllIamUsers();
   }
 
   updateSearchTerm(term: string) {
@@ -129,9 +124,11 @@ export class TeamUsersStore {
   }
 
   toggleUserStatus(user: TeamUsersEntity) {
-    const updatedUser = { ...user, isActive: !user.isActive };
+    const request = user.isActive
+      ? this.teamApi.deactivateTeamUser(user.id)
+      : this.teamApi.activateTeamUser(user.id);
 
-    this.teamApi.updateUser(updatedUser).subscribe({
+    request.subscribe({
       next: (savedUser) => {
         this.teamUsersSignal.update((users) =>
           users.map((u) => (u.id === savedUser.id ? savedUser : u)),

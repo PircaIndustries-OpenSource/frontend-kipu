@@ -695,13 +695,8 @@
       },
       "send-invitation": {
         "title": "Invite new user",
-        "credentials": "An email with the system access credentials will be sent.",
-        "email": "EMAIL ADDRESS",
-        "email-placeholder": "user@company.com",
-        "name": "Name",
-        "name-placeholder": "e.g., 'Juan'",
-        "lastname": "Lastname",
-        "lastname-placeholder": "e.g., 'Perez'",
+        "select-user": "Select a registered user",
+        "user-label": "USER",
         "rol": "Role to assign",
         "btn-cancel": "Cancel",
         "btn-invite": "Send Invitation"

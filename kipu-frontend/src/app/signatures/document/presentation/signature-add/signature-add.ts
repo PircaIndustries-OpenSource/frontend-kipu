@@ -1,39 +1,61 @@
-import { Component, inject, OnInit, HostListener } from '@angular/core';
-import { MatDialogActions, MatDialogContent, MatDialogRef } from '@angular/material/dialog';
-import { TranslatePipe } from '@ngx-translate/core';
-import { MatError } from '@angular/material/input';
-import { MatIcon } from '@angular/material/icon';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
-import { CommonModule } from '@angular/common';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { FormsModule } from '@angular/forms';
-import { DocumentsStore } from '../../application/document.store';
+import {
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { TranslateModule } from '@ngx-translate/core';
 import { TeamUsersStore } from '../../../../team/team-users/application/team-users.store';
-import { DocumentEntity, UserDocument } from '../../domain/model/document.entity';
+import { MatIconModule } from '@angular/material/icon';
+import { NgClass } from '@angular/common';
+
+export interface UserDocument {
+  id: string;
+  fullName: string;
+  signedAt: Date | undefined;
+}
 
 @Component({
   selector: 'app-signature-add',
-  standalone: true,
   imports: [
-    CommonModule,
-    TranslatePipe,
-    MatIcon,
-    ReactiveFormsModule,
-    MatCheckboxModule,
-    FormsModule,
-    MatDialogContent,
+    MatButtonModule,
     MatDialogActions,
-    MatButton,
+    MatDialogClose,
+    MatDialogContent,
+    MatDialogTitle,
+    MatFormFieldModule,
+    MatInputModule,
+    MatLabel,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    FormsModule,
+    TranslateModule,
+    MatIconModule,
+    NgClass,
+    MatCheckboxModule,
   ],
   templateUrl: './signature-add.html',
-  styleUrl: './signature-add.css',
 })
 export class SignatureAddComponent implements OnInit {
-  private dialogRef = inject(MatDialogRef<SignatureAddComponent>);
-  private documentsStore = inject(DocumentsStore);
-  private teamUsersStore = inject(TeamUsersStore);
   private fb = inject(FormBuilder);
+  private dialogRef = inject(MatDialogRef<SignatureAddComponent>);
+  protected teamUsersStore = inject(TeamUsersStore);
 
   documentForm: FormGroup = this.fb.group({
     documentType: ['', Validators.required],
@@ -58,11 +80,23 @@ export class SignatureAddComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
-    if (this.teamUsersStore.teamUsers().length === 0) {
-      this.teamUsersStore.loadIamUsers();
-    }
+  get documentTypeControl() {
+    return this.documentForm.get('documentType');
   }
+
+  get deadlineControl() {
+    return this.documentForm.get('deadline');
+  }
+
+  get selectedUsersControl() {
+    return this.documentForm.get('selectedUsers');
+  }
+
+  get attachedFileControl() {
+    return this.documentForm.get('attachedFile');
+  }
+
+  ngOnInit() {}
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
@@ -72,59 +106,97 @@ export class SignatureAddComponent implements OnInit {
     }
   }
 
-  toggleUserDropdown(event?: MouseEvent) {
-    if (event) {
-      event.stopPropagation();
-    }
+  toggleUserDropdown(event?: Event) {
+    if (event) event.stopPropagation();
     this.showUserDropdown = !this.showUserDropdown;
-    if (this.showUserDropdown) {
-      this.userSearchTerm = '';
-    }
-  }
-
-  toggleUserSelection(userId: string) {
-    const currentValue = this.documentForm.get('selectedUsers')?.value || [];
-    if (currentValue.includes(userId)) {
-      this.documentForm
-        .get('selectedUsers')
-        ?.setValue(currentValue.filter((id: string) => id !== userId));
-    } else {
-      this.documentForm.get('selectedUsers')?.setValue([...currentValue, userId]);
-    }
-    this.documentForm.get('selectedUsers')?.markAsTouched();
   }
 
   isUserSelected(userId: string): boolean {
-    return (this.documentForm.get('selectedUsers')?.value || []).includes(userId);
+    const selected = this.documentForm.get('selectedUsers')?.value || [];
+    return selected.includes(userId);
   }
 
-  removeUser(userId: string, event: Event) {
-    event.stopPropagation();
-    this.toggleUserSelection(userId);
+  toggleUserSelection(userId: string) {
+    const selected = this.documentForm.get('selectedUsers')?.value || [];
+    const index = selected.indexOf(userId);
+    if (index > -1) {
+      selected.splice(index, 1);
+    } else {
+      selected.push(userId);
+    }
+    this.documentForm.get('selectedUsers')?.setValue([...selected]);
   }
 
-  getUserName(userId: string): string {
-    const user = this.allUsers.find((u) => u.id === userId);
-    return user?.fullName || userId;
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.documentForm.patchValue({ attachedFile: input.files[0] });
+    }
+  }
+
+  removeUser(userId: string, event?: Event) {
+    if (event) event.stopPropagation();
+    const selected = this.documentForm.get('selectedUsers')?.value || [];
+    const index = selected.indexOf(userId);
+    if (index > -1) {
+      selected.splice(index, 1);
+      this.documentForm.get('selectedUsers')?.setValue(selected);
+    }
   }
 
   getInitials(fullName: string): string {
-    if (!fullName) return '?';
-    const parts = fullName.trim().split(' ');
-    if (parts.length === 1) return parts[0][0].toUpperCase();
-    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    if (!fullName || fullName.trim() === '') return '?';
+    const trimmed = fullName.trim();
+    const spaceIndex = trimmed.indexOf(' ');
+    if (spaceIndex === -1) return trimmed[0].toUpperCase();
+    return (trimmed[0] + trimmed[spaceIndex + 1]).toUpperCase();
   }
 
   getRoleTranslation(role: string): string {
     const roleMap: Record<string, string> = {
       Administrador: 'Administrador',
+      ROLE_ADMIN: 'Administrador',
       Gestor: 'Gestor',
       'Gestor Operativo': 'Gestor',
+      ROLE_USER: 'Gestor',
       Logistica: 'Logística',
+      ROLE_LOGISTICS: 'Logística',
       Cliente: 'Cliente',
+      ROLE_CLIENT: 'Cliente',
       Ingeniero: 'Ingeniero',
     };
     return roleMap[role] || role;
+  }
+
+  selectUser(user: any) {
+    const selected = this.documentForm.get('selectedUsers')?.value || [];
+    if (!selected.includes(user.id)) {
+      selected.push(user.id);
+      this.documentForm.get('selectedUsers')?.setValue(selected);
+    }
+    this.showUserDropdown = false;
+    this.userSearchTerm = '';
+  }
+
+  getUserName(userId: string): string {
+    const user = this.teamUsersStore.teamUsers().find((u) => u.id === userId);
+    return user?.fullName || 'Usuario';
+  }
+
+  getRoleBadgeClass(role: string): string {
+    const roleMap: Record<string, string> = {
+      Administrador: 'bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm',
+      ROLE_ADMIN: 'bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm',
+      Gestor: 'bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm',
+      'Gestor Operativo': 'bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm',
+      ROLE_USER: 'bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm',
+      Logistica: 'bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm',
+      ROLE_LOGISTICS: 'bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm',
+      Cliente: 'bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm',
+      ROLE_CLIENT: 'bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm',
+      Ingeniero: 'bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm',
+    };
+    return roleMap[role] || 'bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm';
   }
 
   onConfirm() {
@@ -147,61 +219,18 @@ export class SignatureAddComponent implements OnInit {
       };
     });
 
-    const currentUserAlreadyAdded = assignedUsers.some((u) => u.id === currentUserId);
+    const includeCurrentUser = [...assignedUsers, { id: currentUserId, fullName: currentUserName, signedAt: undefined }];
 
-    if (!currentUserAlreadyAdded && currentUserId) {
-      assignedUsers.unshift({
-        id: currentUserId,
-        fullName: currentUserName,
-        signedAt: undefined,
-      });
-    }
+    const documentData = {
+      deadline: formValue.deadline,
+      assignedUsers: includeCurrentUser,
+      attachedFile: formValue.attachedFile,
+    };
 
-    const newDocument = new DocumentEntity();
-    newDocument.id = `doc-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`;
-    newDocument.type = formValue.documentType;
-    newDocument.deadLine = new Date(formValue.deadline);
-    newDocument.isSigned = false;
-    newDocument.digitalSignatureToken = null;
-    newDocument.assignedTo = assignedUsers;
-
-    console.log(' Documento creado:', newDocument);
-    console.log(' Fecha límite:', newDocument.deadLine);
-
-    this.dialogRef.close({
-      success: true,
-      document: newDocument,
-    });
+    this.dialogRef.close(documentData);
   }
 
-  cancel() {
-    this.dialogRef.close({ success: false });
-  }
-
-  get documentTypeControl() {
-    return this.documentForm.get('documentType');
-  }
-
-  get deadlineControl() {
-    return this.documentForm.get('deadline');
-  }
-
-  get selectedUsersControl() {
-    return this.documentForm.get('selectedUsers');
-  }
-
-  get attachedFileControl() {
-    return this.documentForm.get('attachedFile');
-  }
-
-  onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-      this.documentForm.get('attachedFile')?.setValue(file.name);
-    } else {
-      this.documentForm.get('attachedFile')?.setValue('');
-    }
-    this.documentForm.get('attachedFile')?.markAsTouched();
+  onCancel() {
+    this.dialogRef.close();
   }
 }

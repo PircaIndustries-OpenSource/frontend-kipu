@@ -38,8 +38,6 @@ export class UsersPage implements OnInit {
   currentUser = this.teamStore.currentUser;
   searchControl = new FormControl('');
   ngOnInit() {
-    this.teamStore.loadIamUsers();
-
     this.searchControl.valueChanges.subscribe((value) => {
       this.teamStore.updateSearchTerm(value || '');
     });

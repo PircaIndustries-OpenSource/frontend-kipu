@@ -58,7 +58,7 @@ export class BudgetPage implements OnInit {
 
   ngOnInit() {
     this.store.loadBudgetItems();
-    this.teamUsersStore.loadIamUsers();
+
     this.progressStore.loadProgress(); // Load progress entries to populate dropdowns
   }
 

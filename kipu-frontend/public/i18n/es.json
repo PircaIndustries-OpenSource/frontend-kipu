@@ -695,13 +695,8 @@
       },
       "send-invitation": {
         "title": "Invitar nuevo usuario",
-        "credentials": "Se enviará un correo con las credenciales de acceso al sistema.",
-        "email": "CORREO ELECTRÓNICO",
-        "email-placeholder": "usuario@compañia.com",
-        "name": "Nombre",
-        "name-placeholder": "Ejm. 'Juan'",
-        "lastname": "Apellido",
-        "lastname-placeholder": "Ejm. 'Perez'",
+        "select-user": "Selecciona un usuario registrado",
+        "user-label": "USUARIO",
         "rol": "Rol a asignar",
         "btn-cancel": "Cancelar",
         "btn-invite": "Enviar Invitación"

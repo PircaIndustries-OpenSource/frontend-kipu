@@ -17,8 +17,12 @@ export class TeamWorkersApi {
   teamWorkersUrl = `${this.apiBaseUrl}${this.teamWorkersEndpoint}`;
 
   getAllWorkers(): Observable<TeamWorkersEntity[]> {
+    const projectId = localStorage.getItem('currentProjectId');
+    const url = projectId
+      ? `${this.teamWorkersUrl}?projectId=${projectId}`
+      : this.teamWorkersUrl;
     return this.http
-      .get<TeamWorkersResponse>(this.teamWorkersUrl)
+      .get<TeamWorkersResponse>(url)
       .pipe(map((response) => TeamWorkersAssembler.toEntitiesFromResponse(response)));
   }
 
