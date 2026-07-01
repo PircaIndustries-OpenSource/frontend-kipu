@@ -97,8 +97,9 @@ export class LogisticsApi {
       .pipe(map((response) => RequestAssembler.toEntityFromResource(response)));
   }
   postMachinery(machinery: MachineryEntity): Observable<MachineryEntity> {
+    const projectId = localStorage.getItem('currentProjectId');
     return this.http
-      .post<MachineryResource>(`${this.apiBaseUrl}${this.machineryEndpoint}`, machinery)
+      .post<MachineryResource>(`${this.apiBaseUrl}${this.machineryEndpoint}?projectId=${projectId}`, machinery)
       .pipe(map((response) => MachineryAssembler.toEntityFromResource(response)));
   }
   postWaste(waste: WasteEntity): Observable<WasteEntity> {
