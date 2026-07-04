@@ -10,6 +10,7 @@ import { TeamUsersApi } from '../../infrastructure/team-users.api';
 import { Identity } from '../../../../identity/domain/identity.model';
 import { CommonModule } from '@angular/common';
 import { AuthStore } from '../../../../identity/application/auth.store';
+import { ProjectStateService } from '../../../../shared/application/project-state.service';
 
 @Component({
   selector: 'app-users-send-invitation',
@@ -31,6 +32,7 @@ export class UsersSendInvitation implements OnInit {
   private dialogRef = inject(MatDialogRef<UsersSendInvitation>);
   private teamApi = inject(TeamUsersApi);
   private authStore = inject(AuthStore);
+  private projectStateService = inject(ProjectStateService);
 
   iamUsers: Identity[] = [];
   roles = ['Administrador', 'Logística', 'Gestor Operativo'];
@@ -42,11 +44,28 @@ export class UsersSendInvitation implements OnInit {
 
   ngOnInit() {
     const currentEmail = this.authStore.currentUser()?.email || '';
-    this.teamApi.getAllIamUsers().subscribe({
-      next: (users) => {
-        this.iamUsers = users.filter((u) => u.email !== currentEmail);
+    const projectId = this.projectStateService.currentProjectId() || '';
+
+    this.teamApi.getTeamUsersByProject(projectId).subscribe({
+      next: (teamUsers) => {
+        const teamEmails = teamUsers.map((u) => u.email);
+        this.teamApi.getAllIamUsers().subscribe({
+          next: (users) => {
+            this.iamUsers = users.filter(
+              (u) => u.email !== currentEmail && !teamEmails.includes(u.email)
+            );
+          },
+          error: (err) => console.error('Error loading IAM users', err),
+        });
       },
-      error: (err) => console.error('Error loading IAM users', err),
+      error: () => {
+        this.teamApi.getAllIamUsers().subscribe({
+          next: (users) => {
+            this.iamUsers = users.filter((u) => u.email !== currentEmail);
+          },
+          error: (err) => console.error('Error loading IAM users', err),
+        });
+      },
     });
   }
 

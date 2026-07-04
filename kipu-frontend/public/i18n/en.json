@@ -678,7 +678,8 @@
       "title": "User Management",
       "stats": {
         "active": "ACTIVE USERS",
-        "managers": "MANAGERS",
+        "administrators": "ADMINISTRATORS",
+        "managers": "OPERATIONS MANAGERS",
         "logistics": "LOGISTICS TEAM",
         "clients": "CLIENTS / INVESTORS"
       },
@@ -691,12 +692,16 @@
         "user-profile-you": "You",
         "btn-action": "Disable",
         "btn-actions": "Actions",
+        "btn-change-role": "Change Role",
+        "btn-delete": "Delete",
         "btn-action-done": "Disabled",
         "input-placeholder": "Name, email or role...",
         "search-user": "Search user",
         "user-count": "users",
         "no-user-found": "No users were found with"
       },
+      "pending-invitations": "Pending invitations",
+      "no-pending-invitations": "No pending invitations",
       "btn-invite": "Send Invitation",
       "role-dictionary": {
         "title": "Role Dictionary",

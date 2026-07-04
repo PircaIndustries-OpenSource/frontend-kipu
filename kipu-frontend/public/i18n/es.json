@@ -678,7 +678,8 @@
       "title": "Gestión de Usuarios",
       "stats": {
         "active": "USUARIOS ACTIVOS",
-        "managers": "GESTORES",
+        "administrators": "ADMINISTRADORES",
+        "managers": "GESTORES OPERATIVOS",
         "logistics": "EQUIPO DE LOGÍSTICA",
         "clients": "CLIENTES / INVERSORES"
       },
@@ -691,12 +692,16 @@
         "user-profile-you": "Tú",
         "btn-action": "Deshabilitar",
         "btn-actions": "Acciones",
+        "btn-change-role": "Cambiar Rol",
+        "btn-delete": "Eliminar",
         "btn-action-done": "Deshabilitado",
         "input-placeholder": "Nombre, correo o rol...",
         "search-user": "Buscar usuario",
         "user-count": "usuarios",
         "no-user-found": "No se encontraron usuarios con"
       },
+      "pending-invitations": "Invitaciones pendientes",
+      "no-pending-invitations": "Sin invitaciones pendientes",
       "btn-invite": "Enviar Invitación",
       "role-dictionary": {
         "title": "Diccionario de Roles",

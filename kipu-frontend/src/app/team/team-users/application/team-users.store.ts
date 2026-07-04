@@ -24,24 +24,27 @@ export class TeamUsersStore {
   readonly filteredUsers = computed(() => {
     const users = this.teamUsers();
     const searchTeam = this.searchTermSignal().toLowerCase().trim();
-
-    if (!searchTeam || searchTeam === '' || searchTeam === null || searchTeam === undefined)
-      return users;
-
+    if (!searchTeam) return users;
     return users.filter(
       (user) =>
         user.fullName.toLowerCase().includes(searchTeam) ||
-        user.email.toLowerCase().includes(searchTeam) ||
-        this.getRoleTranslation(user.role).toLowerCase().includes(searchTeam) ||
-        (user.isActive ? 'activo' : 'inactivo').includes(searchTeam),
+        user.email.toLowerCase().includes(searchTeam)
     );
   });
-  readonly totalActiveUsers = computed(
-    () => this.teamUsers().filter((user) => user.isActive).length,
-  );
+  readonly totalActiveUsers = computed(() => {
+    const teamCount = this.teamUsers().filter((u) => u.isActive).length;
+    return teamCount + (this.currentUser().isActive ? 1 : 0);
+  });
+  readonly totalAdmins = computed(() => {
+    const teamCount = this.teamUsers().filter((u) => u.isActive && u.role == 'Administrador').length;
+    return teamCount + (this.currentUser().isActive && this.currentUser().role == 'Administrador' ? 1 : 0);
+  });
   readonly totalManagers = computed(
     () => this.teamUsers().filter((user) => user.isActive && user.role == 'Gestor Operativo').length,
   );
+  readonly displayUserCount = computed(() => this.teamUsers().length + 1);
+  readonly displayFilteredCount = computed(() => this.filteredUsers().length + 1);
+
   readonly totalLogistics = computed(
     () => this.teamUsers().filter((user) => user.isActive && user.role == 'Logística').length,
   );
@@ -147,6 +150,26 @@ export class TeamUsersStore {
         );
       },
       error: (err) => console.error('Error al actualizar estado:', err),
+    });
+  }
+
+  updateUserRole(user: TeamUsersEntity, newRole: string) {
+    this.teamApi.updateTeamUserRole(user.id, newRole).subscribe({
+      next: (updated) => {
+        this.teamUsersSignal.update((users) =>
+          users.map((u) => (u.id === updated.id ? updated : u)),
+        );
+      },
+      error: (err) => console.error('Error al actualizar rol:', err),
+    });
+  }
+
+  deleteUser(user: TeamUsersEntity) {
+    this.teamApi.deleteTeamUser(user.id).subscribe({
+      next: () => {
+        this.teamUsersSignal.update((users) => users.filter((u) => u.id !== user.id));
+      },
+      error: (err) => console.error('Error al eliminar usuario:', err),
     });
   }
 }

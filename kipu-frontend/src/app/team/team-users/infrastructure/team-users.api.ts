@@ -29,17 +29,19 @@ export class TeamUsersApi {
 
   getCurrentUser(): Observable<Identity | null> {
     const storedUser = localStorage.getItem('currentUser');
-
     if (storedUser) {
       const user = JSON.parse(storedUser);
       return of(user);
     }
-
     return of(null);
   }
 
   createTeamUser(user: any): Observable<any> {
     return this.http.post<any>(this.teamUsersUrl, user);
+  }
+
+  updateTeamUserRole(id: string, role: string): Observable<any> {
+    return this.http.patch<any>(`${this.teamUsersUrl}/${id}/role`, { role });
   }
 
   deactivateTeamUser(id: string): Observable<any> {
@@ -50,24 +52,28 @@ export class TeamUsersApi {
     return this.http.patch<any>(`${this.teamUsersUrl}/${id}/activate`, {});
   }
 
+  deleteTeamUser(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.teamUsersUrl}/${id}`);
+  }
+
   // Invitations
   invitationsEndpoint = environment.kipuApiInvitationsEndpointPath;
   invitationsUrl = `${this.apiBaseUrl}${this.invitationsEndpoint}`;
-
-  postInvitation(invitation: any): Observable<any> {
-    return this.http.post<any>(this.invitationsUrl, invitation);
-  }
 
   getInvitationById(id: number): Observable<any> {
     return this.http.get<any>(`${this.invitationsUrl}/${id}`);
   }
 
   getInvitations(projectId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.invitationsUrl}?projectId=${projectId}`);
+    return this.http.get<any[]>(`${this.invitationsUrl}/by-project?projectId=${projectId}`);
   }
 
   getInvitationsByEmail(email: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.invitationsUrl}/user/${email}`);
+  }
+
+  postInvitation(invitation: any): Observable<any> {
+    return this.http.post<any>(this.invitationsUrl, invitation);
   }
 
   acceptInvitation(id: number): Observable<any> {

@@ -1,7 +1,33 @@
 <section>
   <div class="flex flex-col md:flex-row justify-between mx-4 md:mx-10 md:mr-30 items-start md:items-center gap-4 overflow-y-auto">
     <h1 class="text-2xl font-bold">{{'team.users.title'| translate }}</h1>
-    <button matRipple (click)="openInviteDialog()" class="px-s bg-accent text-white! py-s! rounded-m! font-bold! cursor-pointer transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2">{{'team.users.btn-invite' | translate }}</button>
+    <div class="flex items-center gap-3">
+      <button [matMenuTriggerFor]="pendingMenu" matRipple
+              class="flex items-center gap-1 px-3 py-2 rounded-m font-medium text-sm border border-orange-300 text-orange-700 bg-orange-50 hover:bg-orange-100 cursor-pointer transition-all">
+        <mat-icon class="text-sm">pending_actions</mat-icon>
+        {{ 'team.users.pending-invitations' | translate }} ({{ pendingInvitations.length }})
+        <mat-icon class="text-sm">arrow_drop_down</mat-icon>
+      </button>
+      <mat-menu #pendingMenu="matMenu">
+        @if (pendingInvitations.length > 0) {
+          @for (inv of pendingInvitations; track inv.id) {
+            <a mat-menu-item [routerLink]="['/invitations', inv.id]">
+              <div class="flex flex-col">
+                <span class="font-medium">{{ inv.firstName + ' ' + inv.lastName || inv.email }}</span>
+                <span class="text-xs text-gray-500">{{ 'team.users.role-dictionary.' + (inv.role === 'Administrador' ? 'administrator' : inv.role === 'Logística' ? 'logistics' : 'manager') | translate }}</span>
+              </div>
+            </a>
+          }
+        } @else {
+          <span mat-menu-item disabled class="text-gray-400">{{ 'team.users.no-pending-invitations' | translate }}</span>
+        }
+      </mat-menu>
+      @if (currentUser().role === 'Administrador') {
+        <button matRipple (click)="openInviteDialog()" class="px-s bg-accent text-white! py-s! rounded-m! font-bold! cursor-pointer transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2 whitespace-nowrap">
+          {{'team.users.btn-invite' | translate }}
+        </button>
+      }
+    </div>
   </div>
 
   <div class="user-dashboard flex mx-4 md:mx-20 flex-col">
@@ -9,6 +35,10 @@
       <div class="card p-5 shadow-md/20 gap-2 flex-1 flex-col grow py-6 flex">
         <p class="text-divider">{{'team.users.stats.active' | translate}}</p>
         <h1 class="text-4xl">{{this.teamStore.totalActiveUsers()}}</h1>
+      </div>
+      <div class="card p-5 shadow-md/20 gap-2 flex-1 flex-col grow py-6 flex">
+        <p>{{'team.users.stats.administrators' | translate}}</p>
+        <h1 class="text-4xl">{{this.teamStore.totalAdmins()}}</h1>
       </div>
       <div class="card p-5 shadow-md/20 gap-2 flex-1 flex-col grow py-6 flex">
         <p>{{'team.users.stats.managers' | translate}}</p>
@@ -31,6 +61,7 @@
               type="text"
               matInput
               [formControl]="searchControl"
+              (input)="onSearchChange($any($event.target).value)"
               placeholder="{{'team.users.assigned-roles.input-placeholder' | translate}}"
             />
             @if (searchControl.value){
@@ -56,28 +87,31 @@
           </div>
 
           <div class="table-body max-h-120 overflow-y-scroll">
-            <div class="flex flex-col md:grid md:grid-cols-4 p-4 md:p-3 border md:border-0 md:border-b rounded-xl md:rounded-none mb-3 md:mb-0 bg-white md:bg-transparent shadow-sm md:shadow-none hover:bg-gray-50 pl-5 gap-3 md:gap-0">
-              <div class="flex justify-start items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent font-semibold text-sm">
-                  {{ getInitials(this.currentUser().fullName) }}
+            @if (!searchControl.value ||
+                 currentUser().fullName.toLowerCase().includes((searchControl.value || '').toLowerCase()) ||
+                 currentUser().email.toLowerCase().includes((searchControl.value || '').toLowerCase())) {
+              <div class="flex flex-col md:grid md:grid-cols-4 p-4 md:p-3 border md:border-0 md:border-b rounded-xl md:rounded-none mb-3 md:mb-0 bg-white md:bg-transparent shadow-sm md:shadow-none hover:bg-gray-50 pl-5 gap-3 md:gap-0">
+                <div class="flex justify-start items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent font-semibold text-sm">
+                    {{ getInitials(this.currentUser().fullName) }}
+                  </div>
+                  <div>
+                      <span class="font-medium">
+                        {{ this.currentUser().fullName }}
+                          <span class="text-xs text-gray-500 ml-1">({{'team.users.assigned-roles.user-profile-you' | translate}})</span>
+                      </span>
+                  </div>
                 </div>
-                <div>
-                    <span class="font-medium">
-                      {{ this.currentUser().fullName }}
-                        <span class="text-xs text-gray-500 ml-1">({{'team.users.assigned-roles.user-profile-you' | translate}})</span>
+                <div class="flex justify-start text-gray-600 pl-5">
+                  {{ this.currentUser().email }}
+                </div>
+                <div class="flex justify-center">
+                    <span [class]="getRoleBadgeClass(this.currentUser().role)">
+                      {{ getRoleTranslation(this.currentUser().role) }}
                     </span>
                 </div>
               </div>
-              <div class="flex justify-start text-gray-600 pl-5">
-                {{ this.currentUser().email }}
-              </div>
-              <div class="flex justify-center">
-                  <span [class]="getRoleBadgeClass(this.currentUser().role)">
-                    {{ getRoleTranslation(this.currentUser().role) }}
-                  </span>
-              </div>
-
-            </div>
+            }
             @for (user of teamStore.filteredUsers(); track user.id) {
               <div class="flex flex-col md:grid md:grid-cols-4 p-4 md:p-3 border md:border-0 md:border-b rounded-xl md:rounded-none mb-3 md:mb-0 bg-white md:bg-transparent shadow-sm md:shadow-none hover:bg-gray-50 pl-5 gap-3 md:gap-0">
                 <div class="flex justify-start items-center gap-3">
@@ -98,7 +132,6 @@
                     {{ getRoleTranslation(user.role) }}
                   </span>
                 </div>
-
                 <div class="flex justify-center pl-5">
                   @if (currentUser().role === 'Administrador') {
                     <button
@@ -120,10 +153,20 @@
                           <span>{{ 'team.users.assigned-roles.btn-action-done' | translate }}</span>
                         </button>
                       }
+                      @if (user.isActive) {
+                        <button mat-menu-item (click)="openChangeRoleDialog(user)">
+                          <mat-icon class="text-blue-500">swap_horiz</mat-icon>
+                          <span>{{ 'team.users.assigned-roles.btn-change-role' | translate }}</span>
+                        </button>
+                      }
+                      <mat-divider></mat-divider>
+                      <button mat-menu-item (click)="deleteUser(user)">
+                        <mat-icon class="text-red-500">delete</mat-icon>
+                        <span>{{ 'team.users.assigned-roles.btn-delete' | translate }}</span>
+                      </button>
                     </mat-menu>
                   }
                 </div>
-
               </div>
             }
             @empty {
@@ -135,13 +178,12 @@
         </div>
 
         <div class="text-xs text-gray-400 mt-4 text-right">
-           {{ teamStore.filteredUsers().length }} / {{ teamStore.teamUsers().length }} {{'team.users.assigned-roles.user-count' | translate}}
+           {{ teamStore.displayFilteredCount() }} / {{ teamStore.displayUserCount() }} {{'team.users.assigned-roles.user-count' | translate}}
         </div>
       </div>
 
       <div class="info-dic flex-1 shadow-md/20 p-7">
         <h2 class="text-2xl font-medium">{{'team.users.role-dictionary.title' | translate}}</h2>
-
         <div class="py-6 flex flex-col gap-y-2">
           <h2 class="text-lg font-medium">{{'team.users.role-dictionary.administrator' | translate}}</h2>
           <p class="text-(--color-neutral-border) font-medium text-base/7">{{'team.users.role-dictionary.administrator-description' | translate}}</p>
