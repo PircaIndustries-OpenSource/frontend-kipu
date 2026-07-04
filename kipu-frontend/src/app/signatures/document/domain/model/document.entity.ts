@@ -10,7 +10,8 @@ export class DocumentEntity {
   isSigned: boolean;
   digitalSignatureToken: string | null;
   deadLine: Date;
-  assignedTo: UserDocument[]; 
+  projectId: string;
+  assignedTo: UserDocument[];
 
   constructor() {
     this.id = '';
@@ -18,6 +19,7 @@ export class DocumentEntity {
     this.isSigned = false;
     this.digitalSignatureToken = null;
     this.deadLine = new Date();
+    this.projectId = '';
     this.assignedTo = [];
   }
 }

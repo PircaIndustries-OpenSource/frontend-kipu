@@ -516,8 +516,26 @@
       "assignment-detail-placeholder": "Describe the equipment assignment...",
       "worker-label": "Assign to Worker (optional)",
       "worker-none": "None",
+      "catalog-label": "Catalog Equipment",
+      "catalog-required": "Please select equipment from the catalog.",
       "assignment-detail-required": "Assignment detail is required.",
       "btn-save": "Save Equipment",
+      "btn-cancel": "Cancel"
+    },
+    "catalog": {
+      "title": "New Catalog Item",
+      "btn-new": "New to Catalog",
+      "name-label": "Equipment Name",
+      "name-placeholder": "e.g., CAT 320 Excavator",
+      "name-required": "Name is required.",
+      "brand-label": "Brand",
+      "brand-placeholder": "e.g., Caterpillar",
+      "model-label": "Model",
+      "model-placeholder": "e.g., 320D",
+      "serial-label": "Serial Number",
+      "serial-placeholder": "e.g., CAT-320D-2024-001",
+      "date-label": "Acquisition Date",
+      "btn-save": "Save",
       "btn-cancel": "Cancel"
     },
     "assign": {
@@ -672,6 +690,7 @@
         "action-tab": "Action",
         "user-profile-you": "You",
         "btn-action": "Disable",
+        "btn-actions": "Actions",
         "btn-action-done": "Disabled",
         "input-placeholder": "Name, email or role...",
         "search-user": "Search user",
@@ -686,12 +705,7 @@
         "manager": "Operations Manager",
         "manager-description": "Field-focused. Records progress, RNCs and requests materials. Views blueprints.",
         "logistics": "Logistics",
-        "logistics-description": "Office-focused. Approves orders, edits inventory and manages suppliers.",
-        "client": "Client",
-        "client-description-1": "Strict access level of ",
-        "client-description-bold": "Read Only. ",
-        "client-description-2": "All creation or editing buttons are hidden in their view to protect the data.",
-        "engineer": "Engineer"
+        "logistics-description": "Office-focused. Approves orders, edits inventory and manages suppliers."
       },
       "send-invitation": {
         "title": "Invite new user",

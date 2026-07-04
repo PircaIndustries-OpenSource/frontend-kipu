@@ -1,5 +1,4 @@
-
-import { DocumentResource, DocumentResponse, UserDocumentResource } from './document.response';
+import { DocumentResource, DocumentResponse, SignerResource } from './document.response';
 import { DocumentEntity, UserDocument } from '../domain/model/document.entity';
 
 export class DocumentAssembler {
@@ -10,7 +9,8 @@ export class DocumentAssembler {
     entity.isSigned = resource.isSigned;
     entity.digitalSignatureToken = resource.digitalSignatureToken;
     entity.deadLine = new Date(resource.deadLine);
-    entity.assignedTo = resource.assignedTo.map((user) => this.toUserDocumentEntity(user));
+    entity.projectId = resource.projectId;
+    entity.assignedTo = (resource.signers || []).map((s) => this.toUserDocument(s));
     return entity;
   }
 
@@ -21,31 +21,24 @@ export class DocumentAssembler {
       isSigned: entity.isSigned,
       digitalSignatureToken: entity.digitalSignatureToken,
       deadLine: entity.deadLine.toISOString(),
-      assignedTo: entity.assignedTo.map((user) => this.toUserDocumentResource(user)),
+      projectId: entity.projectId,
+      signers: entity.assignedTo.map((u) => ({
+        teamUserId: u.id,
+        fullName: u.fullName,
+        signedAt: u.signedAt ? u.signedAt.toISOString() : null,
+      })),
     };
   }
 
   static toEntitiesFromResponse(response: DocumentResponse): DocumentEntity[] {
-    return response.map((resource) => this.toEntityFromResource(resource));
+    return response.map((r) => this.toEntityFromResource(r));
   }
 
-  static toResponseFromEntities(entities: DocumentEntity[]): DocumentResponse {
-    return entities.map((entity) => this.toResourceFromEntity(entity));
-  }
-
-  private static toUserDocumentEntity(resource: UserDocumentResource): UserDocument {
+  private static toUserDocument(signer: SignerResource): UserDocument {
     return {
-      id: resource.id,
-      fullName: resource.fullName,
-      signedAt: resource.signedAt ? new Date(resource.signedAt) : undefined,
-    };
-  }
-
-  private static toUserDocumentResource(entity: UserDocument): UserDocumentResource {
-    return {
-      id: entity.id,
-      fullName: entity.fullName,
-      signedAt: entity.signedAt?.toISOString(),
+      id: signer.teamUserId,
+      fullName: signer.fullName,
+      signedAt: signer.signedAt ? new Date(signer.signedAt) : undefined,
     };
   }
 }

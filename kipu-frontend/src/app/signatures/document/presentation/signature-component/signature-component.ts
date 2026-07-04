@@ -7,7 +7,6 @@ import { MatIcon } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 
-
 @Component({
   selector: 'app-signature-component',
   imports: [
@@ -32,12 +31,12 @@ export class SignatureComponent {
   tokenInput: string = '';
 
   async onConfirm() {
-    const result = await this.documentsStore.verifyAndSign(this.tokenInput).toPromise();
+    const result = await this.documentsStore.verifyAndSign(this.tokenInput);
 
-    if (result?.success) {
+    if (result.success) {
       this.dialogRef.close({ success: true, message: result.message });
     } else {
-      alert(result?.message || 'Error al verificar token');
+      this.dialogRef.close({ success: false, error: result.message });
     }
   }
 }

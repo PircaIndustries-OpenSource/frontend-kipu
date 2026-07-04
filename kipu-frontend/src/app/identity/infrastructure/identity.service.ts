@@ -1,14 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable, map, of, switchMap } from 'rxjs';
+import { Observable, map, of, switchMap, catchError } from 'rxjs';
 import { Identity } from '../domain/identity.model';
 import { environment } from '../../../environments/environment';
+
+export interface AuthResponse {
+  token: string;
+  id: number;
+  email: string;
+  role: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class IdentityService {
   private http = inject(HttpClient);
 
   private apiUrl = environment.kipuApiBaseUrl + '/identity';
+  private authUrl = environment.kipuApiBaseUrl + '/auth';
 
   /**
    * Check if an email already exists.
@@ -45,6 +53,11 @@ export class IdentityService {
     return this.http
       .get<Identity[]>(`${this.apiUrl}?email=${email}`)
       .pipe(map((users) => users.length > 0));
+  }
+
+  loginWithJwt(email: string, password: string): Observable<AuthResponse | null> {
+    return this.http.post<AuthResponse>(`${this.authUrl}/login`, { email, password })
+      .pipe(catchError(() => of(null)));
   }
 
   resetPassword(email: string, newPassword: string): Observable<boolean> {

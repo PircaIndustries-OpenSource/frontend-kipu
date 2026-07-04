@@ -155,15 +155,8 @@ export class SignatureAddComponent implements OnInit {
   getRoleTranslation(role: string): string {
     const roleMap: Record<string, string> = {
       Administrador: 'Administrador',
-      ROLE_ADMIN: 'Administrador',
-      Gestor: 'Gestor',
-      'Gestor Operativo': 'Gestor',
-      ROLE_USER: 'Gestor',
-      Logistica: 'Logística',
-      ROLE_LOGISTICS: 'Logística',
-      Cliente: 'Cliente',
-      ROLE_CLIENT: 'Cliente',
-      Ingeniero: 'Ingeniero',
+      'Gestor Operativo': 'Gestor Operativo',
+      Logística: 'Logística',
     };
     return roleMap[role] || role;
   }
@@ -186,15 +179,8 @@ export class SignatureAddComponent implements OnInit {
   getRoleBadgeClass(role: string): string {
     const roleMap: Record<string, string> = {
       Administrador: 'bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm',
-      ROLE_ADMIN: 'bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm',
-      Gestor: 'bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm',
       'Gestor Operativo': 'bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm',
-      ROLE_USER: 'bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm',
-      Logistica: 'bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm',
-      ROLE_LOGISTICS: 'bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm',
-      Cliente: 'bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm',
-      ROLE_CLIENT: 'bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm',
-      Ingeniero: 'bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm',
+      Logística: 'bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm',
     };
     return roleMap[role] || 'bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm';
   }

@@ -8,6 +8,7 @@ import { MatRipple } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MachineryCreateForm } from '../machinery-create-form/machinery-create-form';
+import { MachineryCatalogForm } from '../machinery-catalog-form/machinery-catalog-form';
 import { MachineryEntity } from '../../../domain/machinery.entity';
 
 @Component({
@@ -46,15 +47,6 @@ export class MachineryPage implements OnInit {
   inUseCount = computed(() => this.machinery().filter((m) => m.status === 'IN_USE').length);
   maintenanceCount = computed(() => this.machinery().filter((m) => m.status === 'URGENT_MAINTENANCE').length);
 
-  currentFilterLabel = computed(() => {
-    switch (this.filterSignal()) {
-      case 'assigned': return 'machinery.filter.only-assigned';
-      case 'maintenance': return 'machinery.filter.critical-equipment';
-      case 'unassigned': return 'machinery.filter.unassigned';
-      default: return 'machinery.filter.show-all';
-    }
-  });
-
   setFilter(filter: string) {
     this.filterSignal.set(filter);
   }
@@ -71,6 +63,20 @@ export class MachineryPage implements OnInit {
           ...result,
         };
         this.logisticsStore.addMachinery(machinery);
+      }
+    });
+  }
+
+  openCatalogDialog() {
+    const dialogRef = this.dialog.open(MachineryCatalogForm, {
+      width: '550px',
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.logisticsStore.addCatalogItem(result, () => {
+          this.logisticsStore.loadMachineryCatalog(true);
+        });
       }
     });
   }

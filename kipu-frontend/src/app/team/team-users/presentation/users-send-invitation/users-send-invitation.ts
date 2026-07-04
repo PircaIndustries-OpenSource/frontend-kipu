@@ -31,6 +31,7 @@ export class UsersSendInvitation implements OnInit {
   private teamApi = inject(TeamUsersApi);
 
   iamUsers: Identity[] = [];
+  roles = ['Administrador', 'Logística', 'Gestor Operativo'];
 
   inviteForm: FormGroup = this.fb.group({
     selectedUser: [null, Validators.required],

@@ -1,19 +1,23 @@
-import { TeamWorkersEntity } from '../domain/model/team-workers.entity';
+import { TeamWorkersEntity, WorkerMachinery } from '../domain/model/team-workers.entity';
 import { TeamWorkersResource, TeamWorkersResponse } from './team-workers.response';
-
 
 export class TeamWorkersAssembler {
   static toEntityFromResource(resource: TeamWorkersResource): TeamWorkersEntity {
-    return {
-      id: resource.id,
-      dni: resource.dni,
-      fullName: resource.fullName,
-      role: resource.role,
-      status: resource.status,
-      assignedTools: resource.assignedTools
-    }
+    const entity = new TeamWorkersEntity();
+    entity.id = resource.id;
+    entity.dni = resource.dni;
+    entity.fullName = resource.fullName;
+    entity.role = resource.role;
+    entity.isActive = resource.isActive;
+    entity.projectId = resource.projectId;
+    entity.machineries = (resource.machineries || []).map((m) => ({
+      machineryId: m.machineryId,
+      fullName: m.fullName,
+    }));
+    return entity;
   }
+
   static toEntitiesFromResponse(response: TeamWorkersResponse): TeamWorkersEntity[] {
-    return response.map(resource => this.toEntityFromResource(resource));
+    return response.map((r) => this.toEntityFromResource(r));
   }
 }

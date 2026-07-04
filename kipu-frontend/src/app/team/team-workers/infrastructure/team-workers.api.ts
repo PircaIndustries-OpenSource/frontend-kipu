@@ -3,9 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { map, Observable } from 'rxjs';
 import { TeamWorkersEntity } from '../domain/model/team-workers.entity';
-import { TeamWorkersResponse } from './team-workers.response';
+import { TeamWorkersResponse, TeamWorkersResource, CreateTeamWorkerRequest } from './team-workers.response';
 import { TeamWorkersAssembler } from './team-workers.assembler';
-
 
 @Injectable({
   providedIn: 'root',
@@ -13,30 +12,35 @@ import { TeamWorkersAssembler } from './team-workers.assembler';
 export class TeamWorkersApi {
   http: HttpClient = inject(HttpClient);
   apiBaseUrl = environment.kipuApiBaseUrl;
-  teamWorkersEndpoint = environment.kipuApiTeamWorkersEndpointPath;
-  teamWorkersUrl = `${this.apiBaseUrl}${this.teamWorkersEndpoint}`;
+  teamWorkersUrl = `${this.apiBaseUrl}${environment.kipuApiTeamWorkersEndpointPath}`;
 
   getAllWorkers(): Observable<TeamWorkersEntity[]> {
     const projectId = localStorage.getItem('currentProjectId');
-    const url = projectId
-      ? `${this.teamWorkersUrl}?projectId=${projectId}`
-      : this.teamWorkersUrl;
+    const url = projectId ? `${this.teamWorkersUrl}?projectId=${projectId}` : this.teamWorkersUrl;
     return this.http
       .get<TeamWorkersResponse>(url)
       .pipe(map((response) => TeamWorkersAssembler.toEntitiesFromResponse(response)));
   }
 
-  postWorker(worker: TeamWorkersEntity): Observable<TeamWorkersEntity> {
-    return this.http.post<TeamWorkersEntity>(this.teamWorkersUrl, worker);
-  }
-
-  updateWorker(worker: TeamWorkersEntity): Observable<TeamWorkersEntity> {
-    const url = `${this.teamWorkersUrl}/${worker.id}`;
-    return this.http.put<TeamWorkersEntity>(url, worker);
+  postWorker(worker: CreateTeamWorkerRequest): Observable<TeamWorkersEntity> {
+    return this.http
+      .post<TeamWorkersResource>(this.teamWorkersUrl, worker)
+      .pipe(map((r) => TeamWorkersAssembler.toEntityFromResource(r)));
   }
 
   deleteWorker(id: string): Observable<void> {
-    const url = `${this.teamWorkersUrl}/${id}`;
-    return this.http.delete<void>(url);
+    return this.http.delete<void>(`${this.teamWorkersUrl}/${id}`);
+  }
+
+  assignMachinery(workerId: string, machineryId: string, fullName: string): Observable<TeamWorkersEntity> {
+    return this.http
+      .post<TeamWorkersResource>(`${this.teamWorkersUrl}/${workerId}/machineries`, { machineryId, fullName })
+      .pipe(map((r) => TeamWorkersAssembler.toEntityFromResource(r)));
+  }
+
+  removeMachinery(workerId: string, machineryId: string): Observable<TeamWorkersEntity> {
+    return this.http
+      .delete<TeamWorkersResource>(`${this.teamWorkersUrl}/${workerId}/machineries/${machineryId}`)
+      .pipe(map((r) => TeamWorkersAssembler.toEntityFromResource(r)));
   }
 }

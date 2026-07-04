@@ -40,34 +40,22 @@ export class TeamUsersStore {
     () => this.teamUsers().filter((user) => user.isActive).length,
   );
   readonly totalManagers = computed(
-    () => this.teamUsers().filter((user) => user.isActive && user.role == 'Gestor'
-    || user.role == "Gestor Operativo").length,
+    () => this.teamUsers().filter((user) => user.isActive && user.role == 'Gestor Operativo').length,
   );
   readonly totalLogistics = computed(
-    () => this.teamUsers().filter((user) => user.isActive && user.role == 'Logistica').length,
-  );
-  readonly totalClients = computed(
-    () => this.teamUsers().filter((user) => user.isActive && user.role == 'Cliente').length,
+    () => this.teamUsers().filter((user) => user.isActive && user.role == 'Logística').length,
   );
 
   getRoleTranslation(role: string): string {
     const translationMap: Record<string, string> = {
       Administrador: this.translate.instant('team.users.role-dictionary.administrator'),
-      Gestor: this.translate.instant('team.users.role-dictionary.manager'),
-      Logistica: this.translate.instant('team.users.role-dictionary.logistics'),
-      Cliente: this.translate.instant('team.users.role-dictionary.client'),
-      Ingeniero: this.translate.instant('team.users.role-dictionary.engineer'),
+      'Gestor Operativo': this.translate.instant('team.users.role-dictionary.manager'),
+      Logística: this.translate.instant('team.users.role-dictionary.logistics'),
     };
     return translationMap[role] || role;
   }
 
   constructor() {
-    const stored = localStorage.getItem('currentUser');
-    if (stored) {
-      const identity = JSON.parse(stored);
-      this.currentUserSignal.set(TeamUsersAssembler.toEntityFromIdentity(identity));
-    }
-
     effect(() => {
       const activeId = this.projectStateService.currentProjectId();
       if (activeId) {
@@ -81,11 +69,23 @@ export class TeamUsersStore {
   loadTeamUsers(projectId: string) {
     this.teamApi.getTeamUsersByProject(projectId).subscribe({
       next: (users) => {
-        const currentUserEmail = this.currentUser().email;
-        const filtered = currentUserEmail
-          ? users.filter((u) => u.email !== currentUserEmail)
+        const stored = localStorage.getItem('currentUser');
+        let currentEmail = '';
+        if (stored) {
+          const identity = JSON.parse(stored);
+          currentEmail = identity.email || '';
+        }
+        const filtered = currentEmail
+          ? users.filter((u) => u.email !== currentEmail)
           : users;
         this.teamUsersSignal.set(filtered);
+
+        const myRecord = users.find((u) => u.email === currentEmail);
+        if (myRecord) {
+          this.currentUserSignal.set(myRecord);
+        } else {
+          this.currentUserSignal.set(TeamUsersAssembler.toEntityFromIdentity(stored ? JSON.parse(stored) : null));
+        }
       },
       error: (err) => console.error('Error loading team users:', err),
     });
@@ -137,6 +137,4 @@ export class TeamUsersStore {
       error: (err) => console.error('Error al actualizar estado:', err),
     });
   }
-
-
 }

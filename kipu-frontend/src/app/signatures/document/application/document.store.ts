@@ -1,20 +1,17 @@
-// presentation/store/documents.store.ts
 import { Injectable, signal, effect, inject } from '@angular/core';
 import { DocumentEntity } from '../domain/model/document.entity';
 import { DocumentApi } from '../infrastructure/document.api';
-import { catchError, map, Observable, of } from 'rxjs';
+import { AuthStore } from '../../../identity/application/auth.store';
 import { ProjectsStore } from '../../../projects/application/projects.store';
-
 
 @Injectable({ providedIn: 'root' })
 export class DocumentsStore {
   private documents = signal<DocumentEntity[]>([]);
-  private currentToken = signal<string | null>(null); // Token actual (solo en memoria)
-  private currentDocumentId = signal<string | null>(null); // Documento que se está firmando
+  private currentDocumentId = signal<string | null>(null);
 
   readonly documents$ = this.documents.asReadonly();
-  readonly currentToken$ = this.currentToken.asReadonly();
 
+  private authStore = inject(AuthStore);
   private projectsStore = inject(ProjectsStore);
 
   constructor(private documentApi: DocumentApi) {
@@ -47,110 +44,58 @@ export class DocumentsStore {
     return this.documents().filter((doc) => !doc.isSigned);
   }
 
-  getDocumentsByType(type: string): DocumentEntity[] {
-    return this.documents().filter((doc) => doc.type === type);
-  }
+  sendSignCode(documentId: string): Promise<boolean> {
+    const email = this.authStore.currentUser()?.email || '';
+    if (!email) return Promise.resolve(false);
 
-  generateToken(documentId: string): string {
-    const token = '123456';
-    this.currentToken.set(token);
     this.currentDocumentId.set(documentId);
 
-    console.log(`🔐 Token generado: ${token} para documento ${documentId}`);
-    return token;
+    return new Promise((resolve) => {
+      this.documentApi.sendSignCode(documentId, email).subscribe({
+        next: () => resolve(true),
+        error: () => resolve(false),
+      });
+    });
   }
 
-  verifyAndSign(token: string): Observable<{ success: boolean; message: string }> {
-    const activeToken = this.currentToken();
-    const activeDocumentId = this.currentDocumentId();
+  verifyAndSign(code: string): Promise<{ success: boolean; message: string }> {
+    const docId = this.currentDocumentId();
+    const user = this.authStore.currentUser();
 
-    if (!activeToken || !activeDocumentId) {
-      return of({ success: false, message: 'No hay un proceso de firma activo' });
+    if (!docId || !user) {
+      return Promise.resolve({ success: false, message: 'No hay un proceso de firma activo' });
     }
 
-    if (token !== activeToken) {
-      return of({ success: false, message: 'Token incorrecto' });
-    }
-
-    const documentToUpdate = this.documents().find((d) => d.id === activeDocumentId);
-
-    if (!documentToUpdate) {
-      return of({ success: false, message: 'Documento no encontrado' });
-    }
-
-    if (documentToUpdate.isSigned) {
-      return of({ success: false, message: 'Este documento ya está firmado' });
-    }
-
-    const updatedDocument = {
-      ...documentToUpdate,
-      isSigned: true,
-      digitalSignatureToken: token,
-    };
-
-    this.currentToken.set(null);
-    this.currentDocumentId.set(null);
-
-    return this.documentApi.updateDocument(updatedDocument).pipe(
-      map((response) => {
-        const currentDocs = this.documents();
-        const index = currentDocs.findIndex((d) => d.id === response.id);
-        if (index !== -1) {
-          const newDocs = [...currentDocs];
-          newDocs[index] = response;
-          this.documents.set(newDocs);
-        }
-
-        return {
-          success: true,
-          message: `✅ Documento firmado exitosamente`,
-        };
-      }),
-      catchError((error) => {
-        console.error('Error al actualizar:', error);
-        return of({
-          success: false,
-          message: 'Error al guardar la firma: ' + (error.error?.message || error.message),
-        });
-      }),
-    );
-  }
-
-  updateLocalDocument(updatedDocument: DocumentEntity): void {
-    const currentDocs = this.documents();
-    const index = currentDocs.findIndex((d) => d.id === updatedDocument.id);
-
-    if (index !== -1) {
-      const newDocs = [...currentDocs];
-      newDocs[index] = updatedDocument;
-      this.documents.set(newDocs);
-    }
-  }
-
-  // application/document.store.ts
-  addLocalDocument(document: DocumentEntity): void {
-    // ✅ Guardar en la API primero
-    this.documentApi.postDocument(document).subscribe({
-      next: (savedDocument) => {
-        // Después de guardar en la API, añadir al signal
-        this.documents.update((currentDocs) => [...currentDocs, savedDocument]);
-        console.log('📄 Documento guardado en API y añadido localmente:', savedDocument);
-      },
-      error: (err) => {
-        console.error('Error al guardar documento en API:', err);
-        // Fallback: solo añadir localmente
-        this.documents.update((currentDocs) => [...currentDocs, document]);
-      },
+    return new Promise((resolve) => {
+      this.documentApi.signDocument(docId, code, user.email || '', user.id || '', user.name || '').subscribe({
+        next: (updatedDoc) => {
+          this.documents.update((docs) =>
+            docs.map((d) => (d.id === updatedDoc.id ? updatedDoc : d))
+          );
+          this.currentDocumentId.set(null);
+          resolve({ success: true, message: 'Documento firmado exitosamente' });
+        },
+        error: (err) => {
+          const message = err.error?.message || err.error?.detail || 'Error al verificar el código';
+          resolve({ success: false, message });
+        },
+      });
     });
   }
 
   cancelSignature(): void {
-    this.currentToken.set(null);
     this.currentDocumentId.set(null);
-    console.log('🔐 Proceso de firma cancelado');
   }
 
-  hasActiveSignature(): boolean {
-    return this.currentToken() !== null && this.currentDocumentId() !== null;
+  addLocalDocument(document: DocumentEntity): void {
+    this.documentApi.postDocument(document).subscribe({
+      next: (saved) => {
+        this.documents.update((current) => [...current, saved]);
+      },
+      error: (err) => {
+        console.error('Error al guardar documento:', err);
+        this.documents.update((current) => [...current, document]);
+      },
+    });
   }
 }

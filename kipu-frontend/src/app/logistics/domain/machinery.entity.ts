@@ -7,6 +7,7 @@ export class MachineryEntity {
   registrationDate: string;
   maintenanceHours: string;
   assignmentDetail: string;
+  projectId: string;
 
   constructor() {
     this.id = '';
@@ -17,5 +18,24 @@ export class MachineryEntity {
     this.registrationDate = '';
     this.maintenanceHours = '';
     this.assignmentDetail = '';
+    this.projectId = '';
+  }
+}
+
+export class MachineryCatalogEntity {
+  id: string;
+  name: string;
+  brand: string;
+  model: string;
+  serialNumber: string;
+  acquisitionDate: string | null;
+
+  constructor() {
+    this.id = '';
+    this.name = '';
+    this.brand = '';
+    this.model = '';
+    this.serialNumber = '';
+    this.acquisitionDate = null;
   }
 }

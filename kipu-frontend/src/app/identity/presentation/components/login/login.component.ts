@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { IdentityService } from '../../../infrastructure/identity.service';
+import { Identity } from '../../../domain/identity.model';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { AuthBannerComponent } from '../../../../shared/presentation/components/auth-banner/auth-banner.component';
@@ -65,16 +66,22 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.isSubmitting = true;
       const { email, password, rememberMe } = this.loginForm.value;
-      this.identityService.login(email, password).subscribe({
-        next: (user) => {
-          if (user) {
-            // Check trusted device
+      this.identityService.loginWithJwt(email, password).subscribe({
+        next: (auth) => {
+          if (auth) {
+            const user: Identity = {
+              id: String(auth.id),
+              email: auth.email,
+              name: auth.email,
+              role: auth.role,
+              token: auth.token,
+            };
+
             const trustedStr = localStorage.getItem('trusted_device_' + email);
             if (trustedStr) {
               try {
                 const trusted = JSON.parse(trustedStr);
                 const now = new Date().getTime();
-                // 30 days
                 if (now - trusted.timestamp < 30 * 24 * 60 * 60 * 1000) {
                   this.isSubmitting = false;
                   this.authStore.login(user);
@@ -84,11 +91,10 @@ export class LoginComponent {
               } catch (e) {}
             }
 
-            // Generate OTP for 2FA
             this.identityService.generateOtp(email).subscribe({
               next: () => {
                 this.isSubmitting = false;
-                this.router.navigate(['/verification'], { 
+                this.router.navigate(['/verification'], {
                   queryParams: { email, context: 'login' },
                   state: { user, rememberMe }
                 });

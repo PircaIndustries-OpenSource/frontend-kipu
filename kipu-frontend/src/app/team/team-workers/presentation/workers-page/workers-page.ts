@@ -9,6 +9,10 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { forkJoin } from 'rxjs';
+import { TeamWorkersEntity } from '../../domain/model/team-workers.entity';
+
 @Component({
   selector: 'app-workers-page',
   imports: [
@@ -22,6 +26,7 @@ import { MatIcon } from '@angular/material/icon';
     MatInput,
     MatIconButton,
     MatIcon,
+    MatSnackBarModule,
   ],
   templateUrl: './workers-page.html',
   styleUrl: './workers-page.css',
@@ -30,6 +35,7 @@ export class WorkersPage implements OnInit {
   teamStore: TeamWorkersStore = inject(TeamWorkersStore);
   logisticsStore: LogisticsStore = inject(LogisticsStore);
   dialog = inject(MatDialog);
+  snackBar = inject(MatSnackBar);
 
   searchControl = new FormControl('');
 
@@ -74,58 +80,69 @@ export class WorkersPage implements OnInit {
   }
 
   onSaveWorker(workerFormValue: any) {
+    const projectId = localStorage.getItem('currentProjectId') || '';
+
     const selectedMachineries = workerFormValue.assignedTools || [];
-    const assignedToolNames = selectedMachineries.map((m: any) => m.name);
+    const machineriesPayload = selectedMachineries.map((m: any) => ({
+      machineryId: m.id,
+      fullName: m.name,
+    }));
 
     const workerDTO = {
-      id: `w-${Date.now()}`,
       dni: workerFormValue.dni,
       fullName: workerFormValue.fullName,
       role: workerFormValue.role,
-      status: workerFormValue.status,
-      assignedTools: assignedToolNames,
+      projectId: projectId,
+      machineries: machineriesPayload,
     };
 
     this.teamStore.addWorker(workerDTO).subscribe({
       next: (newWorker) => {
         const today = new Date().toISOString().split('T')[0];
-
-        selectedMachineries.forEach((machinery: any) => {
+        const syncCalls = selectedMachineries.map((machinery: any) =>
           this.logisticsStore.updateMachinery(machinery.id, {
             status: 'IN_USE',
             assignedTo: newWorker.fullName,
             assignedWorkerId: newWorker.id,
             registrationDate: today,
             assignmentDetail: `Asignado al operador ${newWorker.fullName}`,
-          });
+          })
+        );
+        forkJoin(syncCalls).subscribe({
+          next: () => {
+            this.teamStore.loadWorkers(true);
+            this.logisticsStore.loadMachinery(true);
+            this.snackBar.open('Trabajador creado y maquinaria asignada', 'Cerrar', { duration: 3000 });
+          },
         });
       },
-      error: (error) => console.log(error),
+      error: (err) => {
+        console.error('Error creating worker:', err);
+        this.snackBar.open('Error al crear trabajador', 'Cerrar', { duration: 4000 });
+      },
     });
   }
 
-  deleteWorker(id: string) {
-    const workerToRelease = this.teamStore.teamWorkers().find((w) => w.id === id);
+  deleteWorker(worker: TeamWorkersEntity) {
+    const todelMachineries = worker.machineries || [];
+    const returnCalls = todelMachineries.map((m) =>
+      this.logisticsStore.updateMachinery(m.machineryId, {
+        status: 'AVAILABLE',
+        assignedTo: '',
+        assignedWorkerId: '',
+        assignmentDetail: 'Maquinaria liberada por eliminación de operador',
+      })
+    );
 
-    if (
-      workerToRelease &&
-      workerToRelease.assignedTools &&
-      workerToRelease.assignedTools.length > 0
-    ) {
-      workerToRelease.assignedTools.forEach((toolName: string) => {
-        const machineryItem = this.logisticsStore.machinery().find((m) => m.name === toolName);
-
-        if (machineryItem) {
-          this.logisticsStore.updateMachinery(machineryItem.id, {
-            status: 'AVAILABLE',
-            assignedTo: '',
-            assignedWorkerId: '',
-            assignmentDetail: 'Maquinaria liberada por eliminación de operador',
-          });
-        }
-      });
-    }
-
-    this.teamStore.deleteWorker(id);
+    forkJoin(returnCalls).subscribe({
+      next: () => {
+        this.logisticsStore.loadMachinery(true);
+        this.teamStore.deleteWorker(worker.id);
+        this.snackBar.open('Trabajador eliminado y maquinaria liberada', 'Cerrar', { duration: 3000 });
+      },
+      error: () => {
+        this.teamStore.deleteWorker(worker.id);
+      },
+    });
   }
 }

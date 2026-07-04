@@ -1,8 +1,8 @@
 import { computed, inject, Injectable, signal, effect } from '@angular/core';
-import { TranslateModule, TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { TeamWorkersApi } from '../infrastructure/team-workers.api';
 import { TeamWorkersEntity } from '../domain/model/team-workers.entity';
 import { ProjectStateService } from '../../../shared/application/project-state.service';
+import { CreateTeamWorkerRequest } from '../infrastructure/team-workers.response';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
 })
 export class TeamWorkersStore {
   teamApi = inject(TeamWorkersApi);
-  private translate = inject(TranslateService);
 
   teamWorkersSignal = signal<TeamWorkersEntity[]>([]);
   readonly teamWorkers = computed(() => this.teamWorkersSignal());
@@ -28,22 +27,24 @@ export class TeamWorkersStore {
   }
 
   loadWorkers(force = false) {
-    if (force || this.teamWorkersSignal().length == 0) {
-      this.teamApi.getAllWorkers().subscribe((data) => {
-        this.teamWorkersSignal.set(data);
+    if (force || this.teamWorkersSignal().length === 0) {
+      this.teamApi.getAllWorkers().subscribe({
+        next: (data) => this.teamWorkersSignal.set(data),
+        error: (err) => console.error('Error loading workers:', err),
       });
     }
   }
+
+  addWorker(worker: CreateTeamWorkerRequest): Observable<TeamWorkersEntity> {
+    return this.teamApi.postWorker(worker);
+  }
+
   deleteWorker(id: string) {
     this.teamApi.deleteWorker(id).subscribe({
       next: () => {
-        this.teamWorkersSignal.update(workers =>
-        workers.filter(worker => worker.id !== id))
+        this.teamWorkersSignal.update((workers) => workers.filter((w) => w.id !== id));
       },
-      error: (err) => console.log(err)
+      error: (err) => console.error('Error deleting worker:', err),
     });
-  }
-  addWorker(worker: TeamWorkersEntity): Observable<TeamWorkersEntity> {
-    return this.teamApi.postWorker(worker);
   }
 }
