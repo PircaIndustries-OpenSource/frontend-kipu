@@ -163,22 +163,25 @@ export class LogisticsStore {
 
   loadMaterials(force = false) {
     if (force || this.materialsSignal().length === 0) {
-      this.logisticsApi.getAllMaterials().subscribe((data) => {
-        this.materialsSignal.set(data);
+      this.logisticsApi.getAllMaterials().subscribe({
+        next: (data) => this.materialsSignal.set(data),
+        error: () => console.error('Failed to load materials'),
       });
     }
   }
   loadInventoryMaterials = (force = false) => {
     if (force || this.inventorySignal().length === 0) {
-      this.logisticsApi.getAllInventoryMaterials().subscribe((data) => {
-        this.inventorySignal.set(data);
+      this.logisticsApi.getAllInventoryMaterials().subscribe({
+        next: (data) => this.inventorySignal.set(data),
+        error: () => console.error('Failed to load inventory materials'),
       });
     }
   };
   loadCategories(force = false) {
     if (force || this.categoriesSignal().length === 0) {
-      this.logisticsApi.getAllCategories().subscribe((data) => {
-        this.categoriesSignal.set(data);
+      this.logisticsApi.getAllCategories().subscribe({
+        next: (data) => this.categoriesSignal.set(data),
+        error: () => console.error('Failed to load categories'),
       });
     }
   }
@@ -267,8 +270,9 @@ export class LogisticsStore {
   }
   loadRequest(force = false) {
     if (force || this.requestsSignal().length === 0) {
-      this.logisticsApi.getAllRequest().subscribe((data) => {
-        this.requestsSignal.set(data);
+      this.logisticsApi.getAllRequest().subscribe({
+        next: (data) => this.requestsSignal.set(data),
+        error: () => console.error('Failed to load requests'),
       });
     }
   }
@@ -363,8 +367,9 @@ export class LogisticsStore {
   readonly machinery = computed(() => this.machinerySignal());
   loadMachinery(force = false) {
     if (force || this.machinerySignal().length === 0) {
-      this.logisticsApi.getAllMachinery().subscribe((data) => {
-        this.machinerySignal.set(data);
+      this.logisticsApi.getAllMachinery().subscribe({
+        next: (data) => this.machinerySignal.set(data),
+        error: () => console.error('Failed to load machinery'),
       });
     }
   }
@@ -398,8 +403,9 @@ export class LogisticsStore {
   readonly supplierOffer = computed(() => this.supplierOfferSignal());
   loadSupplierOffers(force = false) {
     if (force || this.supplierOfferSignal().length === 0) {
-      this.logisticsApi.getAllSupplierOffer().subscribe((data) => {
-        this.supplierOfferSignal.set(data);
+      this.logisticsApi.getAllSupplierOffer().subscribe({
+        next: (data) => this.supplierOfferSignal.set(data),
+        error: () => console.error('Failed to load supplier offers'),
       });
     }
   }
@@ -418,8 +424,9 @@ export class LogisticsStore {
   readonly suppliers = computed(() => this.suppliersSignal());
   loadSuppliers(force = false) {
     if (force || this.suppliersSignal().length === 0) {
-      this.logisticsApi.getAllSuppliers().subscribe((data) => {
-        this.suppliersSignal.set(data);
+      this.logisticsApi.getAllSuppliers().subscribe({
+        next: (data) => this.suppliersSignal.set(data),
+        error: () => console.error('Failed to load suppliers'),
       });
     }
   }
@@ -516,8 +523,9 @@ export class LogisticsStore {
   });
   loadWaste(force = false) {
     if (force || this.wasteSignal().length === 0) {
-      this.logisticsApi.getAllWaste().subscribe((data) => {
-        this.wasteSignal.set(data);
+      this.logisticsApi.getAllWaste().subscribe({
+        next: (data) => this.wasteSignal.set(data),
+        error: () => console.error('Failed to load waste'),
       });
     }
   }
