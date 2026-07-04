@@ -12,6 +12,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { forkJoin } from 'rxjs';
 import { TeamWorkersEntity } from '../../domain/model/team-workers.entity';
+import { ConfirmDialog } from '../../../../shared/presentation/confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-workers-page',
@@ -125,13 +126,11 @@ export class WorkersPage implements OnInit {
 
     this.teamStore.addWorker(workerDTO).subscribe({
       next: (newWorker) => {
-        const today = new Date().toISOString().split('T')[0];
         const syncCalls = selectedMachineries.map((machinery: any) =>
           this.logisticsStore.updateMachinery(machinery.id, {
             status: 'IN_USE',
             assignedTo: newWorker.fullName,
             assignedWorkerId: newWorker.id,
-            registrationDate: today,
             assignmentDetail: `Asignado al operador ${newWorker.fullName}`,
           })
         );
@@ -151,25 +150,37 @@ export class WorkersPage implements OnInit {
   }
 
   deleteWorker(worker: TeamWorkersEntity) {
-    const todelMachineries = worker.machineries || [];
-    const returnCalls = todelMachineries.map((m) =>
-      this.logisticsStore.updateMachinery(m.machineryId, {
-        status: 'AVAILABLE',
-        assignedTo: '',
-        assignedWorkerId: '',
-        assignmentDetail: 'Maquinaria liberada por eliminación de operador',
-      })
-    );
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      data: {
+        title: 'Eliminar trabajador',
+        subtitle: `¿Estás seguro de eliminar a ${worker.fullName}?`,
+        confirmText: 'Eliminar',
+      },
+    });
 
-    forkJoin(returnCalls).subscribe({
-      next: () => {
-        this.logisticsStore.loadMachinery(true);
-        this.teamStore.deleteWorker(worker.id);
-        this.snackBar.open('Trabajador eliminado y maquinaria liberada', 'Cerrar', { duration: 3000 });
-      },
-      error: () => {
-        this.teamStore.deleteWorker(worker.id);
-      },
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (!confirmed) return;
+
+      const todelMachineries = worker.machineries || [];
+      const returnCalls = todelMachineries.map((m) =>
+        this.logisticsStore.updateMachinery(m.machineryId, {
+          status: 'AVAILABLE',
+          assignedTo: '',
+          assignedWorkerId: '',
+          assignmentDetail: 'Maquinaria liberada por eliminación de operador',
+        })
+      );
+
+      forkJoin(returnCalls).subscribe({
+        next: () => {
+          this.logisticsStore.loadMachinery(true);
+          this.teamStore.deleteWorker(worker.id);
+          this.snackBar.open('Trabajador eliminado y maquinaria liberada', 'Cerrar', { duration: 3000 });
+        },
+        error: () => {
+          this.teamStore.deleteWorker(worker.id);
+        },
+      });
     });
   }
 }
