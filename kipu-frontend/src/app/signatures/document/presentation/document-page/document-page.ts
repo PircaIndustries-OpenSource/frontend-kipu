@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, effect, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, effect, inject, OnInit, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { DocumentsStore } from '../../application/document.store';
@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { DossierExportService } from '../../application/dossier-export.service';
 import { ProjectStateService } from '../../../../shared/application/project-state.service';
 import { TeamUsersStore } from '../../../../team/team-users/application/team-users.store';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-document-page',
@@ -28,11 +29,13 @@ export class DocumentPage implements OnInit {
   private projectStateService = inject(ProjectStateService);
   private snackBar = inject(MatSnackBar);
   private teamUsersStore = inject(TeamUsersStore);
+  private route = inject(ActivatedRoute);
 
   pendingDocuments: DocumentEntity[] = [];
   signedDocuments: DocumentEntity[] = [];
   pendingCount = 0;
   signedCount = 0;
+  isSigningDialogLoading = signal<boolean>(false);
 
   constructor() {
     effect(() => {
@@ -51,6 +54,13 @@ export class DocumentPage implements OnInit {
 
   ngOnInit() {
     this.documentsStore.loadAllDocuments();
+    
+    // Check if we need to open the create dialog automatically
+    this.route.queryParams.subscribe(params => {
+      if (params['action'] === 'create') {
+        setTimeout(() => this.openCreateDocumentDialog(), 100);
+      }
+    });
   }
 
   openCreateDocumentDialog() {
@@ -69,10 +79,14 @@ export class DocumentPage implements OnInit {
   }
 
   async openSignatureDialog(document: DocumentEntity) {
+    if (this.isSigningDialogLoading()) return;
+    this.isSigningDialogLoading.set(true);
+
     const codeSent = await this.documentsStore.sendSignCode(document.id);
 
     if (!codeSent) {
       this.snackBar.open('Error al enviar el código de verificación', 'Cerrar', { duration: 4000 });
+      this.isSigningDialogLoading.set(false);
       return;
     }
 
@@ -82,6 +96,7 @@ export class DocumentPage implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      this.isSigningDialogLoading.set(false);
       if (result?.success) {
         this.snackBar.open('Documento firmado exitosamente', 'Cerrar', { duration: 3000 });
         this.documentsStore.loadAllDocuments();

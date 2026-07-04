@@ -124,7 +124,7 @@
                                              'bg-gray-100 text-gray-700': project.status === 'ON_HOLD',
                                              'bg-blue-100 text-blue-700': project.status === 'COMPLETED'}"
                             (click)="openChangeStatusDialog($event, project)">
-                            {{ getDisplayStatus(project.status) }}
+                            {{ getDisplayStatus(project.status) | translate }}
                         </span>
                     </div>
                 </div>
@@ -182,11 +182,11 @@
     <div class="mt-12 bg-white rounded-2xl border border-slate-200/50 shadow-lg p-8">
         <div class="flex justify-between items-center pb-6 border-b border-slate-100 mb-8">
             <div>
-                <h2 class="text-2xl font-bold text-slate-800">Ficha Técnica: {{ currentProject()?.name }}</h2>
-                <p class="text-slate-500 text-xs mt-1 font-semibold">Trazabilidad documental e historial de cambios de estado del proyecto activo</p>
+                <h2 class="text-2xl font-bold text-slate-800">{{ 'projects_dashboard.technical_file' | translate:{name: currentProject()?.name} }}</h2>
+                <p class="text-slate-500 text-xs mt-1 font-semibold">{{ 'projects_dashboard.technical_file_desc' | translate }}</p>
             </div>
             <div class="bg-blue-50 text-blue-700 px-4 py-2 rounded-lg font-semibold text-sm">
-                Avance Real: {{ getAdvance(currentProject()) }}%
+                {{ 'projects_dashboard.real_advance' | translate:{advance: getAdvance(currentProject())} }}
             </div>
         </div>
 
@@ -196,7 +196,7 @@
             <div class="lg:col-span-1 bg-slate-50 p-6 rounded-xl border border-slate-100 flex flex-col justify-between">
                 <div>
                     <h3 class="font-bold text-slate-800 text-lg mb-4 flex items-center gap-2">
-                        <span>📋 Historial de Estados</span>
+                        <span>{{ 'projects_dashboard.status_history' | translate }}</span>
                     </h3>
                     
                     <div class="relative pl-6 border-l-2 border-slate-200 flex flex-col gap-5">
@@ -204,9 +204,9 @@
                         <div class="relative">
                             <span class="absolute -left-[31px] top-1.5 h-3 w-3 rounded-full bg-slate-450 border-2 border-white"></span>
                             <div class="text-[10px] text-slate-400 font-semibold">{{ log.date | date:'dd/MM/yyyy' }}</div>
-                            <div class="text-xs font-bold text-slate-700 mt-0.5">Estado: {{ getDisplayStatus(log.status) }}</div>
-                            <p class="text-slate-500 text-[11px] mt-1 italic">"{{ log.justification || 'Sin justificación' }}"</p>
-                            <span class="text-[10px] text-slate-400 block mt-0.5">Por: {{ log.changedBy }}</span>
+                            <div class="text-xs font-bold text-slate-700 mt-0.5">{{ 'projects_dashboard.status_label' | translate:{status: (getDisplayStatus(log.status) | translate)} }}</div>
+                            <p class="text-slate-500 text-[11px] mt-1 italic">"{{ log.justification || ('projects_dashboard.status_no_justification' | translate) }}"</p>
+                            <span class="text-[10px] text-slate-400 block mt-0.5">{{ 'projects_dashboard.status_by' | translate:{name: log.changedBy} }}</span>
                         </div>
                         }
                     </div>
@@ -216,16 +216,21 @@
                 <button 
                     (click)="showAllStatusLogs(currentProject()!)"
                     class="mt-6 w-full py-2 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-lg text-xs font-bold transition-all cursor-pointer">
-                    Ver historial completo
+                    {{ 'projects_dashboard.view_full_history' | translate }}
                 </button>
                 }
             </div>
 
             <!-- Trazabilidad Documental de Planos (US-21) -->
             <div class="lg:col-span-2">
-                <h3 class="font-bold text-slate-800 text-lg mb-4 flex items-center gap-2">
-                    <span>📐 Trazabilidad de Planos Técnicos</span>
-                </h3>
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-slate-800 text-lg flex items-center gap-2 m-0">
+                        <span>{{ 'projects_dashboard.technical_plans' | translate }}</span>
+                    </h3>
+                    <button mat-flat-button color="primary" class="!bg-slate-800 flex items-center gap-2" [title]="'projects_dashboard.upload_plan_btn' | translate" (click)="uploadPlan()">
+                        <mat-icon>upload_file</mat-icon> <span class="hidden md:inline">{{ 'projects_dashboard.upload_plan_btn' | translate }}</span>
+                    </button>
+                </div>
 
                 <!-- Modo Escritorio -->
                 <div class="hidden md:block">
@@ -234,30 +239,35 @@
                       styleClass="p-datatable-sm p-datatable-striped">
                       <ng-template pTemplate="header">
                           <tr>
-                              <th>Documento</th>
-                              <th>Versión</th>
-                              <th>Expiración</th>
-                              <th>Firma Digital</th>
-                              <th class="w-24">Acciones</th>
+                              <th>{{ 'projects_dashboard.table_document' | translate }}</th>
+                              <th>{{ 'projects_dashboard.table_added_date' | translate }}</th>
+                              <th class="w-32">{{ 'projects_dashboard.table_actions' | translate }}</th>
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-bp>
                           <tr>
                               <td class="font-semibold text-slate-800 text-xs">{{ bp.title }}</td>
-                              <td><span class="bg-blue-50 text-blue-700 text-[11px] px-2 py-0.5 rounded-full font-bold">V{{ bp.version }}</span></td>
                               <td class="text-xs">{{ bp.expirationDate | date:'dd/MM/yyyy' }}</td>
-                              <td>
-                                  <span 
-                                      [class]="'text-[10px] px-2 py-0.5 rounded-full font-semibold ' + (bp.isDigitallySigned ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700')">
-                                      {{ bp.isDigitallySigned ? 'Firmado' : 'Pendiente' }}
-                                  </span>
-                              </td>
-                              <td>
-                                  <button 
-                                      (click)="showBlueprintHistory(bp)"
-                                      class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-[11px] font-bold border-none cursor-pointer">
-                                      Historial
+                              <td class="flex gap-2">
+                                  <button mat-stroked-button [matMenuTriggerFor]="bpMenu" class="!flex !items-center !gap-1 !text-slate-700 !font-bold">
+                                      <mat-icon class="scale-75 -mx-1 text-sm">folder_open</mat-icon> 
+                                      <span>{{ 'projects_dashboard.table_archivero_btn' | translate }}</span>
+                                      <mat-icon class="scale-75 -mx-1 text-sm">arrow_drop_down</mat-icon>
                                   </button>
+                                  <mat-menu #bpMenu="matMenu">
+                                      <button mat-menu-item (click)="downloadBlueprint(bp)">
+                                          <mat-icon>download</mat-icon>
+                                          <span>{{ 'projects_dashboard.action_download' | translate }}</span>
+                                      </button>
+                                      <button mat-menu-item (click)="openEditBlueprint(bp)">
+                                          <mat-icon>edit</mat-icon>
+                                          <span>{{ 'projects_dashboard.action_edit' | translate }}</span>
+                                      </button>
+                                      <button mat-menu-item (click)="openDeleteBlueprint(bp)">
+                                          <mat-icon class="text-red-500">delete</mat-icon>
+                                          <span class="text-red-500">{{ 'projects_dashboard.action_delete' | translate }}</span>
+                                      </button>
+                                  </mat-menu>
                               </td>
                           </tr>
                       </ng-template>
@@ -269,36 +279,42 @@
                     @for (bp of getProjectBlueprints(currentProject()?.id || ''); track bp.title) {
                         <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-col gap-3">
                             <div>
-                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1">Documento</p>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1">{{ 'projects_dashboard.table_document' | translate }}</p>
                                 <p class="font-bold text-slate-800 text-sm">{{ bp.title }}</p>
                             </div>
                             
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1">Versión & Expiración</p>
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1">{{ 'projects_dashboard.table_added_date' | translate }}</p>
                                     <div class="flex items-center gap-2">
-                                        <span class="bg-blue-50 text-blue-700 text-[11px] px-2 py-0.5 rounded-full font-bold">V{{ bp.version }}</span>
                                         <span class="text-xs text-slate-600">{{ bp.expirationDate | date:'dd/MM/yyyy' }}</span>
                                     </div>
                                 </div>
-                                <div class="text-right">
-                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wide mb-1">Firma Digital</p>
-                                    <span 
-                                        [class]="'text-[10px] px-2 py-0.5 rounded-full font-semibold ' + (bp.isDigitallySigned ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700')">
-                                        {{ bp.isDigitallySigned ? 'Firmado' : 'Pendiente' }}
-                                    </span>
-                                </div>
                             </div>
                             
-                            <button 
-                                (click)="showBlueprintHistory(bp)"
-                                class="w-full mt-2 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold border-none cursor-pointer flex justify-center items-center transition-colors">
-                                <mat-icon class="text-sm scale-75">history</mat-icon> Historial de Cambios
+                            <button mat-stroked-button [matMenuTriggerFor]="mobileMenu" class="w-full mt-2 !flex !justify-center !items-center !gap-1 !text-slate-700 !font-bold">
+                                <mat-icon class="scale-75 -mx-1 text-sm">folder_open</mat-icon> 
+                                <span>{{ 'projects_dashboard.table_archivero_btn' | translate }}</span>
+                                <mat-icon class="scale-75 -mx-1 text-sm">arrow_drop_down</mat-icon>
                             </button>
+                            <mat-menu #mobileMenu="matMenu">
+                                <button mat-menu-item (click)="downloadBlueprint(bp)">
+                                    <mat-icon>download</mat-icon>
+                                    <span>{{ 'projects_dashboard.action_download' | translate }}</span>
+                                </button>
+                                <button mat-menu-item (click)="openEditBlueprint(bp)">
+                                    <mat-icon>edit</mat-icon>
+                                    <span>{{ 'projects_dashboard.action_edit' | translate }}</span>
+                                </button>
+                                <button mat-menu-item (click)="openDeleteBlueprint(bp)">
+                                    <mat-icon class="text-red-500">delete</mat-icon>
+                                    <span class="text-red-500">{{ 'projects_dashboard.action_delete' | translate }}</span>
+                                </button>
+                            </mat-menu>
                         </div>
                     } @empty {
                         <div class="bg-slate-50 border-2 border-dashed border-slate-200 rounded-xl p-6 text-center">
-                            <p class="text-slate-500 text-sm">No hay planos registrados.</p>
+                            <p class="text-slate-500 text-sm">{{ 'projects_dashboard.no_plans' | translate }}</p>
                         </div>
                     }
                 </div>
@@ -310,7 +326,7 @@
 
     <!-- Modal: Historial Completo de Estados -->
     <p-dialog 
-        header="Historial Completo de Cambios de Estado" 
+        [header]="'projects_dashboard.full_history_title' | translate" 
         [(visible)]="displayStatusLogsDialog" 
         [modal]="true" 
         [style]="{ width: '450px' }"
@@ -321,11 +337,114 @@
             <div class="relative">
                 <span class="absolute -left-[31px] top-1.5 h-3 w-3 rounded-full bg-slate-800 border-2 border-white"></span>
                 <div class="text-[11px] text-slate-400 font-semibold">{{ log.date | date:'dd/MM/yyyy' }}</div>
-                <div class="text-xs font-bold text-slate-700 mt-0.5">Estado: {{ getDisplayStatus(log.status) }}</div>
-                <p class="text-slate-500 text-[11px] mt-1 italic">"{{ log.justification || 'Sin justificación' }}"</p>
-                <span class="text-[10px] text-slate-400 block mt-0.5">Por: {{ log.changedBy }}</span>
+                <div class="text-xs font-bold text-slate-700 mt-0.5">{{ 'projects_dashboard.status_label' | translate:{status: (getDisplayStatus(log.status) | translate)} }}</div>
+                <p class="text-slate-500 text-[11px] mt-1 italic">"{{ log.justification || ('projects_dashboard.status_no_justification' | translate) }}"</p>
+                <span class="text-[10px] text-slate-400 block mt-0.5">{{ 'projects_dashboard.status_by' | translate:{name: log.changedBy} }}</span>
             </div>
             }
+        </div>
+    </p-dialog>
+
+    <!-- Modal: Upload Plan -->
+    <p-dialog 
+        [header]="'projects_dashboard.upload_plan_title' | translate" 
+        [(visible)]="displayUploadPlanDialog" 
+        [modal]="true" 
+        [style]="{ width: '450px' }"
+        [draggable]="false" 
+        [resizable]="false">
+        <div class="flex flex-col gap-4 mt-2">
+            <p class="text-slate-700 text-sm m-0">{{ 'projects_dashboard.upload_plan_desc' | translate }}</p>
+            <div class="flex gap-3 mt-2">
+                <button mat-stroked-button color="primary" class="flex-1" (click)="confirmUploadPlanSignature(true)">
+                    {{ 'projects_dashboard.upload_plan_requires_signature' | translate }}
+                </button>
+                <button mat-stroked-button class="flex-1 text-slate-600" (click)="confirmUploadPlanSignature(false)">
+                    {{ 'projects_dashboard.upload_plan_no_signature' | translate }}
+                </button>
+            </div>
+            
+            @if (showUploadForm) {
+            <div class="flex flex-col gap-3 mt-4 border-t border-slate-200 pt-4">
+                <div class="flex flex-col gap-1">
+                    <label class="text-xs font-bold text-slate-700">{{ 'projects_dashboard.upload_plan_name' | translate }}</label>
+                    <input type="text" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm" [placeholder]="'projects_dashboard.upload_plan_name_placeholder' | translate" [(ngModel)]="uploadPlanData.title" />
+                </div>
+                <div class="flex flex-col gap-1 mt-2">
+                    <label class="text-xs font-bold text-slate-700">{{ 'projects_dashboard.upload_plan_file' | translate }}</label>
+                    <div class="relative flex items-center justify-center w-full mt-1">
+                        <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-lg cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors">
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6 text-center">
+                                <mat-icon class="text-slate-400 mb-2">cloud_upload</mat-icon>
+                                <p class="mb-1 text-sm text-slate-500"><span class="font-semibold">{{ 'projects_dashboard.upload_plan_click_to_upload' | translate }}</span> {{ 'projects_dashboard.upload_plan_drag_drop' | translate }}</p>
+                                <p class="text-xs text-slate-400">{{ 'projects_dashboard.upload_plan_file_formats' | translate }}</p>
+                                @if (uploadPlanData.file) {
+                                    <p class="text-sm font-bold text-blue-600 mt-2 truncate max-w-xs">{{ uploadPlanData.file.name }}</p>
+                                }
+                            </div>
+                            <input id="dropzone-file" type="file" class="hidden" accept="application/pdf,image/*" (change)="onUploadPlanFileChange($event)" />
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end gap-2 mt-4">
+                    <button mat-button (click)="displayUploadPlanDialog = false">
+                        {{ 'projects_dashboard.cancel' | translate }}
+                    </button>
+                    <button mat-flat-button color="primary" class="!bg-blue-600 !text-white" [disabled]="!uploadPlanData.title || !uploadPlanData.file" (click)="submitUploadPlan()">
+                        {{ 'projects_dashboard.save' | translate }}
+                    </button>
+                </div>
+            </div>
+            }
+        </div>
+    </p-dialog>
+
+    <!-- Modal: Editar Plano -->
+    <p-dialog 
+        [header]="'projects_dashboard.edit_plan_title' | translate" 
+        [(visible)]="displayEditPlanDialog" 
+        [modal]="true" 
+        [style]="{ width: '400px' }"
+        [draggable]="false" 
+        [resizable]="false">
+        <div class="flex flex-col gap-4 mt-2" *ngIf="planToEdit">
+            <div class="flex flex-col gap-1">
+                <label class="text-xs font-bold text-slate-700">{{ 'projects_dashboard.upload_plan_name' | translate }}</label>
+                <input type="text" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm" [(ngModel)]="planToEdit.title" />
+            </div>
+            <div class="flex justify-end gap-2 mt-4">
+                <button mat-button (click)="displayEditPlanDialog = false">
+                    {{ 'projects_dashboard.cancel' | translate }}
+                </button>
+                <button mat-flat-button color="primary" class="!bg-blue-600 !text-white" [disabled]="!planToEdit.title" (click)="submitEditBlueprint()">
+                    {{ 'projects_dashboard.save' | translate }}
+                </button>
+            </div>
+        </div>
+    </p-dialog>
+
+    <!-- Modal: Eliminar Plano -->
+    <p-dialog 
+        [header]="'projects_dashboard.delete_plan_title' | translate" 
+        [(visible)]="displayDeletePlanDialog" 
+        [modal]="true" 
+        [style]="{ width: '400px' }"
+        [draggable]="false" 
+        [resizable]="false">
+        <div class="flex flex-col gap-4 mt-2" *ngIf="planToDelete">
+            <p class="text-slate-700 text-sm m-0">{{ 'projects_dashboard.delete_plan_desc' | translate }}</p>
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">
+                <p class="font-bold text-slate-800 text-sm m-0">{{ planToDelete.title }}</p>
+            </div>
+            <div class="flex justify-end gap-2 mt-4">
+                <button mat-button (click)="displayDeletePlanDialog = false">
+                    {{ 'projects_dashboard.cancel' | translate }}
+                </button>
+                <button mat-flat-button color="warn" (click)="submitDeleteBlueprint()">
+                    {{ 'projects_dashboard.action_delete' | translate }}
+                </button>
+            </div>
         </div>
     </p-dialog>
 

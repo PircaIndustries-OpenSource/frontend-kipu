@@ -1,25 +1,25 @@
-<h2 mat-dialog-title class="font-bold text-xl mb-4">Cambiar Estado del Proyecto</h2>
+<h2 mat-dialog-title class="font-bold text-xl mb-4">{{ 'projects_dashboard.change_status_title' | translate }}</h2>
 
 <mat-dialog-content>
-  <p class="text-sm text-gray-500 mb-4">Actualiza el estado operativo para <strong>{{ data.project.name }}</strong></p>
+  <p class="text-sm text-gray-500 mb-4">{{ 'projects_dashboard.change_status_desc' | translate:{name: data.project.name} }}</p>
   
   <form [formGroup]="statusForm" class="flex flex-col gap-4 mt-2">
     <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Nuevo Estado</mat-label>
+      <mat-label>{{ 'projects_dashboard.change_status_new_state' | translate }}</mat-label>
       <mat-select formControlName="status">
-        <mat-option value="PLANNED">Planificación</mat-option>
-        <mat-option value="IN_PROGRESS">En ejecución</mat-option>
-        <mat-option value="ON_HOLD">Pausado (Paralizada)</mat-option>
-        <mat-option value="COMPLETED">Completado</mat-option>
+        <mat-option value="PLANNED">{{ 'projects_dashboard.status_planned' | translate }}</mat-option>
+        <mat-option value="IN_PROGRESS">{{ 'projects_dashboard.status_in_progress' | translate }}</mat-option>
+        <mat-option value="ON_HOLD">{{ 'projects_dashboard.status_on_hold' | translate }}</mat-option>
+        <mat-option value="COMPLETED">{{ 'projects_dashboard.status_completed' | translate }}</mat-option>
       </mat-select>
     </mat-form-field>
 
     @if (statusForm.get('status')?.value === 'ON_HOLD') {
       <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Justificación de la Paralización</mat-label>
-        <textarea matInput formControlName="statusJustification" rows="3" placeholder="Ingresa el motivo obligatorio por el cual se paraliza la obra"></textarea>
+        <mat-label>{{ 'projects_dashboard.change_status_justification' | translate }}</mat-label>
+        <textarea matInput formControlName="statusJustification" rows="3" [placeholder]="'projects_dashboard.change_status_justification_placeholder' | translate"></textarea>
         @if (statusForm.get('statusJustification')?.hasError('required')) {
-          <mat-error>La justificación es obligatoria para paralizar el proyecto.</mat-error>
+          <mat-error>{{ 'projects_dashboard.change_status_justification_error' | translate }}</mat-error>
         }
       </mat-form-field>
     }
@@ -27,8 +27,8 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end" class="pb-4 pr-4">
-  <button mat-stroked-button mat-dialog-close>Cancelar</button>
+  <button mat-stroked-button mat-dialog-close>{{ 'projects_dashboard.cancel' | translate }}</button>
   <button mat-flat-button color="primary" (click)="onSubmit()" [disabled]="statusForm.invalid">
-    Guardar Cambios
+    {{ 'projects_dashboard.save' | translate }}
   </button>
 </mat-dialog-actions>
