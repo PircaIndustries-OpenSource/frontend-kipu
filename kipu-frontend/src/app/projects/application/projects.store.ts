@@ -3,8 +3,6 @@ import { ProjectEntity } from '../domain/project.entity';
 import { ProjectsApi } from '../infrastructure/projects.api';
 import { AuthStore } from '../../identity/application/auth.store';
 import { TeamUsersApi } from '../../team/team-users/infrastructure/team-users.api';
-import { forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -28,23 +26,8 @@ export class ProjectsStore {
   loadProjects() {
     if (this.projectsSignal().length === 0) {
       const email = this.authStore.currentUser()?.email || '';
-      this.projectsApi.getAll(email).subscribe((created) => {
-        this.teamUsersApi.getTeamUsersByEmail(email).subscribe((teamUsers) => {
-          const projectIds = [...new Set(teamUsers.map((tu) => tu.projectId))];
-          if (projectIds.length === 0) {
-            this.projectsSignal.set(created);
-            return;
-          }
-          const projectCalls = projectIds.map((pid) => this.projectsApi.getById(pid));
-          forkJoin(projectCalls).subscribe((teamProjects) => {
-            const merged = new Map<string, ProjectEntity>();
-            created.forEach((p) => merged.set(p.id, p));
-            teamProjects.forEach((p) => {
-              if (!merged.has(p.id)) merged.set(p.id, p);
-            });
-            this.projectsSignal.set(Array.from(merged.values()));
-          });
-        });
+      this.projectsApi.getAll(email).subscribe((data) => {
+        this.projectsSignal.set(data);
       });
     }
   }

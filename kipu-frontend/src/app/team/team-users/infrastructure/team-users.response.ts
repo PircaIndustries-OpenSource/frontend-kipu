@@ -8,5 +8,6 @@ export interface TeamUsersResource {
   password: string,
   isActive: boolean,
   hasUnreadNotifications: boolean,
-  role: string
+  role: string,
+  projectId: string
 }

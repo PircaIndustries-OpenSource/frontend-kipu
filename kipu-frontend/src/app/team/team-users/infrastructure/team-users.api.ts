@@ -27,12 +27,6 @@ export class TeamUsersApi {
       .pipe(map((response) => TeamUsersAssembler.toEntitiesFromResponse(response)));
   }
 
-  getTeamUsersByEmail(email: string): Observable<TeamUsersEntity[]> {
-    return this.http
-      .get<TeamUsersResponse>(`${this.teamUsersUrl}/by-email?email=${encodeURIComponent(email)}`)
-      .pipe(map((response) => TeamUsersAssembler.toEntitiesFromResponse(response)));
-  }
-
   getCurrentUser(): Observable<Identity | null> {
     const storedUser = localStorage.getItem('currentUser');
 

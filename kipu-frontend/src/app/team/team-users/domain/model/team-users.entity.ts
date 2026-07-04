@@ -5,6 +5,7 @@ export class TeamUsersEntity {
   email: string;
   isActive: boolean;
   role: string;
+  projectId: string;
   constructor() {
     this.id = "";
     this.userId = 0;
@@ -12,5 +13,6 @@ export class TeamUsersEntity {
     this.email = "";
     this.isActive = true;
     this.role = "";
+    this.projectId = "";
   }
 }

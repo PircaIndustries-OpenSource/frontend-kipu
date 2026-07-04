@@ -10,7 +10,8 @@ export class TeamUsersAssembler {
       fullName: resource.fullName || resource.username || 'Usuario Invitado',
       email: resource.email,
       isActive: resource.isActive !== undefined ? resource.isActive : true,
-      role: resource.role
+      role: resource.role,
+      projectId: resource.projectId || ''
     };
   }
 
@@ -32,8 +33,8 @@ export class TeamUsersAssembler {
       fullName: identity.name!,
       email: identity.email,
       isActive: true,
-      role: identity.role!
-
+      role: identity.role!,
+      projectId: ''
     }
   }
 }
