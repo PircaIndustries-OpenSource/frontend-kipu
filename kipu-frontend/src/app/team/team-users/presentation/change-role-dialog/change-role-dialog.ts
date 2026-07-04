@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-change-role-dialog',
   standalone: true,
-  imports: [MatDialogModule, MatFormFieldModule, MatSelectModule, MatButtonModule, TranslatePipe, FormsModule],
+  imports: [MatDialogModule, MatFormFieldModule, MatSelectModule, MatButtonModule, FormsModule],
   template: `
     <h2 mat-dialog-title>Cambiar Rol</h2>
     <mat-dialog-content>

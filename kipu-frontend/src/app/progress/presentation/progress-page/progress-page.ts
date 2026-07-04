@@ -9,6 +9,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ProgressStore } from '../../application/progress.store';
 import { AutocompleteFilterList } from '../../../shared/presentation/autocomplete-filter-list/autocomplete-filter-list';
@@ -29,6 +30,7 @@ import { UploadService } from '../../../shared/infrastructure/upload.service';
     MatIconModule,
     MatTabsModule,
     MatDialogModule,
+    MatSnackBarModule,
     TranslatePipe,
     AutocompleteFilterList,
     MatDatepickerModule,
@@ -43,18 +45,29 @@ export class ProgressPage implements OnInit {
   private readonly projectsStore = inject(ProjectsStore);
   private readonly teamUsersStore = inject(TeamUsersStore);
   readonly dialog = inject(MatDialog);
+  private snackBar = inject(MatSnackBar);
   private readonly fb = inject(FormBuilder);
 
   readonly currentView = signal<'list' | 'create'>('list');
   readonly selectedWeather = signal<string>('sunny');
   progressForm: FormGroup;
 
-  readonly gestoresOptions = computed(() =>
-    this.teamUsersStore
-      .teamUsers()
+  readonly isProjectOnHold = (): boolean => {
+    const project = this.projectsStore.currentProject();
+    return project?.status === 'SUSPENDED';
+  };
+
+  readonly gestoresOptions = computed(() => {
+    const users = this.teamUsersStore.teamUsers()
       .filter((user: TeamUsersEntity) => user.role === 'Gestor' || user.role === 'Gestor Operativo')
-      .map((user: TeamUsersEntity) => user.fullName),
-  );
+      .map((user: TeamUsersEntity) => user.fullName);
+    
+    const curr = this.teamUsersStore.currentUser();
+    if (curr && curr.fullName && !users.includes(curr.fullName)) {
+      users.unshift(curr.fullName);
+    }
+    return users;
+  });
   readonly specialtiesOptions = ['Estructuras', 'Instalaciones', 'Arquitectura'];
   readonly activityOptions = ['Vaciado de Losa N3', 'Instalación Eléctrica', 'Acabado de Muros'];
   protected readonly mockPhotos = [
@@ -100,6 +113,13 @@ export class ProgressPage implements OnInit {
   }
 
   openCreateForm(): void {
+    if (this.isProjectOnHold()) {
+      this.snackBar.open('Debes reanudar el proyecto pasando su estado a "Planificación" o "En Ejecución" antes de agregar nuevos avances.', 'Entendido', {
+        duration: 5000,
+        panelClass: ['bg-red-500', 'text-white', 'font-bold']
+      });
+      return;
+    }
     this.progressForm.reset({ percentage: 0, weather: 'sunny' });
     this.selectedWeather.set('sunny');
     this.currentView.set('create');
@@ -117,6 +137,7 @@ export class ProgressPage implements OnInit {
   saveProgress(): void {
     if (this.progressForm.valid) {
       const val = this.progressForm.value;
+      const advancePercentage = Number(val.percentage) || 0;
 
       // Get current project context from store
       const currentId = this.projectsStore.currentProjectId() || 'unknown';
@@ -129,8 +150,8 @@ export class ProgressPage implements OnInit {
         activityName: val.activityName,
         details: val.location || '',
         specialty: val.specialty,
-        status: val.percentage === 100 ? 'Finished' : 'Active',
-        currentPercentage: val.percentage,
+        status: advancePercentage === 100 ? 'Finished' : 'Active',
+        currentPercentage: advancePercentage,
         startDate: new Date(),
         endDate: new Date(),
         lastUpdate: new Date(val.date),
@@ -141,6 +162,7 @@ export class ProgressPage implements OnInit {
       };
 
       this.store.addProgress(newEntry);
+      
       this.currentView.set('list');
     }
   }

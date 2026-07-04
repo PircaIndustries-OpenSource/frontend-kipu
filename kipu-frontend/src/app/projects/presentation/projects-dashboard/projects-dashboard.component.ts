@@ -105,7 +105,6 @@ export class ProjectsDashboardComponent implements OnInit {
 
     getAdvance(project: ProjectEntity | null): number {
         if (!project) return 0;
-        if (project.status === 'COMPLETED') return 100;
 
         // Fetch advances for this project
         const projectAdvances = this.progressStore.allProgress().filter(
@@ -113,23 +112,11 @@ export class ProjectsDashboardComponent implements OnInit {
         );
 
         if (projectAdvances.length === 0) {
-            return project.status === 'IN_PROGRESS' ? 45 : 10;
+            return 0;
         }
 
-        // Add weights fallback
-        const advancesWithWeights = projectAdvances.map(item => ({
-            ...item,
-            weight: item.weight !== undefined ? item.weight : 1
-        }));
-
-        const totalWeight = advancesWithWeights.reduce((sum, item) => sum + (item.weight || 0), 0);
-        if (totalWeight === 0) return 0;
-
-        const completedWeight = advancesWithWeights.reduce((sum, item) => {
-            return sum + ((item.weight || 0) * (item.currentPercentage || 0) / 100);
-        }, 0);
-
-        return Math.round((completedWeight / totalWeight) * 100);
+        const totalProgress = projectAdvances.reduce((sum, item) => sum + (item.currentPercentage || 0), 0);
+        return Math.min(100, Math.round(totalProgress));
     }
 
     getRNCs(project: ProjectEntity | null): number {
@@ -194,18 +181,20 @@ export class ProjectsDashboardComponent implements OnInit {
     }
 
     getProjectStatusLogs(projectId: string): any[] {
-        return [
-            { date: '2026-05-20T10:00:00.000Z', status: 'IN_PROGRESS', justification: 'Inicio de vaciado de columnas del sótano.', changedBy: 'Paula Montoya' },
-            { date: '2026-05-15T14:30:00.000Z', status: 'IN_PROGRESS', justification: 'Planos aprobados y licencia obtenida.', changedBy: 'Carlos Ramos' },
-            { date: '2026-05-10T09:00:00.000Z', status: 'PLANNED', justification: 'Presentación de cronograma valorizado.', changedBy: 'Ana Torres' },
-            { date: '2026-05-08T11:15:00.000Z', status: 'ON_HOLD', justification: 'Falta de materiales críticos en almacén.', changedBy: 'Juan Pérez' },
-            { date: '2026-05-05T08:00:00.000Z', status: 'PLANNED', justification: 'Ajuste de presupuesto de estructuras.', changedBy: 'Paula Montoya' },
-            { date: '2026-05-01T16:00:00.000Z', status: 'PLANNED', justification: 'Registro inicial de proyecto.', changedBy: 'Paula Montoya' },
-        ];
+        const localData = localStorage.getItem('kipu_status_logs');
+        let allLogs = [];
+        if (localData) {
+            try {
+                allLogs = JSON.parse(localData);
+            } catch(e) {}
+        }
+        
+        const projectLogs = allLogs.filter((l: any) => l.projectId === projectId);
+        return projectLogs.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
     }
 
     getProjectBlueprints(projectId: string): any[] {
-        return this.blueprints();
+        return this.blueprints().filter((bp: any) => bp.projectId === projectId);
     }
 
     getInitialBlueprints(): any[] {
@@ -218,6 +207,7 @@ export class ProjectsDashboardComponent implements OnInit {
         return [
             {
                 id: 'bp-01',
+                projectId: 'proj-01',
                 title: 'Plano Estructural Cimentación - E-01',
                 version: '1.2',
                 expirationDate: '2026-12-31T23:59:59.000Z',
@@ -230,6 +220,7 @@ export class ProjectsDashboardComponent implements OnInit {
             },
             {
                 id: 'bp-02',
+                projectId: 'proj-01',
                 title: 'Plano de Instalaciones Sanitarias - IS-01',
                 version: '1.0',
                 expirationDate: '2027-06-30T23:59:59.000Z',
@@ -240,6 +231,7 @@ export class ProjectsDashboardComponent implements OnInit {
             },
             {
                 id: 'bp-03',
+                projectId: 'proj-02',
                 title: 'Especificaciones Técnicas Concreto del Proyecto',
                 version: '2.0',
                 expirationDate: '2026-11-30T23:59:59.000Z',
@@ -283,6 +275,7 @@ export class ProjectsDashboardComponent implements OnInit {
             
             const newPlan = {
                 id: 'bp-' + Date.now(),
+                projectId: this.currentProject()?.id || '',
                 fileId: fileId,
                 originalFileName: this.uploadPlanData.file.name,
                 fileType: this.uploadPlanData.file.type,

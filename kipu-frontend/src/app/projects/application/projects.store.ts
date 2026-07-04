@@ -74,7 +74,28 @@ export class ProjectsStore {
       this.projectsSignal.update((projects) =>
         projects.map((p) => (p.id === id ? updatedProject : p))
       );
+      this.pushStatusLog(id, status, justification || '');
     });
+  }
+
+  pushStatusLog(projectId: string, status: string, justification: string) {
+    const localData = localStorage.getItem('kipu_status_logs');
+    let logs = [];
+    if (localData) {
+        try {
+            logs = JSON.parse(localData);
+        } catch(e) {}
+    }
+    const currentUser = this.authStore.currentUser();
+    const newLog = {
+      projectId,
+      date: new Date().toISOString(),
+      status,
+      justification,
+      changedBy: currentUser?.name || currentUser?.email || 'Sistema'
+    };
+    logs.push(newLog);
+    localStorage.setItem('kipu_status_logs', JSON.stringify(logs));
   }
 
   deleteProject(id: string) {
@@ -83,6 +104,25 @@ export class ProjectsStore {
       if (this.currentProjectIdSignal() === id) {
         this.currentProjectIdSignal.set(null);
         localStorage.removeItem('currentProjectId');
+      }
+
+      // Cleanup local blueprints and status logs
+      const blueprintsData = localStorage.getItem('kipu_blueprints');
+      if (blueprintsData) {
+        try {
+          const blueprints = JSON.parse(blueprintsData);
+          const filteredBlueprints = blueprints.filter((bp: any) => bp.projectId !== id);
+          localStorage.setItem('kipu_blueprints', JSON.stringify(filteredBlueprints));
+        } catch (e) {}
+      }
+
+      const logsData = localStorage.getItem('kipu_status_logs');
+      if (logsData) {
+        try {
+          const logs = JSON.parse(logsData);
+          const filteredLogs = logs.filter((log: any) => log.projectId !== id);
+          localStorage.setItem('kipu_status_logs', JSON.stringify(filteredLogs));
+        } catch (e) {}
       }
     });
   }

@@ -18,8 +18,9 @@ export interface ProjectProgress {
   responsible?: string;
   workers?: number;
   weather?: string;
-  weight?: number;
   isMiniAdvance?: boolean;
+  weight?: number;
+  parentId?: number;
 }
 
 export type ProgressStatus = 'Active' | 'Finished' | 'Delayed';

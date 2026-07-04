@@ -36,7 +36,7 @@
               </app-autocomplete-filter-list>
             </div>
             <div class="w-full sm:w-[300px]">
-              <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full bg-white">
+              <mat-form-field subscriptSizing="dynamic" class="w-full bg-white">
                 <mat-date-range-input [rangePicker]="picker">
                   <input matStartDate [placeholder]="'progress.filters.start_date' | translate" #startInput>
                   <input matEndDate [placeholder]="'progress.filters.end_date' | translate" #endInput (dateChange)="onDateRangeChange(startInput.valueAsDate, endInput.valueAsDate)">

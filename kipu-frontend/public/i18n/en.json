@@ -230,6 +230,7 @@
     "upload_plan_btn": "Upload Plan",
     "status_planned": "Planning",
     "status_in_progress": "In progress",
+    "status_suspended": "On hold",
     "status_on_hold": "On hold",
     "status_completed": "Completed",
     "upload_plan_title": "Upload Plan",
