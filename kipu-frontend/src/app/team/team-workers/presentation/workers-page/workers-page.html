@@ -54,44 +54,67 @@
       <div class="table-body max-h-120 overflow-y-scroll rounded-b-md">
 
         @for (worker of filteredWorkers; track worker.id) {
-          <div class="flex flex-col md:grid md:grid-cols-6 border-2 border-(--color-neutral-border) w-full p-4 md:p-3 place-content-center align-middle rounded-xl md:rounded-none mb-3 md:mb-0 shadow-sm md:shadow-none bg-white gap-2 md:gap-0">
-            <div class="id-number flex justify-center">
-              <h2 class="text-base">{{worker.dni}}</h2>
+          <div class="flex flex-col md:grid md:grid-cols-6 border-2 border-(--color-neutral-border) w-full p-4 md:p-3 place-content-center align-middle rounded-xl md:rounded-none mb-3 md:mb-0 shadow-sm md:shadow-none bg-white gap-3 md:gap-0">
+            <div class="flex items-center gap-3 md:justify-center">
+              <div class="block md:hidden w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent font-semibold text-sm shrink-0">
+                {{ getInitials(worker.fullName) }}
+              </div>
+              <div class="flex flex-col md:items-center md:justify-center w-full">
+                <span class="text-xs text-gray-400 uppercase tracking-wide md:hidden">{{'team.workers.register.tab-dni' | translate}}</span>
+                <h2 class="text-base">{{worker.dni}}</h2>
+              </div>
             </div>
 
-            <div class="fullname flex justify-center">
+            <div class="flex flex-col md:items-center md:justify-center">
+              <div class="hidden md:block w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent font-semibold text-sm shrink-0 mb-1">
+                {{ getInitials(worker.fullName) }}
+              </div>
+              <span class="text-xs text-gray-400 uppercase tracking-wide md:hidden">{{'team.workers.register.tab-name' | translate}}</span>
               <h2 class="text-base">{{worker.fullName}}</h2>
             </div>
 
-            <div class="position flex justify-center">
-              <h2 class="text-base">{{worker.role}}</h2>
+            <div class="flex flex-col md:items-center md:justify-center">
+              <span class="text-xs text-gray-400 uppercase tracking-wide md:hidden">{{'team.workers.register.tab-role' | translate}}</span>
+              <span [class]="'px-2 py-0.5 rounded-md text-xs font-medium w-fit ' + getRoleBadgeClass(worker.role)">
+                {{ getRoleTranslation(worker.role) }}
+              </span>
             </div>
 
-            <div class="work-status flex justify-center">
+            <div class="flex flex-col md:items-center md:justify-center">
+              <span class="text-xs text-gray-400 uppercase tracking-wide md:hidden">{{'team.workers.register.tab-status' | translate}}</span>
               @if (worker.isActive){
-                <h3 class="p-2 bg-[#CAFFC9] w-fit rounded-md text-(--color-success)">{{'team.workers.register.tab-status-active' | translate}}</h3>
+                <h3 class="p-1.5 px-3 bg-[#CAFFC9] w-fit rounded-md text-(--color-success) text-xs font-medium">{{'team.workers.register.tab-status-active' | translate}}</h3>
               }
               @else {
-                <h3 class="p-2 bg-(--color-neutral-border) w-fit rounded-md text-(--color-info-soft)">{{'team.workers.register.tab-status-inactive' | translate}}</h3>
+                <h3 class="p-1.5 px-3 bg-(--color-neutral-border) w-fit rounded-md text-(--color-info-soft) text-xs font-medium">{{'team.workers.register.tab-status-inactive' | translate}}</h3>
               }
             </div>
 
-            <div class="assigned-tools flex flex-col justify-center items-center text-center h-full px-2">
-              @if (worker.assignedTools && worker.assignedTools.length > 0) {
-                <h2 class="text-base font-medium text-slate-700">
-                  {{ worker.assignedTools.join(', ') }}
-                </h2>
-              } @else {
-                <h2 class="text-sm italic text-slate-400">
-                  {{ 'team.workers.register.no-tools' | translate }}
-                </h2>
-              }
+            <div class="flex flex-col md:items-center md:justify-center min-w-0">
+              <span class="text-xs text-gray-400 uppercase tracking-wide md:hidden">{{'team.workers.register.tab-tools' | translate}}</span>
+              <div class="flex flex-wrap gap-1 max-w-full">
+                @if (worker.assignedTools && worker.assignedTools.length > 0) {
+                  @for (tool of worker.assignedTools.slice(0, 2); track tool) {
+                    <span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded truncate max-w-28 md:max-w-20">{{ tool }}</span>
+                  }
+                  @if (worker.assignedTools.length > 2) {
+                    <span class="text-xs text-slate-400">+{{ worker.assignedTools.length - 2 }}</span>
+                  }
+                } @else {
+                  <span class="text-xs italic text-slate-400">
+                    {{ 'team.workers.register.no-tools' | translate }}
+                  </span>
+                }
+              </div>
             </div>
 
-            <div class="action flex justify-center">
-              <button class="text-red-600 hover:text-red-800 hover:bg-red-50 font-medium text-base transition-all duration-200 px-3 py-1 cursor-pointer rounded-md"
+            <div class="flex md:items-center md:justify-center">
+              <span class="text-xs text-gray-400 uppercase tracking-wide md:hidden">{{'team.workers.register.tab-action' | translate}}</span>
+              <button class="text-red-600 hover:text-red-800 hover:bg-red-50 font-medium transition-all duration-200 px-2 py-1 cursor-pointer rounded-md flex items-center gap-1 w-fit"
                       (click)="deleteWorker(worker)">
-                {{'team.workers.register.tab-btn-delete' | translate}}</button>
+                <mat-icon class="text-lg md:mr-0">delete</mat-icon>
+                <span class="md:hidden">{{'team.workers.register.tab-btn-delete' | translate}}</span>
+              </button>
             </div>
           </div>
 

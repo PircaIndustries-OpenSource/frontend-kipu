@@ -52,6 +52,33 @@ export class WorkersPage implements OnInit {
     );
   }
 
+  getInitials(name: string): string {
+    return name
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  }
+
+  getRoleBadgeClass(role: string): string {
+    const map: Record<string, string> = {
+      'Administrador': 'bg-purple-100 text-purple-700',
+      'Logística': 'bg-blue-100 text-blue-700',
+      'Gestor Operativo': 'bg-green-100 text-green-700',
+    };
+    return map[role] || 'bg-gray-100 text-gray-700';
+  }
+
+  getRoleTranslation(role: string): string {
+    const map: Record<string, string> = {
+      'Administrador': 'Administrador',
+      'Logística': 'Logística',
+      'Gestor Operativo': 'Gestor Operativo',
+    };
+    return map[role] || role;
+  }
+
   clearSearch() {
     this.searchControl.setValue('');
   }
