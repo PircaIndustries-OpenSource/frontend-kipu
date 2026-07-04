@@ -32,6 +32,13 @@ export class ProjectsStore {
     }
   }
 
+  reloadProjects() {
+    const email = this.authStore.currentUser()?.email || '';
+    this.projectsApi.getAll(email).subscribe((data) => {
+      this.projectsSignal.set(data);
+    });
+  }
+
   setCurrentProject(id: string) {
     localStorage.setItem('currentProjectId', id);
     this.currentProjectIdSignal.set(id);

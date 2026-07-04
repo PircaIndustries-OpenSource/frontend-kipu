@@ -126,7 +126,7 @@ export class ProjectsDashboardComponent implements OnInit {
     });
 
     ngOnInit() {
-        this.projectsStore.loadProjects();
+        this.projectsStore.reloadProjects();
         this.progressStore.loadProgress();
 
         setTimeout(() => {

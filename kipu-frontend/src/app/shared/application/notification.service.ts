@@ -164,10 +164,12 @@ export class NotificationService {
           // Check if it already exists
           const exists = this.notificationsSignal().find(n => n.id === `inv-${inv.id}`);
           if (!exists) {
+            const projectDisplay = inv.projectName || 'un proyecto';
+            const inviterDisplay = inv.invitedBy || 'Alguien';
             const newNotif: AppNotification = {
               id: `inv-${inv.id}`,
-              title: 'Nueva Invitación a Proyecto',
-              description: `Has sido invitado al proyecto con rol: ${inv.role}`,
+              title: `Invitación: ${projectDisplay}`,
+              description: `${inviterDisplay} te ha invitado con rol: ${inv.role}`,
               type: 'invitacion',
               route: `/invitations/${inv.id}`,
               projectId: '',

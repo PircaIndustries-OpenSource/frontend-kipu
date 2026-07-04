@@ -109,6 +109,9 @@ export class TeamUsersStore {
 
   inviteUser(userData: any) {
     const projectId = this.projectStateService.currentProjectId() || '1';
+    const projectName = this.projectStateService.currentProjectName() || '';
+    const stored = localStorage.getItem('currentUser');
+    const invitedBy = stored ? (JSON.parse(stored).name || JSON.parse(stored).email) : '';
     const nameParts = (userData.fullName || '').split(' ');
     const firstName = nameParts[0] || '';
     const lastName = nameParts.slice(1).join(' ') || '';
@@ -119,6 +122,8 @@ export class TeamUsersStore {
       lastName: lastName,
       role: userData.role,
       projectId: projectId,
+      projectName: projectName,
+      invitedBy: invitedBy,
       status: 'PENDING',
     };
 
