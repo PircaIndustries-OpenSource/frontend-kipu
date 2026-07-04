@@ -69,10 +69,13 @@
                   } @else {
                     <button
                       (click)="openSignatureDialog(doc)"
+                      [disabled]="isSigningDialogLoading()"
+                      [class.opacity-50]="isSigningDialogLoading()"
+                      [class.cursor-not-allowed]="isSigningDialogLoading()"
                       class="px-4 py-2 bg-accent text-white rounded-lg text-sm font-medium hover:brightness-110 transition-all active:scale-95 cursor-pointer flex items-center gap-1"
                     >
-                      <mat-icon class="text-sm">edit</mat-icon>
-                      {{ 'signatures.page.btn-sign' | translate }}
+                      <mat-icon class="text-sm">{{ isSigningDialogLoading() ? 'hourglass_empty' : 'edit' }}</mat-icon>
+                      {{ isSigningDialogLoading() ? 'Cargando...' : ('signatures.page.btn-sign' | translate) }}
                     </button>
                   }
                 </div>

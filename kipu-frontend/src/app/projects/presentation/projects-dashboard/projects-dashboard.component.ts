@@ -1,9 +1,12 @@
-import { Component, inject, OnInit, signal, computed } from '@angular/core';
+import { Component, inject, OnInit, signal, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslateModule } from '@ngx-translate/core';
 import { CreateProjectDialogComponent } from '../components/create-project-dialog/create-project-dialog.component';
 import { DeleteProjectDialogComponent } from '../components/delete-project-dialog/delete-project-dialog.component';
@@ -12,6 +15,8 @@ import { ChangeProjectStatusDialogComponent } from '../components/change-project
 import { SelectProjectDialogComponent } from '../components/select-project-dialog/select-project-dialog.component';
 import { ProjectEntity } from '../../domain/project.entity';
 import { ProgressStore } from '../../../progress/application/progress.store';
+import { TeamUsersApi } from '../../../team/team-users/infrastructure/team-users.api';
+import { Router } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 
@@ -26,7 +31,10 @@ import { TableModule } from 'primeng/table';
         MatDialogModule,
         TranslateModule,
         DialogModule,
-        TableModule
+        TableModule,
+        FormsModule,
+        MatMenuModule,
+        MatSnackBarModule
     ],
     templateUrl: './projects-dashboard.component.html',
 })
@@ -34,18 +42,56 @@ export class ProjectsDashboardComponent implements OnInit {
     private dialog = inject(MatDialog);
     private projectsStore = inject(ProjectsStore);
     private progressStore = inject(ProgressStore);
+    private teamUsersApi = inject(TeamUsersApi);
+    private router = inject(Router);
+    private snackBar = inject(MatSnackBar);
 
     projects = this.projectsStore.projects;
     currentProjectId = this.projectsStore.currentProjectId;
     currentProject = this.projectsStore.currentProject;
     isLoading = signal<boolean>(true);
     searchQuery = signal<string>('');
+    projectMembersCount = signal<Record<string, number>>({});
+    blueprints = signal<any[]>([]);
+
+    constructor() {
+        effect(() => {
+            const currentProjs = this.projects();
+            if (currentProjs.length > 0) {
+                currentProjs.forEach(p => {
+                    if (this.projectMembersCount()[p.id] === undefined) {
+                        this.teamUsersApi.getTeamUsersByProject(p.id).subscribe({
+                            next: (users: any[]) => {
+                                this.projectMembersCount.update(counts => ({
+                                    ...counts,
+                                    [p.id]: users ? users.length : 1
+                                }));
+                            },
+                            error: () => {
+                                this.projectMembersCount.update(counts => ({
+                                    ...counts,
+                                    [p.id]: 1
+                                }));
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
 
     // Dialog state variables
     displayStatusLogsDialog = false;
     displayBlueprintHistoryDialog = false;
     activeLogs: any[] = [];
+    displayUploadPlanDialog = false;
+    showUploadForm = false;
+    uploadPlanData = { title: '', file: null as File | null };
     selectedBlueprint: any = null;
+    displayEditPlanDialog = false;
+    displayDeletePlanDialog = false;
+    planToEdit: any = null;
+    planToDelete: any = null;
 
     filteredProjects = computed(() => {
         const query = this.searchQuery().toLowerCase();
@@ -96,11 +142,7 @@ export class ProjectsDashboardComponent implements OnInit {
 
     getCollaborators(project: ProjectEntity | null): number {
         if (!project) return 0;
-        let hash = 0;
-        for (let i = 0; i < project.id.length; i++) {
-            hash = project.id.charCodeAt(i) + ((hash << 5) - hash);
-        }
-        return Math.abs(hash + 2) % 9 + 1;
+        return this.projectMembersCount()[project.id] || 1;
     }
 
     averageAdvance = computed(() => {
@@ -128,6 +170,7 @@ export class ProjectsDashboardComponent implements OnInit {
     ngOnInit() {
         this.projectsStore.reloadProjects();
         this.progressStore.loadProgress();
+        this.blueprints.set(this.getInitialBlueprints());
 
         setTimeout(() => {
             this.isLoading.set(false);
@@ -135,13 +178,7 @@ export class ProjectsDashboardComponent implements OnInit {
     }
 
     getDisplayStatus(status: string) {
-        const map: Record<string, string> = {
-            'PLANNED': 'Planificación',
-            'IN_PROGRESS': 'En ejecución',
-            'ON_HOLD': 'Pausado',
-            'COMPLETED': 'Completado'
-        };
-        return map[status] || status;
+        return 'projects_dashboard.status_' + status.toLowerCase();
     }
 
     resolveImageUrl(project: ProjectEntity): string {
@@ -167,6 +204,16 @@ export class ProjectsDashboardComponent implements OnInit {
     }
 
     getProjectBlueprints(projectId: string): any[] {
+        return this.blueprints();
+    }
+
+    getInitialBlueprints(): any[] {
+        const localData = localStorage.getItem('kipu_blueprints');
+        if (localData) {
+            try {
+                return JSON.parse(localData);
+            } catch(e) {}
+        }
         return [
             {
                 id: 'bp-01',
@@ -202,6 +249,95 @@ export class ProjectsDashboardComponent implements OnInit {
                 ]
             }
         ];
+    }
+
+    uploadPlan() {
+        this.showUploadForm = false;
+        this.uploadPlanData = { title: '', file: null };
+        this.displayUploadPlanDialog = true;
+    }
+
+    confirmUploadPlanSignature(requiresSignature: boolean) {
+        if (requiresSignature) {
+            this.displayUploadPlanDialog = false;
+            this.router.navigate(['/signatures'], { queryParams: { action: 'create' } });
+        } else {
+            this.showUploadForm = true;
+        }
+    }
+
+    onUploadPlanFileChange(event: any) {
+        const file = event.target.files[0];
+        this.uploadPlanData.file = file;
+    }
+
+    submitUploadPlan() {
+        if (this.uploadPlanData.title && this.uploadPlanData.file) {
+            const newPlan = {
+                id: 'bp-' + Date.now(),
+                title: this.uploadPlanData.title,
+                version: '1.0',
+                expirationDate: new Date().toISOString(), // Changed to reflect "added date" rather than expiration
+                isDigitallySigned: false,
+                requireSignature: false,
+                history: [
+                    { version: '1.0', date: new Date().toISOString(), changedBy: 'Tú', description: 'Subida inicial.' }
+                ]
+            };
+            this.blueprints.update(bps => {
+                const updated = [...bps, newPlan];
+                localStorage.setItem('kipu_blueprints', JSON.stringify(updated));
+                return updated;
+            });
+            this.displayUploadPlanDialog = false;
+            this.snackBar.open('El plano ha sido almacenado correctamente.', 'Cerrar', { duration: 3000 });
+        }
+    }
+
+    downloadBlueprint(bp: any) {
+        // Obtenemos la traducción dinámica del snackbar
+        const el = document.createElement('div');
+        this.snackBar.open('Iniciando descarga...', 'Cerrar', { duration: 3000 });
+        setTimeout(() => {
+            const link = document.createElement('a');
+            link.href = 'data:text/plain;charset=utf-8,Contenido simulado para ' + encodeURIComponent(bp.title);
+            link.download = bp.title + '.pdf';
+            link.click();
+        }, 1000);
+    }
+
+    openEditBlueprint(bp: any) {
+        this.planToEdit = { ...bp };
+        this.displayEditPlanDialog = true;
+    }
+
+    submitEditBlueprint() {
+        if (this.planToEdit) {
+            this.blueprints.update(bps => {
+                const updated = bps.map(b => b.id === this.planToEdit.id ? this.planToEdit : b);
+                localStorage.setItem('kipu_blueprints', JSON.stringify(updated));
+                return updated;
+            });
+            this.displayEditPlanDialog = false;
+            this.snackBar.open('Documento actualizado correctamente.', 'Cerrar', { duration: 3000 });
+        }
+    }
+
+    openDeleteBlueprint(bp: any) {
+        this.planToDelete = bp;
+        this.displayDeletePlanDialog = true;
+    }
+
+    submitDeleteBlueprint() {
+        if (this.planToDelete) {
+            this.blueprints.update(bps => {
+                const updated = bps.filter(b => b.id !== this.planToDelete.id);
+                localStorage.setItem('kipu_blueprints', JSON.stringify(updated));
+                return updated;
+            });
+            this.displayDeletePlanDialog = false;
+            this.snackBar.open('Documento eliminado.', 'Cerrar', { duration: 3000 });
+        }
     }
 
     showAllStatusLogs(project: ProjectEntity) {
