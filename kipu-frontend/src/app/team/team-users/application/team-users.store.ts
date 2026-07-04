@@ -56,6 +56,12 @@ export class TeamUsersStore {
   }
 
   constructor() {
+    const stored = localStorage.getItem('currentUser');
+    if (stored) {
+      const identity = JSON.parse(stored);
+      this.currentUserSignal.set(TeamUsersAssembler.toEntityFromIdentity(identity));
+    }
+
     effect(() => {
       const activeId = this.projectStateService.currentProjectId();
       if (activeId) {
@@ -83,8 +89,6 @@ export class TeamUsersStore {
         const myRecord = users.find((u) => u.email === currentEmail);
         if (myRecord) {
           this.currentUserSignal.set(myRecord);
-        } else {
-          this.currentUserSignal.set(TeamUsersAssembler.toEntityFromIdentity(stored ? JSON.parse(stored) : null));
         }
       },
       error: (err) => console.error('Error loading team users:', err),
@@ -105,21 +109,24 @@ export class TeamUsersStore {
 
   inviteUser(userData: any) {
     const projectId = this.projectStateService.currentProjectId() || '1';
+    const nameParts = (userData.fullName || '').split(' ');
+    const firstName = nameParts[0] || '';
+    const lastName = nameParts.slice(1).join(' ') || '';
 
-    const teamUserToSave = {
-      userId: userData.userId,
-      fullName: userData.fullName,
+    const invitation = {
       email: userData.email,
+      firstName: firstName,
+      lastName: lastName,
       role: userData.role,
       projectId: projectId,
+      status: 'PENDING',
     };
 
-    this.teamApi.createTeamUser(teamUserToSave).subscribe({
-      next: (newUser) => {
-        const entity = TeamUsersAssembler.toEntityFromResource(newUser);
-        this.teamUsersSignal.update((prev) => [...prev, entity]);
+    this.teamApi.postInvitation(invitation).subscribe({
+      next: () => {
+        console.log('Invitación enviada a:', userData.email);
       },
-      error: (err) => console.error('Error al invitar:', err),
+      error: (err) => console.error('Error al enviar invitación:', err),
     });
   }
 

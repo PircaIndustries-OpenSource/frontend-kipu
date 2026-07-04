@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { TeamUsersApi } from '../../infrastructure/team-users.api';
 import { Identity } from '../../../../identity/domain/identity.model';
 import { CommonModule } from '@angular/common';
+import { AuthStore } from '../../../../identity/application/auth.store';
 
 @Component({
   selector: 'app-users-send-invitation',
@@ -29,6 +30,7 @@ export class UsersSendInvitation implements OnInit {
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<UsersSendInvitation>);
   private teamApi = inject(TeamUsersApi);
+  private authStore = inject(AuthStore);
 
   iamUsers: Identity[] = [];
   roles = ['Administrador', 'Logística', 'Gestor Operativo'];
@@ -39,9 +41,10 @@ export class UsersSendInvitation implements OnInit {
   });
 
   ngOnInit() {
+    const currentEmail = this.authStore.currentUser()?.email || '';
     this.teamApi.getAllIamUsers().subscribe({
       next: (users) => {
-        this.iamUsers = users;
+        this.iamUsers = users.filter((u) => u.email !== currentEmail);
       },
       error: (err) => console.error('Error loading IAM users', err),
     });

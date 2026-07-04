@@ -2,6 +2,7 @@ import { Injectable, signal, computed, inject, effect } from '@angular/core';
 import { ProjectStateService } from './project-state.service';
 import { AuthStore } from '../../identity/application/auth.store';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 export interface AppNotification {
   id: string;
@@ -157,7 +158,7 @@ export class NotificationService {
   }
 
   loadInvitations(email: string) {
-    this.http.get<any[]>(`http://localhost:8080/api/v1/invitations/user/${encodeURIComponent(email)}`).subscribe({
+    this.http.get<any[]>(`${environment.kipuApiBaseUrl}/invitations/user/${encodeURIComponent(email)}`).subscribe({
       next: (invitations) => {
         invitations.filter((inv: any) => inv.status === 'PENDING').forEach((inv: any) => {
           // Check if it already exists
