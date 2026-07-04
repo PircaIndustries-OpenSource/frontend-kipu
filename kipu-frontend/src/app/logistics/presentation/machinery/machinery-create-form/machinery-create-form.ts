@@ -56,6 +56,8 @@ export class MachineryCreateForm implements OnInit {
     this.dialogRef.close({
       name: catalogItem.name,
       assignedTo: worker ? `${worker.dni} - ${worker.fullName}` : formValue.assignedTo,
+      assignedWorkerId: worker?.id ?? '',
+      status: worker ? 'IN_USE' : 'AVAILABLE',
       assignmentDetail: formValue.assignmentDetail,
     });
   }

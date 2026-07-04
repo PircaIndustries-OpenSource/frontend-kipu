@@ -10,7 +10,7 @@ import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { forkJoin } from 'rxjs';
+import { concat } from 'rxjs';
 import { TeamWorkersEntity } from '../../domain/model/team-workers.entity';
 import { ConfirmDialog } from '../../../../shared/presentation/confirm-dialog/confirm-dialog';
 
@@ -134,13 +134,19 @@ export class WorkersPage implements OnInit {
             assignmentDetail: `Asignado al operador ${newWorker.fullName}`,
           })
         );
-        forkJoin(syncCalls).subscribe({
-          next: () => {
-            this.teamStore.loadWorkers(true);
-            this.logisticsStore.loadMachinery(true);
-            this.snackBar.open('Trabajador creado y maquinaria asignada', 'Cerrar', { duration: 3000 });
-          },
-        });
+        if (syncCalls.length > 0) {
+          concat(...syncCalls).subscribe({
+            complete: () => {
+              this.teamStore.loadWorkers(true);
+              this.logisticsStore.loadMachinery(true);
+              this.snackBar.open('Trabajador creado y maquinaria asignada', 'Cerrar', { duration: 3000 });
+            },
+          });
+        } else {
+          this.teamStore.loadWorkers(true);
+          this.logisticsStore.loadMachinery(true);
+          this.snackBar.open('Trabajador creado y maquinaria asignada', 'Cerrar', { duration: 3000 });
+        }
       },
       error: (err) => {
         console.error('Error creating worker:', err);
@@ -161,25 +167,32 @@ export class WorkersPage implements OnInit {
     dialogRef.afterClosed().subscribe((confirmed) => {
       if (!confirmed) return;
 
-      const todelMachineries = worker.machineries || [];
-      const returnCalls = todelMachineries.map((m) =>
-        this.logisticsStore.updateMachinery(m.machineryId, {
-          status: 'AVAILABLE',
-          assignedTo: '',
-          assignedWorkerId: '',
-          assignmentDetail: 'Maquinaria liberada por eliminación de operador',
-        })
-      );
+      this.teamStore.reloadWorkers().subscribe((workers) => {
+        const freshWorker = workers.find((w) => w.id === worker.id);
+        const todelMachineries = freshWorker?.machineries || worker.machineries || [];
 
-      forkJoin(returnCalls).subscribe({
-        next: () => {
+        const returnCalls = todelMachineries.map((m) =>
+          this.logisticsStore.updateMachinery(m.machineryId, {
+            status: 'AVAILABLE',
+            assignedTo: '',
+            assignedWorkerId: '',
+            assignmentDetail: 'Maquinaria liberada por eliminación de operador',
+          })
+        );
+
+        if (returnCalls.length > 0) {
+          concat(...returnCalls).subscribe({
+            complete: () => {
+              this.logisticsStore.loadMachinery(true);
+              this.teamStore.deleteWorker(worker.id);
+              this.snackBar.open('Trabajador eliminado y maquinaria liberada', 'Cerrar', { duration: 3000 });
+            },
+          });
+        } else {
           this.logisticsStore.loadMachinery(true);
           this.teamStore.deleteWorker(worker.id);
           this.snackBar.open('Trabajador eliminado y maquinaria liberada', 'Cerrar', { duration: 3000 });
-        },
-        error: () => {
-          this.teamStore.deleteWorker(worker.id);
-        },
+        }
       });
     });
   }

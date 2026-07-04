@@ -373,14 +373,16 @@ export class LogisticsStore {
       });
     }
   }
-  addMachinery(machinery: MachineryEntity, onSuccess?: () => void) {
-    this.logisticsApi.postMachinery(machinery).subscribe({
-      next: (newMachinery) => {
+  addMachinery(machinery: MachineryEntity): Observable<MachineryEntity> {
+    return this.logisticsApi.postMachinery(machinery).pipe(
+      tap((newMachinery) => {
         this.machinerySignal.update((prev) => [...prev, newMachinery]);
-        onSuccess?.();
-      },
-      error: (err) => console.error('Error adding machinery', err),
-    });
+      }),
+      catchError((err) => {
+        console.error('Error adding machinery', err);
+        return of(machinery as MachineryEntity);
+      }),
+    );
   }
   updateMachinery(id: string, updates: Partial<MachineryEntity>): Observable<MachineryEntity> {
     return this.logisticsApi.patchMachinery(id, updates).pipe(

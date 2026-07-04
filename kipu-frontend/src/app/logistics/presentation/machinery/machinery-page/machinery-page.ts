@@ -10,6 +10,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MachineryCreateForm } from '../machinery-create-form/machinery-create-form';
 import { MachineryCatalogForm } from '../machinery-catalog-form/machinery-catalog-form';
 import { MachineryEntity } from '../../../domain/machinery.entity';
+import { TeamWorkersStore } from '../../../../team/team-workers/application/team-workers.store';
 
 @Component({
   selector: 'app-machinery-page',
@@ -19,6 +20,7 @@ import { MachineryEntity } from '../../../domain/machinery.entity';
 })
 export class MachineryPage implements OnInit {
   logisticsStore = inject(LogisticsStore);
+  private workersStore = inject(TeamWorkersStore);
   private dialog = inject(MatDialog);
 
   machinery = this.logisticsStore.machinery;
@@ -62,7 +64,10 @@ export class MachineryPage implements OnInit {
           ...new MachineryEntity(),
           ...result,
         };
-        this.logisticsStore.addMachinery(machinery);
+        this.logisticsStore.addMachinery(machinery).subscribe(() => {
+          this.logisticsStore.loadMachinery(true);
+          this.workersStore.loadWorkers(true);
+        });
       }
     });
   }
