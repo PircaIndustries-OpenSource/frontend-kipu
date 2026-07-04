@@ -1,4 +1,6 @@
 import { computed, inject, Injectable, signal, effect } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 import { InventoryMaterialEntity } from '../domain/inventoryMaterial.entity';
 import { LogisticsApi } from '../infrastructure/logistics.api';
 import { RequestEntity } from '../domain/request.entity';
@@ -375,22 +377,21 @@ export class LogisticsStore {
       error: (err) => console.error('Error adding machinery', err),
     });
   }
-  updateMachinery(id: string, updates: Partial<MachineryEntity>, onSuccess?: () => void) {
-    this.logisticsApi.patchMachinery(id, updates).subscribe({
-      next: (updated) => {
+  updateMachinery(id: string, updates: Partial<MachineryEntity>): Observable<MachineryEntity> {
+    return this.logisticsApi.patchMachinery(id, updates).pipe(
+      tap((updated) => {
         this.machinerySignal.update((prev) =>
           prev.map((m) => (m.id === id ? { ...m, ...updated } : m)),
         );
-        onSuccess?.();
-      },
-      error: (err) => {
+      }),
+      catchError((err) => {
         console.error('Error updating machinery, applying locally', err);
         this.machinerySignal.update((prev) =>
           prev.map((m) => (m.id === id ? { ...m, ...updates } : m)),
         );
-        onSuccess?.();
-      },
-    });
+        return of(updates as MachineryEntity);
+      }),
+    );
   }
   //SUPPLIERS OFFER
   supplierOfferSignal = signal<SupplierOfferEntity[]>([]);
