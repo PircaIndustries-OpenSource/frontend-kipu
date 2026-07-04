@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TeamUsersApi } from '../../../../team/team-users/infrastructure/team-users.api';
 import { CommonModule } from '@angular/common';
@@ -36,6 +36,7 @@ export class InvitationPage implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private teamApi = inject(TeamUsersApi);
+  private cdr = inject(ChangeDetectorRef);
 
   invitationId: number = 0;
   loading = false;
@@ -51,16 +52,20 @@ export class InvitationPage implements OnInit {
 
   accept() {
     this.loading = true;
+    this.cdr.detectChanges();
     this.teamApi.acceptInvitation(this.invitationId).subscribe({
       next: () => {
         this.loading = false;
         this.processed = true;
-        this.message = '¡Has aceptado la invitación!';
+        this.message = '¡Has aceptado la invitación! Redirigiendo...';
+        this.cdr.detectChanges();
+        setTimeout(() => this.router.navigate(['/projects']), 1500);
       },
       error: () => {
         this.loading = false;
         this.processed = true;
         this.message = 'Error al aceptar la invitación.';
+        this.cdr.detectChanges();
       }
     });
   }
@@ -69,16 +74,20 @@ export class InvitationPage implements OnInit {
     const confirmReject = confirm("¿Estás seguro de que quieres rechazar la invitación? Esta acción no se podrá deshacer.");
     if (confirmReject) {
       this.loading = true;
+      this.cdr.detectChanges();
       this.teamApi.rejectInvitation(this.invitationId).subscribe({
         next: () => {
           this.loading = false;
           this.processed = true;
           this.message = 'Has rechazado la invitación.';
+          this.cdr.detectChanges();
+          setTimeout(() => this.router.navigate(['/']), 1500);
         },
         error: () => {
           this.loading = false;
           this.processed = true;
           this.message = 'Error al rechazar la invitación.';
+          this.cdr.detectChanges();
         }
       });
     }
