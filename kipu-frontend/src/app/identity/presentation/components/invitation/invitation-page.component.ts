@@ -2,6 +2,7 @@ import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TeamUsersApi } from '../../../../team/team-users/infrastructure/team-users.api';
 import { CommonModule } from '@angular/common';
+import { NotificationService } from '../../../../shared/application/notification.service';
 
 @Component({
   selector: 'app-invitation-page',
@@ -44,6 +45,7 @@ export class InvitationPage implements OnInit {
   private router = inject(Router);
   private teamApi = inject(TeamUsersApi);
   private cdr = inject(ChangeDetectorRef);
+  private notificationService = inject(NotificationService);
 
   invitationId: number = 0;
   invitation: any = null;
@@ -70,6 +72,7 @@ export class InvitationPage implements OnInit {
       },
       error: () => {
         this.loading = false;
+        this.notificationService.dismissInvitationNotification(this.invitationId);
         this.message = 'No se pudo cargar la invitación.';
         this.processed = true;
         this.cdr.detectChanges();

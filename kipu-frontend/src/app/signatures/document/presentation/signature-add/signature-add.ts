@@ -23,12 +23,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TeamUsersStore } from '../../../../team/team-users/application/team-users.store';
 import { MatIconModule } from '@angular/material/icon';
 import { NgClass } from '@angular/common';
-
-export interface UserDocument {
-  id: string;
-  fullName: string;
-  signedAt: Date | undefined;
-}
+import { DocumentEntity, UserDocument } from '../../domain/model/document.entity';
 
 @Component({
   selector: 'app-signature-add',
@@ -60,8 +55,8 @@ export class SignatureAddComponent implements OnInit {
   documentForm: FormGroup = this.fb.group({
     documentType: ['', Validators.required],
     deadline: ['', Validators.required],
-    selectedUsers: [[], [Validators.required, Validators.minLength(1)]],
-    attachedFile: ['', Validators.required],
+    selectedUsers: [[]],
+    attachedFile: [''],
   });
 
   showUserDropdown = false;
@@ -195,25 +190,22 @@ export class SignatureAddComponent implements OnInit {
     const currentUser = this.teamUsersStore.currentUser();
     const currentUserId = currentUser?.id || '';
     const currentUserName = currentUser?.fullName || 'Usuario actual';
+    const projectId = localStorage.getItem('currentProjectId') || '';
 
     const assignedUsers: UserDocument[] = formValue.selectedUsers.map((userId: string) => {
       const user = this.teamUsersStore.teamUsers().find((u) => u.id === userId);
-      return {
-        id: userId,
-        fullName: user?.fullName || 'Usuario',
-        signedAt: undefined,
-      };
+      return { id: userId, fullName: user?.fullName || 'Usuario', signedAt: undefined };
     });
 
-    const includeCurrentUser = [...assignedUsers, { id: currentUserId, fullName: currentUserName, signedAt: undefined }];
+    assignedUsers.push({ id: currentUserId, fullName: currentUserName, signedAt: undefined });
 
-    const documentData = {
-      deadline: formValue.deadline,
-      assignedUsers: includeCurrentUser,
-      attachedFile: formValue.attachedFile,
-    };
+    const documentEntity = new DocumentEntity();
+    documentEntity.type = formValue.documentType;
+    documentEntity.deadLine = new Date(formValue.deadline);
+    documentEntity.projectId = projectId;
+    documentEntity.assignedTo = assignedUsers;
 
-    this.dialogRef.close(documentData);
+    this.dialogRef.close({ success: true, document: documentEntity });
   }
 
   onCancel() {

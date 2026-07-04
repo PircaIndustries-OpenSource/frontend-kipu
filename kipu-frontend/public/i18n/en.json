@@ -795,6 +795,7 @@
       "deadline": "Deadline",
       "signers": "Signers",
       "btn-sign": "Sign Document",
+      "btn-pending": "Pending",
       "empty-pending": "No pending documents",
       "empty-signed": "No signed documents",
       "signed-at": "Signed on",

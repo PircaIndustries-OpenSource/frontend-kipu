@@ -17,6 +17,7 @@ import { TeamUsersApi } from '../../infrastructure/team-users.api';
 import { ProjectStateService } from '../../../../shared/application/project-state.service';
 import { RouterLink } from '@angular/router';
 import { ConfirmDialog } from '../../../../shared/presentation/confirm-dialog/confirm-dialog';
+import { AuthStore } from '../../../../identity/application/auth.store';
 
 @Component({
   selector: 'app-users-page',
@@ -45,6 +46,7 @@ export class UsersPage implements OnInit {
   private dialog = inject(MatDialog);
   private teamApi = inject(TeamUsersApi);
   private projectStateService = inject(ProjectStateService);
+  private authStore = inject(AuthStore);
 
   currentUser = this.teamStore.currentUser;
   pendingInvitations: any[] = [];
@@ -52,9 +54,9 @@ export class UsersPage implements OnInit {
 
   constructor() {
     effect(() => {
-      const projectId = this.projectStateService.currentProjectId();
-      if (projectId) {
-        this.loadPendingInvitations(projectId);
+      const email = this.authStore.currentUser()?.email;
+      if (email) {
+        this.loadPendingInvitations(email);
       } else {
         this.pendingInvitations = [];
       }
@@ -67,8 +69,8 @@ export class UsersPage implements OnInit {
     });
   }
 
-  loadPendingInvitations(projectId: string) {
-    this.teamApi.getInvitations(projectId).subscribe({
+  loadPendingInvitations(email: string) {
+    this.teamApi.getInvitationsByEmail(email).subscribe({
       next: (invitations) => {
         this.pendingInvitations = invitations.filter((inv: any) => inv.status === 'PENDING');
       },
@@ -146,8 +148,8 @@ export class UsersPage implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.teamStore.inviteUser(result);
-        const projectId = this.projectStateService.currentProjectId();
-        if (projectId) this.loadPendingInvitations(projectId);
+        const email = this.authStore.currentUser()?.email;
+        if (email) this.loadPendingInvitations(email);
       }
     });
   }

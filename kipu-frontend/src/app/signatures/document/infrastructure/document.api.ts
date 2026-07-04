@@ -36,8 +36,8 @@ export class DocumentApi {
       .pipe(map((created) => DocumentAssembler.toEntityFromResource(created)));
   }
 
-  sendSignCode(documentId: string, email: string): Observable<void> {
-    return this.http.post<void>(`${this.documentsUrl}/${documentId}/send-code`, { email });
+  sendSignCode(documentId: string, email: string, teamUserId: string): Observable<void> {
+    return this.http.post<void>(`${this.documentsUrl}/${documentId}/send-code`, { email, teamUserId });
   }
 
   signDocument(documentId: string, code: string, email: string, teamUserId: string, fullName: string): Observable<DocumentEntity> {

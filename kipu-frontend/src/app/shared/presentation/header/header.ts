@@ -53,4 +53,11 @@ export class Header {
     event.stopPropagation();
     this.notificationService.dismissNotification(id);
   }
+
+  // Navigates to the invitation acceptance page
+  goToInvitation(invitation: AppNotification, overlayPanel: any) {
+    overlayPanel.hide();
+    this.notificationService.markAsRead(invitation.id);
+    this.router.navigateByUrl(invitation.route);
+  }
 }

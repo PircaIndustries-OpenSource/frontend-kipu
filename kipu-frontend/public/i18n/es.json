@@ -795,6 +795,7 @@
       "deadline": "Vence",
       "signers": "Firmantes",
       "btn-sign": "Firmar Documento",
+      "btn-pending": "Pendiente",
       "empty-pending": "No hay documentos pendientes",
       "empty-signed": "No hay documentos firmados",
       "signed-at": "Firmado el",

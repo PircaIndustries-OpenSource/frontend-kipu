@@ -3,6 +3,7 @@ import { DocumentEntity } from '../domain/model/document.entity';
 import { DocumentApi } from '../infrastructure/document.api';
 import { AuthStore } from '../../../identity/application/auth.store';
 import { ProjectsStore } from '../../../projects/application/projects.store';
+import { TeamUsersStore } from '../../../team/team-users/application/team-users.store';
 
 @Injectable({ providedIn: 'root' })
 export class DocumentsStore {
@@ -13,6 +14,7 @@ export class DocumentsStore {
 
   private authStore = inject(AuthStore);
   private projectsStore = inject(ProjectsStore);
+  private teamUsersStore = inject(TeamUsersStore);
 
   constructor(private documentApi: DocumentApi) {
     effect(() => {
@@ -46,12 +48,13 @@ export class DocumentsStore {
 
   sendSignCode(documentId: string): Promise<boolean> {
     const email = this.authStore.currentUser()?.email || '';
-    if (!email) return Promise.resolve(false);
+    const teamUserId = this.teamUsersStore.currentUser()?.id || '';
+    if (!email || !teamUserId) return Promise.resolve(false);
 
     this.currentDocumentId.set(documentId);
 
     return new Promise((resolve) => {
-      this.documentApi.sendSignCode(documentId, email).subscribe({
+      this.documentApi.sendSignCode(documentId, email, teamUserId).subscribe({
         next: () => resolve(true),
         error: () => resolve(false),
       });
@@ -61,13 +64,14 @@ export class DocumentsStore {
   verifyAndSign(code: string): Promise<{ success: boolean; message: string }> {
     const docId = this.currentDocumentId();
     const user = this.authStore.currentUser();
+    const teamUserId = this.teamUsersStore.currentUser()?.id || '';
 
-    if (!docId || !user) {
+    if (!docId || !user || !teamUserId) {
       return Promise.resolve({ success: false, message: 'No hay un proceso de firma activo' });
     }
 
     return new Promise((resolve) => {
-      this.documentApi.signDocument(docId, code, user.email || '', user.id || '', user.name || '').subscribe({
+      this.documentApi.signDocument(docId, code, user.email || '', teamUserId, user.name || '').subscribe({
         next: (updatedDoc) => {
           this.documents.update((docs) =>
             docs.map((d) => (d.id === updatedDoc.id ? updatedDoc : d))

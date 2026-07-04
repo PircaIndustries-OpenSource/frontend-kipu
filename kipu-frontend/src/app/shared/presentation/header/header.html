@@ -80,6 +80,56 @@
       </p-popover>
     </div>
 
+    <!-- Pending Invitations Dropdown -->
+    <div class="relative">
+      <button
+        (click)="invOp.toggle($event)"
+        class="text-primary flex items-center justify-center cursor-pointer transition-all duration-200 hover:scale-110 active:scale-90 overflow-visible relative">
+        <mat-icon class="!text-[24px] !w-[24px] !h-[24px] !leading-[24px] !flex !items-center !justify-center">mail</mat-icon>
+        <span
+          *ngIf="notificationService.pendingInvitationsCount() > 0"
+          class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-amber-500 text-[9px] font-bold text-white animate-pulse">
+          {{ notificationService.pendingInvitationsCount() }}
+        </span>
+      </button>
+
+      <p-popover #invOp [style]="{ width: '360px' }">
+        <div class="p-2">
+          <div class="flex justify-between items-center mb-3 pb-2 border-b border-slate-100">
+            <span class="font-bold text-xs text-slate-800">Invitaciones Pendientes</span>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <div
+              *ngFor="let inv of notificationService.pendingInvitations()"
+              (click)="goToInvitation(inv, invOp)"
+              class="flex gap-2.5 p-2 rounded-lg border border-slate-200 bg-amber-50/30 cursor-pointer hover:bg-amber-50 transition-colors">
+
+              <div class="flex-none flex items-center">
+                <mat-icon class="!text-[18px] text-amber-600">person_add</mat-icon>
+              </div>
+
+              <div class="flex-1 min-w-0">
+                <p class="text-xs truncate font-bold text-slate-800">{{ inv.title }}</p>
+                <p class="text-[10px] text-slate-500 truncate mt-0.5">{{ inv.description }}</p>
+              </div>
+
+              <div class="flex-none flex items-center">
+                <mat-icon class="!text-[16px] text-slate-400">chevron_right</mat-icon>
+              </div>
+            </div>
+
+            <div
+              *ngIf="notificationService.pendingInvitations().length === 0"
+              class="text-center py-6 text-slate-400 text-xs">
+              <mat-icon class="!text-lg block text-slate-300 mb-1">mail_outline</mat-icon>
+              No tienes invitaciones pendientes
+            </div>
+          </div>
+        </div>
+      </p-popover>
+    </div>
+
     <!-- Settings Navigation with Back Path -->
     <button
       [routerLink]="['/settings']"

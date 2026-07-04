@@ -1,8 +1,9 @@
-import { Injectable, signal, computed, inject, effect } from '@angular/core';
+import { Injectable, signal, computed, inject, effect, DestroyRef } from '@angular/core';
 import { ProjectStateService } from './project-state.service';
 import { AuthStore } from '../../identity/application/auth.store';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { interval, Subscription, startWith, switchMap } from 'rxjs';
 
 export interface AppNotification {
   id: string;
@@ -28,10 +29,11 @@ export class NotificationService {
   // All notifications
   readonly notifications = this.notificationsSignal.asReadonly();
 
-  // Notifications filtered by active project ID
+  // Notifications filtered by active project ID (excludes invitations)
   readonly projectNotifications = computed(() => {
     const activeId = this.projectStateService.currentProjectId();
     return this.notificationsSignal()
+      .filter((n) => n.type !== 'invitacion')
       .filter((n) => n.projectId === activeId || !n.projectId || n.projectId === '')
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   });
@@ -45,6 +47,20 @@ export class NotificationService {
   readonly latestThreeNotifications = computed(() => {
     return this.projectNotifications().slice(0, 3);
   });
+
+  // Pending invitations (not filtered by project)
+  readonly pendingInvitations = computed(() => {
+    return this.notificationsSignal()
+      .filter((n) => n.type === 'invitacion' && !n.read)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  });
+
+  readonly pendingInvitationsCount = computed(() => {
+    return this.pendingInvitations().length;
+  });
+
+  private pollingSubscription: Subscription | null = null;
+  private destroyRef = inject(DestroyRef);
 
   constructor() {
     // Load initial state
@@ -98,13 +114,18 @@ export class NotificationService {
       localStorage.setItem('kipu-notifications', JSON.stringify(this.notificationsSignal()));
     });
 
-    // Reactively load invitations when current user changes
+    // Reactively load invitations when current user changes, with polling
     effect(() => {
       const user = this.authStore.currentUser();
       if (user?.email) {
         this.loadInvitations(user.email);
+        this.startPolling(user.email);
+      } else {
+        this.stopPolling();
       }
     });
+
+    this.destroyRef.onDestroy(() => this.stopPolling());
   }
 
   addNotification(notification: {
@@ -157,11 +178,32 @@ export class NotificationService {
     }
   }
 
+  private startPolling(email: string) {
+    this.stopPolling();
+    this.pollingSubscription = interval(30000)
+      .pipe(startWith(0))
+      .subscribe(() => this.loadInvitations(email));
+  }
+
+  private stopPolling() {
+    this.pollingSubscription?.unsubscribe();
+    this.pollingSubscription = null;
+  }
+
   loadInvitations(email: string) {
     this.http.get<any[]>(`${environment.kipuApiBaseUrl}/invitations/user/${encodeURIComponent(email)}`).subscribe({
       next: (invitations) => {
+        const pendingIds = new Set(
+          invitations.filter((inv: any) => inv.status === 'PENDING').map((inv: any) => `inv-${inv.id}`)
+        );
+
+        // Remove stale invitation notifications that no longer exist
+        this.notificationsSignal.update((list) =>
+          list.filter((n) => n.type !== 'invitacion' || pendingIds.has(n.id))
+        );
+
+        // Add new invitations
         invitations.filter((inv: any) => inv.status === 'PENDING').forEach((inv: any) => {
-          // Check if it already exists
           const exists = this.notificationsSignal().find(n => n.id === `inv-${inv.id}`);
           if (!exists) {
             const projectDisplay = inv.projectName || 'un proyecto';
@@ -182,5 +224,12 @@ export class NotificationService {
       },
       error: (err) => console.error('Error fetching invitations', err)
     });
+  }
+
+  dismissInvitationNotification(invitationId: number) {
+    this.notificationsSignal.update((list) =>
+      list.filter((n) => n.id !== `inv-${invitationId}`)
+    );
+    this.dismissNotification(`inv-${invitationId}`);
   }
 }

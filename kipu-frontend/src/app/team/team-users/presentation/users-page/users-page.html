@@ -13,7 +13,7 @@
           @for (inv of pendingInvitations; track inv.id) {
             <a mat-menu-item [routerLink]="['/invitations', inv.id]">
               <div class="flex flex-col">
-                <span class="font-medium">{{ inv.firstName + ' ' + inv.lastName || inv.email }}</span>
+                <span class="font-medium">{{ inv.projectName || inv.firstName + ' ' + inv.lastName || inv.email }}</span>
                 <span class="text-xs text-gray-500">{{ 'team.users.role-dictionary.' + (inv.role === 'Administrador' ? 'administrator' : inv.role === 'Logística' ? 'logistics' : 'manager') | translate }}</span>
               </div>
             </a>

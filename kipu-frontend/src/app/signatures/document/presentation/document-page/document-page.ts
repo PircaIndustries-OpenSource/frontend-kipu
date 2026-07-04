@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { DossierExportService } from '../../application/dossier-export.service';
 import { ProjectStateService } from '../../../../shared/application/project-state.service';
+import { TeamUsersStore } from '../../../../team/team-users/application/team-users.store';
 
 @Component({
   selector: 'app-document-page',
@@ -26,6 +27,7 @@ export class DocumentPage implements OnInit {
   private dossierExportService = inject(DossierExportService);
   private projectStateService = inject(ProjectStateService);
   private snackBar = inject(MatSnackBar);
+  private teamUsersStore = inject(TeamUsersStore);
 
   pendingDocuments: DocumentEntity[] = [];
   signedDocuments: DocumentEntity[] = [];
@@ -35,8 +37,12 @@ export class DocumentPage implements OnInit {
   constructor() {
     effect(() => {
       const docs = this.documentsStore.documents$();
-      this.pendingDocuments = docs.filter((d) => !d.isSigned);
-      this.signedDocuments = docs.filter((d) => d.isSigned);
+      const currentUserId = this.teamUsersStore.currentUser()?.id;
+      const myDocs = currentUserId
+        ? docs.filter((d) => d.assignedTo.some((s) => s.id === currentUserId))
+        : docs;
+      this.pendingDocuments = myDocs.filter((d) => !d.isSigned);
+      this.signedDocuments = myDocs.filter((d) => d.isSigned);
       this.pendingCount = this.pendingDocuments.length;
       this.signedCount = this.signedDocuments.length;
       this.cdr.detectChanges();
@@ -83,6 +89,12 @@ export class DocumentPage implements OnInit {
         this.snackBar.open(result.error, 'Cerrar', { duration: 4000 });
       }
     });
+  }
+
+  hasUserSigned(document: DocumentEntity): boolean {
+    const currentUserId = this.teamUsersStore.currentUser()?.id;
+    if (!currentUserId) return false;
+    return document.assignedTo.some((s) => s.id === currentUserId && s.signedAt != null);
   }
 
   getSignersNames(document: DocumentEntity): string {
