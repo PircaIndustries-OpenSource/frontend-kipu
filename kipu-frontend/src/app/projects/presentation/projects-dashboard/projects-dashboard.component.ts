@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { set, get, del } from 'idb-keyval';
 import { TranslateModule } from '@ngx-translate/core';
 import { CreateProjectDialogComponent } from '../components/create-project-dialog/create-project-dialog.component';
 import { DeleteProjectDialogComponent } from '../components/delete-project-dialog/delete-project-dialog.component';
@@ -271,10 +272,20 @@ export class ProjectsDashboardComponent implements OnInit {
         this.uploadPlanData.file = file;
     }
 
-    submitUploadPlan() {
+    async submitUploadPlan() {
         if (this.uploadPlanData.title && this.uploadPlanData.file) {
+            const fileId = 'file-' + Date.now();
+            try {
+                await set(fileId, this.uploadPlanData.file);
+            } catch (e) {
+                console.error("Error storing file in IndexedDB", e);
+            }
+            
             const newPlan = {
                 id: 'bp-' + Date.now(),
+                fileId: fileId,
+                originalFileName: this.uploadPlanData.file.name,
+                fileType: this.uploadPlanData.file.type,
                 title: this.uploadPlanData.title,
                 version: '1.0',
                 expirationDate: new Date().toISOString(), // Changed to reflect "added date" rather than expiration
@@ -294,16 +305,34 @@ export class ProjectsDashboardComponent implements OnInit {
         }
     }
 
-    downloadBlueprint(bp: any) {
-        // Obtenemos la traducción dinámica del snackbar
-        const el = document.createElement('div');
+    async downloadBlueprint(bp: any) {
         this.snackBar.open('Iniciando descarga...', 'Cerrar', { duration: 3000 });
-        setTimeout(() => {
+        try {
+            let fileToDownload: Blob;
+            let downloadName = bp.title + '.pdf';
+            
+            if (bp.fileId) {
+                const storedFile = await get(bp.fileId);
+                if (storedFile) {
+                    fileToDownload = storedFile;
+                    downloadName = bp.originalFileName || (bp.title + (storedFile.type.includes('pdf') ? '.pdf' : '.jpg'));
+                } else {
+                    fileToDownload = new Blob(['Documento no encontrado o expiró en caché local.'], { type: 'text/plain' });
+                    downloadName = bp.title + '_error.txt';
+                }
+            } else {
+                fileToDownload = new Blob(['Contenido simulado para ' + bp.title], { type: 'text/plain' });
+            }
+            
+            const url = URL.createObjectURL(fileToDownload);
             const link = document.createElement('a');
-            link.href = 'data:text/plain;charset=utf-8,Contenido simulado para ' + encodeURIComponent(bp.title);
-            link.download = bp.title + '.pdf';
+            link.href = url;
+            link.download = downloadName;
             link.click();
-        }, 1000);
+            URL.revokeObjectURL(url);
+        } catch(e) {
+            this.snackBar.open('Error al intentar descargar el documento.', 'Cerrar', { duration: 3000 });
+        }
     }
 
     openEditBlueprint(bp: any) {
@@ -328,8 +357,15 @@ export class ProjectsDashboardComponent implements OnInit {
         this.displayDeletePlanDialog = true;
     }
 
-    submitDeleteBlueprint() {
+    async submitDeleteBlueprint() {
         if (this.planToDelete) {
+            if (this.planToDelete.fileId) {
+                try {
+                    await del(this.planToDelete.fileId);
+                } catch(e) {
+                    console.error("Failed to delete from idb", e);
+                }
+            }
             this.blueprints.update(bps => {
                 const updated = bps.filter(b => b.id !== this.planToDelete.id);
                 localStorage.setItem('kipu_blueprints', JSON.stringify(updated));
