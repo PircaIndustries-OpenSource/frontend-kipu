@@ -16,6 +16,7 @@ export class ProjectAssembler {
       createdBy: resource.createdBy,
       statusJustification: resource.statusJustification,
       imageUrl: resource.imageUrl,
+      progress: resource.progress,
     };
   }
 
@@ -37,6 +38,7 @@ export class ProjectAssembler {
       createdBy: entity.createdBy,
       statusJustification: entity.statusJustification,
       imageUrl: entity.imageUrl,
+      progress: entity.progress,
     };
   }
 }

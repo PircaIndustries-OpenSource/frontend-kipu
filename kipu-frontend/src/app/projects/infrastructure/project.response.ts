@@ -13,4 +13,5 @@ export interface ProjectResource {
   createdBy: string;
   statusJustification?: string;
   imageUrl?: string;
+  progress?: number;
 }

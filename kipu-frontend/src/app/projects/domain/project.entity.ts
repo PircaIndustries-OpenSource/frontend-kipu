@@ -12,6 +12,7 @@ export class ProjectEntity {
   statusJustification?: string;
   imageUrl?: string;
   statusLogs?: { date: string; status: string; justification?: string; changedBy: string }[];
+  progress?: number;
 
   constructor() {
     this.id = '';

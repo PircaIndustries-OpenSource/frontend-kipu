@@ -34,10 +34,22 @@ export class ProgressApi {
 
   createProgress(data: ProjectProgress): Observable<ProjectProgress> {
     const payload = {
-        ...data,
-        percentage: data.currentPercentage
+        projectId: data.projectId,
+        projectName: data.projectName,
+        activityName: data.activityName,
+        details: data.details,
+        specialty: data.specialty,
+        percentage: data.currentPercentage,
+        responsible: data.responsible,
+        workers: data.workers,
+        weather: data.weather,
+        weight: data.weight || 1,
+        isMiniAdvance: data.isMiniAdvance,
+        parentId: data.parentId || null
     };
-    return this.http.post<ProjectProgress>(this.basePath, payload);
+    return this.http.post<ProgressResponse>(this.basePath, payload).pipe(
+      map(res => ProgressAssembler.toEntity(res))
+    );
   };
 
   getAllPhotos(projectId: string): Observable<ProgressPhotoEntity[]> {

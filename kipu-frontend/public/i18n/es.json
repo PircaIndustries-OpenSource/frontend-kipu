@@ -225,6 +225,7 @@
     "upload_plan_btn": "Subir Plano",
     "status_planned": "Planificación",
     "status_in_progress": "En ejecución",
+    "status_suspended": "Pausado",
     "status_on_hold": "Pausado",
     "status_completed": "Completado",
     "upload_plan_title": "Subir Plano",

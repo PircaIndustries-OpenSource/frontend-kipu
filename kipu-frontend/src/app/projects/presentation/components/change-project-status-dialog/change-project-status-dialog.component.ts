@@ -30,20 +30,10 @@ export class ChangeProjectStatusDialogComponent {
 
   statusForm = this.fb.group({
     status: [this.data.project.status, Validators.required],
-    statusJustification: ['']
+    statusJustification: ['', Validators.required]
   });
 
-  constructor() {
-    this.statusForm.get('status')?.valueChanges.subscribe(status => {
-      const justificationControl = this.statusForm.get('statusJustification');
-      if (status === 'ON_HOLD') {
-        justificationControl?.setValidators([Validators.required]);
-      } else {
-        justificationControl?.clearValidators();
-      }
-      justificationControl?.updateValueAndValidity();
-    });
-  }
+  constructor() {}
 
   onSubmit() {
     if (this.statusForm.invalid) {

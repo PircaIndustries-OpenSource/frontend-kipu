@@ -15,6 +15,7 @@ import {
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
+  MatDialogModule
 } from '@angular/material/dialog';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -29,13 +30,11 @@ import { DocumentEntity, UserDocument } from '../../domain/model/document.entity
   selector: 'app-signature-add',
   imports: [
     MatButtonModule,
-    MatDialogActions,
-    MatDialogClose,
+    MatDialogModule,
     MatDialogContent,
-    MatDialogTitle,
+    MatDialogActions,
     MatFormFieldModule,
     MatInputModule,
-    MatLabel,
     ReactiveFormsModule,
     MatSelectModule,
     MatDatepickerModule,
