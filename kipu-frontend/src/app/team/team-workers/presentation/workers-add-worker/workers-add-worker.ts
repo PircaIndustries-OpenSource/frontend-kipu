@@ -4,9 +4,11 @@ import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/materia
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select'; // Asegúrate de importar esto
+import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';
 import { MachineryEntity } from '../../../../logistics/domain/machinery.entity';
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-workers-add-modal',
   standalone: true,
@@ -18,6 +20,7 @@ import { MachineryEntity } from '../../../../logistics/domain/machinery.entity';
     MatButtonModule,
     MatSelectModule,
     TranslateModule,
+    CommonModule,
   ],
   templateUrl: './workers-add-worker.html',
 })
@@ -28,9 +31,8 @@ export class WorkersAddWorker {
 
   workerForm: FormGroup = this.fb.group({
     dni: ['', [Validators.required, Validators.pattern('^[0-9]{8}$')]],
-    fullName: ['', Validators.required],
+    fullName: ['', [Validators.required, Validators.pattern("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s'-]{2,100}$")]],
     role: ['', Validators.required],
-    status: ['activo'],
     assignedTools: [[], Validators.required],
   });
 

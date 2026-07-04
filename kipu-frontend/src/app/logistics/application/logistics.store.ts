@@ -2,7 +2,7 @@ import { computed, inject, Injectable, signal, effect } from '@angular/core';
 import { InventoryMaterialEntity } from '../domain/inventoryMaterial.entity';
 import { LogisticsApi } from '../infrastructure/logistics.api';
 import { RequestEntity } from '../domain/request.entity';
-import { MachineryEntity } from '../domain/machinery.entity';
+import { MachineryEntity, MachineryCatalogEntity } from '../domain/machinery.entity';
 import { ProjectsStore } from '../../projects/application/projects.store';
 import { SupplierEntity } from '../domain/supplier.entity';
 import { WasteEntity } from '../domain/waste.entity';
@@ -55,10 +55,12 @@ export class LogisticsStore {
         this.loadCategories(true);
         this.loadSupplierOffers(true);
         this.loadSuppliers(true);
+        this.loadMachineryCatalog(true);
       } else {
         this.inventorySignal.set([]);
         this.requestsSignal.set([]);
         this.machinerySignal.set([]);
+        this.machineryCatalogSignal.set([]);
         this.wasteSignal.set([]);
       }
     });
@@ -331,6 +333,29 @@ export class LogisticsStore {
     this.inventorySignal().some((invItem) => invItem.currentStock <= invItem.miniumStock),
   );
   readonly hasNotifications = computed(() => this.hasUnreadRequests() || this.hasCriticalStock());
+  //Machinery Catalog
+  private machineryCatalogSignal = signal<MachineryCatalogEntity[]>([]);
+  readonly machineryCatalog = computed(() => this.machineryCatalogSignal());
+
+  loadMachineryCatalog(force = false) {
+    if (force || this.machineryCatalogSignal().length === 0) {
+      this.logisticsApi.getAllMachineryCatalog().subscribe({
+        next: (data) => this.machineryCatalogSignal.set(data),
+        error: (err) => console.error('Error loading machinery catalog', err),
+      });
+    }
+  }
+
+  addCatalogItem(item: any, onSuccess?: () => void) {
+    this.logisticsApi.postMachineryCatalog(item).subscribe({
+      next: (newItem) => {
+        this.machineryCatalogSignal.update((prev) => [...prev, newItem]);
+        onSuccess?.();
+      },
+      error: (err) => console.error('Error adding catalog item', err),
+    });
+  }
+
   //Machinery
   private machinerySignal = signal<MachineryEntity[]>([]);
   readonly machinery = computed(() => this.machinerySignal());

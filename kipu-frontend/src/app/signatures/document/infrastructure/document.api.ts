@@ -1,8 +1,7 @@
-// infrastructure/api/document.api.ts
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { catchError, map, Observable, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { DocumentEntity } from '../domain/model/document.entity';
 import { DocumentResource, DocumentResponse } from './document.response';
 import { DocumentAssembler } from './document.assembler';
@@ -13,8 +12,7 @@ import { DocumentAssembler } from './document.assembler';
 export class DocumentApi {
   http: HttpClient = inject(HttpClient);
   apiBaseUrl = environment.kipuApiBaseUrl;
-  documentsEndpoint = environment.kipuApiDocumentsEndpointPath; // 'documents'
-  documentsUrl = `${this.apiBaseUrl}${this.documentsEndpoint}`;
+  documentsUrl = `${this.apiBaseUrl}${environment.kipuApiDocumentsEndpointPath}`;
 
   getAllDocuments(): Observable<DocumentEntity[]> {
     const projectId = localStorage.getItem('currentProjectId');
@@ -31,33 +29,20 @@ export class DocumentApi {
       .pipe(map((response) => DocumentAssembler.toEntitiesFromResponse(response)));
   }
 
-  getDocumentById(id: string): Observable<DocumentEntity> {
-    const url = `${this.documentsUrl}/${id}`;
-    return this.http
-      .get<DocumentResource>(url)
-      .pipe(map((resource) => DocumentAssembler.toEntityFromResource(resource)));
-  }
-
   postDocument(document: DocumentEntity): Observable<DocumentEntity> {
     const resource = DocumentAssembler.toResourceFromEntity(document);
     return this.http
       .post<DocumentResource>(this.documentsUrl, resource)
-      .pipe(map((createdResource) => DocumentAssembler.toEntityFromResource(createdResource)));
+      .pipe(map((created) => DocumentAssembler.toEntityFromResource(created)));
   }
 
-  updateDocument(document: DocumentEntity): Observable<DocumentEntity> {
-    const url = `${this.documentsUrl}/${document.id}`;
-    return this.http.put<DocumentEntity>(url, document).pipe(
-      tap(() => console.log('Documento actualizado en API:', document)),
-      catchError((error) => {
-        console.error('Error en updateDocument:', error);
-        throw error;
-      }),
-    );
+  sendSignCode(documentId: string, email: string): Observable<void> {
+    return this.http.post<void>(`${this.documentsUrl}/${documentId}/send-code`, { email });
   }
 
-  deleteDocument(id: string): Observable<void> {
-    const url = `${this.documentsUrl}/${id}`;
-    return this.http.delete<void>(url);
+  signDocument(documentId: string, code: string, email: string, teamUserId: string, fullName: string): Observable<DocumentEntity> {
+    return this.http
+      .patch<DocumentResource>(`${this.documentsUrl}/sign/${documentId}`, { code, email, teamUserId, fullName })
+      .pipe(map((resource) => DocumentAssembler.toEntityFromResource(resource)));
   }
 }

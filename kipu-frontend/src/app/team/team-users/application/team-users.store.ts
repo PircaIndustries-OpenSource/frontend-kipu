@@ -40,23 +40,17 @@ export class TeamUsersStore {
     () => this.teamUsers().filter((user) => user.isActive).length,
   );
   readonly totalManagers = computed(
-    () => this.teamUsers().filter((user) => user.isActive && user.role == 'Gestor'
-    || user.role == "Gestor Operativo").length,
+    () => this.teamUsers().filter((user) => user.isActive && user.role == 'Gestor Operativo').length,
   );
   readonly totalLogistics = computed(
-    () => this.teamUsers().filter((user) => user.isActive && user.role == 'Logistica').length,
-  );
-  readonly totalClients = computed(
-    () => this.teamUsers().filter((user) => user.isActive && user.role == 'Cliente').length,
+    () => this.teamUsers().filter((user) => user.isActive && user.role == 'Logística').length,
   );
 
   getRoleTranslation(role: string): string {
     const translationMap: Record<string, string> = {
       Administrador: this.translate.instant('team.users.role-dictionary.administrator'),
-      Gestor: this.translate.instant('team.users.role-dictionary.manager'),
-      Logistica: this.translate.instant('team.users.role-dictionary.logistics'),
-      Cliente: this.translate.instant('team.users.role-dictionary.client'),
-      Ingeniero: this.translate.instant('team.users.role-dictionary.engineer'),
+      'Gestor Operativo': this.translate.instant('team.users.role-dictionary.manager'),
+      Logística: this.translate.instant('team.users.role-dictionary.logistics'),
     };
     return translationMap[role] || role;
   }

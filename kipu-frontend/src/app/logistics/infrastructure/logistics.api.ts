@@ -8,9 +8,9 @@ import { InventoryMaterialAssembler } from './inventory/inventoryMaterial.assemb
 import { RequestEntity } from '../domain/request.entity';
 import { RequestResponse, RequestResource } from './request/request.response';
 import { RequestAssembler } from './request/request.assembler';
-import { MachineryEntity } from '../domain/machinery.entity';
-import { MachineryResponse, MachineryResource } from './machinery/machinery.response';
-import { MachineryAssembler } from './machinery/machinery.assembler';
+import { MachineryEntity, MachineryCatalogEntity } from '../domain/machinery.entity';
+import { MachineryResponse, MachineryResource, MachineryCatalogResponse, MachineryCatalogResource, CreateMachineryCatalogRequest } from './machinery/machinery.response';
+import { MachineryAssembler, MachineryCatalogAssembler } from './machinery/machinery.assembler';
 import { SupplierEntity } from '../domain/supplier.entity';
 import { SupplierResponse, SupplierResource } from './suppliers/supplier-response';
 import { SupplierAssembler } from './suppliers/supplier.assembler';
@@ -37,6 +37,7 @@ export class LogisticsApi {
   materialsEndpoint = environment.kipuApiMaterialsEndpointPath;
   requestsEndpoint = environment.kipuApiRequestEndpointPath;
   machineryEndpoint = environment.kipuApiMachineryEndpointPath;
+  machineryCatalogEndpoint = environment.kipuApiMachineryCatalogEndpointPath;
   suppliersEndpoint = environment.kipuApiSuppliersEndpointPath;
   wasteEndpoint = environment.kipuApiWasteEndpointPath;
   categoriesEndpoint = environment.kipuApiCategoriesEndPath;
@@ -128,6 +129,23 @@ export class LogisticsApi {
       .patch<SupplierResource>(`${this.apiBaseUrl}${this.suppliersEndpoint}/${id}`, updates)
       .pipe(map((response) => SupplierAssembler.toEntityFromResource(response)));
   }
+  // Machinery Catalog
+  getAllMachineryCatalog(): Observable<MachineryCatalogEntity[]> {
+    return this.http
+      .get<MachineryCatalogResponse>(`${this.apiBaseUrl}${this.machineryCatalogEndpoint}`)
+      .pipe(map((response) => MachineryCatalogAssembler.toEntitiesFromResponse(response)));
+  }
+
+  postMachineryCatalog(item: CreateMachineryCatalogRequest): Observable<MachineryCatalogEntity> {
+    return this.http
+      .post<MachineryCatalogResource>(`${this.apiBaseUrl}${this.machineryCatalogEndpoint}`, item)
+      .pipe(map((r) => MachineryCatalogAssembler.toEntityFromResource(r)));
+  }
+
+  deleteMachineryCatalog(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiBaseUrl}${this.machineryCatalogEndpoint}/${id}`);
+  }
+
   //DELETE
   deleteSupplier(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiBaseUrl}${this.suppliersEndpoint}/${id}`);

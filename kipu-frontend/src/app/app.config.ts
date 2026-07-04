@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {provideTranslateService} from '@ngx-translate/core';
 import {provideTranslateHttpLoader} from '@ngx-translate/http-loader';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MsalModule } from '@azure/msal-angular';
@@ -12,6 +12,7 @@ import { SocialLoginModule, GoogleLoginProvider, SOCIAL_AUTH_CONFIG } from '@aba
 import { environment } from '../environments/environment';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
+import { httpTokenInterceptor } from './shared/infrastructure/http.token.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,7 +27,7 @@ export const appConfig: ApplicationConfig = {
         }
       }
     }),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([httpTokenInterceptor])),
     provideTranslateService({
       loader: provideTranslateHttpLoader({prefix: './i18n/', suffix: '.json'}),
       fallbackLang: 'en'

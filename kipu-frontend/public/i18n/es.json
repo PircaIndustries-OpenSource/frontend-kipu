@@ -514,10 +514,28 @@
       "maintenance-hours-required": "Las horas de mantenimiento son obligatorias.",
       "assignment-detail-label": "Detalle de Asignación",
       "assignment-detail-placeholder": "Describe la asignación del equipo...",
+      "catalog-label": "Equipo del Catálogo",
+      "catalog-required": "Debe seleccionar un equipo del catálogo.",
       "worker-label": "Asignar a Obrero (opcional)",
       "worker-none": "Ninguno",
       "assignment-detail-required": "La descripción de asignación es obligatoria.",
       "btn-save": "Guardar Equipo",
+      "btn-cancel": "Cancelar"
+    },
+    "catalog": {
+      "title": "Nuevo en el Catálogo",
+      "btn-new": "Nuevo al Catálogo",
+      "name-label": "Nombre del Equipo",
+      "name-placeholder": "Ej: Excavadora CAT 320",
+      "name-required": "El nombre es obligatorio.",
+      "brand-label": "Marca",
+      "brand-placeholder": "Ej: Caterpillar",
+      "model-label": "Modelo",
+      "model-placeholder": "Ej: 320D",
+      "serial-label": "Número de Serie",
+      "serial-placeholder": "Ej: CAT-320D-2024-001",
+      "date-label": "Fecha de Adquisición",
+      "btn-save": "Guardar",
       "btn-cancel": "Cancelar"
     },
     "assign": {
@@ -672,6 +690,7 @@
         "action-tab": "Acción",
         "user-profile-you": "Tú",
         "btn-action": "Deshabilitar",
+        "btn-actions": "Acciones",
         "btn-action-done": "Deshabilitado",
         "input-placeholder": "Nombre, correo o rol...",
         "search-user": "Buscar usuario",
@@ -686,12 +705,7 @@
         "manager": "Gestor Operativo",
         "manager-description": "Enfocado en campo. Registra avances, RNCs y solicita materiales. Visualiza planos.",
         "logistics": "Logística",
-        "logistics-description": "Enfocado en oficina. Aprueba pedidos, edita inventarios y gestiona proveedores.",
-        "client": "Cliente",
-        "client-description-1": "Nivel de acceso estricto de ",
-        "client-description-bold": "Solo Lectura. ",
-        "client-description-2": "Todos los botones de creación o edición se ocultan en su vista para proteger la data.",
-        "engineer": "Ingeniero"
+        "logistics-description": "Enfocado en oficina. Aprueba pedidos, edita inventarios y gestiona proveedores."
       },
       "send-invitation": {
         "title": "Invitar nuevo usuario",

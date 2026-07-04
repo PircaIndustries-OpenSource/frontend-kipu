@@ -1,9 +1,10 @@
 import { ChangeDetectorRef, Component, effect, inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { DocumentsStore } from '../../application/document.store';
 import { DocumentEntity } from '../../domain/model/document.entity';
 import { SignatureComponent } from '../signature-component/signature-component';
-import { SignatureAddComponent } from '../signature-add/signature-add'; // ✅ Para CREAR documento
+import { SignatureAddComponent } from '../signature-add/signature-add';
 import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
@@ -15,7 +16,7 @@ import { ProjectStateService } from '../../../../shared/application/project-stat
 
 @Component({
   selector: 'app-document-page',
-  imports: [MatIcon, TranslatePipe, DatePipe, MatButtonModule, MatTooltipModule],
+  imports: [MatIcon, TranslatePipe, DatePipe, MatButtonModule, MatTooltipModule, MatSnackBarModule],
   templateUrl: './document-page.html',
   styleUrl: './document-page.css',
 })
@@ -25,6 +26,7 @@ export class DocumentPage implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   private dossierExportService = inject(DossierExportService);
   private projectStateService = inject(ProjectStateService);
+  private snackBar = inject(MatSnackBar);
 
   pendingDocuments: DocumentEntity[] = [];
   signedDocuments: DocumentEntity[] = [];
@@ -38,9 +40,7 @@ export class DocumentPage implements OnInit {
       this.signedDocuments = docs.filter((d) => d.isSigned);
       this.pendingCount = this.pendingDocuments.length;
       this.signedCount = this.signedDocuments.length;
-
       this.cdr.detectChanges();
-
     });
   }
 
@@ -56,16 +56,20 @@ export class DocumentPage implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.success) {
-        console.log('Nuevo documento creado:', result.document);
         this.documentsStore.addLocalDocument(result.document);
+        this.snackBar.open('Documento creado exitosamente', 'Cerrar', { duration: 3000 });
         this.cdr.detectChanges();
       }
     });
   }
 
-  openSignatureDialog(document: DocumentEntity) {
-    const token = this.documentsStore.generateToken(document.id);
-    console.log(`[SIMULACIÓN] Token para ${document.type}: ${token}`);
+  async openSignatureDialog(document: DocumentEntity) {
+    const codeSent = await this.documentsStore.sendSignCode(document.id);
+
+    if (!codeSent) {
+      this.snackBar.open('Error al enviar el código de verificación', 'Cerrar', { duration: 4000 });
+      return;
+    }
 
     const dialogRef = this.dialog.open(SignatureComponent, {
       width: '450px',
@@ -74,14 +78,13 @@ export class DocumentPage implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.success) {
+        this.snackBar.open('Documento firmado exitosamente', 'Cerrar', { duration: 3000 });
         this.documentsStore.loadAllDocuments();
-
-
+      } else if (result?.error) {
+        this.snackBar.open(result.error, 'Cerrar', { duration: 4000 });
       }
-
     });
   }
-
 
   getSignersNames(document: DocumentEntity): string {
     if (!document.assignedTo || document.assignedTo.length === 0) {
@@ -98,23 +101,18 @@ export class DocumentPage implements OnInit {
 
   exportDossier() {
     const projectName = this.projectStateService.currentProjectName() || 'Proyecto General';
-    const stageName = 'Fase de Control de Calidad';
-    
-    // Compile signatures history from all signed documents
     const signaturesList: any[] = [];
-    this.signedDocuments.forEach(doc => {
-      const signedSigners = doc.assignedTo?.filter(s => s.signedAt) || [];
-      signedSigners.forEach(signer => {
+    this.signedDocuments.forEach((doc) => {
+      const signedSigners = doc.assignedTo?.filter((s) => s.signedAt) || [];
+      signedSigners.forEach((signer) => {
         signaturesList.push({
           date: signer.signedAt,
           documentName: doc.type,
           userName: signer.fullName,
-          userRole: (signer as any).role || 'Ingeniero',
-          hashSignature: doc.digitalSignatureToken || 'e3b0c44298f...'
+          hashSignature: doc.digitalSignatureToken || 'e3b0c44298f...',
         });
       });
     });
-
-    this.dossierExportService.exportDossierPdf(projectName, stageName, signaturesList);
+    this.dossierExportService.exportDossierPdf(projectName, 'Firma Digital', signaturesList);
   }
 }

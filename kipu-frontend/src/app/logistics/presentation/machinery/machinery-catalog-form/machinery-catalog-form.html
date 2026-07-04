@@ -1,0 +1,51 @@
+<div [formGroup]="catalogForm" class="flex flex-col border-(--color-neutral-border)! bg-white!">
+  <h2 mat-dialog-title class="!m-0 !p-8 !text-2xl !font-black text-(--color-primary)! border-b border-(--color-neutral-border)! bg-(--color-neutral-bg)! rounded-t-xl!">
+    {{ 'machinery.catalog.title' | translate }}
+  </h2>
+
+  <mat-dialog-content class="!flex !flex-col !gap-6 !p-10 !m-0 overflow-y-auto max-h-[65vh]">
+    <mat-form-field appearance="outline" class="w-full!">
+      <mat-label>{{ 'machinery.catalog.name-label' | translate }}</mat-label>
+      <input matInput formControlName="name" [placeholder]="'machinery.catalog.name-placeholder' | translate">
+      @if (catalogForm.get('name')?.hasError('required') && catalogForm.get('name')?.touched) {
+        <mat-error>{{ 'machinery.catalog.name-required' | translate }}</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="flex gap-4">
+      <mat-form-field appearance="outline" class="flex-1!">
+        <mat-label>{{ 'machinery.catalog.brand-label' | translate }}</mat-label>
+        <input matInput formControlName="brand" [placeholder]="'machinery.catalog.brand-placeholder' | translate">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="flex-1!">
+        <mat-label>{{ 'machinery.catalog.model-label' | translate }}</mat-label>
+        <input matInput formControlName="model" [placeholder]="'machinery.catalog.model-placeholder' | translate">
+      </mat-form-field>
+    </div>
+
+    <div class="flex gap-4">
+      <mat-form-field appearance="outline" class="flex-1!">
+        <mat-label>{{ 'machinery.catalog.serial-label' | translate }}</mat-label>
+        <input matInput formControlName="serialNumber" [placeholder]="'machinery.catalog.serial-placeholder' | translate">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="flex-1!">
+        <mat-label>{{ 'machinery.catalog.date-label' | translate }}</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="acquisitionDate">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="!px-8 !py-8 !m-0 !gap-4 bg-(--color-neutral-bg)! border-t border-(--color-neutral-border)!">
+    <button mat-stroked-button (click)="onCancel()" class="!rounded-xl !px-8 !py-6 !font-bold" type="button">
+      {{ 'machinery.catalog.btn-cancel' | translate }}
+    </button>
+    <button mat-flat-button class="bg-(--color-accent)! text-white! py-6! px-10! rounded-xl! font-bold! cursor-pointer! shadow-md"
+            (click)="onSave()" [disabled]="catalogForm.invalid" type="button">
+      {{ 'machinery.catalog.btn-save' | translate }}
+    </button>
+  </mat-dialog-actions>
+</div>

@@ -8,6 +8,7 @@ import { MatRipple } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MachineryCreateForm } from '../machinery-create-form/machinery-create-form';
+import { MachineryCatalogForm } from '../machinery-catalog-form/machinery-catalog-form';
 import { MachineryEntity } from '../../../domain/machinery.entity';
 
 @Component({
@@ -71,6 +72,20 @@ export class MachineryPage implements OnInit {
           ...result,
         };
         this.logisticsStore.addMachinery(machinery);
+      }
+    });
+  }
+
+  openCatalogDialog() {
+    const dialogRef = this.dialog.open(MachineryCatalogForm, {
+      width: '550px',
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.logisticsStore.addCatalogItem(result, () => {
+          this.logisticsStore.loadMachineryCatalog(true);
+        });
       }
     });
   }

@@ -9,6 +9,7 @@ export class AuthStore {
   readonly currentUser = computed(() => this.currentUserSignal());
   readonly userName = computed(() => this.currentUser()?.name ?? '');
   readonly userId = computed(() => this.currentUser()?.id ?? '');
+  readonly token = computed(() => this.currentUser()?.token ?? '');
 
   constructor() {
     const stored = localStorage.getItem('currentUser');

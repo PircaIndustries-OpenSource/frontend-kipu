@@ -15,21 +15,16 @@
     </div>
     <aside class="w-full lg:w-64 flex flex-col gap-xl">
       <div class="flex flex-col gap-m">
-        <h3 class="text-xs font-black text-primary uppercase tracking-widest
-                   border-b border-primary/10 pb-2">
+        <h3 class="text-xs font-black text-primary uppercase tracking-widest border-b border-primary/10 pb-2">
           {{ 'general.summary' | translate }}
         </h3>
         <div class="flex flex-col items-center gap-l">
           <app-summary-card [title]="'machinery.summary.total' | translate"
                             [value]="totalCount()"></app-summary-card>
-
           <app-summary-card [title]="'machinery.summary.in-use' | translate"
-                            [value]="inUseCount()"
-                            class="text-success!"></app-summary-card>
-
+                            [value]="inUseCount()" class="text-success!"></app-summary-card>
           <app-summary-card [title]="'machinery.summary.maintenance' | translate"
-                            [value]="maintenanceCount()"
-                            class="text-warning!"></app-summary-card>
+                            [value]="maintenanceCount()" class="text-warning!"></app-summary-card>
         </div>
       </div>
       <div class="bg-white border border-neutral-border/20 rounded-m p-xl shadow-sm flex flex-col gap-m">
@@ -55,6 +50,11 @@
           </li>
         </ul>
       </div>
+      <button (click)="openCatalogDialog()" matRipple
+              class="w-full bg-accent text-white! py-4! rounded-m! font-bold! text-sm! shadow-md! cursor-pointer transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2">
+        <mat-icon>library_add</mat-icon>
+        {{ 'machinery.catalog.btn-new' | translate }}
+      </button>
     </aside>
   </div>
 </section>
