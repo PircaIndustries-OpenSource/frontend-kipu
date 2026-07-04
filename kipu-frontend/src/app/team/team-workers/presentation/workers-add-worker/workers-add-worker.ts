@@ -31,7 +31,7 @@ export class WorkersAddWorker {
     fullName: ['', Validators.required],
     role: ['', Validators.required],
     status: ['activo'],
-    assignedTools: [[], Validators.required],
+    assignedTools: [[]],
   });
 
   onSave() {

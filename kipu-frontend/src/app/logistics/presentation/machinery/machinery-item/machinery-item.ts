@@ -8,6 +8,7 @@ import { LogisticsStore } from '../../../application/logistics.store';
 import { MachineryHistoryDialog } from '../machinery-history-dialog/machinery-history-dialog';
 import { MachineryAssignDialog } from '../machinery-assign-dialog/machinery-assign-dialog';
 import { MachineryMaintenanceDialog } from '../machinery-maintenance-dialog/machinery-maintenance-dialog';
+import { TeamWorkersStore } from '../../../../team/team-workers/application/team-workers.store';
 
 import { CommonModule } from '@angular/common';
 
@@ -21,6 +22,7 @@ export class MachineryItem {
   item = input.required<MachineryEntity>();
   private dialog = inject(MatDialog);
   private logisticsStore = inject(LogisticsStore);
+  private workersStore = inject(TeamWorkersStore);
 
   get statusKey(): string {
     const s = this.item().status;
@@ -47,6 +49,8 @@ export class MachineryItem {
           assignedTo: result.workerName || result.workerDni,
           assignedWorkerId: result.workerId,
           status: 'IN_USE',
+        }).subscribe(() => {
+          this.workersStore.loadWorkers(true);
         });
       }
     });
@@ -57,6 +61,8 @@ export class MachineryItem {
       assignedTo: '',
       assignedWorkerId: '',
       status: 'AVAILABLE',
+    }).subscribe(() => {
+      this.workersStore.loadWorkers(true);
     });
   }
 
@@ -70,7 +76,7 @@ export class MachineryItem {
         this.logisticsStore.updateMachinery(this.item().id, {
           status: 'URGENT_MAINTENANCE',
           maintenanceHours: result.maintenanceHours,
-        });
+        }).subscribe();
       }
     });
   }
