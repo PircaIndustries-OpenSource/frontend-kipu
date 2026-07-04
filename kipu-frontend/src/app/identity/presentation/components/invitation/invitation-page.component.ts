@@ -12,21 +12,28 @@ import { CommonModule } from '@angular/common';
       <div class="bg-white p-8 rounded-lg shadow-md max-w-md w-full">
         <h2 class="text-2xl font-bold mb-4 text-center">Invitación a Proyecto</h2>
         
-        <div *ngIf="loading" class="text-center text-gray-500">
-          Procesando...
+        <div *ngIf="loading && !invitation" class="text-center text-gray-500">
+          Cargando...
         </div>
-        
-        <div *ngIf="!loading && !processed" class="text-center">
-          <p class="mb-6">Has sido invitado a participar en el proyecto.</p>
+
+        <div *ngIf="invitation && !loading && !processed" class="text-center">
+          <p class="mb-2 text-lg font-semibold">{{ invitation.projectName || 'Proyecto' }}</p>
+          <p class="mb-4 text-gray-600">
+            {{ invitation.invitedBy || 'Alguien' }} te ha invitado con el rol:
+            <span class="font-bold">{{ invitation.role }}</span>
+          </p>
           <div class="flex justify-center gap-4">
             <button (click)="accept()" class="bg-green-600 text-white px-4 py-2 rounded font-bold hover:bg-green-700">Aceptar</button>
             <button (click)="reject()" class="bg-red-600 text-white px-4 py-2 rounded font-bold hover:bg-red-700">Rechazar</button>
           </div>
         </div>
 
+        <div *ngIf="loading && invitation" class="text-center text-gray-500">
+          Procesando...
+        </div>
+
         <div *ngIf="processed" class="text-center">
           <p class="mb-4 text-lg font-semibold">{{ message }}</p>
-          <button (click)="goHome()" class="bg-blue-600 text-white px-4 py-2 rounded font-bold hover:bg-blue-700">Ir al inicio</button>
         </div>
       </div>
     </div>
@@ -39,6 +46,7 @@ export class InvitationPage implements OnInit {
   private cdr = inject(ChangeDetectorRef);
 
   invitationId: number = 0;
+  invitation: any = null;
   loading = false;
   processed = false;
   message = '';
@@ -47,7 +55,26 @@ export class InvitationPage implements OnInit {
     const idParam = this.route.snapshot.paramMap.get('id');
     if (idParam) {
       this.invitationId = parseInt(idParam, 10);
+      this.loadInvitation();
     }
+  }
+
+  loadInvitation() {
+    this.loading = true;
+    this.cdr.detectChanges();
+    this.teamApi.getInvitationById(this.invitationId).subscribe({
+      next: (inv) => {
+        this.invitation = inv;
+        this.loading = false;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.loading = false;
+        this.message = 'No se pudo cargar la invitación.';
+        this.processed = true;
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   accept() {
@@ -91,9 +118,5 @@ export class InvitationPage implements OnInit {
         }
       });
     }
-  }
-
-  goHome() {
-    this.router.navigate(['/']);
   }
 }

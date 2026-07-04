@@ -58,6 +58,10 @@ export class TeamUsersApi {
     return this.http.post<any>(this.invitationsUrl, invitation);
   }
 
+  getInvitationById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.invitationsUrl}/${id}`);
+  }
+
   getInvitations(projectId: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.invitationsUrl}?projectId=${projectId}`);
   }
