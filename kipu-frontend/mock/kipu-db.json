@@ -113,7 +113,7 @@
       "createdAt": "2026-01-10",
       "createdBy": "SIVyLM6",
       "imageUrl": "project-image1.png",
-      "totalBudget": 850000,
+      "totalBudget": 8500000,
       "statusJustification": ""
     },
     {
@@ -126,7 +126,7 @@
       "createdAt": "2026-05-01",
       "createdBy": "SIVyLM6",
       "imageUrl": "project-image4.png",
-      "totalBudget": 850000
+      "totalBudget": 8500000
     },
     {
       "id": "proj-03",
@@ -138,7 +138,7 @@
       "createdAt": "2025-02-15",
       "createdBy": "P-n4XLk",
       "imageUrl": "project-image3.png",
-      "totalBudget": 850000
+      "totalBudget": 8500000
     },
     {
       "id": "pyXfjIq",
@@ -151,7 +151,7 @@
       "createdAt": "2026-05-11",
       "createdBy": "current-user",
       "imageUrl": "project-image3.png",
-      "totalBudget": 120000
+      "totalBudget": 1200000
     },
     {
       "id": "vEXQoL6",
@@ -749,30 +749,7 @@
       "status": "ACTIVE"
     }
   ],
-  "materialsRequests": [
-    {
-      "id": "req-001",
-      "projectId": "proj-001",
-      "requestDate": "2026-06-17",
-      "deadline": "2026-06-30",
-      "status": "PENDING",
-      "priority": "HIGH",
-      "deliveryLocation": "Site A - Warehouse 1",
-      "budgetLineId": "bl-001",
-      "purpose": "Construction of perimeter wall",
-      "additionalNotes": "Requires delivery before 2 PM",
-      "suggestedSupplierId": "sup-001",
-      "attachments": [],
-      "items": [
-        {
-          "supplierOfferId": "soff-001",
-          "quantity": 50
-        }
-      ],
-      "requestedBy": "1",
-      "activity": "Cimentación"
-    }
-  ],
+  "materialsRequests": [],
   "materialsWaste": [],
   "materialsTools": [
     {
@@ -1351,6 +1328,112 @@
           "date": "2026-06-17T15:31:22.662Z"
         }
       ]
+    }
+  ],
+  "rnc": [
+    {
+      "id": "818d0720-1585-4b20-940e-34648d82ed43",
+      "projectId": "proj-02",
+      "title": "Eso tilin",
+      "description": "Hijole unos tacos wey",
+      "specialty": "Structures",
+      "location": "En mejico wey",
+      "severity": "Moderate",
+      "status": "Solved",
+      "reportedBy": "current-user-id",
+      "reportDate": "2026-07-04T01:48:15.803Z",
+      "images": []
+    },
+    {
+      "id": "2f621ab4-f8ed-48cf-9add-3702d62ddce4",
+      "projectId": "proj-01",
+      "title": "asddfa",
+      "description": "asfs",
+      "specialty": "Structures",
+      "location": "sf",
+      "severity": "Solved",
+      "reportedBy": "current-user-id",
+      "reportDate": "2026-07-04T22:13:57.319Z",
+      "images": [],
+      "solutionNotes": [
+        {
+          "date": "2026-07-04T22:49:20.691Z",
+          "author": "Current User"
+        },
+        {
+          "date": "2026-07-04T22:54:56.338Z",
+          "author": "Current User"
+        },
+        {
+          "date": "2026-07-04T22:56:43.896Z",
+          "author": "Current User"
+        },
+        {
+          "date": "2026-07-04T23:20:10.157Z",
+          "author": "Current User"
+        },
+        {
+          "date": "2026-07-04T23:23:28.965Z",
+          "note": "asdfdsgfd",
+          "author": "Current User"
+        },
+        {
+          "date": "2026-07-04T23:47:30.773Z",
+          "note": "No details provided",
+          "author": "Current User"
+        },
+        {
+          "date": "2026-07-04T23:47:35.791Z",
+          "note": "No details provided",
+          "author": "Current User"
+        },
+        {
+          "date": "2026-07-04T23:47:40.310Z",
+          "note": "No details provided",
+          "author": "Current User"
+        }
+      ],
+      "status": "Solved"
+    },
+    {
+      "id": "61c1277d-722c-42d7-ac9b-348df993d0d1",
+      "projectId": "proj-01",
+      "title": "adsf",
+      "description": "dsfa",
+      "specialty": "Structures",
+      "location": "gd",
+      "severity": "Moderate",
+      "status": "Unsolved",
+      "reportedBy": "current-user-id",
+      "reportDate": "2026-07-04T22:18:15.238Z",
+      "images": [],
+      "solutionNotes": ""
+    },
+    {
+      "title": "jhgfsda",
+      "description": "dgjhk",
+      "specialty": "Facilities",
+      "location": "safdgf",
+      "severity": "Low",
+      "images": [],
+      "reportedBy": "current-user-id",
+      "id": "c612a341-42e7-48ef-b1e0-7111c2cd1384",
+      "projectId": "proj-01",
+      "status": "Created",
+      "reportDate": "2026-07-05T00:00:36.188Z"
+    },
+    {
+      "title": "hdfgsfa",
+      "description": "hgjhkjlkñ",
+      "specialty": "Architecture",
+      "location": "asdfsgfd",
+      "severity": "Low",
+      "images": [],
+      "reportedBy": "current-user-id",
+      "id": "55d39f9a-4f59-40ab-b867-6aad3daeb404",
+      "projectId": "proj-01",
+      "status": "Created",
+      "reportDate": "2026-07-05T00:00:41.729Z"
     }
   ]
 }

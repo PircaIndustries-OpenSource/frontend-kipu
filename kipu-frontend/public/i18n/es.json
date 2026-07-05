@@ -1,7 +1,8 @@
 {
   "general": {
     "summary": "Resumen",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "confirm": "Confirmar"
   },
   "identity": {
     "login_title": "Iniciar Sesión",
@@ -975,5 +976,79 @@
     "header_latest": "Últimas notificaciones",
     "header_view_all": "Ver todas",
     "header_empty": "No hay notificaciones"
+  },
+  "rnc": {
+    "severity": {
+      "critical": "Crítico",
+      "moderate": "Moderado",
+      "low": "Leve"
+    },
+    "status": {
+      "created": "Creado",
+      "assigned": "Asignado",
+      "solved": "Resuelto",
+      "verified": "Verificado"
+    },
+    "title": "Reportes de No Conformidad",
+    "new": "Nuevo RNC",
+    "create": {
+      "title": "Nuevo Reporte de No Conformidad",
+      "placeholders": { "select_user": "Selecciona un usuario..." },
+      "fields": {
+        "title": "Título",
+        "description": "Descripción",
+        "specialty": "Especialidad",
+        "location": "Ubicación",
+        "severity": "Severidad",
+        "reported-by": "Reportado Por"
+      },
+      "btn-save": "Guardar RNC",
+      "btn-cancel": "Cancelar"
+    },
+    "actions": {
+      "solve": "Registrar Solución",
+      "assign": "Asignar",
+      "delete": "Eliminar",
+      "view_history": "Ver historial"
+    },
+    "dialog": {
+      "assign_title": "Asignar responsable",
+      "solve_title": "Registrar solución",
+      "select_placeholder": "Seleccionar usuario...",
+      "notes_placeholder": "Escribe las notas de solución aquí...",
+      "change_status_title": "Cambiar estado del reporte",
+      "status_label": "Estado",
+      "unsolved": "No resuelto",
+      "delete_title": "¿Eliminar RNC?",
+      "delete_subtitle": "Esta acción eliminará el reporte permanentemente.",
+      "cancel": "Cancelar",
+      "confirm": "Confirmar",
+      "history_title": "Historial de Soluciones",
+      "severity_status": "SEVERIDAD / ESTADO",
+      "solution_notes": "NOTAS DE SOLUCIÓN",
+      "no_logs": "No hay registros aún."
+    },
+    "stats": {
+      "total": "Total RNCs",
+      "critical": "CRÍTICO",
+      "moderate": "MODERADO",
+      "low": "LEVE",
+      "solved": "RESUELTO"
+    },
+    "fields": {
+      "specialty": "Especialidad",
+      "location": "Ubicación",
+      "reported_by": "Reportado Por",
+      "opened": "Abierto"
+    },
+    "summary": {
+      "title": "Resumen",
+      "avg_days": "Tiempo prom. cierre",
+      "frequent": "Más frecuente",
+      "rate": "Tasa de resolución",
+      "tip": "Tip: Enfócate en problemas de",
+      "no_details": "Sin detalles provistos"
+    },
+    "search_placeholder": "Buscar RNC por ID, descripción..."
   }
 }
