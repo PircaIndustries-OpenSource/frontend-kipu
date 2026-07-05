@@ -1,0 +1,58 @@
+<section class="p-8">
+  <h2 class="text-2xl font-bold mb-6 text-primary">{{ 'rnc.create.title' | translate }}</h2>
+  <form [formGroup]="form" (ngSubmit)="save()" class="bg-white p-6 rounded-lg shadow-sm border border-neutral-200">
+
+    <div class="mb-4">
+      <label class="block text-sm font-semibold mb-1">{{ 'rnc.create.fields.title' | translate }}</label>
+      <input formControlName="title" class="w-full border border-neutral-300 p-2 rounded-md">
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div class="mb-4">
+        <label class="block text-sm font-semibold mb-1">{{ 'rnc.create.fields.specialty' | translate }}</label>
+        <select formControlName="specialty" class="w-full border border-neutral-300 p-2 rounded-md">
+          <option value="Structures">{{ 'progress.specialties.structures' | translate }}</option>
+          <option value="Facilities">{{ 'progress.specialties.facilities' | translate }}</option>
+          <option value="Architecture">{{ 'progress.specialties.architecture' | translate }}</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label class="block text-sm font-semibold mb-1">{{ 'rnc.create.fields.severity' | translate }}</label>
+        <select formControlName="severity" class="w-full border border-neutral-300 p-2 rounded-md">
+          <option value="Low">{{ 'rnc.severity.low' | translate }}</option>
+          <option value="Moderate">{{ 'rnc.severity.moderate' | translate }}</option>
+          <option value="Critical">{{ 'rnc.severity.critical' | translate }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-sm font-semibold mb-1">{{ 'rnc.create.fields.location' | translate }}</label>
+      <input formControlName="location" class="w-full border border-neutral-300 p-2 rounded-md">
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-sm font-semibold mb-1">{{ 'rnc.create.fields.reported-by' | translate }}</label>
+      <select formControlName="reportedBy" class="w-full border border-neutral-300 p-2 rounded-md">
+        <option value="">{{ 'rnc.create.placeholders.select_user' | translate }}</option>
+        @for (user of users(); track user.id) {
+          <option [value]="user.fullName">{{ user.fullName }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="mb-6">
+      <label class="block text-sm font-semibold mb-1">{{ 'rnc.create.fields.description' | translate }}</label>
+      <textarea formControlName="description" class="w-full border border-neutral-300 p-2 rounded-md h-24"></textarea>
+    </div>
+
+    <div class="flex gap-4">
+      <button type="submit" [disabled]="form.invalid" class="bg-[#2c3e50] text-white px-6 py-2 rounded-md font-bold hover:brightness-110">
+        {{ 'rnc.create.btn-save' | translate }}
+      </button>
+      <button type="button" (click)="cancel()" class="border border-neutral-300 px-6 py-2 rounded-md font-bold hover:bg-neutral-100">
+        {{ 'rnc.create.btn-cancel' | translate }}
+      </button>
+    </div>
+  </form>
+</section>

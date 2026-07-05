@@ -1,0 +1,53 @@
+<div class="bg-white rounded-lg shadow-sm border border-neutral-200 overflow-hidden flex flex-col">
+  <div class="bg-[#2c3e50] px-4 py-2 flex justify-between items-center text-[11px] font-bold text-white uppercase tracking-wide">
+    <div class="flex items-center gap-3">
+      <span>RNC-{{ rnc().id.substring(0, 3).toUpperCase() }}</span>
+
+      <span (click)="onSeverityClick()"
+            class="px-2 py-0.5 rounded text-[9px] font-black uppercase cursor-pointer"
+            [ngClass]="getLabelClass()">
+  {{ (rnc().status === 'Solved' ? 'rnc.status.solved' : 'rnc.severity.' + rnc().severity.toLowerCase()) | translate }}
+</span>
+    </div>
+    <span>{{ rnc().reportDate | date:'dd/MM/yyyy HH:mm' }}</span>
+  </div>
+
+  <div class="p-4 flex flex-col gap-4">
+    <h3 class="font-bold text-primary text-lg">{{ rnc().title }}</h3>
+
+    <div class="grid grid-cols-4 gap-4 text-center border-y border-neutral-100 py-3">
+      <div class="flex flex-col"><span class="text-[9px] text-neutral-400 uppercase">{{ 'rnc.fields.specialty' | translate }}</span><span class="text-[11px] font-bold text-neutral-800">{{ ('progress.specialties.' + rnc().specialty.toLowerCase()) | translate }}</span></div>
+      <div class="flex flex-col"><span class="text-[9px] text-neutral-400 uppercase">{{ 'rnc.fields.location' | translate }}</span><span class="text-[11px] font-bold text-neutral-800">{{ rnc().location }}</span></div>
+      <div class="flex flex-col"><span class="text-[9px] text-neutral-400 uppercase">{{ 'rnc.fields.reported_by' | translate }}</span><span class="text-[11px] font-bold text-neutral-800">{{ rnc().reportedBy }}</span></div>
+      <div class="flex flex-col"><span class="text-[9px] text-neutral-400 uppercase">{{ 'rnc.fields.opened' | translate }}</span><span class="text-[11px] font-bold text-neutral-800">{{ calculateDaysOpen() }} d</span></div>
+    </div>
+
+    <p class="text-sm text-neutral-600 bg-neutral-50 p-3 rounded border border-neutral-200">{{ rnc().description }}</p>
+
+    <div class="mt-2">
+      <button (click)="onViewSolutionHistory()"
+              class="w-full bg-[#2c3e50] text-white text-[10px] font-bold py-2 rounded hover:brightness-110 uppercase tracking-wide">
+        {{ 'rnc.actions.view_history' | translate }}
+      </button>
+    </div>
+
+    <div class="flex gap-2 mt-2">
+      <button (click)="onRegisterSolution()"
+              [disabled]="rnc().status === 'Solved'"
+              class="flex-1 bg-[#3498db] text-white text-[11px] font-bold py-2 rounded disabled:opacity-50">
+        {{ 'rnc.actions.solve' | translate }}
+      </button>
+
+      <button (click)="onAssign()"
+              [disabled]="rnc().status === 'Solved'"
+              class="flex-1 bg-neutral-200 text-neutral-700 text-[11px] font-bold py-2 rounded disabled:opacity-50">
+        {{ 'rnc.actions.assign' | translate }}
+      </button>
+
+      <button (click)="onDelete()"
+              class="flex-1 bg-red-50 text-red-600 border border-red-200 text-[11px] font-bold py-2 rounded">
+        {{ 'rnc.actions.delete' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

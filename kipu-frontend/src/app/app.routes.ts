@@ -118,15 +118,21 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./progress/presentation/progress-page/progress-page').then((m) => m.ProgressPage),
       },
+      // src/app/app.routes.ts
+
       {
         path: 'rnc',
         canActivate: [projectSelectedGuard],
         loadComponent: () =>
-          import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
-            (m) => m.InventoryPage,
+          import('./rnc/presentation/rnc-page/rnc-page.component').then((m) => m.RncPageComponent),
+      },
+      {
+        path: 'rnc/create',
+        loadComponent: () =>
+          import('./rnc/presentation/rnc-create-page/rnc-create-page.component').then(
+            (m) => m.RncCreatePageComponent,
           ),
       },
-
       {
         path: 'signatures',
         canActivate: [projectSelectedGuard],
@@ -217,9 +223,7 @@ export const routes: Routes = [
       {
         path: 'settings',
         loadComponent: () =>
-          import('./shared/presentation/settings/settings').then(
-            (m) => m.SettingsComponent,
-          ),
+          import('./shared/presentation/settings/settings').then((m) => m.SettingsComponent),
       },
       {
         path: 'notifications',
