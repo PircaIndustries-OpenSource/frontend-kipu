@@ -105,7 +105,7 @@ export class ProgressPage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.teamUsersStore.loadUsers();
+    this.teamUsersStore.loadIamUsers();
     this.store.loadProgress();
   }
 
