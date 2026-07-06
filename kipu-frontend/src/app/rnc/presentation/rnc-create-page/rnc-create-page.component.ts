@@ -32,7 +32,7 @@ export class RncCreatePageComponent {
   });
 
   ngOnInit() {
-    this.teamUsersStore.loadUsers();
+    this.teamUsersStore.loadIamUsers();
   }
 
   save(): void {
