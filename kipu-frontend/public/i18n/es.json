@@ -919,7 +919,9 @@
         "tab-status-active": "ACTIVO",
         "tab-status-inactive": "INACTIVO",
         "no-workers-found": "No se encontraron trabajadores registrados.",
-        "no-tools": "Sin herramientas registradas"
+        "no-tools": "Sin herramientas registradas",
+        "confirm-delete-title": "Eliminar Trabajador",
+        "confirm-delete-message": "¿Estás seguro de eliminar a"
       },
       "add-modal": {
         "title": "Registrar Nuevo Obrero",

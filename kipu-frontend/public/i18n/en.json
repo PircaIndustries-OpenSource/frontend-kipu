@@ -919,7 +919,9 @@
         "tab-status-active": "ACTIVE",
         "tab-status-inactive": "INACTIVE",
         "no-workers-found": "No workers registered yet.",
-        "no-tools": "No tools registered yet"
+        "no-tools": "No tools registered yet",
+        "confirm-delete-title": "Delete Worker",
+        "confirm-delete-message": "Are you sure you want to delete"
       },
       "add-modal": {
         "title": "Register New Worker",

@@ -158,9 +158,9 @@ export class WorkersPage implements OnInit {
   deleteWorker(worker: TeamWorkersEntity) {
     const dialogRef = this.dialog.open(ConfirmDialog, {
       data: {
-        title: 'Eliminar trabajador',
-        subtitle: `¿Estás seguro de eliminar a ${worker.fullName}?`,
-        confirmText: 'Eliminar',
+        title: 'team.workers.register.confirm-delete-title',
+        message: 'team.workers.register.confirm-delete-message',
+        itemName: worker.fullName,
       },
     });
 
