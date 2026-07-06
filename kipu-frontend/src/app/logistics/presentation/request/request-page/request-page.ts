@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, computed } from '@angular/core';
 import { RequestList } from '../request-list/request-list';
 import { LogisticsStore } from '../../../application/logistics.store';
 import { SummaryCard } from '../../../../shared/presentation/summary-card/summary-card';
@@ -7,6 +7,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatRipple } from '@angular/material/core';
 import { BudgetStore } from '../../../../budget/application/budget-store';
 import { Router, RouterModule } from '@angular/router';
+import { TeamUsersStore } from '../../../../team/team-users/application/team-users.store';
 
 @Component({
   selector: 'app-request-page',
@@ -17,9 +18,18 @@ import { Router, RouterModule } from '@angular/router';
 export class RequestPage implements OnInit {
   logisticsStore = inject(LogisticsStore);
   budgetStore = inject(BudgetStore);
+  teamUsersStore = inject(TeamUsersStore);
   requests = this.logisticsStore.requestFiltered;
   availableBudget = this.budgetStore.totalAvailable;
   totalBudget = this.budgetStore.totalBudgeted;
+  isLogistica = computed(() => {
+    const role = this.teamUsersStore.currentUser()?.role;
+    return role === 'Logística' || role === 'Administrador' || role === 'ROLE_ADMIN';
+  });
+  canCreateRequest = computed(() => {
+    const role = this.teamUsersStore.currentUser()?.role;
+    return role !== 'Logística';
+  });
   ngOnInit() {
     this.logisticsStore.loadRequest();
     this.logisticsStore.loadSupplierOffers();

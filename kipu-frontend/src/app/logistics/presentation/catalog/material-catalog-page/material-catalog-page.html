@@ -1,0 +1,58 @@
+<section class="flex flex-col gap-xl p-xl animate-fade-in">
+  <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-m sm:gap-0">
+    <h1 class="text-3xl font-bold text-primary tracking-tight">
+      {{ 'catalog.material-catalog.title' | translate }}
+    </h1>
+    @if (isLogistica()) {
+      <button (click)="openCreateDialog()" matRipple class="w-full sm:w-auto px-6! bg-accent text-white! py-5! rounded-m! font-bold! text-base! shadow-md! cursor-pointer transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2">
+        <mat-icon>add_circle</mat-icon>
+        {{ 'catalog.material-catalog.button-add' | translate }}
+      </button>
+    }
+  </header>
+
+  <div class="border border-neutral-border/20 rounded-m overflow-hidden">
+    <table class="w-full text-left text-sm border-collapse">
+      <thead class="bg-neutral-bg text-primary uppercase font-bold text-xs tracking-wider border-b border-neutral-border/20">
+        <tr>
+          <th class="px-6 py-4">{{ 'catalog.material-catalog.table.name' | translate }}</th>
+          <th class="px-6 py-4">{{ 'catalog.material-catalog.table.category' | translate }}</th>
+          <th class="px-6 py-4">{{ 'catalog.material-catalog.table.unit' | translate }}</th>
+          @if (isLogistica()) {
+            <th class="px-6 py-4 text-center">{{ 'catalog.material-catalog.table.actions' | translate }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-neutral-border/10">
+        @for(material of materials(); track material.id){
+          <tr class="hover:bg-neutral-bg transition-colors">
+            <td class="px-6 py-4 font-bold text-primary text-base">{{ material.name }}</td>
+            <td class="px-6 py-4 text-neutral-border text-sm">{{ getCategoryName(material.categoryId) || '—' }}</td>
+            <td class="px-6 py-4">
+              <span class="text-xs font-semibold bg-neutral-bg px-3 py-1 rounded-full text-neutral-border">{{ material.measureUnit }}</span>
+            </td>
+            @if (isLogistica()) {
+              <td class="px-6 py-4 text-center">
+                <div class="flex justify-center gap-2">
+                  <button matRipple class="btn-secondary text-sm!" (click)="openEditDialog(material)">
+                    <mat-icon class="!w-4 !h-4 !text-base">edit</mat-icon>
+                  </button>
+                  <button matRipple class="btn-secondary text-sm! !text-danger" (click)="deleteMaterial(material)">
+                    <mat-icon class="!w-4 !h-4 !text-base">delete</mat-icon>
+                  </button>
+                </div>
+              </td>
+            }
+          </tr>
+        }
+        @empty {
+          <tr>
+            <td [attr.colspan]="isLogistica() ? 4 : 3" class="px-6 py-16 text-center text-neutral-border">
+              <p class="text-lg font-semibold">{{ 'catalog.material-catalog.empty' | translate }}</p>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

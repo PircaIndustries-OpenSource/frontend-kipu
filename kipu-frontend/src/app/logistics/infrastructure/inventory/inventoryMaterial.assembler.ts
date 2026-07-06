@@ -4,8 +4,8 @@ import { InventoryMaterialEntity } from '../../domain/inventoryMaterial.entity';
 export class InventoryMaterialAssembler {
   static toEntityFromResource(resource: InventoryMaterialResource): InventoryMaterialEntity {
     return {
-      id: resource.id,
-      materialId: resource.materialId,
+      id: String(resource.id),
+      materialId: String(resource.materialId),
       currentStock: resource.currentStock,
       miniumStock: resource.miniumStock,
       location: resource.location,

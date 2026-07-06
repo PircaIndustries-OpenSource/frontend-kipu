@@ -33,6 +33,11 @@
     </div>
   </mat-card-content>
   <mat-card-actions class="supplier-actions">
+    <button matRipple (click)="openDetail()" class="btn-view flex items-center justify-center gap-2">
+      <mat-icon class="text-base w-5 h-5 leading-5">visibility</mat-icon>
+      {{ 'suppliers.card.actions.button-view' | translate }}
+    </button>
+    @if (canManageSupplier()) {
     <button matRipple (click)="openEdit()" class="btn-edit flex items-center justify-center gap-2">
       <mat-icon class="text-base w-5 h-5 leading-5">edit</mat-icon>
       {{ 'suppliers.card.actions.button-edit' | translate }}
@@ -41,5 +46,6 @@
       <mat-icon class="text-base w-5 h-5 leading-5">delete</mat-icon>
       {{ 'suppliers.card.actions.button-delete' | translate }}
     </button>
+    }
   </mat-card-actions>
 </mat-card>

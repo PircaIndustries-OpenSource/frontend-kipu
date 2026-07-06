@@ -10,7 +10,8 @@ import {
 } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
-import { EnrichedRequest } from '../../../../application/logistics.store';
+import { EnrichedRequest, LogisticsStore } from '../../../../application/logistics.store';
+import { TeamUsersStore } from '../../../../../team/team-users/application/team-users.store';
 
 @Component({
   selector: 'app-request-detail-dialog',
@@ -29,6 +30,13 @@ import { EnrichedRequest } from '../../../../application/logistics.store';
 export class RequestDetailDialog {
   data = inject<EnrichedRequest>(MAT_DIALOG_DATA);
   private dialogRef = inject(MatDialogRef<RequestDetailDialog>);
+  private store = inject(LogisticsStore);
+  private teamUsersStore = inject(TeamUsersStore);
+
+  isLogistica = computed(() => {
+    const role = this.teamUsersStore.currentUser()?.role;
+    return role === 'Logística' || role === 'Administrador' || role === 'ROLE_ADMIN';
+  });
 
   remainingDays = computed(() => {
     const diff = new Date(this.data.deadline).getTime() - Date.now();
@@ -38,6 +46,14 @@ export class RequestDetailDialog {
   totalRequested = computed(() =>
     this.data.items.reduce((total, item) => total + item.quantity * item.pricePerUnit, 0),
   );
+
+  accept() {
+    this.store.updateRequestStatus(this.data.id, 'ACCEPTED', () => this.dialogRef.close());
+  }
+
+  reject() {
+    this.store.updateRequestStatus(this.data.id, 'REFUSED', () => this.dialogRef.close());
+  }
 
   close() {
     this.dialogRef.close();

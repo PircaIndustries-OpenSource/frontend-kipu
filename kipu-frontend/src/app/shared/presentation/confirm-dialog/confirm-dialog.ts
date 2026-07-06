@@ -1,22 +1,23 @@
-import { Component, inject, input } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogClose, MatDialogRef } from '@angular/material/dialog';
-import { TranslatePipe } from '@ngx-translate/core';
+import { Component, inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MatRipple } from '@angular/material/core';
 import { MatIcon } from '@angular/material/icon';
-import { MatButton } from '@angular/material/button';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-confirm-dialog',
-  imports: [TranslatePipe, MatIcon, MatButton, MatDialogClose],
+  imports: [MatDialogModule, MatRipple, MatIcon, TranslatePipe],
   templateUrl: './confirm-dialog.html',
-  styleUrl: './confirm-dialog.css',
 })
 export class ConfirmDialog {
-  private data = inject(MAT_DIALOG_DATA);
+  data = inject<{ title: string; message: string; itemName: string }>(MAT_DIALOG_DATA);
   private dialogRef = inject(MatDialogRef<ConfirmDialog>);
-  title = input<string>(this.data?.title);
-  subtitle = input<string>(this.data?.subtitle);
-  confirmText = input<string>(this.data?.confirmText);
-  onConfirm() {
+
+  confirm() {
     this.dialogRef.close(true);
+  }
+
+  cancel() {
+    this.dialogRef.close(false);
   }
 }

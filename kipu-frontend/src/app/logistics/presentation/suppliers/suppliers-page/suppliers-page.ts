@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { SupplierCreateForm } from '../supplier-create-form/supplier-create-form';
 import { SupplierEntity } from '../../../domain/supplier.entity';
+import { TeamUsersStore } from '../../../../team/team-users/application/team-users.store';
 
 @Component({
   selector: 'app-suppliers-page',
@@ -32,6 +33,12 @@ import { SupplierEntity } from '../../../domain/supplier.entity';
 export class SuppliersPage implements OnInit {
   logisticsStore = inject(LogisticsStore);
   private dialog = inject(MatDialog);
+  teamUsersStore = inject(TeamUsersStore);
+
+  canCreateSupplier = computed(() => {
+    const role = this.teamUsersStore.currentUser()?.role;
+    return role === 'Administrador' || role === 'Logística';
+  });
 
   suppliers = this.logisticsStore.filteredSuppliers;
   suppliersActive = computed(() => {
@@ -43,20 +50,29 @@ export class SuppliersPage implements OnInit {
 
   ngOnInit() {
     this.logisticsStore.loadSuppliers();
+    this.logisticsStore.loadMaterials();
   }
 
   openCreateDialog() {
     const dialogRef = this.dialog.open(SupplierCreateForm, {
-      width: '550px',
+      width: '650px',
       disableClose: true,
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const supplier: SupplierEntity = {
           ...new SupplierEntity(),
-          ...result,
+          ...result.supplier,
         };
-        this.logisticsStore.addSupplier(supplier);
+        this.logisticsStore.addSupplier(supplier, (newSupplier) => {
+          result.offers.forEach((offer: { materialId: string; unitPrice: number }) => {
+            this.logisticsStore.addSupplierOffer({
+              supplierId: newSupplier.id,
+              materialId: offer.materialId,
+              unitPrice: offer.unitPrice,
+            });
+          });
+        });
       }
     });
   }

@@ -23,6 +23,12 @@
      [active]="rla5.isActive">
     {{'inventory.tab-waste'|translate}}
   </a>
+  <a mat-tab-link
+     routerLink="catalog"
+     routerLinkActive #rla6="routerLinkActive"
+     [active]="rla6.isActive">
+    {{'inventory.tab-catalog'|translate}}
+  </a>
 
 </nav>
 <mat-tab-nav-panel #tabPanel>

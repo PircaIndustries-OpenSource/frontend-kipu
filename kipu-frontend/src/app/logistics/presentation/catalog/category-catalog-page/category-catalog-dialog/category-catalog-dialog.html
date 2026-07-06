@@ -1,0 +1,33 @@
+<div class="flex flex-col rounded-xl border border-(--color-neutral-border)! p-0!">
+  <header class="px-8 py-6 flex flex-row items-center justify-between border-b bg-(--color-neutral-bg)! rounded-t-xl!">
+    <h2 class="text-xl font-bold text-(--color-primary)!">{{ title | translate }}</h2>
+  </header>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-6 p-8">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>{{ 'catalog.category-catalog.dialog.fields.name' | translate }}</mat-label>
+      <input matInput formControlName="name" [placeholder]="'catalog.category-catalog.dialog.fields.name-placeholder' | translate">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>{{ 'catalog.category-catalog.dialog.fields.description' | translate }}</mat-label>
+      <input matInput formControlName="description" [placeholder]="'catalog.category-catalog.dialog.fields.description-placeholder' | translate">
+    </mat-form-field>
+
+    <div class="flex items-center gap-3">
+      <mat-slide-toggle formControlName="isActive" color="primary">
+        {{ 'catalog.category-catalog.dialog.fields.active' | translate }}
+      </mat-slide-toggle>
+    </div>
+
+    <div class="flex justify-end gap-3 pt-4 border-t border-(--color-neutral-border)!">
+      <button type="button" matRipple class="btn-secondary" (click)="close()">
+        {{ 'general.cancel' | translate }}
+      </button>
+      <button type="submit" matRipple class="w-48 bg-(--color-accent)! text-white! py-5! rounded-m! font-bold! text-base! cursor-pointer transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2">
+        <mat-icon class="!w-4 !h-4 !text-base">{{ isEdit ? 'save' : 'add' }}</mat-icon>
+        {{ (isEdit ? 'catalog.category-catalog.dialog.save' : 'catalog.category-catalog.dialog.create') | translate }}
+      </button>
+    </div>
+  </form>
+</div>

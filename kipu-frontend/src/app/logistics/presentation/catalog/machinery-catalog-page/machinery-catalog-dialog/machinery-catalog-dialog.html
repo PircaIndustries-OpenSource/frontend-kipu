@@ -1,0 +1,44 @@
+<div class="flex flex-col rounded-xl border border-(--color-neutral-border)! p-0!">
+  <header class="px-8 py-6 flex flex-row items-center justify-between border-b bg-(--color-neutral-bg)! rounded-t-xl!">
+    <h2 class="text-xl font-bold text-(--color-primary)!">{{ title | translate }}</h2>
+  </header>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-6 p-8">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>{{ 'catalog.machinery-catalog.dialog.fields.name' | translate }}</mat-label>
+      <input matInput formControlName="name" [placeholder]="'catalog.machinery-catalog.dialog.fields.name-placeholder' | translate">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>{{ 'catalog.machinery-catalog.dialog.fields.brand' | translate }}</mat-label>
+      <input matInput formControlName="brand" [placeholder]="'catalog.machinery-catalog.dialog.fields.brand-placeholder' | translate">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>{{ 'catalog.machinery-catalog.dialog.fields.model' | translate }}</mat-label>
+      <input matInput formControlName="model" [placeholder]="'catalog.machinery-catalog.dialog.fields.model-placeholder' | translate">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>{{ 'catalog.machinery-catalog.dialog.fields.serial' | translate }}</mat-label>
+      <input matInput formControlName="serialNumber" [placeholder]="'catalog.machinery-catalog.dialog.fields.serial-placeholder' | translate">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>{{ 'catalog.machinery-catalog.dialog.fields.acquisition-date' | translate }}</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="acquisitionDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <div class="flex justify-end gap-3 pt-4 border-t border-(--color-neutral-border)!">
+      <button type="button" matRipple class="btn-secondary" (click)="close()">
+        {{ 'general.cancel' | translate }}
+      </button>
+      <button type="submit" matRipple class="w-48 bg-(--color-accent)! text-white! py-5! rounded-m! font-bold! text-base! cursor-pointer transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2">
+        <mat-icon class="!w-4 !h-4 !text-base">{{ isEdit ? 'save' : 'add' }}</mat-icon>
+        {{ (isEdit ? 'catalog.machinery-catalog.dialog.save' : 'catalog.machinery-catalog.dialog.create') | translate }}
+      </button>
+    </div>
+  </form>
+</div>

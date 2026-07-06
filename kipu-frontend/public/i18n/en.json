@@ -1,7 +1,8 @@
 {
   "general": {
     "summary": "Summary",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "delete": "Delete"
   },
   "identity": {
     "login_title": "Welcome Back",
@@ -268,6 +269,7 @@
     "tab-machinery": "Equipment",
     "tab-suppliers": "Suppliers",
     "tab-waste": "Waste",
+    "tab-catalog": "Catalog",
     "title": "General Inventory",
     "filters": {
       "category": "Category",
@@ -431,8 +433,10 @@
       "btn-cancel": "Cancel"
     },
     "detail": {
-      "title": "Full Request Detail",
+      "title": "Complete Request Detail",
       "btn-close": "Close",
+      "btn-accept": "Accept",
+      "btn-reject": "Reject",
       "remaining-days": "{{days}}d remaining",
       "per-unit": "/ unit",
       "total-investment": "Total Investment",
@@ -440,6 +444,110 @@
       "section": {
         "material-info": "Material Information",
         "logistics": "Logistics & Assignment"
+      }
+    }
+  },
+  "catalog": {
+    "tab-material-catalog": "Material Catalog",
+    "tab-machinery-catalog": "Machinery Catalog",
+    "tab-category-catalog": "Category Catalog",
+    "material-catalog": {
+      "title": "Material Catalog",
+      "button-add": "Add Material",
+      "empty": "No materials in catalog",
+      "delete-title": "Delete material",
+      "delete-message": "Are you sure you want to delete",
+      "table": {
+        "name": "Name",
+        "category": "Category",
+        "unit": "Unit",
+        "actions": "Actions"
+      },
+      "card": {
+        "category": "Category",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "dialog": {
+        "create-title": "New Material",
+        "edit-title": "Edit Material",
+        "fields": {
+          "name": "Name",
+          "name-placeholder": "Enter material name",
+          "category": "Category",
+          "unit": "Unit of Measure"
+        },
+        "create": "Create",
+        "save": "Save"
+      }
+    },
+    "machinery-catalog": {
+      "title": "Machinery Catalog",
+      "button-add": "Add Machinery",
+      "empty": "No machinery in catalog",
+      "delete-title": "Delete machinery",
+      "delete-message": "Are you sure you want to delete",
+      "table": {
+        "name": "Name",
+        "brand": "Brand",
+        "model": "Model",
+        "serial": "Serial No.",
+        "acquisition-date": "Acquisition",
+        "actions": "Actions"
+      },
+      "card": {
+        "model": "Model",
+        "serial": "Serial No.",
+        "acquisition-date": "Acquisition Date",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "dialog": {
+        "create-title": "New Machinery",
+        "edit-title": "Edit Machinery",
+        "fields": {
+          "name": "Name",
+          "name-placeholder": "Enter machinery name",
+          "brand": "Brand",
+          "brand-placeholder": "Enter brand",
+          "model": "Model",
+          "model-placeholder": "Enter model",
+          "serial": "Serial Number",
+          "serial-placeholder": "Enter serial number",
+          "acquisition-date": "Acquisition Date"
+        },
+        "create": "Create",
+        "save": "Save"
+      }
+    },
+    "category-catalog": {
+      "title": "Category Catalog",
+      "button-add": "Add Category",
+      "empty": "No categories in catalog",
+      "delete-title": "Delete category",
+      "delete-message": "Are you sure you want to delete",
+      "table": {
+        "name": "Name",
+        "description": "Description",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "card": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "dialog": {
+        "create-title": "New Category",
+        "edit-title": "Edit Category",
+        "fields": {
+          "name": "Name",
+          "name-placeholder": "Enter category name",
+          "description": "Description",
+          "description-placeholder": "Enter description",
+          "active": "Active"
+        },
+        "create": "Create",
+        "save": "Save"
       }
     }
   },
@@ -462,12 +570,14 @@
       "categories": "Supplied Categories",
       "payment-terms": "Standard Payment Terms",
       "actions": {
+        "button-view": "View details",
         "button-edit": "Edit supplier",
         "button-add": "Add new supplier",
         "button-delete": "Delete supplier"
       },
       "delete": {
         "title": "Delete Supplier",
+        "message": "Are you sure you want to delete supplier",
         "subtitle": "Are you sure?",
         "confirm": "Confirm",
         "cancel": "Cancel"
@@ -502,12 +612,24 @@
       "status-active": "Active",
       "status-inactive": "Inactive",
       "btn-save": "Save Supplier",
-      "btn-cancel": "Cancel"
+      "btn-cancel": "Cancel",
+      "offers-title": "Materials offered",
+      "add-offer": "Add material",
+      "offer-material": "Material",
+      "offer-material-required": "Select a material.",
+      "offer-price": "Unit price",
+      "offer-price-required": "Enter price."
     },
     "edit": {
       "title": "Edit Supplier",
       "btn-save": "Save Changes",
       "btn-cancel": "Cancel"
+    },
+    "detail": {
+      "title": "Supplier Details",
+      "offers-title": "Material Offers",
+      "no-offers": "No material offers registered.",
+      "btn-close": "Close"
     }
   },
   "machinery": {

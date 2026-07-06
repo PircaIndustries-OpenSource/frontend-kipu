@@ -4,7 +4,7 @@ import { SupplierEntity } from '../../domain/supplier.entity';
 export class SupplierAssembler {
   static toEntityFromResource(resource: SupplierResource): SupplierEntity {
     return {
-      id: resource.id,
+      id: String(resource.id),
       ruc: resource.ruc,
       onboarded: resource.onboarded,
       socialReason: resource.socialReason,

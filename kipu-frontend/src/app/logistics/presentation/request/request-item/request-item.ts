@@ -9,6 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { RequestModifyDialog } from './request-modify-dialog/request-modify-dialog';
 import { RequestDetailDialog } from './request-detail-dialog/request-detail-dialog';
 import { LogisticsStore } from '../../../application/logistics.store';
+import { AuthStore } from '../../../../identity/application/auth.store';
+import { TeamUsersStore } from '../../../../team/team-users/application/team-users.store';
 import { DatePipe, NgClass } from '@angular/common';
 
 @Component({
@@ -23,6 +25,18 @@ export class RequestItem {
   totalBudget = input.required<number>();
   private dialog = inject(MatDialog);
   private store = inject(LogisticsStore);
+  private authStore = inject(AuthStore);
+  private teamUsersStore = inject(TeamUsersStore);
+
+  isCreator = computed(() => this.request().requestedBy === this.authStore.userName());
+  isLogistica = computed(() => {
+    const role = this.teamUsersStore.currentUser()?.role;
+    return role === 'Logística' || role === 'Administrador' || role === 'ROLE_ADMIN';
+  });
+  canModifyRequest = computed(() => {
+    const role = this.teamUsersStore.currentUser()?.role;
+    return role !== 'Logística';
+  });
 
   remainingDays = computed(() => {
     const difference = new Date(this.request().deadline).getTime() - Date.now();

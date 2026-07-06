@@ -1,0 +1,72 @@
+<div class="flex flex-col border-(--color-neutral-border)! bg-white!">
+
+  <h2 mat-dialog-title class="!m-0 !p-8 !text-2xl !font-black text-(--color-primary)! border-b border-(--color-neutral-border)! bg-(--color-neutral-bg)! rounded-t-xl!">
+    {{ 'suppliers.detail.title' | translate }}
+  </h2>
+
+  <mat-dialog-content class="!flex !flex-col !gap-6 !p-10 !m-0 overflow-y-auto max-h-[65vh]">
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="flex flex-col gap-1">
+        <span class="text-xs font-bold text-neutral-border uppercase tracking-wider">{{ 'suppliers.create.ruc-label' | translate }}</span>
+        <span class="text-base font-semibold text-primary">{{ data.supplier.ruc }}</span>
+      </div>
+      <div class="flex flex-col gap-1">
+        <span class="text-xs font-bold text-neutral-border uppercase tracking-wider">{{ 'suppliers.create.social-reason-label' | translate }}</span>
+        <span class="text-base font-semibold text-primary">{{ data.supplier.socialReason }}</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="flex flex-col gap-1">
+        <span class="text-xs font-bold text-neutral-border uppercase tracking-wider">{{ 'suppliers.create.contact-label' | translate }}</span>
+        <span class="text-base font-semibold text-primary">{{ data.supplier.contact }}</span>
+      </div>
+      <div class="flex flex-col gap-1">
+        <span class="text-xs font-bold text-neutral-border uppercase tracking-wider">{{ 'suppliers.create.phone-label' | translate }}</span>
+        <span class="text-base font-semibold text-primary">{{ data.supplier.phone }}</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="flex flex-col gap-1">
+        <span class="text-xs font-bold text-neutral-border uppercase tracking-wider">{{ 'suppliers.create.email-label' | translate }}</span>
+        <span class="text-base font-semibold text-primary">{{ data.supplier.email }}</span>
+      </div>
+      <div class="flex flex-col gap-1">
+        <span class="text-xs font-bold text-neutral-border uppercase tracking-wider">{{ 'suppliers.create.status-label' | translate }}</span>
+        <span class="text-base font-semibold" [ngClass]="data.supplier.status === 'ACTIVE' ? 'text-success' : 'text-danger'">{{ data.supplier.status === 'ACTIVE' ? ('suppliers.create.status-active' | translate) : ('suppliers.create.status-inactive' | translate) }}</span>
+      </div>
+    </div>
+
+    <div class="border-t border-(--color-neutral-border)! pt-6">
+      <h3 class="text-sm font-black text-(--color-primary)! uppercase tracking-wider mb-4">{{ 'suppliers.detail.offers-title' | translate }}</h3>
+      @if (data.offers.length === 0) {
+        <p class="text-sm text-neutral-border">{{ 'suppliers.detail.no-offers' | translate }}</p>
+      } @else {
+        <div class="flex flex-col gap-3">
+          @for (offer of data.offers; track offer.id) {
+            <div class="flex flex-row items-center justify-between p-4 border border-(--color-neutral-border)! rounded-m bg-(--color-neutral-bg)!">
+              <div class="flex flex-col gap-1">
+                <span class="text-sm font-bold text-primary">{{ materialName(offer.materialId) }}</span>
+              </div>
+              <span class="text-lg font-black text-accent">S/ {{ offer.unitPrice | number:'1.2-2' }}</span>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="!px-8 !py-8 !m-0 !gap-4 bg-(--color-neutral-bg)! border-t border-(--color-neutral-border)!">
+    <button
+      mat-flat-button
+      class="bg-(--color-accent)! text-white! py-6! px-10! rounded-xl! font-bold! text-base! cursor-pointer! transition-all hover:brightness-110! active:scale-95! shadow-md shadow-(--color-accent)/20"
+      (click)="onClose()"
+      type="button"
+    >
+      {{ 'suppliers.detail.btn-close' | translate }}
+    </button>
+  </mat-dialog-actions>
+</div>
