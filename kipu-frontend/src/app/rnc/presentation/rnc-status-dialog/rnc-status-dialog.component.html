@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>{{ 'rnc.dialog.change_status_title' | translate }}</h2>
+
+<mat-dialog-content class="flex flex-col gap-4 pt-4">
+  <!-- Status selection -->
+  <div class="flex flex-col">
+    <label class="text-xs font-bold text-neutral-500 uppercase">{{ 'rnc.dialog.status_label' | translate }}</label>
+    <select [(ngModel)]="statusOption" class="w-full border border-neutral-300 p-2 rounded-md">
+      <option value="Solved">{{ 'rnc.status.solved' | translate }}</option>
+      <option value="Unsolved">{{ 'rnc.dialog.unsolved' | translate }}</option>
+    </select>
+  </div>
+
+  <!-- Severity selection visible only if Unsolved -->
+  @if (statusOption === 'Unsolved') {
+    <div class="flex flex-col">
+      <label class="text-xs font-bold text-neutral-500 uppercase">{{ 'rnc.create.fields.severity' | translate }}</label>
+      <select [(ngModel)]="severityOption" class="w-full border border-neutral-300 p-2 rounded-md">
+        <option value="Low">{{ 'rnc.severity.low' | translate }}</option>
+        <option value="Moderate">{{ 'rnc.severity.moderate' | translate }}</option>
+        <option value="Critical">{{ 'rnc.severity.critical' | translate }}</option>
+      </select>
+    </div>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="pt-4">
+  <button mat-dialog-close class="px-6 py-2 text-neutral-600 font-bold hover:bg-neutral-100 rounded-md">
+    {{ 'general.cancel' | translate }}
+  </button>
+  <button (click)="confirm()" class="px-6 py-2 bg-[#2c3e50] text-white rounded-md font-bold hover:brightness-110">
+    {{ 'general.confirm' | translate }}
+  </button>
+</mat-dialog-actions>

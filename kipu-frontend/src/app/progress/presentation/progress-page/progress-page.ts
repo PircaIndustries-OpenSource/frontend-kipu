@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal, TemplateRef, ViewChild, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -9,16 +9,14 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslatePipe } from '@ngx-translate/core';
 import { ProgressStore } from '../../application/progress.store';
 import { AutocompleteFilterList } from '../../../shared/presentation/autocomplete-filter-list/autocomplete-filter-list';
 import { ProjectProgress } from '../../domain/progress.entity';
-import { ProgressPhotoEntity } from '../../domain/progress-photo.entity';
 import { ProjectsStore } from '../../../projects/application/projects.store';
 import { TeamUsersStore } from '../../../team/team-users/application/team-users.store'; //
-import { TeamUsersEntity } from '../../../team/team-users/domain/model/team-users.entity'; //
-import { UploadService } from '../../../shared/infrastructure/upload.service';
+import { TeamUsersEntity } from '../../../team/team-users/domain/model/team-users.entity';
+import { ProgressCalendarComponent } from '../calendar/calendar'; //
 
 @Component({
   selector: 'app-progress-page',
@@ -30,44 +28,45 @@ import { UploadService } from '../../../shared/infrastructure/upload.service';
     MatIconModule,
     MatTabsModule,
     MatDialogModule,
-    MatSnackBarModule,
     TranslatePipe,
     AutocompleteFilterList,
     MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
+    ProgressCalendarComponent,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './progress-page.html',
 })
 export class ProgressPage implements OnInit {
   readonly store = inject(ProgressStore);
-  private readonly projectsStore = inject(ProjectsStore);
+  readonly projectsStore = inject(ProjectsStore);
   private readonly teamUsersStore = inject(TeamUsersStore);
   readonly dialog = inject(MatDialog);
-  private snackBar = inject(MatSnackBar);
   private readonly fb = inject(FormBuilder);
 
-  readonly currentView = signal<'list' | 'create'>('list');
+  readonly currentView = signal<'list' | 'create' | 'history'>('list');
   readonly selectedWeather = signal<string>('sunny');
   progressForm: FormGroup;
 
-  readonly isProjectOnHold = (): boolean => {
-    const project = this.projectsStore.currentProject();
-    return project?.status === 'SUSPENDED';
-  };
+  readonly selectedParent = signal<ProjectProgress | null>(null);
+  readonly formMode = signal<'create_parent' | 'create_child' | 'edit_parent' | 'edit_child'>(
+    'create_parent',
+  );
 
-  readonly gestoresOptions = computed(() => {
-    const users = this.teamUsersStore.teamUsers()
-      .filter((user: TeamUsersEntity) => user.role === 'Gestor' || user.role === 'Gestor Operativo')
-      .map((user: TeamUsersEntity) => user.fullName);
-    
-    const curr = this.teamUsersStore.currentUser();
-    if (curr && curr.fullName && !users.includes(curr.fullName)) {
-      users.unshift(curr.fullName);
-    }
-    return users;
+  readonly selectedChildId = signal<number | null>(null);
+
+  readonly currentChildren = computed(() => {
+    const parent = this.selectedParent();
+    return parent ? this.store.getChildrenForActivity(parent.id) : [];
   });
+
+  readonly gestoresOptions = computed(() =>
+    this.teamUsersStore
+      .teamUsers()
+      .filter((user: TeamUsersEntity) => user.role === 'Gestor' || user.role === 'Gestor Operativo')
+      .map((user: TeamUsersEntity) => user.fullName),
+  );
   readonly specialtiesOptions = ['Estructuras', 'Instalaciones', 'Arquitectura'];
   readonly activityOptions = ['Vaciado de Losa N3', 'Instalación Eléctrica', 'Acabado de Muros'];
   protected readonly mockPhotos = [
@@ -101,27 +100,194 @@ export class ProgressPage implements OnInit {
       responsible: [''],
       workers: [0],
       weather: ['sunny'],
+      weight: [1, [Validators.required, Validators.min(1)]],
     });
   }
 
-  private readonly uploadService = inject(UploadService);
-
   ngOnInit(): void {
-
+    this.teamUsersStore.loadUsers();
     this.store.loadProgress();
-    this.store.loadPhotos();
+  }
+
+  getSpecialtyKey(specialty: string): string {
+    if (!specialty) return 'structures';
+    const mapping: Record<string, string> = {
+      estructuras: 'structures',
+      instalaciones: 'facilities',
+      arquitectura: 'architecture',
+    };
+    return mapping[specialty.toLowerCase()] || 'structures';
+  }
+
+  /**
+   * Listens to tab selection changes to enforce real-time state synchronization.
+   * If the user navigates to the Calendar tab (Index 2), it forces a cache reload.
+   */
+  onTabChange(event: any): void {
+    // Index 2 corresponds to the progress.tabs.calendar view
+    if (event.index === 2) {
+      this.store.loadProgress();
+    }
   }
 
   openCreateForm(): void {
-    if (this.isProjectOnHold()) {
-      this.snackBar.open('Debes reanudar el proyecto pasando su estado a "Planificación" o "En Ejecución" antes de agregar nuevos avances.', 'Entendido', {
-        duration: 5000,
-        panelClass: ['bg-red-500', 'text-white', 'font-bold']
-      });
-      return;
+    this.progressForm.enable();
+
+    const percentageControl = this.progressForm.get('percentage');
+    if (percentageControl) {
+      percentageControl.setValidators([Validators.min(0), Validators.max(100)]);
+      percentageControl.updateValueAndValidity();
     }
-    this.progressForm.reset({ percentage: 0, weather: 'sunny' });
+
+    const weightControl = this.progressForm.get('weight');
+    if (weightControl) {
+      weightControl.setValidators([Validators.required, Validators.min(1)]);
+      weightControl.updateValueAndValidity();
+    }
+
+    this.progressForm.reset({ percentage: 0, weight: 1, weather: 'sunny' });
     this.selectedWeather.set('sunny');
+    this.formMode.set('create_parent');
+    this.currentView.set('create');
+  }
+
+  openHistory(parent: ProjectProgress): void {
+    this.selectedParent.set(parent);
+    this.currentView.set('history');
+  }
+
+  backToList(): void {
+    this.selectedParent.set(null);
+    this.currentView.set('list');
+  }
+
+  openCreateChildForm(): void {
+    const parent = this.selectedParent();
+    if (!parent) return;
+
+    this.formMode.set('create_child');
+    this.selectedWeather.set('sunny');
+
+    // Business Math: Calculate the sum of current children to establish the remaining buffer
+    const currentProgressSum = this.currentChildren().reduce(
+      (sum, child) => sum + (Number(child.currentPercentage) || 0),
+      0,
+    );
+    const availablePercentage = 100 - currentProgressSum;
+
+    this.progressForm.reset({
+      date: '',
+      specialty: parent.specialty,
+      activityName: parent.activityName,
+      location: parent.details,
+      percentage: 0,
+      description: '',
+      responsible: parent.responsible || '',
+      workers: parent.workers || 0,
+      weather: 'sunny',
+      weight: parent.weight || 1,
+    });
+
+    this.progressForm.get('weight')?.disable();
+
+    // Enforce dynamic validator rules to protect percentage boundaries
+    const percentageControl = this.progressForm.get('percentage');
+    if (percentageControl) {
+      percentageControl.setValidators([
+        Validators.required,
+        this.createMaxPercentageValidator(availablePercentage),
+      ]);
+      percentageControl.updateValueAndValidity(); // Forces Angular to recalculate validation state
+    }
+
+    this.progressForm.get('specialty')?.disable();
+    this.progressForm.get('activityName')?.disable();
+    this.progressForm.get('responsible')?.disable();
+    this.progressForm.get('workers')?.disable();
+
+    this.currentView.set('create');
+  }
+
+  openEditParentForm(parent: ProjectProgress): void {
+    this.formMode.set('edit_parent');
+    this.selectedChildId.set(parent.id);
+    this.selectedWeather.set(parent.weather || 'sunny');
+
+    this.progressForm.enable();
+
+    const formattedDate = parent.lastUpdate
+      ? new Date(parent.lastUpdate).toISOString().split('T')[0]
+      : '';
+
+    this.progressForm.reset({
+      date: formattedDate,
+      specialty: parent.specialty,
+      activityName: parent.activityName,
+      location: parent.details,
+      percentage: parent.currentPercentage,
+      description: parent.details,
+      responsible: parent.responsible || '',
+      workers: parent.workers || 0,
+      weather: parent.weather || 'sunny',
+      weight: parent.weight || 1,
+    });
+
+    if (this.store.getChildrenForActivity(parent.id).length > 0) {
+      this.progressForm.get('percentage')?.disable();
+    }
+
+    this.currentView.set('create');
+  }
+
+  openEditChildForm(child: ProjectProgress): void {
+    const parent = this.selectedParent();
+    if (!parent) return;
+
+    this.formMode.set('edit_child');
+    this.selectedChildId.set(child.id);
+    this.selectedWeather.set(child.weather || 'sunny');
+
+    this.progressForm.enable();
+    this.progressForm.get('weight')?.disable();
+
+    const otherChildrenSum = this.currentChildren()
+      .filter((c) => c.id !== child.id)
+      .reduce((sum, c) => sum + (Number(c.currentPercentage) || 0), 0);
+    const availablePercentage = 100 - otherChildrenSum;
+
+    const formattedDate = child.lastUpdate
+      ? new Date(child.lastUpdate).toISOString().split('T')[0]
+      : '';
+
+    this.progressForm.reset({
+      date: formattedDate,
+      specialty: parent.specialty,
+      activityName: parent.activityName,
+      location: child.details,
+      percentage: child.currentPercentage,
+      description: child.details,
+      responsible: child.responsible || parent.responsible || '',
+      workers: parent.workers || 0,
+      weather: child.weather || 'sunny',
+      weight: parent.weight || 1,
+    });
+
+    this.progressForm.get('weight')?.disable();
+
+    const percentageControl = this.progressForm.get('percentage');
+    if (percentageControl) {
+      percentageControl.setValidators([
+        Validators.required,
+        this.createMaxPercentageValidator(availablePercentage),
+      ]);
+      percentageControl.updateValueAndValidity();
+    }
+
+    this.progressForm.get('specialty')?.disable();
+    this.progressForm.get('activityName')?.disable();
+    this.progressForm.get('responsible')?.disable();
+    this.progressForm.get('workers')?.disable();
+
     this.currentView.set('create');
   }
 
@@ -136,47 +302,139 @@ export class ProgressPage implements OnInit {
 
   saveProgress(): void {
     if (this.progressForm.valid) {
-      const val = this.progressForm.value;
-      const advancePercentage = Number(val.percentage) || 0;
+      const val = this.progressForm.getRawValue();
+      const mode = this.formMode();
+      const parent = this.selectedParent();
+      const targetId = this.selectedChildId();
 
-      // Get current project context from store
       const currentId = this.projectsStore.currentProjectId() || 'unknown';
       const projectName = this.projectsStore.currentProject()?.name || 'Unknown Project';
 
-      const newEntry: ProjectProgress = {
-        id: Math.floor(Math.random() * 10000), // json-server will generate a permanent ID, but we send a temporary one
-        projectId: currentId, // Dynamic project assignment
+      const isChild = mode === 'create_child' || mode === 'edit_child';
+      const isEditing = mode === 'edit_parent' || mode === 'edit_child';
+
+      if (mode === 'create_parent') {
+        const generatedParentId = Math.floor(Math.random() * 10000);
+
+        const parentEntry: ProjectProgress = {
+          id: generatedParentId,
+          projectId: currentId,
+          projectName: projectName,
+          activityName: val.activityName,
+          details: val.location || '',
+          specialty: val.specialty,
+          status: val.percentage === 100 ? 'Finished' : 'Active',
+          currentPercentage: 0,
+          startDate: new Date(),
+          endDate: new Date(),
+          lastUpdate: val.date ? new Date(val.date) : new Date(),
+          responsible: val.responsible,
+          workers: Number(val.workers),
+          weather: val.weather,
+          isMiniAdvance: false,
+          parentId: null,
+          weight: Number(val.weight || 1),
+        };
+
+        const initialChildEntry: ProjectProgress = {
+          id: Math.floor(Math.random() * 10000),
+          projectId: currentId,
+          projectName: projectName,
+          activityName: val.activityName,
+          details: val.location || '',
+          specialty: val.specialty,
+          status: val.percentage === 100 ? 'Finished' : 'Active',
+          currentPercentage: Number(val.percentage),
+          startDate: new Date(),
+          endDate: new Date(),
+          lastUpdate: val.date ? new Date(val.date) : new Date(),
+          responsible: val.responsible,
+          workers: Number(val.workers),
+          weather: val.weather,
+          isMiniAdvance: true,
+          parentId: generatedParentId,
+        };
+
+        this.store.addProgress(parentEntry);
+        setTimeout(() => this.store.addProgress(initialChildEntry), 100);
+
+        this.progressForm.enable();
+        setTimeout(() => {
+          this.store.loadProgress();
+          this.currentView.set('list');
+        }, 250);
+        return;
+      }
+
+      const entryData: ProjectProgress = {
+        id: isEditing && targetId ? targetId : Math.floor(Math.random() * 10000),
+        projectId: currentId,
         projectName: projectName,
         activityName: val.activityName,
         details: val.location || '',
         specialty: val.specialty,
-        status: advancePercentage === 100 ? 'Finished' : 'Active',
-        currentPercentage: advancePercentage,
+        status: val.percentage === 100 ? 'Finished' : 'Active',
+        currentPercentage: Number(val.percentage),
         startDate: new Date(),
         endDate: new Date(),
-        lastUpdate: new Date(val.date),
+        lastUpdate: val.date ? new Date(val.date) : new Date(),
         responsible: val.responsible,
-        workers: val.workers,
+        workers: Number(val.workers),
         weather: val.weather,
-        isMiniAdvance: false
+        isMiniAdvance: isChild,
+        parentId: isChild && parent ? parent.id : null,
+        weight: !isChild ? Number(val.weight || 1) : undefined,
       };
 
-      this.store.addProgress(newEntry);
-      
-      this.currentView.set('list');
+      if (isEditing && targetId) {
+        if (mode === 'edit_parent') {
+          this.selectedParent.set(entryData);
+        }
+        this.store.updateProgress(targetId, entryData);
+      } else {
+        this.store.addProgress(entryData);
+      }
+
+      this.progressForm.enable();
+      this.selectedChildId.set(null);
+
+      setTimeout(() => {
+        this.store.loadProgress();
+        if (mode === 'edit_parent' && parent) {
+          const freshParent = this.store.progressList().find((p) => p.id === parent.id);
+          if (freshParent) {
+            this.selectedParent.set(freshParent);
+          }
+        }
+        this.currentView.set(isChild ? 'history' : 'list');
+      }, 150);
     }
   }
 
   cancelCreation(): void {
+    const targetView = this.formMode().includes('child') ? 'history' : 'list';
+
+    const wasEditing = this.formMode().startsWith('edit');
+    const savedId = this.selectedChildId();
+    if (wasEditing) {
+      this.selectedChildId.set(null);
+    }
+
     if (this.progressForm.dirty) {
       this.dialog
         .open(this.confirmDialogTemplate)
         .afterClosed()
         .subscribe((res) => {
-          if (res === 'discard') this.currentView.set('list');
+          if (res === 'discard') {
+            this.progressForm.enable();
+            this.currentView.set(targetView);
+          } else if (wasEditing && savedId) {
+            this.selectedChildId.set(savedId);
+          }
         });
     } else {
-      this.currentView.set('list');
+      this.progressForm.enable();
+      this.currentView.set(targetView);
     }
   }
 
@@ -194,46 +452,75 @@ export class ProgressPage implements OnInit {
       : `${b} bg-primary/10 text-primary border-primary/20`;
   }
 
-  onPhotoUpload(event: Event) {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      this.uploadService.uploadFile(file).subscribe({
-        next: (url) => {
-          this.store.addPhoto({
-            projectId: this.projectsStore.currentProjectId() || 'unknown',
-            title: 'Nueva foto',
-            url: url,
-            uploadDate: new Date().toLocaleDateString('es-ES')
-          });
-        },
-        error: (err) => {
-          console.error('Error uploading image', err);
+  /**
+   * Generates a custom synchronous validator to protect the 100% progress threshold.
+   * Ensures the new entry combined with existing child logs does not exceed 100%.
+   */
+  private createMaxPercentageValidator(availablePercentage: number) {
+    return (control: any) => {
+      const value = Number(control.value) || 0;
+
+      if (value < 0) {
+        return { negativePercentage: true }; // Triggers an error if value is lower than 0
+      }
+
+      if (value > availablePercentage) {
+        return { exceededLimit: { maxAllowed: availablePercentage, actual: value } }; // Triggers an error if it surpasses the limit
+      }
+
+      return null; // Validator passes successfully
+    };
+  }
+  deleteProgressWithConfirmation(id: number, isChildView: boolean): void {
+    this.formMode.set('edit_child');
+    this.selectedChildId.set(id);
+
+    this.dialog
+      .open(this.confirmDialogTemplate)
+      .afterClosed()
+      .subscribe((res) => {
+        if (res === 'discard') {
+          // 1. Clear the component local reference memory state instantly to allow standard calculations
+          this.store._progressList.update((list) =>
+            list.filter((item) => item.id !== id && item.parentId !== id),
+          );
+
+          // 2. Dispatch cascade deletion commands array loop
+          this.store.removeProgress(id);
+          this.progressForm.enable();
+          this.selectedChildId.set(null);
+
+          if (!isChildView) {
+            this.backToList();
+          }
+        } else {
+          this.progressForm.enable();
+          this.selectedChildId.set(null);
         }
       });
+  }
+
+  navigateToEditFromCalendar(child: ProjectProgress): void {
+    const allProgress = this.store._progressList();
+    const parent = allProgress.find((p) => p.id === child.parentId && !p.isMiniAdvance);
+    if (parent) {
+      this.selectedParent.set(parent);
+      this.openEditChildForm(child);
     }
   }
 
-  @ViewChild('editPhotoDialogTemplate') editPhotoDialogTemplate!: TemplateRef<unknown>;
-  @ViewChild('deletePhotoDialogTemplate') deletePhotoDialogTemplate!: TemplateRef<unknown>;
-  editPhotoControl = new FormControl('');
+  /**
+   * Technical utility to compute and return the remaining progress allocation headroom for the UI translations.
+   */
+  getMaxAllowedBuffer(): number {
+    const parent = this.selectedParent();
+    if (!parent) return 100;
 
-  openEditPhotoDialog(photo: ProgressPhotoEntity) {
-    this.editPhotoControl.setValue(photo.title);
-    this.dialog.open(this.editPhotoDialogTemplate).afterClosed().subscribe((res) => {
-      if (res === 'save') {
-        const newTitle = this.editPhotoControl.value;
-        if (newTitle && newTitle.trim() !== '' && newTitle !== photo.title) {
-          this.store.updatePhotoTitle(photo.id!, newTitle.trim());
-        }
-      }
-    });
-  }
+    const currentProgressSum = this.currentChildren()
+      .filter((c) => c.id !== this.selectedChildId())
+      .reduce((sum, child) => sum + (Number(child.currentPercentage) || 0), 0);
 
-  openDeletePhotoDialog(id: number) {
-    this.dialog.open(this.deletePhotoDialogTemplate).afterClosed().subscribe((res) => {
-      if (res === 'confirm') {
-        this.store.deletePhoto(id);
-      }
-    });
+    const buffer = 100 - currentProgressSum;
+    return buffer < 0 ? 0 : buffer;
   }
 }

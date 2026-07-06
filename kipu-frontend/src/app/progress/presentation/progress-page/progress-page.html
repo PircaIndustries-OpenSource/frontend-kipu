@@ -17,7 +17,10 @@
       </button>
     </header>
 
-    <mat-tab-group animationDuration="0ms" class="bg-white rounded-l border border-neutral-border/20 shadow-sm mt-m overflow-hidden">
+    <mat-tab-group
+      animationDuration="0ms"
+      class="bg-white rounded-l border border-neutral-border/20 shadow-sm mt-m overflow-hidden"
+      (selectedTabChange)="onTabChange($event)">
       <mat-tab [label]="'progress.tabs.log' | translate">
         <div class="p-xl flex flex-col gap-l">
           <div class="flex flex-wrap gap-m items-center">
@@ -36,7 +39,7 @@
               </app-autocomplete-filter-list>
             </div>
             <div class="w-full sm:w-[300px]">
-              <mat-form-field subscriptSizing="dynamic" class="w-full bg-white">
+              <mat-form-field appearance="outline" class="w-full bg-white !mb-[-1.25em]">
                 <mat-date-range-input [rangePicker]="picker">
                   <input matStartDate [placeholder]="'progress.filters.start_date' | translate" #startInput>
                   <input matEndDate [placeholder]="'progress.filters.end_date' | translate" #endInput (dateChange)="onDateRangeChange(startInput.valueAsDate, endInput.valueAsDate)">
@@ -54,24 +57,55 @@
                 <th class="px-6 py-4">{{ 'progress.table.date' | translate }}</th>
                 <th class="px-6 py-4">{{ 'progress.table.activity' | translate }}</th>
                 <th class="px-6 py-4">{{ 'progress.table.specialty' | translate }}</th>
+                <th class="px-6 py-4">{{ 'progress.table.weight' | translate }}</th>
                 <th class="px-6 py-4">{{ 'progress.table.advance' | translate }}</th>
                 <th class="px-6 py-4 text-center">{{ 'progress.table.status' | translate }}</th>
+                <th class="px-6 py-4 text-center">{{ 'progress.table.actions' | translate }}</th>
               </tr>
               </thead>
               <tbody class="divide-y divide-neutral-border/10">
                 @for (item of store.progressList(); track item.id) {
-                  <tr class="hover:bg-neutral-bg transition-colors">
-                    <td class="px-6 py-4 font-medium text-neutral-border">{{ item.lastUpdate | date:'dd/MM/yyyy' }}</td>
-                    <td class="px-6 py-4">
+                  <tr class="hover:bg-neutral-bg transition-colors cursor-pointer group">
+                    <td (click)="openHistory(item)" class="px-6 py-4 font-medium text-neutral-border">{{ item.lastUpdate | date:'dd/MM/yyyy' }}</td>
+                    <td (click)="openHistory(item)" class="px-6 py-4">
                       <div class="font-bold text-primary text-base">{{ item.activityName }}</div>
-                      <div class="text-xs text-neutral-border font-medium">{{ item.details }}</div>
                     </td>
-                    <td class="px-6 py-4 font-medium text-neutral-border">{{ item.specialty }}</td>
-                    <td class="px-6 py-4 font-black text-primary text-lg">{{ item.currentPercentage }}%</td>
-                    <td class="px-6 py-4 text-center">
+                    <td (click)="openHistory(item)" class="px-6 py-4 font-medium text-neutral-border">
+                      {{ 'progress.specialties.' + getSpecialtyKey(item.specialty) | translate }}
+                    </td>
+                    <td (click)="openHistory(item)" class="px-6 py-4 font-bold text-neutral-border">{{ item.weight || 1 }}</td>
+
+                    <td (click)="openHistory(item)" class="px-6 py-4">
+                      <div class="flex items-center gap-3">
+                        <!-- Progress bar container -->
+                        <div class="w-24 bg-neutral-bg rounded-full h-2.5 border border-neutral-border/10 overflow-hidden hidden sm:block">
+                          <div
+                            class="bg-accent h-2.5 rounded-full transition-all duration-300"
+                            [style.width.%]="item.currentPercentage">
+                          </div>
+                        </div>
+                        <!-- Numeric indicator -->
+                        <span class="font-black text-primary text-lg whitespace-nowrap">
+                          {{ item.currentPercentage }}%
+                        </span>
+                      </div>
+                    </td>
+                    <td (click)="openHistory(item)" class="px-6 py-4 text-center">
                       <span [class]="getStatusBadgeClass(item.status)">
                         {{ 'progress.status.' + item.status.toLowerCase() | translate }}
                       </span>
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                      <button
+                        type="button"
+                        (click)="$event.stopPropagation(); deleteProgressWithConfirmation(item.id, false)"
+                        [disabled]="store.getChildrenForActivity(item.id).length > 0"
+                        [title]="store.getChildrenForActivity(item.id).length > 0 ? ('progress.messages.clear_children_first' | translate) : ('progress.table.actions' | translate)"
+                        [ngClass]="store.getChildrenForActivity(item.id).length > 0 ? 'text-neutral-border/40 cursor-not-allowed opacity-40' : 'text-danger hover:bg-danger/10 cursor-pointer'"
+                        class="p-2 rounded-s transition-colors"
+                      >
+                        <mat-icon>delete</mat-icon>
+                      </button>
                     </td>
                   </tr>
                 }
@@ -84,51 +118,46 @@
       <mat-tab [label]="'progress.tabs.photos' | translate">
         <div class="p-xl flex flex-col gap-l">
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-m sm:gap-0">
-            <div class="w-full sm:w-[280px]">
-              <app-autocomplete-filter-list
-                [listOptions]="activityOptions"
-                [placeholder]="'progress.filters.activity' | translate"
-                (optionSelected)="onSearchChange($event)">
-              </app-autocomplete-filter-list>
+            <div class="flex gap-s flex-wrap">
+              <button class="px-4 py-2 border border-accent text-accent font-bold rounded-s text-sm hover:bg-accent/10 transition-colors">Excavaciones</button>
+              <button class="px-4 py-2 border border-neutral-border/20 text-neutral-border font-bold rounded-s text-sm hover:bg-neutral-bg transition-colors">Cimentación</button>
             </div>
-            <div class="flex flex-col sm:flex-row gap-m w-full sm:w-auto mt-4 sm:mt-0">
-              <button class="px-4 py-2 flex items-center justify-center gap-2 text-neutral-border font-bold hover:text-primary transition-colors cursor-pointer w-full sm:w-auto">
+            <div class="flex gap-m w-full sm:w-auto">
+              <button class="px-4 py-2 flex items-center justify-center gap-2 text-neutral-border font-bold hover:text-primary transition-colors cursor-pointer">
                 <mat-icon>download</mat-icon> {{ 'progress.actions.export' | translate }}
               </button>
-              <input type="file" hidden #photoInput (change)="onPhotoUpload($event)" accept="image/*">
-              <button (click)="photoInput.click()" class="px-6 py-2 bg-primary text-white font-bold rounded-s shadow-sm hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto">
+              <button class="px-6 py-2 bg-primary text-white font-bold rounded-s shadow-sm hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto">
                 <mat-icon>add</mat-icon> {{ 'progress.actions.upload' | translate }}
               </button>
             </div>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-l">
-            @for (photo of store.allPhotos(); track photo.id) {
-              <div class="h-56 bg-neutral-bg rounded-m relative overflow-hidden bg-cover bg-center shadow-sm hover:shadow-md transition-all border border-neutral-border/10 group"
+            @for (photo of mockPhotos; track photo.url) {
+              <div class="h-56 bg-neutral-bg rounded-m relative overflow-hidden bg-cover bg-center shadow-sm hover:shadow-md hover:scale-[1.02] transition-all cursor-pointer border border-neutral-border/10"
                    [style.background-image]="'url(' + photo.url + ')'">
-                <div class="absolute inset-0 bg-black/10 hover:bg-black/30 transition-colors"></div>
-                
-                <!-- Action buttons (visible on hover) -->
-                <div class="absolute top-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button (click)="openEditPhotoDialog(photo)" class="bg-white/80 hover:bg-white text-primary rounded-full p-2 cursor-pointer transition-colors" title="Editar descripción">
-                    <mat-icon class="scale-[0.8] !w-5 !h-5 flex items-center justify-center">edit</mat-icon>
-                  </button>
-                  <button (click)="openDeletePhotoDialog(photo.id!)" class="bg-white/80 hover:bg-danger hover:text-white text-danger rounded-full p-2 cursor-pointer transition-colors" title="Eliminar foto">
-                    <mat-icon class="scale-[0.8] !w-5 !h-5 flex items-center justify-center">delete</mat-icon>
-                  </button>
-                </div>
-
+                <div class="absolute inset-0 bg-black/10 hover:bg-transparent transition-colors"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent text-white">
                   <p class="font-bold text-sm">{{photo.title}}</p>
-                  <p class="text-xs opacity-80">{{photo.uploadDate}}</p>
+                  <p class="text-xs opacity-80">{{photo.date}}</p>
                 </div>
               </div>
             }
-            <div (click)="photoInput.click()" class="h-56 border-2 border-dashed border-neutral-border/40 rounded-m flex flex-col gap-2 items-center justify-center text-neutral-border cursor-pointer hover:bg-neutral-bg hover:border-accent hover:text-accent transition-all group">
+            <div class="h-56 border-2 border-dashed border-neutral-border/40 rounded-m flex flex-col gap-2 items-center justify-center text-neutral-border cursor-pointer hover:bg-neutral-bg hover:border-accent hover:text-accent transition-all group">
               <mat-icon class="scale-150 transition-transform group-hover:scale-[1.75]">add</mat-icon>
               <span class="font-bold text-sm mt-2">Agregar Foto</span>
             </div>
           </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab [label]="'progress.tabs.calendar' | translate">
+        <div class="p-xl">
+          <app-progress-calendar
+            [progressList]="store._progressList()"
+            [currentProjectId]="projectsStore.currentProjectId()"
+            (editMiniAdvance)="navigateToEditFromCalendar($event)">
+          </app-progress-calendar>
         </div>
       </mat-tab>
     </mat-tab-group>
@@ -137,7 +166,14 @@
   @if (currentView() === 'create') {
     <div class="flex flex-col lg:flex-row gap-xl">
       <div class="flex-grow bg-white p-xl rounded-l shadow-sm border border-neutral-border/20 flex flex-col gap-l">
-        <h2 class="text-2xl font-bold text-primary tracking-tight">{{ 'progress.form.title' | translate }}</h2>
+
+        <h2 class="text-2xl font-bold text-primary tracking-tight">
+          @if (formMode() === 'create_child') {
+            {{ 'progress.history.child_title' | translate }}: {{ selectedParent()?.activityName }}
+          } @else {
+            {{ 'progress.form.title' | translate }}
+          }
+        </h2>
 
         <form [formGroup]="progressForm" class="grid grid-cols-1 sm:grid-cols-2 gap-x-xl gap-y-m">
           <div class="flex flex-col gap-xs">
@@ -148,7 +184,9 @@
             <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.specialty' | translate }}</label>
             <select formControlName="specialty" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary">
               <option value="" disabled selected>{{ 'progress.form.specialty' | translate }}</option>
-              @for (opt of specialtiesOptions; track opt) { <option [value]="opt">{{opt}}</option> }
+              @for (opt of specialtiesOptions; track opt) {
+                <option [value]="opt">{{ 'progress.specialties.' + getSpecialtyKey(opt) | translate }}</option>
+              }
             </select>
           </div>
           <div class="sm:col-span-2 flex flex-col gap-xs">
@@ -162,27 +200,38 @@
           <div class="flex flex-col gap-xs">
             <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.percentage' | translate }}</label>
             <div class="relative flex items-center">
-              <input type="number" formControlName="percentage" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-bold text-primary w-full pr-10">
+              <input type="number" formControlName="percentage" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-bold text-primary w-full pr-10" [class.border-danger]="progressForm.get('percentage')?.hasError('exceededLimit')">
               <span class="absolute right-4 text-neutral-border font-black">%</span>
             </div>
+            @if (progressForm.get('percentage')?.hasError('exceededLimit')) {
+              <span class="text-xs text-danger font-bold mt-1 animate-fade-in">
+                {{ 'progress.messages.percentage_exceeded' | translate:{ max: getMaxAllowedBuffer() } }}
+              </span>
+            }
           </div>
           <div class="sm:col-span-2 flex flex-col gap-xs">
             <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.description' | translate }}</label>
             <textarea formControlName="description" rows="4" [placeholder]="'progress.form.description_placeholder' | translate" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary resize-none"></textarea>
           </div>
+
           <div class="flex flex-col gap-xs">
-            <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.responsible' | translate }}</label>
-            <select formControlName="responsible" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary">
-              <option value="" disabled selected>Seleccione un Gestor</option>
-              @for (name of gestoresOptions(); track name) {
-                <option [value]="name">{{ name }}</option>
-              }
-            </select>
+            <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.weight' | translate }}</label>
+            <input type="number" formControlName="weight" [placeholder]="'progress.form.weight_placeholder' | translate" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary">
           </div>
           <div class="flex flex-col gap-xs">
             <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.workers' | translate }}</label>
             <input type="number" formControlName="workers" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary">
           </div>
+          <div class="sm:col-span-2 flex flex-col gap-xs">
+            <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.responsible' | translate }}</label>
+            <select formControlName="responsible" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary">
+              <option value="" disabled selected>{{ 'progress.history.select_responsible' | translate }}</option>
+              @for (name of gestoresOptions(); track name) {
+                <option [value]="name">{{ name }}</option>
+              }
+            </select>
+          </div>
+
           <div class="sm:col-span-2 flex flex-col gap-s mt-2">
             <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.weather.label' | translate }}</label>
             <div class="flex gap-m flex-wrap">
@@ -200,27 +249,112 @@
       </div>
       <aside class="w-full lg:w-[350px] flex flex-col gap-xl">
         <div class="bg-white p-xl rounded-l border border-neutral-border/20 shadow-sm flex flex-col gap-m">
-          <h3 class="text-xs font-black text-primary uppercase tracking-widest border-b border-neutral-border/10 pb-3">{{ 'progress.stats.title' | translate }}</h3>
+          <!-- Corrected via i18n structural translation keys mapping -->
+          <h3 class="text-xs font-black text-primary uppercase tracking-widest border-b border-neutral-border/10 pb-3">
+            {{ 'progress.history.stats_title' | translate }}
+          </h3>
           <div class="flex flex-col gap-4 text-sm">
             <div class="flex justify-between items-center text-neutral-border font-medium">
-              <span>{{ 'progress.stats.workers' | translate }}</span> 
+              <span>{{ 'progress.history.stats_personnel' | translate }}:</span>
               <strong class="text-primary font-black text-base">18</strong>
             </div>
             <div class="flex justify-between items-center text-neutral-border font-medium">
-              <span>{{ 'progress.stats.weather' | translate }}</span> 
-              <strong class="text-primary font-black text-base">{{ 'progress.form.weather.' + selectedWeather() | translate }} 25°C</strong>
+              <span>{{ 'progress.history.stats_weather' | translate }}</span>
+              <!-- Dynamically localises the raw weather string tokens fetched from the master records domain -->
+              <strong class="text-primary font-black text-base">
+                {{ 'progress.weather.' + (selectedWeather() || 'sunny') | translate }} 25°C
+              </strong>
             </div>
             <div class="flex justify-between items-center text-neutral-border font-medium">
-              <span>{{ 'progress.stats.hours' | translate }}</span> 
+              <span>{{ 'progress.history.stats_hours' | translate }}:</span>
               <strong class="text-primary font-black text-base">8.5 h</strong>
             </div>
           </div>
         </div>
         <div class="bg-gradient-to-br from-primary to-[#1a252f] p-xl rounded-l shadow-sm flex flex-col gap-s text-white">
-          <h3 class="font-bold text-lg mb-2">Consejo</h3>
-          <p class="text-sm opacity-90 leading-relaxed">Registrar el avance de manera diaria asegura un mejor control presupuestal y de tiempos en el proyecto. Asegúrate de incluir fotografías.</p>
+          <h3 class="font-bold text-lg mb-2">{{ 'progress.history.tip_title' | translate }}</h3>
+          <p class="text-sm opacity-90 leading-relaxed">{{ 'progress.history.tip_desc' | translate }}</p>
         </div>
       </aside>
+    </div>
+  }
+
+  @if (currentView() === 'history') {
+    <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-m mb-4">
+      <div class="flex items-center gap-m">
+        <div>
+          <h1 class="text-3xl font-bold text-primary tracking-tight">{{ 'progress.history.title' | translate }}: {{ selectedParent()?.activityName }}</h1>
+          <p class="text-sm font-medium text-neutral-border mt-1">{{ 'progress.history.subtitle' | translate }}</p>
+        </div>
+        <button type="button" (click)="openEditParentForm(selectedParent()!)" class="p-2 border border-neutral-border/30 text-neutral-border rounded-m hover:text-primary hover:bg-neutral-bg transition-all cursor-pointer flex items-center justify-center" [title]="'progress.history.btn_edit_parent' | translate">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+      <div class="flex gap-m w-full sm:w-auto">
+        <button
+          (click)="backToList()"
+          type="button"
+          class="px-5 py-3 border border-neutral-border/30 text-neutral-border font-bold rounded-m hover:bg-neutral-bg transition-all cursor-pointer flex items-center gap-2"
+        >
+          <mat-icon>arrow_back</mat-icon>
+          {{ 'progress.history.btn_back' | translate }}
+        </button>
+        <button
+          (click)="openCreateChildForm()"
+          type="button"
+          matRipple
+          class="bg-accent text-white py-3 px-5 rounded-m font-bold shadow-md cursor-pointer transition-all hover:scale-[1.02] active:scale-95 flex items-center gap-2"
+        >
+          <mat-icon>add_circle</mat-icon>
+          {{ 'progress.history.btn_new_child' | translate }}
+        </button>
+      </div>
+    </header>
+
+    <div class="bg-white p-xl rounded-l border border-neutral-border/20 shadow-sm mt-m">
+      <div class="flex flex-col gap-m">
+        @if (currentChildren().length === 0) {
+          <div class="text-center py-xl text-neutral-border font-medium">
+            {{ 'progress.history.empty_state' | translate }}
+          </div>
+        } @else {
+          <div class="flex flex-col gap-m">
+            @for (child of currentChildren(); track child.id) {
+              <div class="border border-neutral-border/20 rounded-m p-xl flex justify-between items-center bg-white shadow-sm hover:shadow transition-shadow">
+                <div class="flex flex-col gap-xs">
+                  <div class="text-sm font-black text-primary uppercase tracking-wider">{{ child.lastUpdate | date:'dd/MM/yyyy' }}</div>
+                  <div class="text-lg font-bold text-primary">{{ 'progress.table.advance' | translate }}: {{ child.currentPercentage }}%</div>
+                  <div class="text-sm text-neutral-border font-medium">{{ 'progress.form.location' | translate }}: {{ child.details || ('progress.history.no_location' | translate) }}</div>
+                  @if (child.weather) {
+                    <div class="text-xs text-neutral-border font-bold mt-1 flex items-center gap-1">
+                      <mat-icon class="text-xs !w-4 !h-4 !text-base">wb_sunny</mat-icon>
+                      {{ 'progress.form.weather.label' | translate }}: {{ 'progress.form.weather.' + child.weather | translate }}
+                    </div>
+                  }
+                </div>
+                <div class="flex gap-m items-center">
+                  <button
+                    type="button"
+                    (click)="openEditChildForm(child)"
+                    class="px-4 py-2 border border-accent text-accent font-bold rounded-s text-sm hover:bg-accent/10 transition-colors flex items-center gap-1 cursor-pointer"
+                  >
+                    <mat-icon>edit</mat-icon>
+                    {{ 'progress.history.btn_edit_child' | translate }}
+                  </button>
+                  <button
+                    type="button"
+                    (click)="deleteProgressWithConfirmation(child.id, true)"
+                    class="px-3 py-2 border border-danger text-danger font-bold rounded-s text-sm hover:bg-danger/10 transition-colors flex items-center justify-center cursor-pointer"
+                    [title]="'progress.history.btn_delete' | translate"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
     </div>
   }
 
@@ -229,38 +363,24 @@
       <div class="w-16 h-16 rounded-full bg-danger/10 flex items-center justify-center text-danger mb-2">
         <mat-icon class="scale-150">warning</mat-icon>
       </div>
-      <h2 class="text-2xl font-bold text-primary tracking-tight">{{ 'progress.dialog.title' | translate }}</h2>
-      <p class="text-neutral-border font-medium">{{ 'progress.dialog.question' | translate }}</p>
-      <p class="text-xs text-danger font-bold uppercase tracking-wider">{{ 'progress.dialog.warning' | translate }}</p>
-      <div class="flex flex-col sm:flex-row gap-m mt-l w-full">
-        <button mat-stroked-button mat-dialog-close="discard" class="flex-1 !py-5 !border-danger !text-danger !font-bold hover:!bg-danger hover:!text-white transition-colors">{{ 'progress.dialog.discard' | translate }}</button>
-        <button mat-flat-button color="primary" mat-dialog-close="save" class="flex-1 !py-5 !font-bold">{{ 'progress.dialog.save' | translate }}</button>
-      </div>
-    </div>
-  </ng-template>
 
-  <ng-template #editPhotoDialogTemplate>
-    <div class="p-xl text-center flex flex-col gap-m items-center">
-      <h2 class="text-2xl font-bold text-primary tracking-tight">Editar Descripción de la Foto</h2>
-      <input type="text" [formControl]="editPhotoControl" class="w-full bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary mt-m">
-      <div class="flex flex-col sm:flex-row gap-m mt-l w-full">
-        <button mat-stroked-button mat-dialog-close="discard" class="flex-1 !py-5 !text-neutral-border !font-bold hover:!text-primary transition-colors">Cancelar</button>
-        <button mat-flat-button color="primary" mat-dialog-close="save" class="flex-1 !py-5 !font-bold">Guardar</button>
-      </div>
-    </div>
-  </ng-template>
-
-  <ng-template #deletePhotoDialogTemplate>
-    <div class="p-xl text-center flex flex-col gap-m items-center">
-      <div class="w-16 h-16 rounded-full bg-danger/10 flex items-center justify-center text-danger mb-2">
-        <mat-icon class="scale-150">delete</mat-icon>
-      </div>
-      <h2 class="text-2xl font-bold text-primary tracking-tight">Eliminar Foto</h2>
-      <p class="text-neutral-border font-medium">¿Estás seguro de que quieres eliminar esta foto?</p>
-      <div class="flex flex-col sm:flex-row gap-m mt-l w-full">
-        <button mat-stroked-button mat-dialog-close="discard" class="flex-1 !py-5 !text-neutral-border !font-bold hover:!text-primary transition-colors">Cancelar</button>
-        <button mat-flat-button color="warn" mat-dialog-close="confirm" class="flex-1 !py-5 !bg-danger !text-white !font-bold">Eliminar</button>
-      </div>
+      @if (formMode().startsWith('edit') && selectedChildId() !== null) {
+        <h2 class="text-2xl font-bold text-primary tracking-tight">{{ 'progress.delete_dialog.title' | translate }}</h2>
+        <p class="text-neutral-border font-medium">{{ 'progress.delete_dialog.question' | translate }}</p>
+        <p class="text-xs text-danger font-bold uppercase tracking-wider">{{ 'progress.delete_dialog.warning' | translate }}</p>
+        <div class="flex flex-col sm:flex-row gap-m mt-l w-full">
+          <button mat-stroked-button mat-dialog-close="discard" class="flex-1 !py-5 !border-danger !text-danger !font-bold hover:!bg-danger hover:!text-white transition-colors">{{ 'progress.delete_dialog.confirm_btn' | translate }}</button>
+          <button mat-flat-button color="primary" mat-dialog-close="save" class="flex-1 !py-5 !font-bold">{{ 'progress.delete_dialog.cancel_btn' | translate }}</button>
+        </div>
+      } @else {
+        <h2 class="text-2xl font-bold text-primary tracking-tight">{{ 'progress.dialog.title' | translate }}</h2>
+        <p class="text-neutral-border font-medium">{{ 'progress.dialog.question' | translate }}</p>
+        <p class="text-xs text-danger font-bold uppercase tracking-wider">{{ 'progress.dialog.warning' | translate }}</p>
+        <div class="flex flex-col sm:flex-row gap-m mt-l w-full">
+          <button mat-stroked-button mat-dialog-close="discard" class="flex-1 !py-5 !border-danger !text-danger !font-bold hover:!bg-danger hover:!text-white transition-colors">{{ 'progress.dialog.discard' | translate }}</button>
+          <button mat-flat-button color="primary" mat-dialog-close="save" class="flex-1 !py-5 !font-bold">{{ 'progress.dialog.save' | translate }}</button>
+        </div>
+      }
     </div>
   </ng-template>
 
