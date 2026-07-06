@@ -15,7 +15,15 @@ export class ProgressAssembler {
       startDate: new Date(response.startDate), // We add this mapping
       endDate: new Date(response.endDate), // We add this mapping
       lastUpdate: new Date(response.lastUpdate),
-      weight: response.weight,
+
+      responsible: response.responsible || '',
+      workers: response.workers || 0,
+      weather: response.weather || 'sunny',
+
+      // Assembler mappings for the new architecture keys
+      weight: response.weight !== undefined ? Number(response.weight) : undefined,
+      isMiniAdvance: response.isMiniAdvance === true,
+      parentId: response.parentId ? Number(response.parentId) : null,
     };
   }
 

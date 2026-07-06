@@ -18,9 +18,11 @@ export interface ProjectProgress {
   responsible?: string;
   workers?: number;
   weather?: string;
-  isMiniAdvance?: boolean;
+
+  // New fields to achieve the sub-advances feature from your design rules
   weight?: number;
-  parentId?: number;
+  isMiniAdvance: boolean;
+  parentId?: number | null;
 }
 
 export type ProgressStatus = 'Active' | 'Finished' | 'Delayed';

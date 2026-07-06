@@ -1,4 +1,4 @@
-import { computed, inject, Injectable, signal, effect } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { BudgetItemEntity } from '../domain/budget-item.entity';
 import { ProjectsStore } from '../../projects/application/projects.store';
 import { BudgetApi } from '../infrastructure/budget-api';
@@ -22,17 +22,6 @@ export class BudgetStore {
   private readonly budgetItemsSignal = signal<BudgetItemEntity[]>([]);
   private readonly searchQuery = signal<string>('');
   readonly selectedItem = signal<BudgetItemEntity | null>(null);
-
-  constructor() {
-    effect(() => {
-      const activeId = this.projectsStore.currentProjectId();
-      if (activeId) {
-        this.loadBudgetItems();
-      } else {
-        this.budgetItemsSignal.set([]);
-      }
-    });
-  }
 
   // Authorized personnel list
   readonly authorizedPersonnel = computed(() =>
@@ -120,16 +109,30 @@ export class BudgetStore {
   }
 
   /**
-   * Adds an expense and persists it to the backend.
+   * Adds an expense to a specific budget item if funds are available globally and locally.
+   * @param itemId The target progress ID linked to the budget item
+   * @param expenseData The payload containing the amount and concept details
+   * @returns True if the transaction succeeds, false if it violates budget limits
    */
   addExpense(itemId: number, expenseData: any): boolean {
     const items = this.budgetItemsSignal();
     const target = items.find((i) => i.progressId === Number(itemId));
 
-    if (!target || target.available < expenseData.amount) return false;
+    if (!target) return false;
+
+    const expenseAmount = Number(expenseData.amount);
+
+    // Strict business rule: block registration if the single item has insufficient funds
+    if (target.available < expenseAmount) return false;
+
+    // Strict global validation: block operation if this transaction breaches the master project budget limit
+    const potentialGlobalExecuted = this.totalExecuted() + expenseAmount;
+    if (potentialGlobalExecuted > this.projectLimit()) {
+      return false;
+    }
 
     const realBudgetItemId = target.id;
-    const newExecuted = Number(target.executed) + Number(expenseData.amount);
+    const newExecuted = Number(target.executed) + expenseAmount;
 
     const updatedItem: BudgetItemEntity = {
       ...target,
@@ -144,7 +147,6 @@ export class BudgetStore {
     );
 
     this.budgetApi.updateBudget(String(realBudgetItemId), updatedItem).subscribe();
-
     return true;
   }
 
@@ -209,7 +211,7 @@ export class BudgetStore {
         this.budgetItemsSignal.set(entities);
       },
       error: (err) => {
-        console.error('Error fetching budgets', err);
+        console.error('Error fetching budgets from db.json', err);
         this.budgetItemsSignal.set([]);
       },
     });

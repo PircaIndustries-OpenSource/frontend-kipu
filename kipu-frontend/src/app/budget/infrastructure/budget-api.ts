@@ -23,9 +23,8 @@ export class BudgetApi {
   }
 
   /**
-   * Updates a specific budget item
-   * @param id The item ID
-
+   * Updates a specific budget item in db.json
+   * @param id The item ID (as string to match json-server expectations)
    * @param data The partial or full object to update
    */
   createBudget(data: any): Observable<BudgetResponse> {
