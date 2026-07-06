@@ -843,6 +843,8 @@
       "title": "Enter verification Token",
       "description": "A verification code has been sent to your email",
       "token-sent": "Enter the 6-digit code",
+      "token-label": "Verification Code",
+      "token-hint": "Enter the 6-digit code sent to your email",
       "btn-confirm": "Confirm"
     },
     "page": {

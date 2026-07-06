@@ -23,11 +23,19 @@ export class ProjectsStore {
 
   readonly totalProjects = computed(() => this.projects().length);
 
+  private handleProjectsLoaded(data: ProjectEntity[]) {
+    this.projectsSignal.set(data);
+    const currentId = this.currentProjectIdSignal();
+    if (currentId && !data.find(p => p.id === currentId)) {
+      this.clearCurrentProject();
+    }
+  }
+
   loadProjects() {
     if (this.projectsSignal().length === 0) {
       const email = this.authStore.currentUser()?.email || '';
       this.projectsApi.getAll(email).subscribe((data) => {
-        this.projectsSignal.set(data);
+        this.handleProjectsLoaded(data);
       });
     }
   }
@@ -35,13 +43,18 @@ export class ProjectsStore {
   reloadProjects() {
     const email = this.authStore.currentUser()?.email || '';
     this.projectsApi.getAll(email).subscribe((data) => {
-      this.projectsSignal.set(data);
+      this.handleProjectsLoaded(data);
     });
   }
 
   setCurrentProject(id: string) {
     localStorage.setItem('currentProjectId', id);
     this.currentProjectIdSignal.set(id);
+  }
+
+  clearCurrentProject() {
+    localStorage.removeItem('currentProjectId');
+    this.currentProjectIdSignal.set(null);
   }
 
   addProject(project: ProjectEntity) {

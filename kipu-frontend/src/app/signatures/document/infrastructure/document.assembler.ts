@@ -14,13 +14,13 @@ export class DocumentAssembler {
     return entity;
   }
 
-  static toResourceFromEntity(entity: DocumentEntity): DocumentResource {
+  static toResourceFromEntity(entity: DocumentEntity): Record<string, unknown> {
+    const pad = (n: number) => n.toString().padStart(2, '0');
+    const d = entity.deadLine;
+    const localIso = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
     return {
-      id: entity.id,
       type: entity.type,
-      isSigned: entity.isSigned,
-      digitalSignatureToken: entity.digitalSignatureToken,
-      deadLine: entity.deadLine.toISOString(),
+      deadLine: localIso,
       projectId: entity.projectId,
       signers: entity.assignedTo.map((u) => ({
         teamUserId: u.id,

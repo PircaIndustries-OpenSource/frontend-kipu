@@ -843,6 +843,8 @@
       "title": "Ingresa el Token de verificación",
       "description": "Un código de verificación ha sido enviado a tu correo",
       "token-sent": "Ingresa el código de 6 dígitos",
+      "token-label": "Código de Verificación",
+      "token-hint": "Ingresa el código de 6 dígitos enviado a tu correo",
       "btn-confirm": "Confirmar"
     },
     "page": {
