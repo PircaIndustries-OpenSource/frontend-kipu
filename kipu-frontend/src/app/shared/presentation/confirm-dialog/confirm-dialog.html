@@ -1,16 +1,23 @@
-<div class="flex flex-col items-center justify-center p-6 text-center">
-  <div class="bg-red-100 text-danger rounded-full p-4 mb-4">
-    <mat-icon class="scale-150">warning_amber</mat-icon>
+<div class="flex flex-col rounded-xl border border-(--color-neutral-border)! p-0!">
+  <header class="px-8 py-6 flex flex-row items-center gap-4 border-b bg-(--color-neutral-bg)! rounded-t-xl!">
+    <mat-icon class="text-(--color-danger)! !w-8 !h-8 !text-3xl">warning</mat-icon>
+    <h2 class="text-xl font-bold text-(--color-primary)!">{{ data.title | translate }}</h2>
+  </header>
+
+  <div class="px-8 py-6">
+    <p class="text-base text-(--color-text-main)!">
+      {{ data.message | translate }}
+      <strong class="text-(--color-primary)!">"{{ data.itemName }}"</strong>?
+    </p>
   </div>
-  <h2 class="text-xl font-bold mb-2">{{ title() | translate }}</h2>
-  <p class="text-gray-500 mb-6">{{ subtitle() | translate }}</p>
-  <div class="flex gap-3 w-full">
-    <button mat-stroked-button mat-dialog-close class="flex-1 py-6!">
+
+  <div class="flex justify-end gap-3 px-8 py-6 bg-(--color-neutral-bg)! border-t border-(--color-neutral-border)! rounded-b-xl!">
+    <button matRipple class="btn-secondary" (click)="cancel()">
       {{ 'general.cancel' | translate }}
     </button>
-    <button mat-flat-button class="flex-1 py-6! bg-danger! text-white!"
-            (click)="onConfirm()">
-      {{ confirmText() | translate }}
+    <button matRipple class="bg-(--color-danger)! text-white! py-4! px-6! rounded-m! font-bold! text-sm! cursor-pointer transition-all hover:brightness-110 active:scale-95 flex items-center gap-2" (click)="confirm()">
+      <mat-icon class="!w-4 !h-4 !text-base">delete</mat-icon>
+      {{ 'general.delete' | translate }}
     </button>
   </div>
 </div>

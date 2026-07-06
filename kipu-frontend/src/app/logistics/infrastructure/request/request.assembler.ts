@@ -4,19 +4,22 @@ import {RequestEntity} from '../../domain/request.entity';
 export class RequestAssembler {
   static toEntityFromResource(resource: RequestResource): RequestEntity{
     return {
-      id: resource.id,
-      projectId: resource.projectId,
+      id: String(resource.id),
+      projectId: String(resource.projectId ?? ''),
       requestDate: resource.requestDate,
       deadline: resource.deadline,
       status: resource.status,
       priority: resource.priority,
       deliveryLocation: resource.deliveryLocation,
-      budgetLineId: resource.budgetLineId,
+      budgetLineId: String(resource.budgetLineId ?? ''),
       purpose: resource.purpose,
       additionalNotes: resource.additionalNotes,
-      suggestedSupplierId: resource.suggestedSupplierId,
+      suggestedSupplierId: String(resource.suggestedSupplierId ?? ''),
       attachments: resource.attachments,
-      items: resource.items,
+      items: (resource.items || []).map(item => ({
+        supplierOfferId: String(item.supplierOfferId),
+        quantity: item.quantity,
+      })),
       requestedBy: resource.requestedBy,
       activity: resource.activity,
     }

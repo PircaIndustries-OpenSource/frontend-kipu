@@ -19,12 +19,12 @@ import { WasteResponse, WasteResource } from './waste/waste.response';
 import { WasteAssembler } from './waste/waste.assembler';
 import { MaterialEntity } from '../domain/material.entity';
 import { MaterialsAssembler } from './materials/materials.assembler';
-import { MaterialsResponse } from './materials/materials.response';
+import { MaterialsResponse, MaterialResource } from './materials/materials.response';
 import { CategoryEntity } from '../domain/category.entity';
-import { CategoriesResponse } from './materials/categories.response';
+import { CategoriesResponse, CategoryResource } from './materials/categories.response';
 import { CategoriesAssembler } from './materials/categories.assembler';
 import { SupplierOfferEntity } from '../domain/supplierOffer.entity';
-import { SupplierOfferResponse } from './suppliers/supplier-offer.response';
+import { SupplierOfferResponse, SupplierOfferResource } from './suppliers/supplier-offer.response';
 import { SupplierOfferAssembler } from './suppliers/supplier-offer.assembler';
 
 @Injectable({
@@ -54,6 +54,19 @@ export class LogisticsApi {
     return this.http
       .get<MaterialsResponse>(`${this.apiBaseUrl}${this.materialsEndpoint}`)
       .pipe(map((response) => MaterialsAssembler.toEntitiesFromResponse(response)));
+  }
+  postMaterial(material: Partial<MaterialEntity>): Observable<MaterialEntity> {
+    return this.http
+      .post<MaterialResource>(`${this.apiBaseUrl}${this.materialsEndpoint}`, material)
+      .pipe(map((response) => MaterialsAssembler.toEntityFromResource(response)));
+  }
+  patchMaterial(id: string, updates: Partial<MaterialEntity>): Observable<MaterialEntity> {
+    return this.http
+      .patch<MaterialResource>(`${this.apiBaseUrl}${this.materialsEndpoint}/${id}`, updates)
+      .pipe(map((response) => MaterialsAssembler.toEntityFromResource(response)));
+  }
+  deleteMaterial(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiBaseUrl}${this.materialsEndpoint}/${id}`);
   }
   getAllRequest(): Observable<RequestEntity[]> {
     const projectId = localStorage.getItem('currentProjectId');
@@ -86,10 +99,37 @@ export class LogisticsApi {
       .get<CategoriesResponse>(`${this.apiBaseUrl}${this.categoriesEndpoint}`)
       .pipe(map((response) => CategoriesAssembler.toEntitiesFromResponse(response)));
   }
+  postCategory(category: Partial<CategoryEntity>): Observable<CategoryEntity> {
+    return this.http
+      .post<CategoryResource>(`${this.apiBaseUrl}${this.categoriesEndpoint}`, category)
+      .pipe(map((response) => CategoriesAssembler.toEntityFromResource(response)));
+  }
+  patchCategory(id: string, updates: Partial<CategoryEntity>): Observable<CategoryEntity> {
+    return this.http
+      .patch<CategoryResource>(`${this.apiBaseUrl}${this.categoriesEndpoint}/${id}`, updates)
+      .pipe(map((response) => CategoriesAssembler.toEntityFromResource(response)));
+  }
+  deleteCategory(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiBaseUrl}${this.categoriesEndpoint}/${id}`);
+  }
   getAllSupplierOffer(): Observable<SupplierOfferEntity[]> {
     return this.http
       .get<SupplierOfferResponse>(`${this.apiBaseUrl}${this.supplierOfferEndpoint}`)
       .pipe(map((response) => SupplierOfferAssembler.toEntitiesFromResponse(response)));
+  }
+  postSupplierOffer(offer: Partial<SupplierOfferEntity>): Observable<SupplierOfferEntity> {
+    const body = {
+      supplierId: Number(offer.supplierId),
+      materialCatalogId: Number(offer.materialId),
+      unitPrice: offer.unitPrice,
+    };
+    return this.http
+      .post<SupplierOfferResource>(`${this.apiBaseUrl}${this.supplierOfferEndpoint}`, body)
+      .pipe(map((response) => SupplierOfferAssembler.toEntityFromResource(response)));
+  }
+
+  deleteSupplierOffer(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiBaseUrl}${this.supplierOfferEndpoint}/${id}`);
   }
   //POST
   postRequest(request: RequestEntity): Observable<RequestEntity> {
@@ -119,6 +159,11 @@ export class LogisticsApi {
       .patch<RequestResource>(`${this.apiBaseUrl}${this.requestsEndpoint}/${id}`, updates)
       .pipe(map((response) => RequestAssembler.toEntityFromResource(response)));
   }
+  patchRequestStatus(id: string, status: string): Observable<RequestEntity> {
+    return this.http
+      .patch<RequestResource>(`${this.apiBaseUrl}${this.requestsEndpoint}/${id}/status`, { status })
+      .pipe(map((response) => RequestAssembler.toEntityFromResource(response)));
+  }
   patchMachinery(id: string, updates: Partial<MachineryEntity>): Observable<MachineryEntity> {
     return this.http
       .patch<MachineryResource>(`${this.apiBaseUrl}${this.machineryEndpoint}/${id}`, updates)
@@ -144,6 +189,12 @@ export class LogisticsApi {
 
   deleteMachineryCatalog(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiBaseUrl}${this.machineryCatalogEndpoint}/${id}`);
+  }
+
+  patchMachineryCatalog(id: string, updates: Partial<MachineryCatalogEntity>): Observable<MachineryCatalogEntity> {
+    return this.http
+      .patch<MachineryCatalogResource>(`${this.apiBaseUrl}${this.machineryCatalogEndpoint}/${id}`, updates)
+      .pipe(map((r) => MachineryCatalogAssembler.toEntityFromResource(r)));
   }
 
   //DELETE

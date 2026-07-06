@@ -2,11 +2,11 @@ import { SupplierOfferResource, SupplierOfferResponse } from './supplier-offer.r
 import { SupplierOfferEntity } from '../../domain/supplierOffer.entity';
 
 export class SupplierOfferAssembler {
-  static toEntityFromResource(resource: SupplierOfferResource): SupplierOfferEntity {
+  static toEntityFromResource(resource: any): SupplierOfferEntity {
     return {
-      id: resource.id,
-      supplierId: resource.supplierId,
-      materialId: resource.materialId,
+      id: String(resource.id),
+      supplierId: String(resource.supplierId),
+      materialId: String(resource.materialCatalogId ?? resource.materialId),
       unitPrice: resource.unitPrice,
     };
   }

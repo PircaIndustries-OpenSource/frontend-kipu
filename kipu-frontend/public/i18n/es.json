@@ -1,7 +1,8 @@
 {
   "general": {
     "summary": "Resumen",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "delete": "Eliminar"
   },
   "identity": {
     "login_title": "Iniciar Sesión",
@@ -268,6 +269,7 @@
     "tab-machinery": "Equipos",
     "tab-suppliers": "Proveedores",
     "tab-waste": "Residuos",
+    "tab-catalog": "Catálogo",
     "title": "Inventario General",
     "filters": {
       "category": "Categoría",
@@ -433,6 +435,8 @@
     "detail": {
       "title": "Detalle Completo de la Solicitud",
       "btn-close": "Cerrar",
+      "btn-accept": "Aceptar",
+      "btn-reject": "Rechazar",
       "remaining-days": "{{days}}d restantes",
       "per-unit": "/ unidad",
       "total-investment": "Total de Inversión",
@@ -440,6 +444,110 @@
       "section": {
         "material-info": "Información del Material",
         "logistics": "Logística y Asignación"
+      }
+    }
+  },
+  "catalog": {
+    "tab-material-catalog": "Catálogo de Material",
+    "tab-machinery-catalog": "Catálogo de Maquinaria",
+    "tab-category-catalog": "Catálogo de Categorías",
+    "material-catalog": {
+      "title": "Catálogo de Materiales",
+      "button-add": "Agregar Material",
+      "empty": "No hay materiales en el catálogo",
+      "delete-title": "Eliminar material",
+      "delete-message": "¿Estás seguro de que deseas eliminar",
+      "table": {
+        "name": "Nombre",
+        "category": "Categoría",
+        "unit": "Unidad",
+        "actions": "Acciones"
+      },
+      "card": {
+        "category": "Categoría",
+        "edit": "Editar",
+        "delete": "Eliminar"
+      },
+      "dialog": {
+        "create-title": "Nuevo Material",
+        "edit-title": "Editar Material",
+        "fields": {
+          "name": "Nombre",
+          "name-placeholder": "Ingrese el nombre del material",
+          "category": "Categoría",
+          "unit": "Unidad de Medida"
+        },
+        "create": "Crear",
+        "save": "Guardar"
+      }
+    },
+    "machinery-catalog": {
+      "title": "Catálogo de Maquinaria",
+      "button-add": "Agregar Maquinaria",
+      "empty": "No hay maquinaria en el catálogo",
+      "delete-title": "Eliminar maquinaria",
+      "delete-message": "¿Estás seguro de que deseas eliminar",
+      "table": {
+        "name": "Nombre",
+        "brand": "Marca",
+        "model": "Modelo",
+        "serial": "N° Serie",
+        "acquisition-date": "Adquisición",
+        "actions": "Acciones"
+      },
+      "card": {
+        "model": "Modelo",
+        "serial": "N° Serie",
+        "acquisition-date": "Fecha Adquisición",
+        "edit": "Editar",
+        "delete": "Eliminar"
+      },
+      "dialog": {
+        "create-title": "Nueva Maquinaria",
+        "edit-title": "Editar Maquinaria",
+        "fields": {
+          "name": "Nombre",
+          "name-placeholder": "Ingrese el nombre de la maquinaria",
+          "brand": "Marca",
+          "brand-placeholder": "Ingrese la marca",
+          "model": "Modelo",
+          "model-placeholder": "Ingrese el modelo",
+          "serial": "Número de Serie",
+          "serial-placeholder": "Ingrese el número de serie",
+          "acquisition-date": "Fecha de Adquisición"
+        },
+        "create": "Crear",
+        "save": "Guardar"
+      }
+    },
+    "category-catalog": {
+      "title": "Catálogo de Categorías",
+      "button-add": "Agregar Categoría",
+      "empty": "No hay categorías en el catálogo",
+      "delete-title": "Eliminar categoría",
+      "delete-message": "¿Estás seguro de que deseas eliminar",
+      "table": {
+        "name": "Nombre",
+        "description": "Descripción",
+        "status": "Estado",
+        "actions": "Acciones"
+      },
+      "card": {
+        "active": "Activo",
+        "inactive": "Inactivo"
+      },
+      "dialog": {
+        "create-title": "Nueva Categoría",
+        "edit-title": "Editar Categoría",
+        "fields": {
+          "name": "Nombre",
+          "name-placeholder": "Ingrese el nombre de la categoría",
+          "description": "Descripción",
+          "description-placeholder": "Ingrese la descripción",
+          "active": "Activo"
+        },
+        "create": "Crear",
+        "save": "Guardar"
       }
     }
   },
@@ -462,12 +570,14 @@
       "categories": "Categorías Suministradas",
       "payment-terms": "Condición de Pago Habitual",
       "actions": {
+        "button-view": "Ver detalles",
         "button-edit": "Editar datos",
         "button-add": "Registrar nuevo proveedor",
         "button-delete": "Eliminar proveedor"
       },
       "delete": {
         "title": "Eliminar Proveedor",
+        "message": "¿Estás seguro de que deseas eliminar al proveedor",
         "subtitle": "¿Estás seguro?",
         "confirm": "Confirmar",
         "cancel": "Cancelar"
@@ -502,12 +612,24 @@
       "status-active": "Activo",
       "status-inactive": "Inactivo",
       "btn-save": "Guardar Proveedor",
-      "btn-cancel": "Cancelar"
+      "btn-cancel": "Cancelar",
+      "offers-title": "Materiales que ofrece",
+      "add-offer": "Agregar material",
+      "offer-material": "Material",
+      "offer-material-required": "Seleccione un material.",
+      "offer-price": "Precio unit.",
+      "offer-price-required": "Ingrese el precio."
     },
     "edit": {
       "title": "Modificar Proveedor",
       "btn-save": "Guardar Cambios",
       "btn-cancel": "Cancelar"
+    },
+    "detail": {
+      "title": "Detalles del Proveedor",
+      "offers-title": "Ofertas de Materiales",
+      "no-offers": "No tiene ofertas de materiales registradas.",
+      "btn-close": "Cerrar"
     }
   },
   "machinery": {

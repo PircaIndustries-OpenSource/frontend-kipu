@@ -133,7 +133,27 @@
     </section>
   </mat-dialog-content>
 
-  <mat-dialog-actions align="end" class="px-8! py-6! bg-(--color-neutral-bg)! border-t border-(--color-neutral-border)!">
+  <mat-dialog-actions align="end" class="px-8! py-6! bg-(--color-neutral-bg)! border-t border-(--color-neutral-border)! flex gap-3">
+    @if (isLogistica() && data.status === 'PENDING') {
+      <button
+        mat-flat-button
+        class="px-6! py-5! rounded-xl! font-bold! text-base! cursor-pointer transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2 !bg-red-500 !text-white"
+        (click)="reject()"
+        type="button"
+      >
+        <mat-icon>close</mat-icon>
+        {{ 'request.detail.btn-reject' | translate }}
+      </button>
+      <button
+        mat-flat-button
+        class="px-6! py-5! rounded-xl! font-bold! text-base! cursor-pointer transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2 !bg-green-600 !text-white"
+        (click)="accept()"
+        type="button"
+      >
+        <mat-icon>check</mat-icon>
+        {{ 'request.detail.btn-accept' | translate }}
+      </button>
+    }
     <button
       mat-flat-button
       class="w-60 bg-(--color-accent)! text-white! py-6! rounded-xl! font-bold! text-base! cursor-pointer transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2"

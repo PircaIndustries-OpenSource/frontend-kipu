@@ -107,6 +107,41 @@ export const routes: Routes = [
                 (m) => m.WastePage,
               ),
           },
+          {
+            path: 'catalog',
+            loadComponent: () =>
+              import('./logistics/presentation/catalog/catalog-page/catalog-page').then(
+                (m) => m.CatalogPage,
+              ),
+            children: [
+              {
+                path: '',
+                redirectTo: 'material-catalog',
+                pathMatch: 'full',
+              },
+              {
+                path: 'material-catalog',
+                loadComponent: () =>
+                  import('./logistics/presentation/catalog/material-catalog-page/material-catalog-page').then(
+                    (m) => m.MaterialCatalogPage,
+                  ),
+              },
+              {
+                path: 'machinery-catalog',
+                loadComponent: () =>
+                  import('./logistics/presentation/catalog/machinery-catalog-page/machinery-catalog-page').then(
+                    (m) => m.MachineryCatalogPage,
+                  ),
+              },
+              {
+                path: 'category-catalog',
+                loadComponent: () =>
+                  import('./logistics/presentation/catalog/category-catalog-page/category-catalog-page').then(
+                    (m) => m.CategoryCatalogPage,
+                  ),
+              },
+            ],
+          },
         ],
       },
 

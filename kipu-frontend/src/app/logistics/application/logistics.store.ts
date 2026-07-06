@@ -70,6 +70,7 @@ export class LogisticsStore {
 
   //MATERIAL
   private materialsSignal = signal<MaterialEntity[]>([]);
+  readonly materials = computed(() => this.materialsSignal());
   private categoriesSignal = signal<CategoryEntity[]>([]);
   readonly categories = computed(() => this.categoriesSignal());
   private selectedCategorySignal = signal<string>('');
@@ -169,6 +170,32 @@ export class LogisticsStore {
       });
     }
   }
+  addMaterial(material: Partial<MaterialEntity>, onSuccess?: () => void) {
+    this.logisticsApi.postMaterial(material).subscribe({
+      next: (newMaterial) => {
+        this.materialsSignal.update((prev) => [...prev, newMaterial]);
+        onSuccess?.();
+      },
+      error: (err) => console.error('Error adding material', err),
+    });
+  }
+  updateMaterial(id: string, updates: Partial<MaterialEntity>, onSuccess?: () => void) {
+    this.logisticsApi.patchMaterial(id, updates).subscribe({
+      next: (updated) => {
+        this.materialsSignal.update((prev) => prev.map((m) => (m.id === id ? updated : m)));
+        onSuccess?.();
+      },
+      error: (err) => console.error('Error updating material', err),
+    });
+  }
+  deleteMaterial(id: string) {
+    this.logisticsApi.deleteMaterial(id).subscribe({
+      next: () => {
+        this.materialsSignal.update((prev) => prev.filter((m) => m.id !== id));
+      },
+      error: (err) => console.error('Error deleting material', err),
+    });
+  }
   loadInventoryMaterials = (force = false) => {
     if (force || this.inventorySignal().length === 0) {
       this.logisticsApi.getAllInventoryMaterials().subscribe({
@@ -184,6 +211,32 @@ export class LogisticsStore {
         error: () => console.error('Failed to load categories'),
       });
     }
+  }
+  addCategory(category: Partial<CategoryEntity>, onSuccess?: () => void) {
+    this.logisticsApi.postCategory(category).subscribe({
+      next: (newCategory) => {
+        this.categoriesSignal.update((prev) => [...prev, newCategory]);
+        onSuccess?.();
+      },
+      error: (err) => console.error('Error adding category', err),
+    });
+  }
+  updateCategory(id: string, updates: Partial<CategoryEntity>, onSuccess?: () => void) {
+    this.logisticsApi.patchCategory(id, updates).subscribe({
+      next: (updated) => {
+        this.categoriesSignal.update((prev) => prev.map((c) => (c.id === id ? updated : c)));
+        onSuccess?.();
+      },
+      error: (err) => console.error('Error updating category', err),
+    });
+  }
+  deleteCategory(id: string) {
+    this.logisticsApi.deleteCategory(id).subscribe({
+      next: () => {
+        this.categoriesSignal.update((prev) => prev.filter((c) => c.id !== id));
+      },
+      error: (err) => console.error('Error deleting category', err),
+    });
   }
   clearFilter() {
     this.selectedCategorySignal.set('');
@@ -309,6 +362,15 @@ export class LogisticsStore {
       },
     });
   }
+  updateRequestStatus(id: string, status: string, onSuccess?: () => void) {
+    this.logisticsApi.patchRequestStatus(id, status).subscribe({
+      next: (updated) => {
+        this.requestsSignal.update((prev) => prev.map((r) => (r.id === id ? updated : r)));
+        onSuccess?.();
+      },
+      error: (err) => console.error('Error updating request status:', err),
+    });
+  }
 
   private pendingRequestFilterSignal = signal<boolean>(false);
   private approvedRequestFilterSignal = signal<boolean>(false);
@@ -359,6 +421,27 @@ export class LogisticsStore {
         onSuccess?.();
       },
       error: (err) => console.error('Error adding catalog item', err),
+    });
+  }
+
+  updateCatalogItem(id: string, updates: any, onSuccess?: () => void) {
+    this.logisticsApi.patchMachineryCatalog(id, updates).subscribe({
+      next: (updated) => {
+        this.machineryCatalogSignal.update((prev) =>
+          prev.map((it) => (it.id === id ? updated : it)),
+        );
+        onSuccess?.();
+      },
+      error: (err) => console.error('Error updating catalog item', err),
+    });
+  }
+
+  deleteCatalogItem(id: string) {
+    this.logisticsApi.deleteMachineryCatalog(id).subscribe({
+      next: () => {
+        this.machineryCatalogSignal.update((prev) => prev.filter((it) => it.id !== id));
+      },
+      error: (err) => console.error('Error deleting catalog item', err),
     });
   }
 
@@ -432,13 +515,29 @@ export class LogisticsStore {
       });
     }
   }
-  addSupplier(supplier: SupplierEntity, onSuccess?: () => void) {
+  addSupplier(supplier: SupplierEntity, onSuccess?: (newSupplier: SupplierEntity) => void) {
     this.logisticsApi.postSupplier(supplier).subscribe({
       next: (newSupplier) => {
         this.suppliersSignal.update((prev) => [...prev, newSupplier]);
-        onSuccess?.();
+        onSuccess?.(newSupplier);
       },
       error: (err) => console.error('Error adding supplier', err),
+    });
+  }
+  addSupplierOffer(offer: Partial<SupplierOfferEntity>) {
+    this.logisticsApi.postSupplierOffer(offer).subscribe({
+      next: (newOffer) => {
+        this.supplierOfferSignal.update((prev) => [...prev, newOffer]);
+      },
+      error: (err) => console.error('Error adding supplier offer', err),
+    });
+  }
+  deleteSupplierOffer(id: string) {
+    return this.logisticsApi.deleteSupplierOffer(id).subscribe({
+      next: () => {
+        this.supplierOfferSignal.update((prev) => prev.filter((o) => o.id !== id));
+      },
+      error: (err) => console.error('Error deleting supplier offer', err),
     });
   }
   updateSupplier(id: string, updates: Partial<SupplierEntity>, onSuccess?: () => void) {

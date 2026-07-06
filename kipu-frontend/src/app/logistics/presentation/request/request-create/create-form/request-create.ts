@@ -16,6 +16,7 @@ import { RequestEntity } from '../../../../domain/request.entity';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthStore } from '../../../../../identity/application/auth.store';
+import { TeamUsersStore } from '../../../../../team/team-users/application/team-users.store';
 import { SuccessDialog } from '../../../../../shared/presentation/success-dialog/success-dialog';
 import { ProgressStore } from '../../../../../progress/application/progress.store';
 import { BudgetItemEntity } from '../../../../../budget/domain/budget-item.entity';
@@ -47,9 +48,15 @@ export class RequestCreate implements OnInit {
   budgetStore = inject(BudgetStore);
   progressStore = inject(ProgressStore); // Added ProgressStore
   authStore = inject(AuthStore);
+  teamUsersStore = inject(TeamUsersStore);
   router = inject(Router);
 
   ngOnInit() {
+    const role = this.teamUsersStore.currentUser()?.role;
+    if (role === 'Logística') {
+      this.router.navigate(['/logistics/requests']);
+      return;
+    }
     this.logisticsStore.loadCategories();
     this.logisticsStore.loadMaterials();
     this.logisticsStore.loadSupplierOffers();
@@ -181,6 +188,7 @@ export class RequestCreate implements OnInit {
     request.requestDate = new Date().toISOString().split('T')[0];
     request.deadline = formValue.requiredDate ?? '';
     request.requestedBy = this.authStore.userName();
+    request.projectId = localStorage.getItem('currentProjectId') || '';
     request.status = 'PENDING';
 
     this.logisticsStore.addRequest(request, () => {

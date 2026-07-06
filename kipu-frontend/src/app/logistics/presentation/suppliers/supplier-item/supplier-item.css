@@ -63,8 +63,23 @@
 @media (min-width: 640px) {
   .supplier-actions {
     flex-direction: row !important;
-    width: 50% !important; /* To match the original w-[30%]ish feel but better */
+    width: 100% !important;
   }
+}
+
+.btn-view {
+  flex: 1;
+  background-color: var(--color-primary) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  border-radius: var(--radius-m) !important;
+  padding: var(--spacing-s) !important;
+  cursor: pointer;
+  transition: var(--transition-base);
+  border: none;
+}
+.btn-view:hover {
+  filter: brightness(1.1);
 }
 
 .btn-edit {

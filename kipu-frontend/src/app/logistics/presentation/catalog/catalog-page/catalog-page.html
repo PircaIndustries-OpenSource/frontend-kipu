@@ -1,0 +1,21 @@
+<section class="flex flex-col gap-xl p-xl animate-fade-in">
+  <mat-button-toggle-group
+    [value]="activeRoute"
+    class="w-fit mb-4"
+    hideSingleSelectionIndicator="true"
+  >
+    <mat-button-toggle value="material-catalog" (click)="navigate('material-catalog')" class="px-4 py-2!">
+      <mat-icon class="!w-5 !h-5 !text-lg mr-2">inventory_2</mat-icon>
+      {{'catalog.tab-material-catalog'|translate}}
+    </mat-button-toggle>
+    <mat-button-toggle value="machinery-catalog" (click)="navigate('machinery-catalog')" class="px-4 py-2!">
+      <mat-icon class="!w-5 !h-5 !text-lg mr-2">precision_manufacturing</mat-icon>
+      {{'catalog.tab-machinery-catalog'|translate}}
+    </mat-button-toggle>
+    <mat-button-toggle value="category-catalog" (click)="navigate('category-catalog')" class="px-4 py-2!">
+      <mat-icon class="!w-5 !h-5 !text-lg mr-2">category</mat-icon>
+      {{'catalog.tab-category-catalog'|translate}}
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+  <router-outlet></router-outlet>
+</section>

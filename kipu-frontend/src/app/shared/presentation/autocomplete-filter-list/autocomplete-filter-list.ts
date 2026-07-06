@@ -1,24 +1,25 @@
 import {
   Component,
   effect,
-  EventEmitter,
+  ElementRef,
   input,
-  OnInit,
   output,
+  viewChild,
 } from '@angular/core';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatAutocompleteModule, MatAutocompleteTrigger} from '@angular/material/autocomplete';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {map, Observable, startWith} from 'rxjs';
-import {MatFormField, MatInput} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 import {AsyncPipe} from '@angular/common';
 @Component({
   selector: 'app-autocomplete-filter-list',
   imports: [
     MatAutocompleteModule,
-    MatFormField,
+    MatFormFieldModule,
     ReactiveFormsModule,
     AsyncPipe,
-    MatInput,
+    MatInputModule,
   ],
   templateUrl: './autocomplete-filter-list.html',
   styleUrl: './autocomplete-filter-list.css',
@@ -33,12 +34,15 @@ export class AutocompleteFilterList {
   optionsFilter: Observable<string[]> = this.controlFilter.valueChanges.pipe(
     startWith(''),
     map((value) => {
-      if (!value) {
+      const val = value || '';
+      if (!val) {
         this.optionSelected.emit('');
       }
-      return this._filter(value || '');
+      return this._filter(val);
     }),
   );
+  inputElement = viewChild<ElementRef<HTMLInputElement>>('autoInput');
+  autoTrigger = viewChild(MatAutocompleteTrigger);
   disabled = input<boolean>();
   constructor() {
     effect(() => {
@@ -59,8 +63,15 @@ export class AutocompleteFilterList {
       option.toLowerCase().includes(textLower),
     );
   }
+  onFocus() {
+    if (!this.disabled()) {
+      const trigger = this.autoTrigger();
+      if (trigger && !trigger.panelOpen) {
+        trigger.openPanel();
+      }
+    }
+  }
   selectOption(option: string) {
     this.optionSelected.emit(option);
-    console.log('Select Option emit: ', option);
   }
 }

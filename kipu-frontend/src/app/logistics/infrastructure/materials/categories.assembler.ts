@@ -4,7 +4,7 @@ import { CategoryEntity } from '../../domain/category.entity';
 export class CategoriesAssembler {
   static toEntityFromResource(resource: CategoryResource): CategoryEntity {
     return {
-      id: resource.id,
+      id: String(resource.id),
       name: resource.name,
       description: resource.description,
       isActive: resource.isActive,

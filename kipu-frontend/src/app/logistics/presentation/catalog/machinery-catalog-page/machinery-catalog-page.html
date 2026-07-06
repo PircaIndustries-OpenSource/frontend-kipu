@@ -1,0 +1,60 @@
+<section class="flex flex-col gap-xl p-xl animate-fade-in">
+  <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-m sm:gap-0">
+    <h1 class="text-3xl font-bold text-primary tracking-tight">
+      {{ 'catalog.machinery-catalog.title' | translate }}
+    </h1>
+    @if (isLogistica()) {
+      <button (click)="openCreateDialog()" matRipple class="w-full sm:w-auto px-6! bg-accent text-white! py-5! rounded-m! font-bold! text-base! shadow-md! cursor-pointer transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2">
+        <mat-icon>add_circle</mat-icon>
+        {{ 'catalog.machinery-catalog.button-add' | translate }}
+      </button>
+    }
+  </header>
+
+  <div class="border border-neutral-border/20 rounded-m overflow-hidden">
+    <table class="w-full text-left text-sm border-collapse">
+      <thead class="bg-neutral-bg text-primary uppercase font-bold text-xs tracking-wider border-b border-neutral-border/20">
+        <tr>
+          <th class="px-6 py-4">{{ 'catalog.machinery-catalog.table.name' | translate }}</th>
+          <th class="px-6 py-4">{{ 'catalog.machinery-catalog.table.brand' | translate }}</th>
+          <th class="px-6 py-4">{{ 'catalog.machinery-catalog.table.model' | translate }}</th>
+          <th class="px-6 py-4">{{ 'catalog.machinery-catalog.table.serial' | translate }}</th>
+          <th class="px-6 py-4">{{ 'catalog.machinery-catalog.table.acquisition-date' | translate }}</th>
+          @if (isLogistica()) {
+            <th class="px-6 py-4 text-center">{{ 'catalog.machinery-catalog.table.actions' | translate }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-neutral-border/10">
+        @for(item of machineryCatalogs(); track item.id){
+          <tr class="hover:bg-neutral-bg transition-colors">
+            <td class="px-6 py-4 font-bold text-primary text-base">{{ item.name }}</td>
+            <td class="px-6 py-4 text-neutral-border text-sm">{{ item.brand || '—' }}</td>
+            <td class="px-6 py-4 text-neutral-border text-sm">{{ item.model || '—' }}</td>
+            <td class="px-6 py-4 text-neutral-border text-sm">{{ item.serialNumber || '—' }}</td>
+            <td class="px-6 py-4 text-neutral-border text-sm">{{ item.acquisitionDate ? (item.acquisitionDate | date:'yyyy-MM-dd') : '—' }}</td>
+            @if (isLogistica()) {
+              <td class="px-6 py-4 text-center">
+                <div class="flex justify-center gap-2">
+                  <button matRipple class="btn-secondary text-sm!" (click)="openEditDialog(item)">
+                    <mat-icon class="!w-4 !h-4 !text-base">edit</mat-icon>
+                  </button>
+                  <button matRipple class="btn-secondary text-sm! !text-danger" (click)="deleteCatalogItem(item)">
+                    <mat-icon class="!w-4 !h-4 !text-base">delete</mat-icon>
+                  </button>
+                </div>
+              </td>
+            }
+          </tr>
+        }
+        @empty {
+          <tr>
+            <td [attr.colspan]="isLogistica() ? 6 : 5" class="px-6 py-16 text-center text-neutral-border">
+              <p class="text-lg font-semibold">{{ 'catalog.machinery-catalog.empty' | translate }}</p>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>
