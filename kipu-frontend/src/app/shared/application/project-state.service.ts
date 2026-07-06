@@ -19,4 +19,8 @@ export class ProjectStateService {
   setCurrentProject(id: string) {
     this.projectsStore.setCurrentProject(id);
   }
+
+  clearCurrentProject() {
+    this.projectsStore.clearCurrentProject();
+  }
 }

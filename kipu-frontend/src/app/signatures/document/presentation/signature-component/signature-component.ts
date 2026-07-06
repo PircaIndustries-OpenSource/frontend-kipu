@@ -2,7 +2,8 @@ import { Component, inject } from '@angular/core';
 import { MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef } from '@angular/material/dialog';
 import { DocumentsStore } from '../../application/document.store';
 import { TranslatePipe } from '@ngx-translate/core';
-import { MatFormField, MatHint, MatLabel } from '@angular/material/input';
+import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
@@ -17,6 +18,7 @@ import { MatButton } from '@angular/material/button';
     MatLabel,
     FormsModule,
     MatHint,
+    MatInput,
     MatDialogActions,
     MatDialogClose,
     MatButton,

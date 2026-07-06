@@ -139,7 +139,8 @@ export class TeamUsersStore {
   }
 
   toggleUserStatus(user: TeamUsersEntity) {
-    const request = user.isActive
+    const wasActive = user.isActive;
+    const request = wasActive
       ? this.teamApi.deactivateTeamUser(user.id)
       : this.teamApi.activateTeamUser(user.id);
 
@@ -148,6 +149,8 @@ export class TeamUsersStore {
         this.teamUsersSignal.update((users) =>
           users.map((u) => (u.id === savedUser.id ? savedUser : u)),
         );
+
+
       },
       error: (err) => console.error('Error al actualizar estado:', err),
     });

@@ -98,7 +98,6 @@ export class DocumentsStore {
       },
       error: (err) => {
         console.error('Error al guardar documento:', err);
-        this.documents.update((current) => [...current, document]);
       },
     });
   }

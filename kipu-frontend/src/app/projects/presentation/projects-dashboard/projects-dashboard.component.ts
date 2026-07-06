@@ -99,9 +99,7 @@ export class ProjectsDashboardComponent implements OnInit {
         return this.projects().filter(p => p.name.toLowerCase().includes(query));
     });
 
-    totalActiveProjects = computed(() => {
-        return this.projects().filter(p => p.status === 'IN_PROGRESS').length;
-    });
+    totalActiveProjects = computed(() => this.projects().length);
 
     getAdvance(project: ProjectEntity | null): number {
         if (!project) return 0;
