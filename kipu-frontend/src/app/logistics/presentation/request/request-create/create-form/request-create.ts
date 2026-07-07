@@ -19,6 +19,7 @@ import { TeamUsersStore } from '../../../../../team/team-users/application/team-
 import { SuccessDialog } from '../../../../../shared/presentation/success-dialog/success-dialog';
 import { ProgressStore } from '../../../../../progress/application/progress.store';
 import { BudgetItemEntity } from '../../../../../budget/domain/budget-item.entity';
+import { AutocompleteFilterList } from '../../../../../shared/presentation/autocomplete-filter-list/autocomplete-filter-list';
 
 @Component({
   selector: 'app-request-create',
@@ -35,6 +36,7 @@ import { BudgetItemEntity } from '../../../../../budget/domain/budget-item.entit
     MatRippleModule,
     DecimalPipe,
     ReactiveFormsModule,
+    AutocompleteFilterList,
   ],
   templateUrl: './request-create.html',
   styleUrl: './request-create.css',

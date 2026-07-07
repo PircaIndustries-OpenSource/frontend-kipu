@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { RncStore } from '../../application/rnc.store';
 import { RncListComponent } from '../rnc-list/rnc-list.component';
-import { RncStatsComponent } from '../rnc-stats/rnc-stats.component';
 import { RncCreateDialogComponent } from '../rnc-create-dialog/rnc-create-dialog.component';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -12,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-rnc-page',
   standalone: true,
-  imports: [CommonModule, TranslateModule, RncListComponent, RncStatsComponent, FormsModule],
+  imports: [CommonModule, TranslateModule, RncListComponent, FormsModule],
   templateUrl: './rnc-page.component.html',
 })
 export class RncPageComponent implements OnInit {

@@ -2,7 +2,7 @@ import { Component, inject, input, computed } from '@angular/core';
 import { MatCard, MatCardActions, MatCardContent } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslatePipe } from '@ngx-translate/core';
-import { concat, of } from 'rxjs';
+import { concat, of, Observable } from 'rxjs';
 import { SupplierEntity } from '../../../domain/supplier.entity';
 import { LogisticsStore } from '../../../application/logistics.store';
 import { ConfirmDialog } from '../../../../shared/presentation/confirm-dialog/confirm-dialog';
@@ -59,7 +59,7 @@ export class SupplierItem {
         this.logisticsStore.updateSupplier(this.supplier().id, result.supplier);
 
         const oldIds = this.supplierOffers().map((o) => o.id);
-        const delete$ = oldIds.length
+        const delete$: Observable<any> = oldIds.length
           ? concat(...oldIds.map((id) => this.logisticsStore.deleteSupplierOffer(id)))
           : of(null);
 
