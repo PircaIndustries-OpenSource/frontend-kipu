@@ -1,5 +1,10 @@
 <div class="flex flex-col gap-xl w-full">
   @for(request of requests(); track request.id){
     <app-request-item [request]="request" [availableBudget]="availableBudget()" [totalBudget]="totalBudget()"></app-request-item>
+  } @empty {
+    <div class="flex flex-col items-center justify-center py-16 text-center border-2 border-dashed border-neutral-border/30 rounded-xl">
+      <mat-icon class="text-5xl text-neutral-border/40 mb-4">inbox</mat-icon>
+      <p class="text-neutral-border font-medium text-lg">{{ 'request.empty' | translate }}</p>
+    </div>
   }
 </div>

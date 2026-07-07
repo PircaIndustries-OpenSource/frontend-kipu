@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { InventoryMaterialEntity } from '../domain/inventoryMaterial.entity';
 import { HttpClient } from '@angular/common/http';
-import { InventoryMaterialsResponse } from './inventory/inventoryMaterials.response';
+import { InventoryMaterialRawResource, InventoryMaterialsResponse } from './inventory/inventoryMaterials.response';
 import { environment } from '../../../environments/environment';
 import { InventoryMaterialAssembler } from './inventory/inventoryMaterial.assembler';
 import { RequestEntity } from '../domain/request.entity';
@@ -49,6 +49,12 @@ export class LogisticsApi {
     return this.http
       .get<InventoryMaterialsResponse>(url)
       .pipe(map((response) => InventoryMaterialAssembler.toEntitiesFromResponse(response)));
+  }
+  updateInventoryMinimumStock(id: string, minimumStock: number): Observable<InventoryMaterialEntity> {
+    return this.http
+      .patch<InventoryMaterialRawResource>(`${this.apiBaseUrl}${this.inventoryMaterialsEndpoint}/${id}/minimum-stock`,
+        { minimumStock })
+      .pipe(map((response) => InventoryMaterialAssembler.toEntityFromResource(response)));
   }
   getAllMaterials(): Observable<MaterialEntity[]> {
     return this.http
@@ -133,8 +139,37 @@ export class LogisticsApi {
   }
   //POST
   postRequest(request: RequestEntity): Observable<RequestEntity> {
+    const stored = localStorage.getItem('currentUser');
+    const userId = stored ? Number(JSON.parse(stored).id) || 0 : 0;
+
+    let deadlineIso: string;
+    if (request.deadline) {
+      const d = new Date(request.deadline);
+      deadlineIso = isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString();
+    } else {
+      deadlineIso = new Date().toISOString();
+    }
+
+    const body = {
+      projectId: localStorage.getItem('currentProjectId') || '',
+      deadline: deadlineIso,
+      requestPriority: request.priority || 'LOW',
+      deliveryLocation: request.deliveryLocation || '',
+      budgetLineId: request.budgetLineId ? Number(request.budgetLineId) : null,
+      purpose: request.purpose || null,
+      additionalNotes: request.additionalNotes || null,
+      requestedBy: userId,
+      suggestedSupplierId: request.suggestedSupplierId ? Number(request.suggestedSupplierId) : null,
+      items: request.items.map((item) => ({
+        materialCatalogId: Number(item.materialCatalogId) || 0,
+        supplierId: Number(item.supplierId) || 0,
+        quantity: Number(item.quantity) || 0,
+        unitPrice: Number(item.unitPrice) || 0,
+      })),
+    };
+
     return this.http
-      .post<RequestResource>(`${this.apiBaseUrl}${this.requestsEndpoint}`, request)
+      .post<RequestResource>(`${this.apiBaseUrl}${this.requestsEndpoint}`, body)
       .pipe(map((response) => RequestAssembler.toEntityFromResource(response)));
   }
   postMachinery(machinery: MachineryEntity): Observable<MachineryEntity> {

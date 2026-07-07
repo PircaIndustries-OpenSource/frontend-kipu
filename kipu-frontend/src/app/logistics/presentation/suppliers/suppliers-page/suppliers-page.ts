@@ -74,7 +74,7 @@ export class SuppliersPage implements OnInit {
               supplierId: newSupplier.id,
               materialId: offer.materialId,
               unitPrice: offer.unitPrice,
-            });
+            }).subscribe();
           });
         });
       }

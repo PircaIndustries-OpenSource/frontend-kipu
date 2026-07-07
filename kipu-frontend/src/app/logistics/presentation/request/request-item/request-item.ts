@@ -48,7 +48,7 @@ export class RequestItem {
     }, 0);
   });
   isAmountValid = computed(() => {
-    return this.availableBudget() + this.requestedAmount() <= this.totalBudget();
+    return this.requestedAmount() <= this.availableBudget();
   });
 
   openModifyDialog() {

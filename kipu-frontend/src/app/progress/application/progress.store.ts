@@ -94,11 +94,11 @@ export class ProgressStore {
   /**
    * Persists a new progress entry (either a parent activity or a child log) to db.json.
    */
-  addProgress(newEntry: ProjectProgress): void {
+  addProgress(newEntry: ProjectProgress, onCreated?: (saved: ProjectProgress) => void): void {
     this.progressApi.createProgress(newEntry).subscribe({
       next: (savedEntry) => {
-        // Update local signal with the confirmed entry from the server
         this._progressList.update((list) => [savedEntry, ...list]);
+        onCreated?.(savedEntry);
       },
       error: (err) => console.error('Failed to save progress to db.json', err),
     });

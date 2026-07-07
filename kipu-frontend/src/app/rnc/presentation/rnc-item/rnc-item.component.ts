@@ -35,11 +35,11 @@ export class RncItemComponent {
 
   onDelete(): void {
     const dialogRef = this.dialog.open(ConfirmDialog, {
-      width: '400px',
+      width: '420px',
       data: {
         title: 'rnc.dialog.delete_title',
-        subtitle: 'rnc.dialog.delete_subtitle',
-        confirmText: 'rnc.actions.delete',
+        message: 'rnc.dialog.delete_subtitle',
+        itemName: this.rnc().title,
       },
     });
     dialogRef.afterClosed().subscribe((result) => {

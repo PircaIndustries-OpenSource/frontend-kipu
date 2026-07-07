@@ -91,6 +91,11 @@
             </button>
           </div>
         </div>
+      } @empty {
+        <div class="flex flex-col items-center justify-center py-16 text-center border-2 border-dashed border-neutral-border/30 rounded-xl">
+          <mat-icon class="text-5xl text-neutral-border/40 mb-4">account_balance</mat-icon>
+          <p class="text-neutral-border font-medium text-lg">{{ 'budget.empty' | translate }}</p>
+        </div>
       }
     </div>
 
@@ -128,9 +133,9 @@
           <label class="text-[10px] font-bold text-[#B0BEC5] uppercase">{{ 'budget.forms.item' | translate }}</label>
           <select formControlName="itemId" class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl outline-none focus:border-[#3498DB]">
             <option value="">-- Seleccionar Avance --</option>
-            @for (progress of progressStore.progressList(); track progress.id) {
-              <option [value]="progress.id">
-                {{ progress.activityName }} ({{ progress.currentPercentage }}%)
+            @for (item of store.budgetItems(); track item.id) {
+              <option [value]="item.progressId">
+                {{ item.name }}
               </option>
             }
           </select>
@@ -145,10 +150,14 @@
         </div>
         <div class="col-span-2 flex flex-col gap-1">
           <label class="text-[10px] font-bold text-[#B0BEC5] uppercase">{{ 'budget.forms.responsible' | translate }}</label>
-          <select formControlName="responsible" class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl outline-none focus:border-[#3498DB]">
-            <option value="">{{ 'budget.forms.select_person' | translate }}</option>
-            @for (person of store.authorizedPersonnel(); track person) { <option [value]="person">{{person}}</option> }
-          </select>
+          @if (isAdmin()) {
+            <select formControlName="responsible" class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl outline-none focus:border-[#3498DB]">
+              <option value="">{{ 'budget.forms.select_person' | translate }}</option>
+              @for (person of expenseAuthorizedOptions(); track person) { <option [value]="person">{{person}}</option> }
+            </select>
+          } @else {
+            <span class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl text-[#212529] font-medium">{{ authStore.userName() }} - Logística</span>
+          }
         </div>
 
         <div class="col-span-2 mt-8 flex gap-4">
@@ -187,9 +196,9 @@
           <label class="text-[10px] font-bold text-[#B0BEC5] uppercase">{{ 'budget.forms.item' | translate }}</label>
           <select formControlName="itemId" class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl outline-none">
             <option value="">-- Select Progress Advance --</option>
-            @for (progress of progressStore.progressList(); track progress.id) {
-              <option [value]="progress.id">
-                {{ progress.activityName }}
+            @for (item of store.budgetItems(); track item.id) {
+              <option [value]="item.progressId">
+                {{ item.name }}
               </option>
             }
           </select>
@@ -202,12 +211,16 @@
 
         <div class="flex flex-col gap-1">
           <label class="text-[10px] font-bold text-[#B0BEC5] uppercase">{{ 'budget.forms.authorized_person' | translate }}</label>
-          <select formControlName="responsible" class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl outline-none">
-            <option value="">-- Select Authorized Person --</option>
-            @for (person of store.authorizedPersonnel(); track person) {
-              <option [value]="person">{{person}}</option>
-            }
-          </select>
+          @if (isAdmin()) {
+            <select formControlName="responsible" class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl outline-none">
+              <option value="">-- Select Authorized Person --</option>
+              @for (person of expenseAuthorizedOptions(); track person) {
+                <option [value]="person">{{person}}</option>
+              }
+            </select>
+          } @else {
+            <span class="p-4 bg-[#F8F9FA] border border-[#B0BEC5] rounded-xl text-[#212529] font-medium">{{ authStore.userName() }} - Logística</span>
+          }
         </div>
 
         <div class="flex flex-col gap-1">
@@ -272,7 +285,7 @@
           </div>
         </div>
       }
-    </div>
+      </div>
   </ng-template>
 
   <ng-template #confirmTpl>

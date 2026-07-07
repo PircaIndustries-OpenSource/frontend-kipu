@@ -2,6 +2,7 @@
   "general": {
     "summary": "Resumen",
     "cancel": "Cancelar",
+    "confirm": "Confirmar",
     "delete": "Eliminar"
   },
   "identity": {
@@ -293,6 +294,7 @@
   },
   "request": {
     "title": "Solicitudes de Material",
+    "empty": "No hay solicitudes aún. Crea tu primera solicitud de material.",
     "button-create": "Crear Solicitud",
     "summary": {
       "pending": "Pendientes",
@@ -553,6 +555,7 @@
   },
   "suppliers": {
     "title": "Directorio de Proveedores",
+    "empty": "No hay proveedores registrados. Agrega tu primer proveedor.",
     "button-create": "Registrar nuevo proveedor",
     "search-ruc": "Buscar por RUC",
     "search-ruc-placeholder": "Ingrese el RUC del proveedor",
@@ -634,6 +637,7 @@
   },
   "machinery": {
     "title": "Maquinaria y Herramientas",
+    "empty": "No hay maquinaria registrada. Agrega tu primer equipo.",
     "button-create": "Agregar maquinaria",
     "tabs": {
       "summary": "Resumen",
@@ -746,6 +750,7 @@
   },
   "waste": {
     "title": "Registro de Mermas",
+    "empty": "No hay registros de merma. Reporta material dañado para comenzar.",
     "button-report": "Reportar Material Dañado",
     "date-range-label": "Filtrar por rango de fechas",
     "date-start-placeholder": "Fecha inicio",
@@ -803,6 +808,7 @@
   },
   "budget": {
     "title": "Gestión de Presupuesto",
+    "empty": "No hay partidas presupuestarias aún. Crea un avance primero para asignar presupuesto.",
     "summary": {
       "total-budget": "PRESUPUESTO TOTAL DEL PROYECTO",
       "total-amount": "PRESUPUESTO TOTAL",
@@ -1002,6 +1008,7 @@
   "progress": {
     "title": "Control de Avances",
     "subtitle": "Historial de registros diarios y estados de ejecución.",
+    "empty": "No hay registros de avance aún. Crea tu primer avance diario.",
     "actions": {
       "new": "Nuevo Avance Diario",
       "save": "Guardar Avance",
@@ -1011,7 +1018,8 @@
     },
     "tabs": {
       "log": "Registro de Avance (PPC)",
-      "photos": "Bitácora Fotográfica"
+      "photos": "Bitácora Fotográfica",
+      "calendar": "Calendario"
     },
     "filters": {
       "activity": "Buscar actividad...",
@@ -1023,8 +1031,24 @@
       "date": "Fecha",
       "activity": "Actividad Realizada",
       "specialty": "Especialidad",
+      "weight": "Peso",
       "advance": "Avance (%)",
-      "status": "Estado"
+      "status": "Estado",
+      "actions": "Acciones"
+    },
+    "messages": {
+      "clear_children_first": "Elimina todos los sub-registros antes de borrar esta actividad principal",
+      "percentage_exceeded": "El porcentaje excede el límite disponible: máx {{max}}%"
+    },
+    "specialties": {
+      "structures": "Estructuras",
+      "facilities": "Instalaciones",
+      "architecture": "Arquitectura"
+    },
+    "weather": {
+      "sunny": "Soleado",
+      "cloudy": "Nublado",
+      "rainy": "Lluvia"
     },
     "form": {
       "title": "Nuevo Avance Diario",
@@ -1039,6 +1063,8 @@
       "description_placeholder": "Describe el trabajo realizado, métodos utilizados, condiciones...",
       "responsible": "Responsable",
       "workers": "Personal en Cuadrilla",
+      "weight": "Peso",
+      "weight_placeholder": "Peso relativo (1-10)",
       "weather": {
         "label": "Condiciones Climáticas",
         "sunny": "Soleado",
@@ -1052,12 +1078,50 @@
       "active": "En Curso",
       "delayed": "Demorado"
     },
+    "history": {
+      "title": "Historial de Avances",
+      "subtitle": "Registro detallado de actividad y sub-registros",
+      "child_title": "Nuevo Sub-Avance",
+      "select_responsible": "Seleccionar responsable",
+      "stats_title": "Estadísticas del Día",
+      "stats_personnel": "Personal en obra",
+      "stats_weather": "Clima",
+      "stats_hours": "Horas trabajadas",
+      "tip_title": "Tip Rápido",
+      "tip_desc": "Cada registro de avance puede tener múltiples sub-registros. Úsalos para rastrear avances diarios incrementales.",
+      "btn_back": "Volver a la Lista",
+      "btn_new_child": "Nuevo Hijo",
+      "btn_edit_parent": "Editar Actividad",
+      "btn_edit_child": "Editar",
+      "btn_delete": "Eliminar",
+      "empty_state": "Sin sub-registros aún.",
+      "no_location": "Sin ubicación especificada"
+    },
     "dialog": {
       "title": "¿Guardar cambios?",
       "question": "¿Deseas guardar los cambios?",
       "warning": "De no hacerlo, serán borrados.",
       "discard": "No, descartar cambios",
       "save": "Guardar cambios"
+    },
+    "delete_dialog": {
+      "title": "¿Eliminar Avance?",
+      "question": "¿Estás seguro de eliminar este registro?",
+      "warning": "Esta acción no se puede deshacer.",
+      "confirm_btn": "Sí, eliminar",
+      "cancel_btn": "Cancelar"
+    },
+    "calendar": {
+      "today": "Hoy",
+      "days": {
+        "sun": "Dom",
+        "mon": "Lun",
+        "tue": "Mar",
+        "wed": "Mié",
+        "thu": "Jue",
+        "fri": "Vie",
+        "sat": "Sáb"
+      }
     },
     "stats": {
       "title": "Estadísticas del Día",
@@ -1143,6 +1207,8 @@
     },
     "title": "Reportes de No Conformidad",
     "new": "Nuevo RNC",
+    "empty": "No hay reportes de no conformidad aún. Crea tu primer RNC.",
+    "reported-by": "Reportado Por",
     "create": {
       "title": "Nuevo Reporte de No Conformidad",
       "placeholders": {

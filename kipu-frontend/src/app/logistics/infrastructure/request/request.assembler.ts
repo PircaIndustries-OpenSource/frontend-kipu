@@ -5,25 +5,25 @@ export class RequestAssembler {
   static toEntityFromResource(resource: RequestResource): RequestEntity{
     return {
       id: String(resource.id),
-      projectId: String(resource.projectId ?? ''),
-      requestDate: resource.requestDate,
-      deadline: resource.deadline,
-      status: resource.status,
-      priority: resource.priority,
-      deliveryLocation: resource.deliveryLocation,
+      projectId: resource.projectId || '',
+      requestDate: resource.createdAt || '',
+      deadline: resource.deadline ?? '',
+      status: resource.requestStatus || resource.status || '',
+      priority: resource.requestPriority || resource.priority || '',
+      deliveryLocation: resource.deliveryLocation ?? '',
       budgetLineId: String(resource.budgetLineId ?? ''),
-      purpose: resource.purpose,
-      additionalNotes: resource.additionalNotes,
+      purpose: resource.purpose ?? '',
+      additionalNotes: resource.additionalNotes ?? '',
       suggestedSupplierId: String(resource.suggestedSupplierId ?? ''),
-      attachments: resource.attachments,
+      attachments: [],
       items: (resource.items || []).map(item => ({
         materialCatalogId: item.materialCatalogId,
         supplierId: item.supplierId,
         quantity: item.quantity,
         unitPrice: item.unitPrice,
       })),
-      requestedBy: resource.requestedBy,
-      activity: resource.activity,
+      requestedBy: String(resource.requestedBy ?? ''),
+      activity: '',
     }
   }
   static toEntitiesFromResponse(response: RequestResponse): RequestEntity[]{
