@@ -254,7 +254,7 @@ export class LogisticsStore {
 
     return requests.map((request) => {
       const detailsItem = request.items.map((item) => {
-        const supplierOfferRelated = supplierOffer.find((s) => s.id === item.supplierOfferId);
+        const supplierOfferRelated = supplierOffer.find((s) => s.supplierId === String(item.supplierId));
         const material = materials.find((m) => m.id === supplierOfferRelated?.materialId);
         const category = categories.find((c) => c.id === material?.categoryId);
         return {
@@ -602,7 +602,7 @@ export class LogisticsStore {
   readonly wasteView = computed<WasteView[]>(() => {
     const inventory = this.inventoryView();
     return this.wasteSignal().map((w) => {
-      const material = inventory.find((i) => i.materialId === w.materialId);
+      const material = inventory.find((i) => i.materialId === String(w.materialCatalogId));
       return {
         ...w,
         materialName: material?.materialName ?? 'Unknown',
