@@ -45,6 +45,7 @@ export class AddSeismicSensorDialogComponent {
   onSave() {
     const entity = new SeismicEntity();
     entity.id = Math.random().toString(36).substring(2, 9);
+    entity.projectId = localStorage.getItem('currentProjectId') || '';
     entity.sensorId = this.sensorForm.sensorId;
     entity.name = this.sensorForm.sensorId;
     entity.location = this.sensorForm.location;

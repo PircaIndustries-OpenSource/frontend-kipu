@@ -2,6 +2,7 @@
   "general": {
     "summary": "Summary",
     "cancel": "Cancel",
+    "confirm": "Confirm",
     "delete": "Delete"
   },
   "identity": {
@@ -293,6 +294,7 @@
   },
   "request": {
     "title": "Material Requests",
+    "empty": "No requests yet. Create your first material request.",
     "button-create": "Create Request",
     "summary": {
       "pending": "Pending",
@@ -553,6 +555,7 @@
   },
   "suppliers": {
     "title": "Supplier Directory",
+    "empty": "No suppliers registered yet. Add your first supplier.",
     "button-create": "Register new supplier",
     "search-ruc": "Search by RUC",
     "search-ruc-placeholder": "Enter supplier RUC",
@@ -634,6 +637,7 @@
   },
   "machinery": {
     "title": "Machinery & Tools",
+    "empty": "No machinery registered yet. Add your first equipment.",
     "button-create": "Add machinery",
     "tabs": {
       "summary": "Summary",
@@ -746,6 +750,7 @@
   },
   "budget": {
     "title": "Budget Management",
+    "empty": "No budget items yet. Create a progress entry first to assign a budget.",
     "summary": {
       "total-budget": "TOTAL PROJECT BUDGET",
       "total-amount": "TOTAL BUDGET",
@@ -799,6 +804,7 @@
   },
   "waste": {
     "title": "Waste Records",
+    "empty": "No waste records yet. Report damaged material to get started.",
     "button-report": "Report Damaged Material",
     "date-range-label": "Filter by date range",
     "date-start-placeholder": "Start date",
@@ -1002,6 +1008,7 @@
   "progress": {
     "title": "Construction Progress",
     "subtitle": "History of daily logs and execution statuses.",
+    "empty": "No progress entries yet. Create your first daily progress log.",
     "actions": {
       "new": "New Daily Progress",
       "save": "Save Progress",
@@ -1011,7 +1018,8 @@
     },
     "tabs": {
       "log": "Progress Log (PPC)",
-      "photos": "Photo Log"
+      "photos": "Photo Log",
+      "calendar": "Calendar"
     },
     "filters": {
       "activity": "Search activity...",
@@ -1023,8 +1031,24 @@
       "date": "Date",
       "activity": "Performed Activity",
       "specialty": "Specialty",
+      "weight": "Weight",
       "advance": "Advance (%)",
-      "status": "Status"
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "messages": {
+      "clear_children_first": "Remove all child entries before deleting this parent activity",
+      "percentage_exceeded": "Percentage exceeds available limit: max {{max}}%"
+    },
+    "specialties": {
+      "structures": "Structures",
+      "facilities": "Facilities",
+      "architecture": "Architecture"
+    },
+    "weather": {
+      "sunny": "Sunny",
+      "cloudy": "Cloudy",
+      "rainy": "Rainy"
     },
     "form": {
       "title": "New Daily Progress",
@@ -1039,6 +1063,8 @@
       "description_placeholder": "Describe work performed, methods used, conditions...",
       "responsible": "Responsible",
       "workers": "Crew Personnel",
+      "weight": "Weight",
+      "weight_placeholder": "Relative weight (1-10)",
       "weather": {
         "label": "Weather Conditions",
         "sunny": "Sunny",
@@ -1052,12 +1078,50 @@
       "active": "In Progress",
       "delayed": "Delayed"
     },
+    "history": {
+      "title": "Progress History",
+      "subtitle": "Detailed activity log and sub-registries",
+      "child_title": "New Sub-Progress",
+      "select_responsible": "Select responsible",
+      "stats_title": "Daily Statistics",
+      "stats_personnel": "Personnel on site",
+      "stats_weather": "Weather",
+      "stats_hours": "Hours worked",
+      "tip_title": "Quick Tip",
+      "tip_desc": "Each progress entry can have multiple sub-registries. Use them to track incremental daily advances.",
+      "btn_back": "Back to List",
+      "btn_new_child": "New Child",
+      "btn_edit_parent": "Edit Activity",
+      "btn_edit_child": "Edit",
+      "btn_delete": "Delete",
+      "empty_state": "No child entries yet.",
+      "no_location": "No location specified"
+    },
     "dialog": {
       "title": "Save changes?",
       "question": "Do you want to save changes?",
       "warning": "If you don't, they will be lost.",
       "discard": "No, discard changes",
       "save": "Save changes"
+    },
+    "delete_dialog": {
+      "title": "Delete Progress?",
+      "question": "Are you sure you want to delete this entry?",
+      "warning": "This action cannot be undone.",
+      "confirm_btn": "Yes, delete",
+      "cancel_btn": "Cancel"
+    },
+    "calendar": {
+      "today": "Today",
+      "days": {
+        "sun": "Sun",
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat"
+      }
     },
     "stats": {
       "title": "Daily Statistics",
@@ -1143,6 +1207,7 @@
     },
     "title": "Non-Conformance Reports",
     "new": "New RNC",
+    "empty": "No non-conformance reports yet. Create your first RNC.",
     "reported-by": "Reported By",
     "create": {
       "title": "New Non-Conformance Report",
@@ -1179,7 +1244,9 @@
       "delete_subtitle": "This action will permanently delete the report.",
       "cancel": "Cancel",
       "confirm": "Confirm",
-      "no_logs": "No logs yet."
+      "no_logs": "No logs yet.",
+      "severity_status": "SEVERITY / STATUS",
+      "solution_notes": "SOLUTION NOTES"
     },
     "stats": {
       "total": "Total RNCs",

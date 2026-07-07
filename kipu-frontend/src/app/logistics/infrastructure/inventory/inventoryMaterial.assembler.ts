@@ -1,14 +1,14 @@
-import { InventoryMaterialResource, InventoryMaterialsResponse } from './inventoryMaterials.response';
+import { InventoryMaterialRawResource, InventoryMaterialsResponse } from './inventoryMaterials.response';
 import { InventoryMaterialEntity } from '../../domain/inventoryMaterial.entity';
 
 export class InventoryMaterialAssembler {
-  static toEntityFromResource(resource: InventoryMaterialResource): InventoryMaterialEntity {
+  static toEntityFromResource(resource: InventoryMaterialRawResource): InventoryMaterialEntity {
     return {
       id: String(resource.id),
-      materialId: String(resource.materialId),
+      materialId: String(resource.materialCatalogId),
       currentStock: resource.currentStock,
-      miniumStock: resource.miniumStock,
-      location: resource.location,
+      miniumStock: resource.minimumStock,
+      location: resource.location || '',
     };
   }
   static toEntitiesFromResponse(response: InventoryMaterialsResponse): InventoryMaterialEntity[] {

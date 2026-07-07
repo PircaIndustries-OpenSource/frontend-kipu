@@ -156,10 +156,8 @@ export class RequestCreate implements OnInit {
     this.selectedBudgetLine.set(activityName);
     this.requestForm.get('budgetLine')?.setValue(activityName);
 
-    // Find progress by activity name to get its ID
     const progress = this.progressStore.progressList().find((p) => p.activityName === activityName);
     if (progress) {
-      // Find the budget item that shares the same progressId
       const budgetItem = this.budgetStore.budgetItems().find((b) => b.progressId === progress.id);
       this.selectedBudgetItem.set(budgetItem || null);
     } else {
@@ -185,7 +183,7 @@ export class RequestCreate implements OnInit {
       },
     ];
     request.suggestedSupplierId = this.supplierSelected()?.id ?? '';
-    request.budgetLineId = this.selectedBudgetLine();
+    request.budgetLineId = String(this.selectedBudgetItem()?.id || '');
     request.priority = formValue.priority ?? 'LOW';
     request.deliveryLocation = formValue.deliveryLocation ?? '';
     request.purpose = formValue.purpose ?? '';

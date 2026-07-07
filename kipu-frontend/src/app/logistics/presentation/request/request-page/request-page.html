@@ -34,14 +34,14 @@
           <button class="" (click)="togglePendingIsActive()">
             <app-summary-card
               [title]="'request.summary.pending' | translate"
-              [value]="5"
+              [value]="pendingCount()"
               [active]="pendingIsActive()"
             ></app-summary-card>
           </button>
           <button (click)="toggleApprovedIsActive()">
             <app-summary-card
               [title]="'request.summary.approved-today' | translate"
-              [value]="12"
+              [value]="acceptedCount()"
               [active]="approvedIsActive()"
               class="text-success!"
             ></app-summary-card>
@@ -49,7 +49,7 @@
           <button (click)="toggleRefusedIsActive()">
             <app-summary-card
               [title]="'request.summary.rejected' | translate"
-              [value]="2"
+              [value]="refusedCount()"
               [active]="refusedIsActive()"
               class="text-danger!"
             ></app-summary-card>

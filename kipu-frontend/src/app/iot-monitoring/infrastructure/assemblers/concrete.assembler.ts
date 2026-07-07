@@ -2,44 +2,49 @@ import { ConcreteResource, ConcreteResponse } from '../models/concrete.response'
 import { ConcreteEntity } from '../../domain/concrete.entity';
 
 export class ConcreteAssembler {
-  static toEntityFromResource(concreteResource: ConcreteResource): ConcreteEntity {
-    const concreteSensor = new ConcreteEntity();
+  static toEntityFromResource(resource: ConcreteResource): ConcreteEntity {
+    const sensor = new ConcreteEntity();
+    sensor.id = String(resource.id);
+    sensor.projectId = resource.projectId || '';
+    sensor.sensorId = resource.sensorId || '';
+    sensor.location = resource.location || '';
+    sensor.limit = resource.temperatureLimit || resource.limit || 0;
+    sensor.humidity = resource.humidityPercentage || resource.humidity || 0;
 
-    if (concreteResource.id && concreteResource.id.trim().length > 0)
-      concreteSensor.id = concreteResource.id;
-    concreteSensor.projectId = concreteResource.projectId;
-    if (concreteResource.sensorId && concreteResource.sensorId.trim().length > 0)
-      concreteSensor.sensorId = concreteResource.sensorId;
-    if (concreteResource.location && concreteResource.location.trim().length > 0)
-      concreteSensor.location = concreteResource.location;
-    concreteSensor.unit = concreteResource.unit;
-    concreteSensor.temperature = concreteResource.temperature;
-    concreteSensor.humidity = concreteResource.humidity;
-    concreteSensor.limit = concreteResource.limit;
+    if (typeof resource.temperature === 'string') {
+      const parts = resource.temperature.split(' ');
+      sensor.temperature = parseFloat(parts[0]) || 0;
+      sensor.unit = parts[1] || 'CELSIUS';
+    } else {
+      sensor.temperature = resource.temperature || resource.temperatureReading || 0;
+      sensor.unit = resource.temperatureUnit || resource.unit || 'CELSIUS';
+    }
 
-    const states: Record<number, string> = { 1: 'ONLINE', 2: 'OFFLINE' };
-    concreteSensor.state = states[concreteResource.state] || 'UNKNOWN';
+    if (typeof resource.state === 'number') {
+      const states: Record<number, string> = { 0: 'OFFLINE', 1: 'ONLINE', 2: 'OFFLINE' };
+      sensor.state = states[resource.state] || 'OFFLINE';
+    } else {
+      sensor.state = resource.state === 'IN_PROGRESS' ? 'ONLINE' : 'OFFLINE';
+    }
 
-    return concreteSensor;
+    return sensor;
   }
 
-  static toEntitiesFromResponse(concreteResponse: ConcreteResponse): ConcreteEntity[] {
-    return concreteResponse.map((resource) => this.toEntityFromResource(resource));
+  static toEntitiesFromResponse(response: ConcreteResponse): ConcreteEntity[] {
+    return response.map((r) => this.toEntityFromResource(r));
   }
 
-  static toResourceFromEntity(entity: ConcreteEntity): ConcreteResource {
-    const states: Record<string, number> = { ONLINE: 1, OFFLINE: 2 };
-
+  static toResourceFromEntity(entity: ConcreteEntity): any {
+    const states: Record<string, number> = { ONLINE: 1, OFFLINE: 0 };
     return {
-      id: entity.id,
-      projectId: entity.projectId,
-      sensorId: entity.sensorId,
-      location: entity.location,
-      unit: entity.unit,
-      temperature: entity.temperature,
-      humidity: entity.humidity,
-      limit: entity.limit,
-      state: states[entity.state] || 0, // Valor por defecto si es UNKNOWN
-    } as ConcreteResource;
+      projectId: entity.projectId || '',
+      sensorId: entity.sensorId || '',
+      state: states[entity.state] ?? 0,
+      location: entity.location || '',
+      temperatureReading: Number(entity.temperature) || 0,
+      temperatureUnit: entity.unit || 'CELSIUS',
+      humidityPercentage: Math.round(entity.humidity) || 0,
+      temperatureLimit: Number(entity.limit) || 0,
+    };
   }
 }

@@ -12,6 +12,7 @@ import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { EnrichedRequest, LogisticsStore } from '../../../../application/logistics.store';
 import { TeamUsersStore } from '../../../../../team/team-users/application/team-users.store';
+import { BudgetStore } from '../../../../../budget/application/budget-store';
 
 @Component({
   selector: 'app-request-detail-dialog',
@@ -32,6 +33,9 @@ export class RequestDetailDialog {
   private dialogRef = inject(MatDialogRef<RequestDetailDialog>);
   private store = inject(LogisticsStore);
   private teamUsersStore = inject(TeamUsersStore);
+  private budgetStore = inject(BudgetStore);
+
+  processing = false;
 
   isLogistica = computed(() => {
     const role = this.teamUsersStore.currentUser()?.role;
@@ -47,12 +51,27 @@ export class RequestDetailDialog {
     this.data.items.reduce((total, item) => total + item.quantity * item.pricePerUnit, 0),
   );
 
+  budgetExceeded = computed(() => {
+    const budgetItems = this.budgetStore.budgetItems();
+    const target = budgetItems.find((b) => String(b.id) === this.data.budgetLineId);
+    if (!target) return false;
+    return this.totalRequested() > target.available;
+  });
+
   accept() {
-    this.store.updateRequestStatus(this.data.id, 'ACCEPTED', () => this.dialogRef.close());
+    if (this.processing || this.budgetExceeded()) return;
+    this.processing = true;
+    this.store.updateRequestStatus(this.data.id, 'ACCEPTED', () => {
+      this.dialogRef.close();
+    });
   }
 
   reject() {
-    this.store.updateRequestStatus(this.data.id, 'REFUSED', () => this.dialogRef.close());
+    if (this.processing) return;
+    this.processing = true;
+    this.store.updateRequestStatus(this.data.id, 'REFUSED', () => {
+      this.dialogRef.close();
+    });
   }
 
   close() {

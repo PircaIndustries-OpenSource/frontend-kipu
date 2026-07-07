@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { RncStore } from '../../application/rnc.store';
 import { TeamUsersStore } from '../../../team/team-users/application/team-users.store';
+import { AuthStore } from '../../../identity/application/auth.store';
 import { ProjectStateService } from '../../../shared/application/project-state.service';
 import { CommonModule } from '@angular/common';
 
@@ -18,8 +19,9 @@ export class RncCreatePageComponent {
   private store = inject(RncStore);
   private projectService = inject(ProjectStateService);
   private teamUsersStore = inject(TeamUsersStore);
+  private authStore = inject(AuthStore);
   protected router = inject(Router);
-  protected users = computed(() => this.teamUsersStore.teamUsers().filter((u) => u.isActive));
+  protected reporterName = computed(() => this.authStore.userName() || 'Unknown');
 
   form: FormGroup = this.fb.group({
     title: ['', Validators.required],
@@ -28,7 +30,6 @@ export class RncCreatePageComponent {
     location: ['', Validators.required],
     severity: ['Low', Validators.required],
     images: [[]],
-    reportedBy: [''],
   });
 
   ngOnInit() {
@@ -42,14 +43,12 @@ export class RncCreatePageComponent {
         id: crypto.randomUUID(),
         projectId: this.projectService.currentProjectId(),
         status: 'Created',
-        reportedBy: 'current-user-id',
+        reportedBy: this.reporterName(),
         reportDate: new Date(),
       };
 
       this.store.create(payload as any);
       this.router.navigate(['/rnc']);
-    } else {
-      console.log('Formulario inválido:', this.form.errors);
     }
   }
 
