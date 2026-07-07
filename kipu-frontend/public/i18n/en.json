@@ -1124,5 +1124,80 @@
     "header_latest": "Latest notifications",
     "header_view_all": "View all",
     "header_empty": "No notifications"
+  },
+  "rnc": {
+    "severity": {
+      "critical": "Critical",
+      "moderate": "Moderate",
+      "low": "Low"
+    },
+    "status": {
+      "created": "Created",
+      "assigned": "Assigned",
+      "solved": "Solved",
+      "verified": "Verified"
+    },
+    "title": "Non-Conformance Reports",
+    "new": "New RNC",
+    "reported-by": "Reported By",
+    "create": {
+      "title": "New Non-Conformance Report",
+      "placeholders": {
+        "select_user": "Select user..."
+      },
+      "fields": {
+        "title": "Title",
+        "description": "Description",
+        "specialty": "Specialty",
+        "location": "Location",
+        "severity": "Severity",
+        "reported-by": "Reported By"
+      },
+      "btn-save": "Save RNC",
+      "btn-cancel": "Cancel"
+    },
+    "actions": {
+      "solve": "Register Solution",
+      "assign": "Assign",
+      "delete": "Delete",
+      "view_history": "View Solution History"
+    },
+    "dialog": {
+      "assign_title": "Assign responsible",
+      "solve_title": "Register solution",
+      "select_placeholder": "Select user...",
+      "notes_placeholder": "Write solution notes here...",
+      "change_status_title": "Change report status",
+      "status_label": "Status",
+      "unsolved": "Unsolved",
+      "history_title": "Solution Log",
+      "delete_title": "Delete RNC?",
+      "delete_subtitle": "This action will permanently delete the report.",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "no_logs": "No logs yet."
+    },
+    "stats": {
+      "total": "Total RNCs",
+      "critical": "Critical",
+      "moderate": "Moderate",
+      "low": "Low",
+      "solved": "Solved"
+    },
+    "fields": {
+      "specialty": "Specialty",
+      "location": "Location",
+      "reported_by": "Reported By",
+      "opened": "Opened"
+    },
+    "summary": {
+      "title": "Summary",
+      "avg_days": "Avg. Closing Time",
+      "frequent": "Most Frequent",
+      "rate": "Resolution Rate",
+      "tip": "Tip: Focus on",
+      "no_details": "No details provided"
+    },
+    "search_placeholder": "Search RNC by ID, description..."
   }
 }

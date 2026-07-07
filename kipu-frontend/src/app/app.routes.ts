@@ -164,11 +164,15 @@ export const routes: Routes = [
         path: 'rnc',
         canActivate: [projectSelectedGuard],
         loadComponent: () =>
-          import('./logistics/presentation/inventory/inventory-page/inventory-page').then(
-            (m) => m.InventoryPage,
+          import('./rnc/presentation/rnc-page/rnc-page.component').then((m) => m.RncPageComponent),
+      },
+      {
+        path: 'rnc/create',
+        loadComponent: () =>
+          import('./rnc/presentation/rnc-create-page/rnc-create-page.component').then(
+            (m) => m.RncCreatePageComponent,
           ),
       },
-
       {
         path: 'signatures',
         canActivate: [projectSelectedGuard],

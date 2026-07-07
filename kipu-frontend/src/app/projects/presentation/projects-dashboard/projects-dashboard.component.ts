@@ -16,6 +16,7 @@ import { ChangeProjectStatusDialogComponent } from '../components/change-project
 import { SelectProjectDialogComponent } from '../components/select-project-dialog/select-project-dialog.component';
 import { ProjectEntity } from '../../domain/project.entity';
 import { ProgressStore } from '../../../progress/application/progress.store';
+import { RncStore } from '../../../rnc/application/rnc.store';
 import { TeamUsersApi } from '../../../team/team-users/infrastructure/team-users.api';
 import { Router } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
@@ -43,6 +44,7 @@ export class ProjectsDashboardComponent implements OnInit {
     private dialog = inject(MatDialog);
     private projectsStore = inject(ProjectsStore);
     private progressStore = inject(ProgressStore);
+    private rncStore = inject(RncStore);
     private teamUsersApi = inject(TeamUsersApi);
     private router = inject(Router);
     private snackBar = inject(MatSnackBar);
@@ -119,11 +121,9 @@ export class ProjectsDashboardComponent implements OnInit {
 
     getRNCs(project: ProjectEntity | null): number {
         if (!project) return 0;
-        let hash = 0;
-        for (let i = 0; i < project.id.length; i++) {
-            hash = project.id.charCodeAt(i) + ((hash << 5) - hash);
-        }
-        return Math.abs(hash + 1) % 9 + 1;
+        const all = this.rncStore.rncs();
+        const projectRnc = all.filter(r => String(r.projectId) === String(project.id) && r.status !== 'Solved');
+        return projectRnc.length;
     }
 
     getCollaborators(project: ProjectEntity | null): number {
@@ -156,6 +156,7 @@ export class ProjectsDashboardComponent implements OnInit {
     ngOnInit() {
         this.projectsStore.reloadProjects();
         this.progressStore.loadProgress();
+        this.rncStore.loadAll();
         this.blueprints.set(this.getInitialBlueprints());
 
         setTimeout(() => {
