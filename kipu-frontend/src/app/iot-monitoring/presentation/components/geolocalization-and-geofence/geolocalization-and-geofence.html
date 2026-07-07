@@ -125,6 +125,11 @@
             </div>
 
           </li>
+        } @empty {
+          <li class="flex flex-col items-center justify-center py-16 text-center">
+            <mat-icon class="text-5xl text-neutral-border/40 mb-4">explore</mat-icon>
+            <p class="text-neutral-border font-medium text-lg">No locations tracked yet. Add your first geolocalization point.</p>
+          </li>
         }
       </ul>
     </mat-card>

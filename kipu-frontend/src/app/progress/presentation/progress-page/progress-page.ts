@@ -17,6 +17,7 @@ import { ProjectsStore } from '../../../projects/application/projects.store';
 import { TeamUsersStore } from '../../../team/team-users/application/team-users.store'; //
 import { TeamUsersEntity } from '../../../team/team-users/domain/model/team-users.entity';
 import { ProgressCalendarComponent } from '../calendar/calendar'; //
+import { BudgetStore } from '../../../budget/application/budget-store';
 
 @Component({
   selector: 'app-progress-page',
@@ -42,6 +43,7 @@ export class ProgressPage implements OnInit {
   readonly store = inject(ProgressStore);
   readonly projectsStore = inject(ProjectsStore);
   private readonly teamUsersStore = inject(TeamUsersStore);
+  private readonly budgetStore = inject(BudgetStore);
   readonly dialog = inject(MatDialog);
   private readonly fb = inject(FormBuilder);
 
@@ -64,7 +66,7 @@ export class ProgressPage implements OnInit {
   readonly gestoresOptions = computed(() =>
     this.teamUsersStore
       .teamUsers()
-      .filter((user: TeamUsersEntity) => user.role === 'Gestor' || user.role === 'Gestor Operativo')
+      .filter((user: TeamUsersEntity) => user.role === 'Gestor Operativo')
       .map((user: TeamUsersEntity) => user.fullName),
   );
   readonly specialtiesOptions = ['Estructuras', 'Instalaciones', 'Arquitectura'];
@@ -97,7 +99,7 @@ export class ProgressPage implements OnInit {
       location: [''],
       percentage: [0, [Validators.min(0), Validators.max(100)]],
       description: [''],
-      responsible: [''],
+      responsible: ['', Validators.required],
       workers: [0],
       weather: ['sunny'],
       weight: [1, [Validators.required, Validators.min(1)]],
@@ -105,7 +107,10 @@ export class ProgressPage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.teamUsersStore.loadIamUsers();
+    const projectId = this.projectsStore.currentProjectId();
+    if (projectId) {
+      this.teamUsersStore.loadTeamUsers(projectId);
+    }
     this.store.loadProgress();
   }
 
@@ -355,7 +360,9 @@ export class ProgressPage implements OnInit {
           parentId: generatedParentId,
         };
 
-        this.store.addProgress(parentEntry);
+        this.store.addProgress(parentEntry, (saved) => {
+          this.budgetStore.createBudgetItem(saved);
+        });
         setTimeout(() => this.store.addProgress(initialChildEntry), 100);
 
         this.progressForm.enable();

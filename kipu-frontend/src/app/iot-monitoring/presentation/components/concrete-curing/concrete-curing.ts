@@ -57,7 +57,7 @@ export class ConcreteCuring implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.store.addConcreteSensor({ ...result });
+        this.store.addConcreteSensor(result);
       }
     });
   }

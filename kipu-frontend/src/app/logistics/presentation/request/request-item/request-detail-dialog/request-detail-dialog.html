@@ -3,7 +3,7 @@
   <header
     class="px-8 py-6 flex flex-row items-center justify-between border-b rounded-t-xl!"
     [class]="
-      data.status === 'APPROVED' ? 'bg-(--color-success-soft)! border-(--color-success)!' :
+      data.status === 'ACCEPTED' ? 'bg-(--color-success-soft)! border-(--color-success)!' :
       data.status === 'PENDING' ? 'bg-(--color-warning-soft)! border-(--color-warning)!' :
       'bg-(--color-danger-soft)! border-(--color-danger)!'
     "
@@ -15,12 +15,12 @@
           <span
             class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border"
             [class]="
-              data.status === 'APPROVED' ? 'bg-(--color-success-soft)! text-(--color-success)! border-(--color-success)!' :
+              data.status === 'ACCEPTED' ? 'bg-(--color-success-soft)! text-(--color-success)! border-(--color-success)!' :
               data.status === 'PENDING' ? 'bg-(--color-warning-soft)! text-(--color-warning)! border-(--color-warning)!' :
               'bg-(--color-danger-soft)! text-(--color-danger)! border-(--color-danger)!'
             "
           >
-            {{ data.status === 'APPROVED' ? ('request.card.status.approved' | translate) :
+            {{ data.status === 'ACCEPTED' ? ('request.card.status.approved' | translate) :
             data.status === 'PENDING' ? ('request.card.status.pending' | translate) : ('request.card.status.refused' | translate) }}
           </span>
           <span
@@ -113,6 +113,7 @@
       }
     </section>
 
+    @if (data.status === 'PENDING') {
     <section>
       <div class="bg-(--color-primary)! rounded-xl p-8 flex flex-row justify-between items-center">
         <div class="flex flex-col gap-1">
@@ -123,23 +124,39 @@
           </div>
         </div>
 
+        @if (budgetExceeded()) {
+        <div class="px-4 py-2 bg-(--color-danger-soft)! border border-(--color-danger)! rounded-lg flex items-center justify-center">
+          <span class="text-(--color-danger)! text-xs font-bold flex items-center gap-2 leading-none">
+            <mat-icon class="!w-4 !h-4 !text-[16px] flex items-center justify-center">error</mat-icon>
+            {{ 'request.card.status.out-budget' | translate }}
+          </span>
+        </div>
+        } @else {
         <div class="px-4 py-2 bg-(--color-success-soft)! border border-(--color-success)! rounded-lg flex items-center justify-center">
           <span class="text-(--color-success)! text-xs font-bold flex items-center gap-2 leading-none">
             <mat-icon class="!w-4 !h-4 !text-[16px] flex items-center justify-center">check_circle</mat-icon>
             {{ 'request.detail.budget-validated' | translate }}
           </span>
         </div>
+        }
       </div>
     </section>
+    }
   </mat-dialog-content>
 
   <mat-dialog-actions align="end" class="px-8! py-6! bg-(--color-neutral-bg)! border-t border-(--color-neutral-border)! flex gap-3">
     @if (isLogistica() && data.status === 'PENDING') {
+      @if (budgetExceeded()) {
+        <span class="text-xs text-red-500 font-bold text-center block mb-2">
+          This request exceeds the available budget and cannot be accepted.
+        </span>
+      }
       <button
         mat-flat-button
         class="px-6! py-5! rounded-xl! font-bold! text-base! cursor-pointer transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2 !bg-red-500 !text-white"
         (click)="reject()"
         type="button"
+        [disabled]="processing"
       >
         <mat-icon>close</mat-icon>
         {{ 'request.detail.btn-reject' | translate }}
@@ -149,6 +166,7 @@
         class="px-6! py-5! rounded-xl! font-bold! text-base! cursor-pointer transition-all hover:brightness-110 active:scale-95 flex items-center justify-center gap-2 !bg-green-600 !text-white"
         (click)="accept()"
         type="button"
+        [disabled]="processing || budgetExceeded()"
       >
         <mat-icon>check</mat-icon>
         {{ 'request.detail.btn-accept' | translate }}

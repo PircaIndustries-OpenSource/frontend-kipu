@@ -13,25 +13,37 @@ export class BudgetApi {
   private readonly budgetEndpoint = environment.kipuApiBudgetEndpointPath;
   private readonly budgetUrl = `${this.apiUrl}${this.budgetEndpoint}`;
 
-  /**
-   * Fetches all budget items from the server
-   */
   getAllBudgets(): Observable<BudgetResponse[]> {
     const projectId = localStorage.getItem('currentProjectId');
     const url = projectId ? `${this.budgetUrl}?projectId=${projectId}` : this.budgetUrl;
     return this.http.get<BudgetResponse[]>(url);
   }
 
-  /**
-   * Updates a specific budget item in db.json
-   * @param id The item ID (as string to match json-server expectations)
-   * @param data The partial or full object to update
-   */
-  createBudget(data: any): Observable<BudgetResponse> {
+  createBudget(data: {
+    projectId: string;
+    progressId: number;
+    code: string;
+    name: string;
+    description: string;
+    budgeted: number;
+  }): Observable<BudgetResponse> {
     return this.http.post<BudgetResponse>(this.budgetUrl, data);
   }
 
-  updateBudget(id: string, data: any): Observable<BudgetResponse> {
-    return this.http.put<BudgetResponse>(`${this.budgetUrl}/${id}`, data);
+  addExpenseToBudget(id: number, data: {
+    concept: string;
+    amount: number;
+    responsible: string;
+    description: string;
+  }): Observable<BudgetResponse> {
+    return this.http.post<BudgetResponse>(`${this.budgetUrl}/${id}/expenses`, data);
+  }
+
+  addExtensionToBudget(id: number, data: {
+    amount: number;
+    reason: string;
+    responsible: string;
+  }): Observable<BudgetResponse> {
+    return this.http.post<BudgetResponse>(`${this.budgetUrl}/${id}/extensions`, data);
   }
 }

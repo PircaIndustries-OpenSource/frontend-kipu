@@ -50,6 +50,7 @@ export class AddConcreteCuringDialogComponent {
   onSave() {
     const entity = new ConcreteEntity();
     entity.id = Math.random().toString(36).substring(2, 9);
+    entity.projectId = localStorage.getItem('currentProjectId') || '';
     entity.sensorId = this.sensorForm.sensorId;
     entity.location = this.sensorForm.location;
     entity.humidity = this.sensorForm.humidity;

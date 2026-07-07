@@ -9,7 +9,7 @@
     </div>
     <div class="text-sm opacity-90 mt-2 sm:mt-0 bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm border border-white/10">
       <mat-icon class="text-sm w-4 h-4 leading-4 inline-block align-text-bottom mr-1">person_add</mat-icon>
-      {{ 'suppliers.card.onboarded' | translate }}: <span class="font-semibold">{{ supplier().onboarded }}</span>
+      {{ 'suppliers.card.onboarded' | translate }}: <span class="font-semibold">{{ supplier().onboarded | date:'dd/MM/yyyy' }}</span>
     </div>
   </div>
   <mat-card-content class="supplier-content">

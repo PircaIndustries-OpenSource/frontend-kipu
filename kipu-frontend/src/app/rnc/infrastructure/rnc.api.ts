@@ -7,15 +7,12 @@ import { RncAssembler } from './rnc.assembler';
 import { RncEntity } from '../domain/model/rnc.entity';
 import { environment } from '../../../environments/environment';
 
-/**
- * Service to handle HTTP requests to the RNC API.
- */
 @Injectable({
   providedIn: 'root',
 })
 export class RncApi {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = `${environment.kipuApiBaseUrl}/rnc`;
+  private readonly baseUrl = `${environment.kipuApiBaseUrl}/non-conformity-records`;
 
   getAll(): Observable<RncEntity[]> {
     const projectId = localStorage.getItem('currentProjectId');
@@ -26,8 +23,18 @@ export class RncApi {
   }
 
   create(rnc: RncEntity): Observable<RncEntity> {
+    const body = {
+      projectId: rnc.projectId,
+      title: rnc.title,
+      description: rnc.description,
+      specialty: rnc.specialty?.toUpperCase() || 'STRUCTURES',
+      location: rnc.location || '',
+      severity: rnc.severity?.toUpperCase() || 'LOW',
+      reportedBy: rnc.reportedBy || '',
+      images: rnc.images || [],
+    };
     return this.http
-      .post<RncResource>(this.baseUrl, rnc)
+      .post<RncResource>(this.baseUrl, body)
       .pipe(map((resource) => RncAssembler.toEntityFromResource(resource)));
   }
 

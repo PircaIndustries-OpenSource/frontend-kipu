@@ -12,28 +12,22 @@ import { TeamUsersEntity } from '../../team/team-users/domain/model/team-users.e
   providedIn: 'root',
 })
 export class BudgetStore {
-  // Dependencies
   private readonly budgetApi = inject(BudgetApi);
   private readonly projectsStore = inject(ProjectsStore);
   private readonly progressStore = inject(ProgressStore);
   private readonly teamUsersStore = inject(TeamUsersStore);
 
-  // State signals
   private readonly budgetItemsSignal = signal<BudgetItemEntity[]>([]);
   private readonly searchQuery = signal<string>('');
   readonly selectedItem = signal<BudgetItemEntity | null>(null);
 
-  // Authorized personnel list
   readonly authorizedPersonnel = computed(() =>
     this.teamUsersStore
       .teamUsers()
-      .filter((user: TeamUsersEntity) => user.role === 'Logistica')
+      .filter((user: TeamUsersEntity) => user.role === 'Logística')
       .map((user: TeamUsersEntity) => `${user.fullName} - ${user.role}`),
   );
 
-  /**
-   * Reactive list that merges real budget items with progress entries.
-   */
   readonly budgetItems = computed(() => {
     const currentId = this.projectsStore.currentProjectId();
     const query = this.searchQuery().toLowerCase();
@@ -70,7 +64,6 @@ export class BudgetStore {
     );
   });
 
-  // Reactive totals
   readonly totalBudgeted = computed(() =>
     this.budgetItems().reduce((sum, item) => sum + item.budgeted, 0),
   );
@@ -82,22 +75,8 @@ export class BudgetStore {
     this.projectLimit() > 0 ? (this.totalExecuted() / this.projectLimit()) * 100 : 0,
   );
 
-  /**
-   * NEW: Project Global Budget Limit
-   * Retrieves the limit defined in the Project's master file (totalBudget)
-   */
   readonly projectLimit = computed(() => this.projectsStore.currentProject()?.totalBudget || 0);
-
-  /**
-   * NEW: Unallocated project funds
-   * Difference between the project's global limit and what has been assigned to advances.
-   */
   readonly unallocatedBudget = computed(() => this.projectLimit() - this.totalBudgeted());
-
-  /**
-   * NEW: Over-allocation flag
-   * True if the sum of all activities exceeds the project's global budget.
-   */
   readonly isProjectOverAllocated = computed(() => this.totalBudgeted() > this.projectLimit());
 
   updateSearch(query: string) {
@@ -109,101 +88,155 @@ export class BudgetStore {
   }
 
   /**
-   * Adds an expense to a specific budget item if funds are available globally and locally.
-   * @param itemId The target progress ID linked to the budget item
-   * @param expenseData The payload containing the amount and concept details
-   * @returns True if the transaction succeeds, false if it violates budget limits
+   * When budget is 0, the amount defines the total budget (via extensions endpoint).
+   * When budget > 0, the amount is deducted from available (via expenses endpoint).
    */
-  addExpense(itemId: number, expenseData: any): boolean {
-    const items = this.budgetItemsSignal();
-    const target = items.find((i) => i.progressId === Number(itemId));
+  addExpense(itemId: number, expenseData: any): Promise<boolean> {
+    const amount = Number(expenseData.amount);
 
-    if (!target) return false;
+    let target = this.budgetItemsSignal().find((i) => i.progressId === Number(itemId));
+    let needsCreate = false;
 
-    const expenseAmount = Number(expenseData.amount);
-
-    // Strict business rule: block registration if the single item has insufficient funds
-    if (target.available < expenseAmount) return false;
-
-    // Strict global validation: block operation if this transaction breaches the master project budget limit
-    const potentialGlobalExecuted = this.totalExecuted() + expenseAmount;
-    if (potentialGlobalExecuted > this.projectLimit()) {
-      return false;
+    if (!target) {
+      const computedItems = this.budgetItems();
+      target = computedItems.find((i) =>
+        i.progressId === Number(itemId) &&
+        !this.budgetItemsSignal().some((r) => r.progressId === i.progressId),
+      );
+      needsCreate = !!target;
     }
 
-    const realBudgetItemId = target.id;
-    const newExecuted = Number(target.executed) + expenseAmount;
+    if (!target) return Promise.resolve(false);
 
-    const updatedItem: BudgetItemEntity = {
-      ...target,
-      executed: newExecuted,
-      available: target.budgeted - newExecuted,
-      progress: Math.round((newExecuted / target.budgeted) * 100),
-      expenseHistory: [...(target.expenseHistory || []), { ...expenseData, date: new Date() }],
-    };
+    const isNewBudget = target.budgeted === 0;
 
-    this.budgetItemsSignal.update((list) =>
-      list.map((item) => (item.id === realBudgetItemId ? updatedItem : item)),
-    );
+    return new Promise<boolean>((resolve) => {
+      const doApiCall = (realId: number) => {
+        if (isNewBudget) {
+          this.budgetApi.addExtensionToBudget(realId, {
+            amount,
+            reason: 'Initial budget assignment',
+            responsible: expenseData.responsible || 'System',
+          }).subscribe({
+            next: (response) => {
+              this.budgetItemsSignal.update((list) =>
+                list.map((item) => (item.id === realId ? {
+                  ...item,
+                  budgeted: response.budgeted,
+                  available: response.available,
+                  executed: response.executed,
+                  progress: response.progress,
+                  status: response.status,
+                  alert: response.alert,
+                } : item)),
+              );
+              resolve(true);
+            },
+            error: (err) => { console.error('Failed to define budget', err); resolve(false); },
+          });
+        } else {
+          this.budgetApi.addExpenseToBudget(realId, {
+            concept: expenseData.concept || 'Expense',
+            amount,
+            responsible: expenseData.responsible || 'System',
+            description: expenseData.description || '',
+          }).subscribe({
+            next: (response) => {
+              this.budgetItemsSignal.update((list) =>
+                list.map((item) => (item.id === realId ? {
+                  ...item,
+                  budgeted: response.budgeted,
+                  executed: response.executed,
+                  available: response.available,
+                  progress: response.progress,
+                  status: response.status,
+                  alert: response.alert,
+                  expenseHistory: (response.expenseHistory || []).map((e: any) => ({
+                    concept: e.concept,
+                    amount: e.amount,
+                    responsible: e.responsible,
+                    description: e.description,
+                    date: new Date(e.date),
+                  })),
+                } : item)),
+              );
+              resolve(true);
+            },
+            error: (err) => { console.error('Failed to add expense', err); resolve(false); },
+          });
+        }
+      };
 
-    this.budgetApi.updateBudget(String(realBudgetItemId), updatedItem).subscribe();
-    return true;
+      if (needsCreate) {
+        this.budgetApi.createBudget({
+          projectId: target!.projectId,
+          progressId: target!.progressId,
+          code: '01.XX',
+          name: target!.name,
+          description: target!.description,
+          budgeted: 0,
+        }).subscribe({
+          next: (response) => {
+            const serverId = Number(response.id);
+            doApiCall(serverId);
+          },
+          error: (err) => {
+            console.error('Failed to create budget', err);
+            resolve(false);
+          },
+        });
+      } else {
+        doApiCall(target.id);
+      }
+    });
   }
 
-  /**
-   * Handles budget extensions with safe mathematical summation (1k + 18k = 19k).
-   */
   addExtension(progressId: number, amount: any) {
     const realItems = this.budgetItemsSignal();
-    const target = realItems.find((i) => i.progressId === progressId);
-
-    // Force numeric conversion to avoid string concatenation
+    let target = realItems.find((i) => i.progressId === progressId);
     const extensionAmount = Number(amount);
 
     if (target) {
-      // Logic for existing item: SUM the values
-      const newBudgeted = Number(target.budgeted) + extensionAmount;
-
-      const updatedItem = {
-        ...target,
-        budgeted: newBudgeted,
-        available: newBudgeted - target.executed,
-        progress: Math.round((target.executed / newBudgeted) * 100),
-      };
-
-      this.budgetApi
-        .updateBudget(String(target.id), updatedItem)
-        .subscribe(() => this.loadBudgetItems());
+      this.budgetApi.addExtensionToBudget(target.id, {
+        amount: extensionAmount,
+        reason: 'Budget extension',
+        responsible: 'System',
+      }).subscribe({
+        next: (response) => {
+          this.budgetItemsSignal.update((list) =>
+            list.map((item) => (item.id === target!.id ? {
+              ...item,
+              budgeted: response.budgeted,
+              available: response.available,
+              progress: response.progress,
+              status: response.status,
+              alert: response.alert,
+            } : item)),
+          );
+        },
+        error: (err) => console.error('Failed to add extension', err),
+      });
     } else {
-      // New Record Creation (POST)
-      const progress = this.progressStore
-        .progressList()
-        .find((p: ProjectProgress) => p.id === progressId);
+      const progress = this.progressStore.progressList().find((p: ProjectProgress) => p.id === progressId);
       if (!progress) return;
 
-      const newItem: BudgetItemEntity = {
-        id: Math.floor(Math.random() * 100000),
+      this.budgetApi.createBudget({
         projectId: progress.projectId,
         progressId: progress.id,
         code: '01.XX',
         name: progress.activityName,
         description: progress.details,
         budgeted: extensionAmount,
-        executed: 0,
-        available: extensionAmount,
-        progress: 0,
-        status: 'normal',
-        alert: null,
-        expenseHistory: [],
-      };
-
-      this.budgetApi.createBudget(newItem).subscribe(() => this.loadBudgetItems());
+      }).subscribe({
+        next: (response) => {
+          const newItem = BudgetAssembler.toEntity(response);
+          this.budgetItemsSignal.update((list) => [...list, newItem]);
+        },
+        error: (err) => console.error('Failed to create extension budget', err),
+      });
     }
   }
 
-  /**
-   * Loads budget items from the server.
-   */
   loadBudgetItems() {
     this.budgetApi.getAllBudgets().subscribe({
       next: (responses) => {
@@ -211,8 +244,53 @@ export class BudgetStore {
         this.budgetItemsSignal.set(entities);
       },
       error: (err) => {
-        console.error('Error fetching budgets from db.json', err);
-        this.budgetItemsSignal.set([]);
+        console.error('Error fetching budgets', err);
+      },
+    });
+  }
+
+  createBudgetItem(progress: ProjectProgress): void {
+    const existingItem = this.budgetItemsSignal().find((b) => b.progressId === progress.id);
+    if (existingItem) return;
+
+    const tempId = Math.floor(Math.random() * 100000);
+    const tempItem: BudgetItemEntity = {
+      id: tempId,
+      projectId: progress.projectId,
+      progressId: progress.id,
+      code: '01.XX',
+      name: progress.activityName,
+      description: progress.details || 'Pending budget assignment',
+      budgeted: 0,
+      executed: 0,
+      available: 0,
+      progress: 0,
+      status: 'risk',
+      alert: 'Needs budget assignment',
+      expenseHistory: [],
+    };
+
+    this.budgetItemsSignal.update((list) => [...list, tempItem]);
+
+    this.budgetApi.createBudget({
+      projectId: progress.projectId,
+      progressId: progress.id,
+      code: '01.XX',
+      name: progress.activityName,
+      description: progress.details || 'Pending budget assignment',
+      budgeted: 0,
+    }).subscribe({
+      next: (response) => {
+        this.budgetItemsSignal.update((list) =>
+          list.map((item) => (item.id === tempId ? {
+            ...item,
+            id: Number(response.id),
+          } : item)),
+        );
+      },
+      error: (err) => {
+        console.error('Failed to create budget item', err);
+        this.budgetItemsSignal.update((list) => list.filter((i) => i.id !== tempId));
       },
     });
   }

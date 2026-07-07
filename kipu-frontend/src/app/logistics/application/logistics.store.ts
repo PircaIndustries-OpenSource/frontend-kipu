@@ -204,6 +204,16 @@ export class LogisticsStore {
       });
     }
   };
+  updateInventoryMinimumStock(id: string, minimumStock: number) {
+    this.logisticsApi.updateInventoryMinimumStock(id, minimumStock).subscribe({
+      next: (updated) => {
+        this.inventorySignal.update((list) =>
+          list.map((item) => (item.id === id ? { ...item, miniumStock: updated.miniumStock } : item)),
+        );
+      },
+      error: (err) => console.error('Failed to update minimum stock', err),
+    });
+  }
   loadCategories(force = false) {
     if (force || this.categoriesSignal().length === 0) {
       this.logisticsApi.getAllCategories().subscribe({
@@ -283,7 +293,7 @@ export class LogisticsStore {
       result = result.filter((i) => i.status === 'PENDING');
     }
     if (this.approvedRequestFilterSignal()) {
-      result = result.filter((i) => i.status === 'APPROVED');
+      result = result.filter((i) => i.status === 'ACCEPTED');
     }
     if (this.refusedRequestFilterSignal()) {
       result = result.filter((i) => i.status === 'REFUSED');
@@ -378,6 +388,15 @@ export class LogisticsStore {
   readonly pendingRequestFilter = computed(() => this.pendingRequestFilterSignal());
   readonly approvedRequestFilter = computed(() => this.approvedRequestFilterSignal());
   readonly refusedRequestFilter = computed(() => this.refusedRequestFilterSignal());
+  readonly pendingRequestsCount = computed(() =>
+    this.requestDetailsView().filter((r) => r.status === 'PENDING').length,
+  );
+  readonly acceptedRequestsCount = computed(() =>
+    this.requestDetailsView().filter((r) => r.status === 'ACCEPTED').length,
+  );
+  readonly refusedRequestsCount = computed(() =>
+    this.requestDetailsView().filter((r) => r.status === 'REFUSED').length,
+  );
   togglePendingRequestFilter() {
     this.pendingRequestFilterSignal.update((v) => !v);
     this.approvedRequestFilterSignal.set(false);

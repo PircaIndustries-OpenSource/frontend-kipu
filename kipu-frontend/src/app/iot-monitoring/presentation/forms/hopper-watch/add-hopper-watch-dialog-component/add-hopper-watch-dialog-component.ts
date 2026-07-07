@@ -44,6 +44,7 @@ export class AddHopperWatchDialogComponent {
   onSave() {
     const entity = new HopperEntity();
     entity.id = Math.random().toString(36).substring(2, 9);
+    entity.projectId = localStorage.getItem('currentProjectId') || '';
     entity.sensorId = this.sensorForm.sensorId;
     entity.name = this.sensorForm.name;
     entity.unit = this.sensorForm.unit;

@@ -2,7 +2,17 @@
 
 <mat-dialog-content class="flex flex-col gap-4 pt-4">
 
-  @if (data.action === 'solve') {
+  @if (data.action === 'assign') {
+    <div class="flex flex-col">
+      <label class="text-xs font-bold text-neutral-500 uppercase">{{ 'rnc.dialog.select_placeholder' | translate }}</label>
+      <select [(ngModel)]="selectedUser" class="w-full border border-neutral-300 p-2 rounded-md">
+        <option value="">{{ 'rnc.dialog.select_placeholder' | translate }}</option>
+        @for (user of users(); track user.id) {
+          <option [value]="user.fullName">{{ user.fullName }} - {{ user.role }}</option>
+        }
+      </select>
+    </div>
+  } @else if (data.action === 'solve') {
     <div class="flex flex-col">
       <label class="text-xs font-bold text-neutral-500 uppercase">{{ 'rnc.dialog.severity_status' | translate }}</label>
       <select [(ngModel)]="selectionValue" class="w-full border border-neutral-300 p-2 rounded-md">
@@ -14,29 +24,31 @@
     </div>
   } @else if (data.action === 'changeStatus') {
     <div class="flex flex-col">
-      <label class="text-xs font-bold text-neutral-500 uppercase">Status</label>
+      <label class="text-xs font-bold text-neutral-500 uppercase">{{ 'rnc.dialog.status_label' | translate }}</label>
       <select [(ngModel)]="statusOption" class="w-full border border-neutral-300 p-2 rounded-md">
-        <option value="Solved">Solved</option>
-        <option value="Unsolved">Unsolved</option>
+        <option value="Solved">{{ 'rnc.status.solved' | translate }}</option>
+        <option value="Unsolved">{{ 'rnc.dialog.unsolved' | translate }}</option>
       </select>
     </div>
 
     @if (statusOption === 'Unsolved') {
       <div class="flex flex-col">
-        <label class="text-xs font-bold text-neutral-500 uppercase">Severity</label>
+        <label class="text-xs font-bold text-neutral-500 uppercase">{{ 'rnc.create.fields.severity' | translate }}</label>
         <select [(ngModel)]="severityOption" class="w-full border border-neutral-300 p-2 rounded-md">
-          <option value="Low">Low</option>
-          <option value="Moderate">Moderate</option>
-          <option value="Critical">Critical</option>
+          <option value="Low">{{ 'rnc.severity.low' | translate }}</option>
+          <option value="Moderate">{{ 'rnc.severity.moderate' | translate }}</option>
+          <option value="Critical">{{ 'rnc.severity.critical' | translate }}</option>
         </select>
       </div>
     }
   }
 
-  <div class="flex flex-col">
-    <label class="text-xs font-bold text-neutral-500 uppercase">{{ 'rnc.dialog.solution_notes' | translate }}</label>
-    <textarea [(ngModel)]="inputValue" class="w-full border border-neutral-300 p-2 rounded-md" rows="3"></textarea>
-  </div>
+  @if (data.action !== 'assign') {
+    <div class="flex flex-col">
+      <label class="text-xs font-bold text-neutral-500 uppercase">{{ 'rnc.dialog.solution_notes' | translate }}</label>
+      <textarea [(ngModel)]="inputValue" [placeholder]="'rnc.dialog.notes_placeholder' | translate" class="w-full border border-neutral-300 p-2 rounded-md" rows="3"></textarea>
+    </div>
+  }
 </mat-dialog-content>
 
 <mat-dialog-actions align="end" class="pt-4">

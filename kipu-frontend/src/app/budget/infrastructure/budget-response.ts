@@ -1,3 +1,12 @@
+export interface ExpenseHistoryResponse {
+  id: number;
+  concept: string;
+  amount: number;
+  responsible: string;
+  description: string;
+  date: string;
+}
+
 /**
  * Represents the raw JSON data structure received from the Budget API.
  */
@@ -14,4 +23,5 @@ export interface BudgetResponse {
   progress: number;
   status: string;
   alert: string | null;
+  expenseHistory?: ExpenseHistoryResponse[];
 }

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, computed } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,30 +16,34 @@ export class RncActionDialogComponent implements OnInit {
   dialogRef = inject(MatDialogRef<RncActionDialogComponent>);
   teamUsersStore = inject(TeamUsersStore);
 
+  users = computed(() => this.teamUsersStore.teamUsers().filter((u) => u.isActive));
+
   inputValue: string = '';
   selectionValue: string = 'Low';
   statusValue: string = 'Created';
   statusOption: string = 'Solved';
   severityOption: string = 'Low';
   notesOption: string = '';
+  selectedUser: string = '';
 
   ngOnInit() {
     this.selectionValue = this.data.currentSeverity || 'Low';
     this.inputValue = this.data.currentNotes || '';
-  }
-
-  updateMode() {
-    if (this.statusValue === 'Unsolved') {
-      this.statusValue = 'Created';
+    const projectId = localStorage.getItem('currentProjectId');
+    if (projectId) {
+      this.teamUsersStore.loadTeamUsers(projectId);
     }
   }
 
   confirm() {
-    // We send back the selected severity, the notes, and explicitly signal if it should be 'Solved'
-    this.dialogRef.close({
-      severity: this.selectionValue,
-      value: this.inputValue,
-      status: this.selectionValue === 'Solved' ? 'Solved' : this.data.currentStatus,
-    });
+    if (this.data.action === 'assign') {
+      this.dialogRef.close(this.selectedUser ? { assignedTo: this.selectedUser } : null);
+    } else {
+      this.dialogRef.close({
+        severity: this.selectionValue === 'Solved' ? this.data.currentSeverity : this.selectionValue,
+        value: this.inputValue,
+        status: this.selectionValue === 'Solved' ? 'Solved' : this.data.currentStatus,
+      });
+    }
   }
 }

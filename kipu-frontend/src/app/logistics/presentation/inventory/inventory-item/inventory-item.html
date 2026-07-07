@@ -1,7 +1,7 @@
 <mat-card class="inventory-card">
   <div class="inventory-header flex flex-col sm:flex-row justify-between items-start sm:items-center gap-s">
     <div class="flex flex-row items-center gap-m">
-      <span class="font-bold text-xl tracking-tight">{{inventoryMaterial().id}}</span>
+      <span class="font-bold text-xl tracking-tight">{{inventoryMaterial().materialName}}</span>
     </div>
     <div class="flex flex-row items-center gap-xs text-sm font-medium bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm border border-white/20 min-w-0">
       <mat-icon class="text-sm w-4 h-4 leading-4 shrink-0">category</mat-icon>
@@ -11,22 +11,46 @@
 
   <mat-card-content class="inventory-content">
     <div class="inventory-grid">
-      <!-- Nombre del material — columna más ancha -->
       <div class="flex flex-col gap-1 min-w-0">
         <p class="text-xs text-neutral-border font-bold uppercase tracking-wider">{{'inventory.card.equipment'|translate}}</p>
         <p class="font-bold text-base text-primary leading-snug">{{inventoryMaterial().materialName}}</p>
       </div>
 
-      <!-- Límite mínimo -->
       <div class="flex flex-col gap-1 min-w-0">
-        <p class="text-xs text-neutral-border font-bold uppercase tracking-wider">{{'inventory.card.min-limit' | translate}}</p>
-        <p class="font-bold text-xl text-primary leading-tight">
-          {{inventoryMaterial().miniumStock}}
-        </p>
-        <p class="text-xs text-neutral-border font-medium">{{inventoryMaterial().materialUnit}}</p>
+        <div class="flex items-center gap-2">
+          <p class="text-xs text-neutral-border font-bold uppercase tracking-wider">{{'inventory.card.min-limit' | translate}}</p>
+          @if (!editingMinStock()) {
+          <button
+            (click)="startEdit()"
+            class="p-0.5 text-neutral-border hover:text-accent transition-colors cursor-pointer border-none bg-transparent"
+            title="Edit minimum stock"
+          >
+            <mat-icon class="text-sm w-4 h-4 leading-4">edit</mat-icon>
+          </button>
+          }
+        </div>
+        @if (editingMinStock()) {
+          <div class="flex items-center gap-1">
+            <input
+              type="number"
+              [(ngModel)]="editValue"
+              min="0"
+              class="w-20 bg-neutral-bg border border-accent rounded p-1 text-sm font-bold text-primary outline-none"
+              (keyup.enter)="saveMinStock()"
+              (keyup.escape)="cancelEdit()"
+            />
+            <button (click)="saveMinStock()" class="text-success hover:text-success/80 cursor-pointer">
+              <mat-icon class="text-sm w-4 h-4">check</mat-icon>
+            </button>
+            <button (click)="cancelEdit()" class="text-danger hover:text-danger/80 cursor-pointer">
+              <mat-icon class="text-sm w-4 h-4">close</mat-icon>
+            </button>
+          </div>
+        } @else {
+          <p class="font-bold text-xl text-primary leading-tight">{{inventoryMaterial().miniumStock}}</p>
+        }
       </div>
 
-      <!-- Stock actual -->
       <div class="flex flex-col gap-1 min-w-0">
         <p class="text-xs text-neutral-border font-bold uppercase tracking-wider">{{'inventory.card.current-stock' | translate}}</p>
         @if(inventoryMaterial().currentStock < inventoryMaterial().miniumStock){
@@ -38,10 +62,4 @@
       </div>
     </div>
   </mat-card-content>
-
-  <mat-card-footer class="inventory-footer">
-    <p class="text-xs text-neutral-border font-medium bg-neutral-bg px-3 py-1 rounded border border-neutral-border/20 inline-block">
-      {{inventoryMaterial().materialSubcategory || 'Sin subcategoría'}}
-    </p>
-  </mat-card-footer>
 </mat-card>

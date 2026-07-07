@@ -3,10 +3,14 @@ export interface ConcreteResource {
   id: string;
   projectId: string;
   sensorId: string;
-  state: number;
+  state: number | string;
   location: string;
-  temperature: number;
-  humidity: number;
+  temperature?: number | string;
+  temperatureReading?: number;
+  temperatureUnit?: string;
+  humidity?: number;
+  humidityPercentage?: number;
   limit: number;
-  unit: string;
+  temperatureLimit?: number;
+  unit?: string;
 }

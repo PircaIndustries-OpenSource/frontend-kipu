@@ -31,10 +31,15 @@ export class RequestPage implements OnInit {
     return role !== 'Logística';
   });
   ngOnInit() {
+    this.budgetStore.loadBudgetItems();
     this.logisticsStore.loadRequest();
     this.logisticsStore.loadSupplierOffers();
     this.logisticsStore.loadMaterials();
     this.logisticsStore.loadCategories();
+    const projectId = localStorage.getItem('currentProjectId');
+    if (projectId) {
+      this.teamUsersStore.loadTeamUsers(projectId);
+    }
   }
   onFilterChange(filter: string) {
     this.logisticsStore.filterRequest(filter);
@@ -46,6 +51,9 @@ export class RequestPage implements OnInit {
   readonly pendingIsActive = this.logisticsStore.pendingRequestFilter;
   readonly approvedIsActive = this.logisticsStore.approvedRequestFilter;
   readonly refusedIsActive = this.logisticsStore.refusedRequestFilter;
+  readonly pendingCount = this.logisticsStore.pendingRequestsCount;
+  readonly acceptedCount = this.logisticsStore.acceptedRequestsCount;
+  readonly refusedCount = this.logisticsStore.refusedRequestsCount;
 
   togglePendingIsActive() {
     this.logisticsStore.togglePendingRequestFilter();

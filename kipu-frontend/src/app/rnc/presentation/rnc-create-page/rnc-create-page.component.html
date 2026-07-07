@@ -33,12 +33,7 @@
 
     <div class="mb-4">
       <label class="block text-sm font-semibold mb-1">{{ 'rnc.create.fields.reported-by' | translate }}</label>
-      <select formControlName="reportedBy" class="w-full border border-neutral-300 p-2 rounded-md">
-        <option value="">{{ 'rnc.create.placeholders.select_user' | translate }}</option>
-        @for (user of users(); track user.id) {
-          <option [value]="user.fullName">{{ user.fullName }}</option>
-        }
-      </select>
+      <p class="text-base font-bold text-primary">{{ reporterName() }}</p>
     </div>
 
     <div class="mb-6">

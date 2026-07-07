@@ -1,12 +1,14 @@
-import { Component, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, TemplateRef, ViewChild, computed } from '@angular/core';
 import { CommonModule, CurrencyPipe, DatePipe, DecimalPipe } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatIcon } from '@angular/material/icon';
 import { BudgetStore } from '../../application/budget-store';
 import { BudgetItemEntity } from '../../domain/budget-item.entity';
 import { ProgressStore } from '../../../progress/application/progress.store';
 import { TeamUsersStore } from '../../../team/team-users/application/team-users.store';
+import { AuthStore } from '../../../identity/application/auth.store';
 
 @Component({
   selector: 'app-budget-page',
@@ -19,19 +21,33 @@ import { TeamUsersStore } from '../../../team/team-users/application/team-users.
     DecimalPipe,
     ReactiveFormsModule,
     MatDialogModule,
+    MatIcon,
   ],
   templateUrl: './budget-page.html',
 })
 export class BudgetPage implements OnInit {
   protected readonly store = inject(BudgetStore);
-  protected readonly progressStore = inject(ProgressStore); // Injecting ProgressStore
+  protected readonly progressStore = inject(ProgressStore);
   private readonly teamUsersStore = inject(TeamUsersStore);
+  protected readonly authStore = inject(AuthStore);
   private readonly fb = inject(FormBuilder);
   protected readonly dialog = inject(MatDialog);
 
   expenseForm: FormGroup;
   extensionForm: FormGroup;
   errorMessage: string | null = null;
+
+  readonly currentUserRole = computed(() => this.authStore.currentUser()?.role ?? '');
+  readonly isAdmin = computed(() => this.currentUserRole() === 'Administrador');
+
+  readonly expenseAuthorizedOptions = computed(() => {
+    const logistics = this.store.authorizedPersonnel();
+    if (this.isAdmin()) {
+      const adminName = `${this.authStore.userName()} - Administrador`;
+      return [...logistics, adminName];
+    }
+    return logistics;
+  });
 
   @ViewChild('expenseTpl') expenseTpl!: TemplateRef<any>;
   @ViewChild('extensionTpl') extensionTpl!: TemplateRef<any>;
@@ -58,16 +74,26 @@ export class BudgetPage implements OnInit {
 
   ngOnInit() {
     this.store.loadBudgetItems();
-    this.teamUsersStore.loadIamUsers();
-    this.progressStore.loadProgress(); // Load progress entries to populate dropdowns
+    this.progressStore.loadProgress();
+
+    const projectId = localStorage.getItem('currentProjectId');
+    if (projectId) {
+      this.teamUsersStore.loadTeamUsers(projectId);
+    }
   }
 
   openExpense() {
     this.errorMessage = null;
+    if (!this.isAdmin()) {
+      this.expenseForm.patchValue({ responsible: this.authStore.userName() });
+    }
     this.dialog.open(this.expenseTpl, { width: '600px', disableClose: true });
   }
 
   openExtension() {
+    if (!this.isAdmin()) {
+      this.extensionForm.patchValue({ responsible: this.authStore.userName() });
+    }
     this.dialog.open(this.extensionTpl, { width: '600px', disableClose: true });
   }
 
@@ -99,24 +125,24 @@ export class BudgetPage implements OnInit {
 
   onSaveExpense() {
     if (this.expenseForm.valid) {
-      const success = this.store.addExpense(this.expenseForm.value.itemId, this.expenseForm.value);
-      if (success) {
-        this.dialog.closeAll();
-        this.expenseForm.reset();
-        this.errorMessage = null;
-      } else {
-        // Automatically checks if failure is due to general allocation or item limit exhaustion
-        const amount = Number(this.expenseForm.value.amount);
-        const currentItem = this.store
-          .budgetItems()
-          .find((i) => i.progressId === Number(this.expenseForm.value.itemId));
-
-        if (currentItem && currentItem.available < amount) {
-          this.errorMessage = 'budget.errors.insufficient-funds';
+      this.store.addExpense(this.expenseForm.value.itemId, this.expenseForm.value).then((success) => {
+        if (success) {
+          this.dialog.closeAll();
+          this.expenseForm.reset();
+          this.errorMessage = null;
         } else {
-          this.errorMessage = 'budget.errors.global-limit-exceeded';
+          const amount = Number(this.expenseForm.value.amount);
+          const currentItem = this.store
+            .budgetItems()
+            .find((i) => i.progressId === Number(this.expenseForm.value.itemId));
+
+          if (currentItem && currentItem.available < amount) {
+            this.errorMessage = 'budget.errors.insufficient-funds';
+          } else {
+            this.errorMessage = 'budget.errors.global-limit-exceeded';
+          }
         }
-      }
+      });
     }
   }
 

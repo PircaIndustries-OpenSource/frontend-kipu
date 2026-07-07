@@ -1,17 +1,11 @@
 import { BudgetResponse } from './budget-response';
 import { BudgetItemEntity } from '../domain/budget-item.entity';
 
-/**
- * Assembler responsible for mapping infrastructure responses to domain entities.
- */
 export class BudgetAssembler {
-  /**
-   * Transforms a single BudgetResponse into a BudgetItemEntity.
-   */
   static toEntity(response: BudgetResponse): BudgetItemEntity {
     return {
       id: Number(response.id),
-      projectId: response.projectId, // Cast string ID to number
+      projectId: response.projectId,
       progressId: response.progressId,
       code: response.code,
       name: response.name,
@@ -22,12 +16,13 @@ export class BudgetAssembler {
       progress: response.progress,
       status: response.status,
       alert: response.alert,
+      expenseHistory: (response.expenseHistory || []).map((e) => ({
+        ...e,
+        date: new Date(e.date),
+      })),
     };
   }
 
-  /**
-   * Transforms an array of responses into an array of entities.
-   */
   static toEntityList(responses: BudgetResponse[]): BudgetItemEntity[] {
     return responses.map(this.toEntity);
   }

@@ -47,6 +47,7 @@ export class AddGeolocalizationDialogComponent {
   onSave() {
     const entity = new GeolocalizationEntity();
     entity.id = Math.random().toString(36).substring(2, 9);
+    entity.projectId = localStorage.getItem('currentProjectId') || '';
     entity.numberId = Math.floor(Math.random() * 1000) + 100;
     entity.name = this.sensorForm.name;
     entity.projectId = 'proj-01';

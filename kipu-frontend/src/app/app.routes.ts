@@ -220,7 +220,7 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'iot-monitoring',
+            redirectTo: 'concrete-curing',
             pathMatch: 'full',
           },
           {

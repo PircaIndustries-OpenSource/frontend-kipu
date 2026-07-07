@@ -107,9 +107,16 @@
                         <mat-icon>delete</mat-icon>
                       </button>
                     </td>
-                  </tr>
-                }
-              </tbody>
+              </tr>
+            }
+            @if (store.progressList().length === 0) {
+            <tr>
+              <td colspan="7" class="py-16 text-center">
+                <p class="text-neutral-border font-medium text-lg">{{ 'progress.empty' | translate }}</p>
+              </td>
+            </tr>
+            }
+          </tbody>
             </table>
           </div>
         </div>
@@ -178,20 +185,29 @@
         <form [formGroup]="progressForm" class="grid grid-cols-1 sm:grid-cols-2 gap-x-xl gap-y-m">
           <div class="flex flex-col gap-xs">
             <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.date' | translate }}</label>
-            <input type="date" formControlName="date" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary">
+            <input type="date" formControlName="date" class="bg-neutral-bg border p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary" [class.border-danger]="progressForm.get('date')?.invalid && progressForm.get('date')?.touched" [class.border-neutral-border/20]="!progressForm.get('date')?.invalid || !progressForm.get('date')?.touched">
+            @if (progressForm.get('date')?.hasError('required') && progressForm.get('date')?.touched) {
+              <span class="text-xs text-danger font-medium">Date is required</span>
+            }
           </div>
           <div class="flex flex-col gap-xs">
             <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.specialty' | translate }}</label>
-            <select formControlName="specialty" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary">
+            <select formControlName="specialty" class="bg-neutral-bg border p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary" [class.border-danger]="progressForm.get('specialty')?.invalid && progressForm.get('specialty')?.touched" [class.border-neutral-border/20]="!progressForm.get('specialty')?.invalid || !progressForm.get('specialty')?.touched">
               <option value="" disabled selected>{{ 'progress.form.specialty' | translate }}</option>
               @for (opt of specialtiesOptions; track opt) {
                 <option [value]="opt">{{ 'progress.specialties.' + getSpecialtyKey(opt) | translate }}</option>
               }
             </select>
+            @if (progressForm.get('specialty')?.hasError('required') && progressForm.get('specialty')?.touched) {
+              <span class="text-xs text-danger font-medium">Specialty is required</span>
+            }
           </div>
           <div class="sm:col-span-2 flex flex-col gap-xs">
             <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.activity' | translate }}</label>
-            <input type="text" formControlName="activityName" [placeholder]="'progress.form.activity_placeholder' | translate" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary">
+            <input type="text" formControlName="activityName" [placeholder]="'progress.form.activity_placeholder' | translate" class="bg-neutral-bg border p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary" [class.border-danger]="progressForm.get('activityName')?.invalid && progressForm.get('activityName')?.touched" [class.border-neutral-border/20]="!progressForm.get('activityName')?.invalid || !progressForm.get('activityName')?.touched">
+            @if (progressForm.get('activityName')?.hasError('required') && progressForm.get('activityName')?.touched) {
+              <span class="text-xs text-danger font-medium">Activity name is required</span>
+            }
           </div>
           <div class="flex flex-col gap-xs">
             <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.location' | translate }}</label>
@@ -216,7 +232,13 @@
 
           <div class="flex flex-col gap-xs">
             <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.weight' | translate }}</label>
-            <input type="number" formControlName="weight" [placeholder]="'progress.form.weight_placeholder' | translate" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary">
+            <input type="number" formControlName="weight" [placeholder]="'progress.form.weight_placeholder' | translate" class="bg-neutral-bg border p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary" [class.border-danger]="progressForm.get('weight')?.invalid && progressForm.get('weight')?.touched" [class.border-neutral-border/20]="!progressForm.get('weight')?.invalid || !progressForm.get('weight')?.touched">
+            @if (progressForm.get('weight')?.hasError('required') && progressForm.get('weight')?.touched) {
+              <span class="text-xs text-danger font-medium">Weight is required</span>
+            }
+            @if (progressForm.get('weight')?.hasError('min') && progressForm.get('weight')?.touched) {
+              <span class="text-xs text-danger font-medium">Weight must be at least 1</span>
+            }
           </div>
           <div class="flex flex-col gap-xs">
             <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.workers' | translate }}</label>
@@ -224,12 +246,15 @@
           </div>
           <div class="sm:col-span-2 flex flex-col gap-xs">
             <label class="text-xs font-black text-primary uppercase tracking-widest">{{ 'progress.form.responsible' | translate }}</label>
-            <select formControlName="responsible" class="bg-neutral-bg border border-neutral-border/20 p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary">
+            <select formControlName="responsible" class="bg-neutral-bg border p-3 rounded-s outline-none focus:border-accent transition-colors font-medium text-primary" [class.border-danger]="progressForm.get('responsible')?.invalid && progressForm.get('responsible')?.touched" [class.border-neutral-border/20]="!progressForm.get('responsible')?.invalid || !progressForm.get('responsible')?.touched">
               <option value="" disabled selected>{{ 'progress.history.select_responsible' | translate }}</option>
               @for (name of gestoresOptions(); track name) {
                 <option [value]="name">{{ name }}</option>
               }
             </select>
+            @if (progressForm.get('responsible')?.hasError('required') && progressForm.get('responsible')?.touched) {
+              <span class="text-xs text-danger font-medium">Responsible is required</span>
+            }
           </div>
 
           <div class="sm:col-span-2 flex flex-col gap-s mt-2">

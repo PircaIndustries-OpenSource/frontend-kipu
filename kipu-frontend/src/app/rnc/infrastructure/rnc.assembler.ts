@@ -1,9 +1,11 @@
 import { RncEntity } from '../domain/model/rnc.entity';
 import { RncResource } from './rnc.response';
 
-/**
- * Assembler class to transform API resources into Domain entities.
- */
+function toPascalCase(value: string): string {
+  if (!value) return value;
+  return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+}
+
 export class RncAssembler {
   static toEntityFromResource(resource: RncResource): RncEntity {
     return {
@@ -11,19 +13,21 @@ export class RncAssembler {
       projectId: resource.projectId,
       title: resource.title,
       description: resource.description,
-      specialty: resource.specialty,
+      specialty: toPascalCase(resource.specialty) as RncEntity['specialty'],
       location: resource.location,
-      severity: resource.severity,
-      status: resource.status,
+      severity: toPascalCase(resource.severity) as RncEntity['severity'],
+      status: toPascalCase(resource.status) as RncEntity['status'],
       reportedBy: resource.reportedBy,
       reportDate: new Date(resource.reportDate),
-      images: resource.images,
+      images: resource.images || [],
       assignedTo: resource.assignedTo,
       solutionNotes: Array.isArray(resource.solutionNotes)
-        ? resource.solutionNotes
-        : resource.solutionNotes
-          ? [{ date: new Date(), note: resource.solutionNotes, author: 'System' }]
-          : [],
+        ? resource.solutionNotes.map((s: any) => ({
+            date: new Date(s.date || s.logDate),
+            note: s.note || '',
+            author: s.author || s.authorId || '',
+          }))
+        : [],
       resolutionDate: resource.resolutionDate ? new Date(resource.resolutionDate) : undefined,
     };
   }
