@@ -1,8 +1,10 @@
 export class WasteEntity {
   id: string;
   projectId: string;
-  materialId: string;
+  materialCatalogId: number;
   quantity: number;
+  unit: string;
+  classificationType: string;
   date: string;
   description: string;
   reportedBy: string;
@@ -11,8 +13,10 @@ export class WasteEntity {
   constructor() {
     this.id = '';
     this.projectId = '';
-    this.materialId = '';
+    this.materialCatalogId = 0;
     this.quantity = 0;
+    this.unit = '';
+    this.classificationType = 'ROTURA';
     this.date = '';
     this.description = '';
     this.reportedBy = '';

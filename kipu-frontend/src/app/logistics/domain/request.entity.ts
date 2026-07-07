@@ -1,9 +1,14 @@
 export class RequestItem {
-  supplierOfferId: string;
+  materialCatalogId: number;
+  supplierId: number;
   quantity: number;
+  unitPrice: number;
+
   constructor() {
-    this.supplierOfferId = '';
+    this.materialCatalogId = 0;
+    this.supplierId = 0;
     this.quantity = 0;
+    this.unitPrice = 0;
   }
 }
 export class RequestEntity {

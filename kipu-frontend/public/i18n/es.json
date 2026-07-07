@@ -793,7 +793,11 @@
         "reported-by-placeholder": "Nombre de quien reporta",
         "reported-by-required": "El nombre del reportante es obligatorio.",
         "btn-save": "Reportar Merma",
-        "btn-cancel": "Cancelar"
+        "btn-cancel": "Cancelar",
+        "type-rotura": "Rotura",
+        "type-vencimiento": "Vencimiento",
+        "type-defecto": "Defecto",
+        "type-contaminacion": "Contaminación"
       }
     }
   },

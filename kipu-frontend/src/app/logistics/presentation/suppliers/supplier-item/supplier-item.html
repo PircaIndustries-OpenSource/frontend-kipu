@@ -3,8 +3,8 @@
     <div class="flex flex-row items-center gap-m">
       <span class="font-bold text-xl tracking-tight">{{ supplier().ruc }}</span>
       <span class="text-xs font-bold tracking-widest uppercase bg-white/20 px-2 py-0.5 rounded backdrop-blur-sm border border-white/10"
-            [ngClass]="supplier().status === 'Activo' ? 'text-success-soft bg-success/20 border-success/30' : ''">
-        {{supplier().status}}
+            [ngClass]="supplier().isActive ? 'text-success-soft bg-success/20 border-success/30' : 'text-danger-soft bg-danger/20 border-danger/30'">
+        {{ supplier().isActive ? ('suppliers.create.status-active' | translate) : ('suppliers.create.status-inactive' | translate) }}
       </span>
     </div>
     <div class="text-sm opacity-90 mt-2 sm:mt-0 bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm border border-white/10">

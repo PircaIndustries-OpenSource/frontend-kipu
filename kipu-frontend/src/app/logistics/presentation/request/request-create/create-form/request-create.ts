@@ -3,7 +3,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { AutocompleteFilterList } from '../../../../../shared/presentation/autocomplete-filter-list/autocomplete-filter-list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LogisticsStore } from '../../../../application/logistics.store';
 import { MatOption, MatSelect } from '@angular/material/select';
@@ -27,7 +26,6 @@ import { BudgetItemEntity } from '../../../../../budget/domain/budget-item.entit
   imports: [
     TranslatePipe,
     MatFormFieldModule,
-    AutocompleteFilterList,
     MatInputModule,
     MatDatepickerModule,
     MatProgressBarModule,
@@ -46,7 +44,7 @@ export class RequestCreate implements OnInit {
   private fb = inject(FormBuilder);
   logisticsStore = inject(LogisticsStore);
   budgetStore = inject(BudgetStore);
-  progressStore = inject(ProgressStore); // Added ProgressStore
+  progressStore = inject(ProgressStore);
   authStore = inject(AuthStore);
   teamUsersStore = inject(TeamUsersStore);
   router = inject(Router);
@@ -61,8 +59,8 @@ export class RequestCreate implements OnInit {
     this.logisticsStore.loadMaterials();
     this.logisticsStore.loadSupplierOffers();
     this.logisticsStore.loadSuppliers();
-    this.progressStore.loadProgress(); // Load progress entries
-    this.budgetStore.loadBudgetItems(); // Load budget items
+    this.progressStore.loadProgress();
+    this.budgetStore.loadBudgetItems();
   }
 
   goToRequestPage() {
@@ -82,11 +80,9 @@ export class RequestCreate implements OnInit {
     additionalNotes: [''],
   });
 
-  materialResetCounter = signal(0);
-  supplierResetCounter = signal(0);
   quantity = signal(1);
   selectedBudgetLine = signal('');
-  selectedBudgetItem = signal<BudgetItemEntity | null>(null); // Track the linked budget line
+  selectedBudgetItem = signal<BudgetItemEntity | null>(null);
   minDate: Date;
 
   constructor() {
@@ -101,7 +97,6 @@ export class RequestCreate implements OnInit {
   nameCategories = computed<string[]>(() => this.categories().map((category) => category.name));
   nameMaterials = computed<string[]>(() => this.materials().map((material) => material.name));
 
-  // Maps active project progress activities for the dropdown
   nameBudgetLines = computed(() => this.progressStore.progressList().map((p) => p.activityName));
 
   suppliersByMaterial = computed(() => {
@@ -112,7 +107,6 @@ export class RequestCreate implements OnInit {
 
   nameSuppliers = computed<string[]>(() => this.suppliersByMaterial().map((s) => s.socialReason));
 
-  // Current Material Request cost (Qty * Unit Price)
   requestCost = computed(() => {
     const offer = this.logisticsStore.getSupplierOfferByMaterialIdAndSupplierId();
     const quantity = this.quantity();
@@ -120,7 +114,6 @@ export class RequestCreate implements OnInit {
     return Math.round(quantity * offer.unitPrice * 100) / 100;
   });
 
-  // Reactive verification signals based on selected activity
   assignedBudget = computed(() => this.selectedBudgetItem()?.budgeted || 0);
   executedAmount = computed(() => this.selectedBudgetItem()?.executed || 0);
   availableAmount = computed(() => this.selectedBudgetItem()?.available || 0);
@@ -133,19 +126,26 @@ export class RequestCreate implements OnInit {
   onCategoryMaterialSelect(category: string) {
     this.logisticsStore.filterByCategory(category);
     this.requestForm.get('category')?.setValue(category);
-    this.materialResetCounter.update((v) => v + 1);
+    this.requestForm.get('material')?.reset('');
+    this.requestForm.get('supplier')?.reset('');
   }
 
   onMaterialSelect(materialName: string) {
     this.logisticsStore.setSelectedMaterial(materialName);
     this.requestForm.get('material')?.setValue(materialName);
-    this.supplierResetCounter.update((v) => v + 1);
+    this.requestForm.get('supplier')?.reset('');
   }
 
-  onSupplierSelect(supplierSocialReason: string) {
-    this.logisticsStore.setSelectedSupplier(supplierSocialReason);
-    this.requestForm.get('supplier')?.setValue(supplierSocialReason);
+  onSupplierSelect(supplierName: string) {
+    this.logisticsStore.setSelectedSupplier(supplierName);
+    this.requestForm.get('supplier')?.setValue(supplierName);
   }
+
+  materialSelected = computed(() => this.logisticsStore.getMaterialSelected());
+  supplierSelected = computed(() => this.logisticsStore.getSupplierSelected());
+
+  isMaterialDisabled = computed(() => this.logisticsStore.selectedCategory().length === 0);
+  isSupplierDisabled = computed(() => this.logisticsStore.selectedMaterial().length === 0);
 
   /**
    * Links the selected Progress Activity to its corresponding Budget Line
@@ -173,10 +173,13 @@ export class RequestCreate implements OnInit {
     const formValue = this.requestForm.value;
     const request = new RequestEntity();
 
+    const offer = this.supplierOffer();
     request.items = [
       {
-        supplierOfferId: this.supplierOffer()?.id ?? '',
+        materialCatalogId: Number(this.materialSelected()?.id) || 0,
+        supplierId: Number(offer?.supplierId) || 0,
         quantity: formValue.quantity ?? 1,
+        unitPrice: offer?.unitPrice ?? 0,
       },
     ];
     request.suggestedSupplierId = this.supplierSelected()?.id ?? '';
@@ -207,10 +210,6 @@ export class RequestCreate implements OnInit {
   }
 
   selectedUnit = computed(() => this.materialSelected()?.measureUnit);
-  isMaterialDisabled = computed(() => this.logisticsStore.selectedCategory().length === 0);
-  isSupplierDisabled = computed(() => this.logisticsStore.selectedMaterial().length === 0);
-  materialSelected = computed(() => this.logisticsStore.getMaterialSelected());
-  supplierSelected = computed(() => this.logisticsStore.getSupplierSelected());
 
   uploadedDocumentName: string | null = null;
   uploadedDocumentFile: File | null = null;

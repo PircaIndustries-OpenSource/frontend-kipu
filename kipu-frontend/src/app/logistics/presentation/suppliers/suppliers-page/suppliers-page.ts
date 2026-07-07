@@ -60,10 +60,14 @@ export class SuppliersPage implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        const supplier: SupplierEntity = {
-          ...new SupplierEntity(),
-          ...result.supplier,
-        };
+        const supplier = {
+          ruc: result.supplier.ruc,
+          socialReason: result.supplier.socialReason,
+          contact: result.supplier.contact,
+          phone: result.supplier.phone,
+          email: result.supplier.email,
+          isActive: result.supplier.isActive,
+        } as unknown as SupplierEntity;
         this.logisticsStore.addSupplier(supplier, (newSupplier) => {
           result.offers.forEach((offer: { materialId: string; unitPrice: number }) => {
             this.logisticsStore.addSupplierOffer({

@@ -8,7 +8,7 @@ export class SupplierEntity {
   email: string;
   categories: string;
   paymentTerms: string;
-  status: string;
+  isActive: boolean;
 
   constructor() {
     this.id = '';
@@ -20,6 +20,6 @@ export class SupplierEntity {
     this.email = '';
     this.categories = '';
     this.paymentTerms = '';
-    this.status = '';
+    this.isActive = true;
   }
 }

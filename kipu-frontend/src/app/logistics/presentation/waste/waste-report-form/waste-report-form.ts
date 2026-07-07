@@ -50,11 +50,12 @@ export class WasteReportForm implements OnInit {
   onInventoryMaterialSelect(materialName: string) {
     this.logisticsStore.setInventorySelectedMaterial(materialName);
     const material = this.selectedInventoryMaterial();
-    this.wasteForm.get('materialId')?.setValue(material?.materialId ?? '');
+    this.wasteForm.get('materialCatalogId')?.setValue(Number(material?.materialId) || 0);
   }
   wasteForm: FormGroup = this.fb.group({
-    materialId: ['', Validators.required],
+    materialCatalogId: [0, Validators.required],
     quantity: [null, [Validators.required, Validators.min(1)]],
+    classificationType: ['ROTURA', Validators.required],
     date: [new Date().toISOString().split('T')[0], Validators.required],
     description: ['', Validators.required],
   });
@@ -63,10 +64,15 @@ export class WasteReportForm implements OnInit {
       this.wasteForm.markAllAsTouched();
       return;
     }
-    const formValue = this.wasteForm;
+    const formValue = this.wasteForm.value;
     this.dialogRef.close({
-      ...formValue.value,
+      projectId: localStorage.getItem('currentProjectId'),
+      materialCatalogId: formValue.materialCatalogId,
+      quantity: formValue.quantity,
       unit: this.selectedUnit() ?? '',
+      classificationType: formValue.classificationType,
+      date: formValue.date,
+      description: formValue.description,
       reportedBy: this.authStore.userName(),
     });
   }

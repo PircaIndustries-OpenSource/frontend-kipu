@@ -51,9 +51,9 @@
     <div class="flex flex-col w-full">
       <mat-form-field appearance="outline" class="w-full!" subscriptSizing="dynamic">
         <mat-label class="text-(--color-text-main)!">{{ 'suppliers.create.status-label' | translate }}</mat-label>
-        <mat-select formControlName="status">
-          <mat-option value="ACTIVE">{{ 'suppliers.create.status-active' | translate }}</mat-option>
-          <mat-option value="INACTIVE">{{ 'suppliers.create.status-inactive' | translate }}</mat-option>
+        <mat-select formControlName="isActive">
+          <mat-option [value]="true">{{ 'suppliers.create.status-active' | translate }}</mat-option>
+          <mat-option [value]="false">{{ 'suppliers.create.status-inactive' | translate }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>

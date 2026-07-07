@@ -41,7 +41,7 @@ export class SupplierEditDialog {
     contact: [this.data.supplier.contact, Validators.required],
     phone: [this.data.supplier.phone, Validators.required],
     email: [this.data.supplier.email, [Validators.required, Validators.email]],
-    status: [this.data.supplier.status],
+    isActive: [this.data.supplier.isActive],
     offers: this.fb.array([]),
   });
 
@@ -91,7 +91,7 @@ export class SupplierEditDialog {
         contact: value.contact,
         phone: value.phone,
         email: value.email,
-        status: value.status,
+        isActive: value.isActive,
       },
       offers: value.offers || [],
     });
