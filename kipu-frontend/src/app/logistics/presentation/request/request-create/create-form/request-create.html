@@ -14,11 +14,14 @@
         <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
           {{ 'request.create.fields.category' | translate }}
         </span>
-        <app-autocomplete-filter-list
-          (optionSelected)="onCategoryMaterialSelect($event)"
-          [listOptions]="nameCategories()"
-          [placeholder]="'request.create.placeholders.select' | translate"
-        ></app-autocomplete-filter-list>
+        <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+          <mat-label>{{ 'request.create.placeholders.select' | translate }}</mat-label>
+          <mat-select (selectionChange)="onCategoryMaterialSelect($event.value)">
+            @for (cat of nameCategories(); track cat) {
+              <mat-option [value]="cat">{{ cat }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
         @if (requestForm.get('category')?.invalid && requestForm.get('category')?.touched){
           <mat-error>{{ 'request.create.validation.category-required' | translate }}</mat-error>
         }
@@ -27,13 +30,14 @@
         <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
           {{ 'request.create.fields.specific-material' | translate }}
         </span>
-        <app-autocomplete-filter-list
-          [listOptions]="nameMaterials()"
-          (optionSelected)="onMaterialSelect($event)"
-          [resetSignal]="materialResetCounter()"
-          [disabled]="isMaterialDisabled()"
-          [placeholder]="!isMaterialDisabled() ? ('request.create.placeholders.select' | translate) : ('request.create.placeholders.select-category-first' | translate)"
-        ></app-autocomplete-filter-list>
+        <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+          <mat-label>{{ 'request.create.placeholders.select' | translate }}</mat-label>
+          <mat-select (selectionChange)="onMaterialSelect($event.value)" [disabled]="isMaterialDisabled()">
+            @for (mat of nameMaterials(); track mat) {
+              <mat-option [value]="mat">{{ mat }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
         @if (requestForm.get('material')?.invalid && requestForm.get('material')?.touched){
           <mat-error>{{ 'request.create.validation.material-required' | translate }}</mat-error>
         }
@@ -43,16 +47,17 @@
       <span class="text-xs font-bold text-primary/80 uppercase tracking-wider">
         {{ 'request.create.fields.suggested-supplier' | translate }}
       </span>
-      <app-autocomplete-filter-list
-        [listOptions]="nameSuppliers()"
-        [resetSignal]="supplierResetCounter()"
-        (optionSelected)="onSupplierSelect($event)"
-        [disabled]="isSupplierDisabled()"
-        [placeholder]="!isSupplierDisabled() ? ('request.create.placeholders.select' | translate) : ('request.create.placeholders.select-material-first' | translate)"
-      ></app-autocomplete-filter-list>
-        @if (requestForm.get('supplier')?.invalid && requestForm.get('supplier')?.touched){
-          <mat-error>{{ 'request.create.validation.supplier-required' | translate }}</mat-error>
-        }
+      <mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+        <mat-label>{{ isSupplierDisabled() ? ('request.create.placeholders.select-material-first' | translate) : ('request.create.placeholders.select' | translate) }}</mat-label>
+        <mat-select (selectionChange)="onSupplierSelect($event.value)" [disabled]="isSupplierDisabled()">
+          @for (sup of nameSuppliers(); track sup) {
+            <mat-option [value]="sup">{{ sup }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      @if (requestForm.get('supplier')?.invalid && requestForm.get('supplier')?.touched){
+        <mat-error>{{ 'request.create.validation.supplier-required' | translate }}</mat-error>
+      }
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-l">
       <div class="flex flex-col gap-1">

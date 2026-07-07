@@ -39,9 +39,9 @@ export class SupplierCreateForm {
     ruc: ['', [Validators.required, Validators.pattern('^[0-9]{11}$')]],
     socialReason: ['', Validators.required],
     contact: ['', Validators.required],
-    phone: ['', Validators.required],
+    phone: ['', [Validators.required, Validators.pattern('^\\+?[0-9]{7,15}$')]],
     email: ['', [Validators.required, Validators.email]],
-    status: ['ACTIVE'],
+    isActive: [true],
     offers: this.fb.array([]),
   });
 
@@ -81,7 +81,7 @@ export class SupplierCreateForm {
         contact: value.contact,
         phone: value.phone,
         email: value.email,
-        status: value.status,
+        isActive: value.isActive,
       },
       offers: value.offers || [],
     });

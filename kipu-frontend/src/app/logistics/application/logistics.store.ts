@@ -525,20 +525,14 @@ export class LogisticsStore {
     });
   }
   addSupplierOffer(offer: Partial<SupplierOfferEntity>) {
-    this.logisticsApi.postSupplierOffer(offer).subscribe({
-      next: (newOffer) => {
-        this.supplierOfferSignal.update((prev) => [...prev, newOffer]);
-      },
-      error: (err) => console.error('Error adding supplier offer', err),
-    });
+    return this.logisticsApi.postSupplierOffer(offer).pipe(
+      tap((newOffer) => this.supplierOfferSignal.update((prev) => [...prev, newOffer])),
+    );
   }
   deleteSupplierOffer(id: string) {
-    return this.logisticsApi.deleteSupplierOffer(id).subscribe({
-      next: () => {
-        this.supplierOfferSignal.update((prev) => prev.filter((o) => o.id !== id));
-      },
-      error: (err) => console.error('Error deleting supplier offer', err),
-    });
+    return this.logisticsApi.deleteSupplierOffer(id).pipe(
+      tap(() => this.supplierOfferSignal.update((prev) => prev.filter((o) => o.id !== id))),
+    );
   }
   updateSupplier(id: string, updates: Partial<SupplierEntity>, onSuccess?: () => void) {
     this.logisticsApi.patchSupplier(id, updates).subscribe({
@@ -566,16 +560,10 @@ export class LogisticsStore {
     });
   }
   numberSuppliersActive = computed(() => {
-    const activeSuppliers = this.suppliersSignal().filter(
-      (supplier) => supplier.status === 'ACTIVE',
-    );
-    return activeSuppliers.length;
+    return this.suppliersSignal().filter((s) => s.isActive).length;
   });
   numberSuppliersInactive = computed(() => {
-    const inactiveSuppliers = this.suppliersSignal().filter(
-      (supplier) => supplier.status === 'INACTIVE',
-    );
-    return inactiveSuppliers.length;
+    return this.suppliersSignal().filter((s) => !s.isActive).length;
   });
   selectedSupplier = signal<string>('');
   setSelectedSupplier = (supplierSocialReason: string) => {
@@ -604,8 +592,8 @@ export class LogisticsStore {
     let result = this.suppliers();
     const ruc = this.searchRuc().trim();
     if (ruc) result = result.filter((s) => s.ruc.includes(ruc));
-    if (this.inactiveSupplierFilterSignal()) result = result.filter((s) => s.status === 'INACTIVE');
-    if (this.activeSupplierFilterSignal()) result = result.filter((s) => s.status === 'ACTIVE');
+    if (this.inactiveSupplierFilterSignal()) result = result.filter((s) => !s.isActive);
+    if (this.activeSupplierFilterSignal()) result = result.filter((s) => s.isActive);
     return result;
   });
   //Waste
@@ -634,6 +622,7 @@ export class LogisticsStore {
     this.logisticsApi.postWaste(waste).subscribe({
       next: (newWaste) => {
         this.wasteSignal.update((prev) => [...prev, newWaste]);
+        this.loadInventoryMaterials(true);
         onSuccess?.();
       },
       error: (err) => console.error('Error adding waste', err),

@@ -846,7 +846,11 @@
         "reported-by-placeholder": "Name of the reporter",
         "reported-by-required": "Reporter name is required.",
         "btn-save": "Report Waste",
-        "btn-cancel": "Cancel"
+        "btn-cancel": "Cancel",
+        "type-rotura": "Breakage",
+        "type-vencimiento": "Expiration",
+        "type-defecto": "Defect",
+        "type-contaminacion": "Contamination"
       }
     }
   },

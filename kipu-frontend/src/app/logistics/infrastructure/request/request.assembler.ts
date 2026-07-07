@@ -17,8 +17,10 @@ export class RequestAssembler {
       suggestedSupplierId: String(resource.suggestedSupplierId ?? ''),
       attachments: resource.attachments,
       items: (resource.items || []).map(item => ({
-        supplierOfferId: String(item.supplierOfferId),
+        materialCatalogId: item.materialCatalogId,
+        supplierId: item.supplierId,
         quantity: item.quantity,
+        unitPrice: item.unitPrice,
       })),
       requestedBy: resource.requestedBy,
       activity: resource.activity,

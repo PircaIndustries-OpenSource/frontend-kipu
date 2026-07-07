@@ -35,7 +35,7 @@
       </div>
       <div class="flex flex-col gap-1">
         <span class="text-xs font-bold text-neutral-border uppercase tracking-wider">{{ 'suppliers.create.status-label' | translate }}</span>
-        <span class="text-base font-semibold" [ngClass]="data.supplier.status === 'ACTIVE' ? 'text-success' : 'text-danger'">{{ data.supplier.status === 'ACTIVE' ? ('suppliers.create.status-active' | translate) : ('suppliers.create.status-inactive' | translate) }}</span>
+        <span class="text-base font-semibold" [ngClass]="data.supplier.isActive ? 'text-success' : 'text-danger'">{{ data.supplier.isActive ? ('suppliers.create.status-active' | translate) : ('suppliers.create.status-inactive' | translate) }}</span>
       </div>
     </div>
 

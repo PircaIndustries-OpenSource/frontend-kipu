@@ -38,6 +38,18 @@
 
     <div class="flex flex-col w-full">
       <mat-form-field appearance="outline" class="w-full!" subscriptSizing="dynamic">
+        <mat-label class="text-(--color-text-main)!">{{ 'waste.card.create.classification-label' | translate }}</mat-label>
+        <mat-select formControlName="classificationType">
+          <mat-option value="ROTURA">{{ 'waste.card.create.type-rotura' | translate }}</mat-option>
+          <mat-option value="VENCIMIENTO">{{ 'waste.card.create.type-vencimiento' | translate }}</mat-option>
+          <mat-option value="DEFECTO">{{ 'waste.card.create.type-defecto' | translate }}</mat-option>
+          <mat-option value="CONTAMINACION">{{ 'waste.card.create.type-contaminacion' | translate }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-col w-full">
+      <mat-form-field appearance="outline" class="w-full!" subscriptSizing="dynamic">
         <mat-label class="text-(--color-text-main)!">{{ 'waste.card.create.date-label' | translate }}</mat-label>
         <input matInput formControlName="date" [matDatepicker]="wasteDatePicker">
         <mat-datepicker-toggle matIconSuffix [for]="wasteDatePicker"></mat-datepicker-toggle>

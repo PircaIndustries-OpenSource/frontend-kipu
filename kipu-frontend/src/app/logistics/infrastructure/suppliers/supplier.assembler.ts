@@ -13,7 +13,7 @@ export class SupplierAssembler {
       email: resource.email,
       categories: resource.categories,
       paymentTerms: resource.paymentTerms,
-      status: resource.status,
+      isActive: resource.isActive,
     };
   }
   static toEntitiesFromResponse(response: SupplierResponse): SupplierEntity[] {

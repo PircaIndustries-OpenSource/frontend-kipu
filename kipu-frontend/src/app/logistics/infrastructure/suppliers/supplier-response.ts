@@ -10,5 +10,5 @@ export interface SupplierResource {
   email: string;
   categories: string;
   paymentTerms: string;
-  status: string;
+  isActive: boolean;
 }

@@ -2,6 +2,7 @@ import { Component, inject, input, computed } from '@angular/core';
 import { MatCard, MatCardActions, MatCardContent } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslatePipe } from '@ngx-translate/core';
+import { concat, of } from 'rxjs';
 import { SupplierEntity } from '../../../domain/supplier.entity';
 import { LogisticsStore } from '../../../application/logistics.store';
 import { ConfirmDialog } from '../../../../shared/presentation/confirm-dialog/confirm-dialog';
@@ -54,18 +55,26 @@ export class SupplierItem {
         data: { supplier: this.supplier(), offers: this.supplierOffers() },
       });
       dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          this.logisticsStore.updateSupplier(this.supplier().id, result.supplier);
-          const oldOffers = this.supplierOffers();
-          oldOffers.forEach((o) => this.logisticsStore.deleteSupplierOffer(o.id));
-          result.offers.forEach((offer: { materialId: string; unitPrice: number }) => {
+        if (!result) return;
+        this.logisticsStore.updateSupplier(this.supplier().id, result.supplier);
+
+        const oldIds = this.supplierOffers().map((o) => o.id);
+        const delete$ = oldIds.length
+          ? concat(...oldIds.map((id) => this.logisticsStore.deleteSupplierOffer(id)))
+          : of(null);
+
+        delete$.subscribe(() => {
+          const newOffers = result.offers || [];
+          if (newOffers.length === 0) return;
+          const offer$ = newOffers.map((offer: { materialId: string; unitPrice: number }) =>
             this.logisticsStore.addSupplierOffer({
               supplierId: this.supplier().id,
               materialId: offer.materialId,
               unitPrice: offer.unitPrice,
-            });
-          });
-        }
+            })
+          );
+          concat(...offer$).subscribe();
+        });
       });
     });
   }
